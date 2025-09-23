@@ -1,0 +1,14 @@
+# Python
+.mypy_cache
+venv
+
+# Local testing dirs
+AssemblyDecompiler-framework
+DepotDownloader-framework
+download
+fullcode
+stripped
+
+# Config and state
+.env
+cache.json
