@@ -1,0 +1,31 @@
+namespace ScheduleOne.Clothing;
+public enum EClothingColor
+{
+    White,
+    LightGrey,
+    DarkGrey,
+    Charcoal,
+    Black,
+    LightRed,
+    Red,
+    Crimson,
+    Orange,
+    Tan,
+    Brown,
+    Coral,
+    Beige,
+    Yellow,
+    Lime,
+    LightGreen,
+    DarkGreen,
+    Cyan,
+    SkyBlue,
+    Blue,
+    DeepBlue,
+    Navy,
+    DeepPurple,
+    Purple,
+    Magenta,
+    BrightPink,
+    HotPink
+}

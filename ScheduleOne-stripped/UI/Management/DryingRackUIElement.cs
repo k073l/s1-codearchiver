@@ -1,0 +1,16 @@
+using ScheduleOne.ItemFramework;
+using ScheduleOne.Management;
+using ScheduleOne.ObjectScripts;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
+
+namespace ScheduleOne.UI.Management;
+public class DryingRackUIElement : WorldspaceUIElement
+{
+    public Image TargetQualityIcon;
+    public DryingRack AssignedRack { get; protected set; }
+
+    public void Initialize(DryingRack rack);
+    protected virtual void RefreshUI();
+}

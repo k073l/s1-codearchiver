@@ -1,0 +1,15 @@
+using ScheduleOne.Building;
+using ScheduleOne.DevUtilities;
+
+namespace ScheduleOne.Equipping;
+public class Equippable_StorableItem : Equippable
+{
+    protected bool isBuildingStoredItem;
+    protected bool lookingAtStorageObject;
+    protected float rotation;
+    protected virtual void Update();
+    protected void CheckLookingAtStorageObject();
+    public override void Unequip();
+    protected virtual void StartBuildingStoredItem();
+    protected virtual void StopBuildingStoredItem();
+}

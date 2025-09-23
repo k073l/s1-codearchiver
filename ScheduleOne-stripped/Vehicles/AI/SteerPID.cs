@@ -1,0 +1,10 @@
+using UnityEngine;
+
+namespace ScheduleOne.Vehicles.AI;
+public class SteerPID
+{
+    private float error_old;
+    private float error_sum;
+    public float GetNewValue(float error, PID_Parameters pid_parameters);
+    public static float AddValueToAverage(float oldAverage, float valueToAdd, float count);
+}
