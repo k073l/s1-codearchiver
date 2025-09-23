@@ -1,0 +1,29 @@
+using FishNet.Object;
+using ScheduleOne.Audio;
+using ScheduleOne.DevUtilities;
+using ScheduleOne.Growing;
+using ScheduleOne.Interaction;
+using ScheduleOne.ObjectScripts;
+using ScheduleOne.PlayerScripts;
+using ScheduleOne.UI;
+using UnityEngine;
+
+namespace ScheduleOne.PlayerTasks;
+public class HarvestPlant : Task
+{
+    protected Pot pot;
+    private int HarvestCount;
+    private int HarvestTotal;
+    private float rotation;
+    private static bool hintShown;
+    private static bool CanDrag;
+    private AudioSourceController SoundLoop;
+    public override string TaskName { get; protected set; } = "Harvest plant";
+
+    public HarvestPlant(Pot _pot, bool canDrag, AudioSourceController soundLoopPrefab);
+    private void UpdateInstructionText();
+    public override void StopTask();
+    protected override void UpdateCursor();
+    public override void Update();
+    private PlantHarvestable GetHoveredHarvestable();
+}
