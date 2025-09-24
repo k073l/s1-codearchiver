@@ -5,7 +5,7 @@ import subprocess
 from dotenv import load_dotenv
 from update import check_for_updates, init_cache, CACHE_FILE, TRACKED_BRANCHES
 from download import download_branch_files, decompile_game_assembly
-from git_utils import git_checkout_branch, copy_stripped_to_repo, git_commit_all, get_version_txt, safe_checkout_and_commit
+from git_utils import copy_stripped_to_repo, git_commit_all, get_version_txt
 
 load_dotenv()
 FULL_CODE_PATH = os.getenv("FULL_CODE_PATH", "fullcode")
@@ -81,6 +81,11 @@ if __name__ == "__main__":
 
         commit_msg = f"Auto-update for version {get_version_txt(branch_output)}"
         git_commit_all(repo_dir, commit_msg)
+        push_result = subprocess.run(["git", "push", "origin", branch], cwd=repo_dir, capture_output=True, text=True)
+        if push_result.returncode == 0:
+            logging.info(f"Pushed branch {branch} to remote.")
+        else:
+            logging.error(f"Failed to push branch {branch} to remote:\n{push_result.stderr}")
 
     if to_update:
         # Save
