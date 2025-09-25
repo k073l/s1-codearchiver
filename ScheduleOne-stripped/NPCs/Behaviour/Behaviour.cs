@@ -8,6 +8,7 @@ using FishNet.Transporting;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Management;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
 namespace ScheduleOne.NPCs.Behaviour;
