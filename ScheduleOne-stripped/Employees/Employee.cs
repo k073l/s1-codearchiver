@@ -17,7 +17,6 @@ using ScheduleOne.Management;
 using ScheduleOne.NPCs;
 using ScheduleOne.NPCs.Behaviour;
 using ScheduleOne.Persistence.Datas;
-using ScheduleOne.PlayerScripts;
 using ScheduleOne.Property;
 using ScheduleOne.UI;
 using ScheduleOne.Variables;
@@ -102,7 +101,6 @@ public class Employee : NPC
     protected void MarkIsWorking();
     private void SetWaitOutside(bool wait);
     protected virtual bool ShouldIdle();
-    protected override bool ShouldNoticeGeneralCrime(Player player);
     protected override void MinPass();
     private void OnSleepEnd();
     public void SetIsPaid();

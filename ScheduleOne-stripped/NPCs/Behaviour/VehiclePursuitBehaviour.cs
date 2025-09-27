@@ -1,6 +1,11 @@
 using System;
 using FishNet;
+using FishNet.Connection;
+using FishNet.Managing;
 using FishNet.Object;
+using FishNet.Object.Delegating;
+using FishNet.Serializing;
+using FishNet.Transporting;
 using ScheduleOne.Lighting;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Police;
@@ -12,7 +17,7 @@ using UnityEngine;
 namespace ScheduleOne.NPCs.Behaviour;
 public class VehiclePursuitBehaviour : Behaviour
 {
-    public const float EXTRA_VISIBILITY_TIME;
+    public const float RECENT_VISIBILITY_THRESHOLD;
     public const float EXIT_VEHICLE_MAX_SPEED;
     public const float CLOSE_ENOUGH_THRESHOLD;
     public const float UPDATE_FREQUENCY;
@@ -23,10 +28,8 @@ public class VehiclePursuitBehaviour : Behaviour
     public LandVehicle vehicle;
     private bool initialContactMade;
     private bool aggressiveDrivingEnabled;
-    private bool isTargetVisible;
-    private bool isTargetStrictlyVisible;
-    private float playerSightedDuration;
     private float timeSinceLastSighting;
+    private bool visionEventReceived;
     private int consecutiveVehiclePathingFailures;
     private float timeStationary;
     private Vector3 currentDriveTarget;
@@ -35,7 +38,9 @@ public class VehiclePursuitBehaviour : Behaviour
     private bool beginAsSighted;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002EBehaviour_002EVehiclePursuitBehaviourAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002EBehaviour_002EVehiclePursuitBehaviourAssembly_002DCSharp_002Edll_Excuted;
-    public Player TargetPlayer { get; protected set; }
+    public Player Target { get; protected set; }
+    public bool IsTargetRecentlyVisible { get; private set; }
+    public bool IsTargetImmediatelyVisible { get; private set; }
     private bool isDriving => (Object)(object)vehicle.OccupantNPCs[0] == (Object)(object)base.Npc;
     private VehicleAgent Agent => vehicle.Agent;
 
@@ -59,12 +64,19 @@ public class VehiclePursuitBehaviour : Behaviour
     private void DriveTo(Vector3 location);
     private void NavigationCallback(VehicleAgent.ENavigationResult status);
     private bool IsAsCloseAsPossible(Vector3 pos, out Vector3 closestPosition);
-    private bool IsPlayerVisible();
-    private void CheckPlayerVisibility();
+    protected void CheckTargetVisibility();
+    public void MarkPlayerVisible();
+    protected bool IsTargetVisible();
     private void ProcessVisionEvent(VisionEventReceipt visionEventReceipt);
     private void ProcessThirdPartyVisionEvent(VisionEventReceipt visionEventReceipt);
+    protected virtual void TargetSpotted();
+    [ServerRpc(RequireOwnership = false)]
+    public void NotifyServerTargetSeen();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();
+    private void RpcWriter___Server_NotifyServerTargetSeen_2166136261();
+    public void RpcLogic___NotifyServerTargetSeen_2166136261();
+    private void RpcReader___Server_NotifyServerTargetSeen_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
     protected override void Awake_UserLogic_ScheduleOne_002ENPCs_002EBehaviour_002EVehiclePursuitBehaviour_Assembly_002DCSharp_002Edll();
 }

@@ -8,6 +8,7 @@ using FishNet.Transporting;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Management;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
 namespace ScheduleOne.NPCs.Behaviour;
@@ -71,7 +72,7 @@ public class Behaviour : NetworkBehaviour
     public virtual void ActiveMinPass();
     protected void SetPriority(int p);
     protected void SetDestination(ITransitEntity transitEntity, bool teleportIfFail = true);
-    protected unsafe void SetDestination(Vector3 position, bool teleportIfFail = true);
+    protected unsafe virtual void SetDestination(Vector3 position, bool teleportIfFail = true);
     protected virtual void WalkCallback(NPCMovement.WalkResult result);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();

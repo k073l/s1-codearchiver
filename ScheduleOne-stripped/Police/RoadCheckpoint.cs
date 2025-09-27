@@ -87,6 +87,7 @@ public class RoadCheckpoint : NetworkBehaviour
     public void SetGate2Open(bool o);
     private void ResetTrafficCones();
     public void PlayerDetected(Player player);
+    private bool TryGetNearestAssignedNPC(out NPC npc, out float distance);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

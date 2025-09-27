@@ -54,4 +54,5 @@ public class AvatarRangedWeapon : AvatarWeapon
     public virtual void ApplyHitToDamageable(IDamageable damageable, Vector3 hitPoint);
     private IEnumerator Reload();
     public bool IsTargetInLoS(ICombatTargetable target);
+    public virtual float GetIdealUseRange();
 }

@@ -71,24 +71,21 @@ public class NPCMovement : NetworkBehaviour
     public float WalkSpeed;
     public float RunSpeed;
     public float MoveSpeedMultiplier;
-    public bool SlipperyMode;
-    public float SlipperyModeMultiplier;
+    [Header("Obstacle Avoidance")]
     public bool ObstacleAvoidanceEnabled;
     public ObstacleAvoidanceType DefaultObstacleAvoidanceType;
+    [Header("Slippery Mode")]
+    public bool SlipperyMode;
+    public float SlipperyModeMultiplier;
     [Header("References")]
     public NavMeshAgent Agent;
     public NPCSpeedController SpeedController;
+    public CapsuleCollider CapsuleCollider;
+    public NPCAnimation Animation;
+    public SmoothedVelocityCalculator VelocityCalculator;
+    public Draggable RagdollDraggable;
+    public Collider RagdollDraggableCollider;
     protected NPC npc;
-    public CapsuleCollider capsuleCollider;
-    [SerializeField]
-    protected NPCAnimation anim;
-    [SerializeField]
-    protected Rigidbody ragdollCentralRB;
-    public SmoothedVelocityCalculator velocityCalculator;
-    [SerializeField]
-    protected Draggable RagdollDraggable;
-    [SerializeField]
-    protected Collider RagdollDraggableCollider;
     public float MovementSpeedScale;
     private float ragdollStaticTime;
     public UnityEvent<LandVehicle> onHitByCar;
@@ -99,7 +96,7 @@ public class NPCMovement : NetworkBehaviour
     private Action<WalkResult> walkResultCallback;
     private float currentMaxDistanceForSuccess;
     private bool forceIsMoving;
-    private Coroutine FaceDirectionRoutine;
+    private Coroutine faceDirectionRoutine;
     private List<ConstantForce> ragdollForceComponents;
     private float timeUntilNextStumble;
     private float timeSinceStumble;
@@ -112,14 +109,14 @@ public class NPCMovement : NetworkBehaviour
     private Vector3[] agentCurrentPathCorners;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002ENPCMovementAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002ENPCMovementAssembly_002DCSharp_002Edll_Excuted;
-    public bool hasDestination { get; protected set; }
+    public bool HasDestination { get; protected set; }
     public bool IsMoving { get; }
     public bool IsPaused { get; protected set; }
     public Vector3 FootPosition => ((Component)this).transform.position;
     public float GravityMultiplier { get; protected set; } = 1f;
     public EStance Stance { get; protected set; }
-    public float timeSinceHitByCar { get; protected set; }
-    public bool FaceDirectionInProgress => FaceDirectionRoutine != null;
+    public float TimeSinceHitByCar { get; protected set; }
+    public bool FaceDirectionInProgress => faceDirectionRoutine != null;
     public Vector3 CurrentDestination { get; protected set; } = Vector3.zero;
     public NPCPathCache PathCache { get; private set; } = new NPCPathCache();
     public bool Disoriented { get; set; }

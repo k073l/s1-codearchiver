@@ -20,4 +20,5 @@ public class Taser : AvatarRangedWeapon
     public override void ApplyHitToDamageable(IDamageable damageable, Vector3 hitPoint);
     public override void SetIsRaised(bool raised);
     private IEnumerator Flash(Vector3 endPoint);
+    public override float GetIdealUseRange();
 }

@@ -21,7 +21,7 @@ public class Avatar : MonoBehaviour
     private static float femaleShoulderScale;
     public bool DEBUG;
     [Header("References")]
-    public AvatarAnimation Anim;
+    public AvatarAnimation Animation;
     public AvatarLookController LookController;
     public SkinnedMeshRenderer[] BodyMeshes;
     public SkinnedMeshRenderer[] ShapeKeyMeshes;

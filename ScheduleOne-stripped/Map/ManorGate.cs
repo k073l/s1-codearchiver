@@ -1,4 +1,5 @@
 using EasyButtons;
+using FishNet;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Interaction;
 using ScheduleOne.Tools;
@@ -15,6 +16,8 @@ public class ManorGate : Gate
     public VehicleDetector InteriorVehicleDetector;
     public PlayerDetector InteriorPlayerDetector;
     private bool intercomActive;
+    private bool NetworkInitialize___EarlyScheduleOne_002EMap_002EManorGateAssembly_002DCSharp_002Edll_Excuted;
+    private bool NetworkInitialize__LateScheduleOne_002EMap_002EManorGateAssembly_002DCSharp_002Edll_Excuted;
     protected virtual void Start();
     private void UpdateDetection();
     public void IntercomBuzzed();
@@ -23,4 +26,8 @@ public class ManorGate : Gate
     public void ActivateIntercom();
     public void SetIntercomActive(bool active);
     private void UpdateIntercom();
+    public override void NetworkInitialize___Early();
+    public override void NetworkInitialize__Late();
+    public override void NetworkInitializeIfDisabled();
+    public override void Awake();
 }

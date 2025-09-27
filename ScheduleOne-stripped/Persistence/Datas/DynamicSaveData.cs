@@ -20,7 +20,7 @@ public class DynamicSaveData : SaveData
     public void AddData(string name, SaveData data);
     public string GetData(string name);
     public bool TryGetData(string name, out string data);
-    public T GetData<T>(string name)
+    public T GetData<T>(string name, bool warn = true)
         where T : SaveData;
     public bool TryGetData<T>(string name, out T data)
         where T : SaveData;

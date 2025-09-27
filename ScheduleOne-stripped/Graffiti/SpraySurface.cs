@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using EasyButtons;
 using FishNet;
 using FishNet.Connection;
@@ -50,6 +51,7 @@ public class SpraySurface : NetworkBehaviour, IGUIDRegisterable
     private void ResizeProjector();
     public bool CanBeEdited();
     public override void OnSpawnServer(NetworkConnection connection);
+    public void ReplicateTo(NetworkConnection conn);
     [ServerRpc(RequireOwnership = false)]
     public void SetCurrentEditor_Server(NetworkObject player);
     [ObserversRpc(RunLocally = true)]
@@ -71,7 +73,7 @@ public class SpraySurface : NetworkBehaviour, IGUIDRegisterable
     private void SetFinalized();
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
-    public void Set(NetworkConnection conn, List<SprayStroke> strokes, bool hasBeenFinalized);
+    public void Set(NetworkConnection conn, SprayStroke[] strokes, bool hasBeenFinalized);
     private void DrawingChanged();
     private float[] GetFalloffTable();
     public void SetGUID(Guid guid);
@@ -105,10 +107,10 @@ public class SpraySurface : NetworkBehaviour, IGUIDRegisterable
     private void RpcWriter___Observers_SetFinalized_2166136261();
     private void RpcLogic___SetFinalized_2166136261();
     private void RpcReader___Observers_SetFinalized_2166136261(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Observers_Set_4232712843(NetworkConnection conn, List<SprayStroke> strokes, bool hasBeenFinalized);
-    public void RpcLogic___Set_4232712843(NetworkConnection conn, List<SprayStroke> strokes, bool hasBeenFinalized);
-    private void RpcReader___Observers_Set_4232712843(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Target_Set_4232712843(NetworkConnection conn, List<SprayStroke> strokes, bool hasBeenFinalized);
-    private void RpcReader___Target_Set_4232712843(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Observers_Set_4105842735(NetworkConnection conn, SprayStroke[] strokes, bool hasBeenFinalized);
+    public void RpcLogic___Set_4105842735(NetworkConnection conn, SprayStroke[] strokes, bool hasBeenFinalized);
+    private void RpcReader___Observers_Set_4105842735(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Target_Set_4105842735(NetworkConnection conn, SprayStroke[] strokes, bool hasBeenFinalized);
+    private void RpcReader___Target_Set_4105842735(PooledReader PooledReader0, Channel channel);
     private void Awake_UserLogic_ScheduleOne_002EGraffiti_002ESpraySurface_Assembly_002DCSharp_002Edll();
 }

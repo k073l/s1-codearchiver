@@ -7,7 +7,6 @@ public enum EVisualState
     Vandalizing,
     PettyCrime,
     DrugDealing,
-    SearchedFor,
     Wanted,
     Pickpocketing,
     DischargingWeapon,

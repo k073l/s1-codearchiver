@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using EasyButtons;
 using FishNet;
 using FishNet.Connection;
 using FishNet.Managing;
@@ -15,6 +16,7 @@ using ScheduleOne.UI.WorldspacePopup;
 using ScheduleOne.Vehicles;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace ScheduleOne.Vision;
 public class VisionCone : NetworkBehaviour
@@ -32,7 +34,11 @@ public class VisionCone : NetworkBehaviour
     {
         public EVisualState state;
         public bool Enabled;
-        public float RequiredNoticeTime;
+        [Range(0.5f, 4f)]
+        public float NoticeTimeMultiplier;
+        public float RequiredNoticeTime => 0.2f * NoticeTimeMultiplier;
+
+        public StateContainer GetCopy();
     }
 
     public class SightableData
@@ -44,16 +50,16 @@ public class VisionCone : NetworkBehaviour
 
     public delegate void EventStateChange(VisionEventReceipt _event);
     public const float VISION_UPDATE_INTERVAL;
+    public const float MinVisionDelta;
     public static float UniversalAttentivenessScale;
     public static float UniversalMemoryScale;
+    public const float HorizontalFOV;
+    public const float VerticalFOV;
+    public const float Range;
+    public const float MinorWidth;
+    public const float MinorHeight;
     public bool DEBUG;
     public bool DisableSightUpdates;
-    [Header("Frustrum Settings")]
-    public float HorizontalFOV;
-    public float VerticalFOV;
-    public float Range;
-    public float MinorWidth;
-    public float MinorHeight;
     public Transform VisionOrigin;
     public bool DEBUG_FRUSTRUM;
     [Header("Vision Settings")]
@@ -63,9 +69,9 @@ public class VisionCone : NetworkBehaviour
     [Range(0f, 2f)]
     public float RangeMultiplier;
     [Header("Interest settings")]
-    public List<StateContainer> StatesOfInterest;
+    [FormerlySerializedAs("StatesOfInterest")]
+    public List<StateContainer> DefaultStatesOfInterest;
     [Header("Notice Settings")]
-    public float MinVisionDelta;
     public float Attentiveness;
     public float Memory;
     [Header("Worldspace Icons")]
@@ -83,12 +89,12 @@ public class VisionCone : NetworkBehaviour
     protected List<VisionEvent> activeVisionEvents;
     protected List<VisionEvent> cachedVisionEvents;
     protected NPC npc;
-    protected bool generalCrimeResponseActive;
+    protected bool noticeGeneralCrime;
     protected List<ISightable> sightablesSeenThisFrame;
     protected List<ISightable> toRemove;
     private bool NetworkInitialize___EarlyScheduleOne_002EVision_002EVisionConeAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EVision_002EVisionConeAssembly_002DCSharp_002Edll_Excuted;
-    protected float effectiveRange => Range * RangeMultiplier;
+    protected float effectiveRange => 25f * RangeMultiplier;
 
     public override void Awake();
     private void PlayerSpawned(Player plr);
@@ -107,7 +113,9 @@ public class VisionCone : NetworkBehaviour
     public virtual void ReceiveEventReceipt(VisionEventReceipt receipt, EEventLevel level);
     public void AddSightableOfInterest(ISightable s);
     public void RemoveSightableOfInterest(ISightable s);
-    public StateContainer GetStateSettings(ISightable sightable, EVisualState state);
+    public void SetSightableStateEnabled(ISightable sightable, EVisualState state, bool enabled);
+    [Button]
+    public void PrintSightableStates();
     public virtual bool IsPointWithinSight(Vector3 point, bool ignoreLoS = false, LandVehicle vehicleToIgnore = null);
     public VisionEvent GetEvent(ISightable target, EntityVisualState state);
     public bool IsPlayerVisible(Player player);
@@ -115,7 +123,7 @@ public class VisionCone : NetworkBehaviour
     public bool IsTargetVisible(ISightable target);
     public float GetPlayerVisibility(Player player);
     public bool IsPlayerVisible(Player player, out SightableData data);
-    public virtual void SetGeneralCrimeResponseActive(Player player, bool active);
+    public virtual void SetNoticePlayerCrimes(Player player, bool active);
     private void OnDie();
     public void ClearEvents();
     private Vector3[] GetFrustumVertices();

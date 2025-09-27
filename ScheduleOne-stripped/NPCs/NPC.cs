@@ -56,7 +56,6 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     public bool hasLastName;
     public string LastName;
     public string ID;
-    public bool AutoGenerateMugshot;
     public Sprite MugshotSprite;
     public EMapRegion Region;
     [Header("If true, NPC will respawn next day instead of waiting 3 days.")]
@@ -141,7 +140,7 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     public Vector3 LookAtPoint => ((Component)Avatar.Eyes).transform.position;
     public bool IsCurrentlyTargetable { get; }
     public float RangedHitChanceMultiplier => 1f;
-    public Vector3 Velocity => Movement.velocityCalculator.Velocity;
+    public Vector3 Velocity => Movement.VelocityCalculator.Velocity;
     public VisionEvent HighestProgressionEvent { get; set; }
     public EntityVisibility VisibilityComponent => Visibility;
     public Guid GUID { get; protected set; }
@@ -241,7 +240,6 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     [TargetRpc]
     public void SetAnimationBool_Networked(NetworkConnection conn, string id, bool value);
     public void SetAnimationBool(string trigger, bool val);
-    protected virtual bool ShouldNoticeGeneralCrime(Player player);
     protected virtual void SetUnsettled_30s(Player player);
     protected void SetUnsettled(float duration);
     [ServerRpc(RequireOwnership = false)]

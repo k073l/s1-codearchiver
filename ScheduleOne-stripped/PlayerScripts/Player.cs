@@ -103,7 +103,6 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public NetworkObject _003CCurrentVehicle_003Ek__BackingField;
     public VehicleEvent onEnterVehicle;
     public VehicleTransformEvent onExitVehicle;
-    public LandVehicle LastDrivenVehicle;
     [CompilerGenerated]
     [SyncVar]
     public NetworkObject _003CCurrentBed_003Ek__BackingField;
@@ -172,6 +171,7 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
         [ServerRpc(RunLocally = true)]
         set; }
     public VehicleSeat CurrentVehicleSeat { get; private set; }
+    public LandVehicle LastDrivenVehicle { get; private set; }
     public float TimeSinceVehicleExit { get; protected set; }
     public bool Crouched { get; private set; }
     public NetworkObject CurrentBed {[CompilerGenerated]
@@ -353,9 +353,14 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public virtual void ProcessImpactForce(Vector3 forcePoint, Vector3 forceDirection, float force);
     public virtual void OnDied();
     public virtual void OnRevived();
+    [ServerRpc(RunLocally = true)]
+    public void Arrest_Server();
     [ObserversRpc(RunLocally = true)]
-    public void Arrest();
-    public void Free();
+    private void Arrest_Client();
+    [ServerRpc(RunLocally = true)]
+    public void Free_Server();
+    [ObserversRpc(RunLocally = true)]
+    private void Free_Client();
     [ServerRpc(RunLocally = true)]
     public void SendPassOut();
     [ObserversRpc(RunLocally = true, ExcludeOwner = true)]
@@ -530,9 +535,18 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     private void RpcWriter___Observers_ReceiveImpact_427288424(Impact impact);
     public virtual void RpcLogic___ReceiveImpact_427288424(Impact impact);
     private void RpcReader___Observers_ReceiveImpact_427288424(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Observers_Arrest_2166136261();
-    public void RpcLogic___Arrest_2166136261();
-    private void RpcReader___Observers_Arrest_2166136261(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Server_Arrest_Server_2166136261();
+    public void RpcLogic___Arrest_Server_2166136261();
+    private void RpcReader___Server_Arrest_Server_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Observers_Arrest_Client_2166136261();
+    private void RpcLogic___Arrest_Client_2166136261();
+    private void RpcReader___Observers_Arrest_Client_2166136261(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Server_Free_Server_2166136261();
+    public void RpcLogic___Free_Server_2166136261();
+    private void RpcReader___Server_Free_Server_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Observers_Free_Client_2166136261();
+    private void RpcLogic___Free_Client_2166136261();
+    private void RpcReader___Observers_Free_Client_2166136261(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Server_SendPassOut_2166136261();
     public void RpcLogic___SendPassOut_2166136261();
     private void RpcReader___Server_SendPassOut_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);

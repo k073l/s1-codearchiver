@@ -69,7 +69,6 @@ public class PlayerCrimeData : NetworkBehaviour
     public float TimeSinceSighted;
     public Dictionary<Crime, int> Crimes;
     public bool BodySearchPending;
-    public float timeSinceLastShot;
     protected List<VehicleCollisionInstance> Collisions;
     private MusicTrack _lightCombatTrack;
     private MusicTrack _heavyCombatTrack;
@@ -122,7 +121,6 @@ public class PlayerCrimeData : NetworkBehaviour
     private void UpdateMusic();
     private void TimeoutPursuit();
     public float GetSearchTime();
-    public void ResetShotAccuracy();
     public float GetShotAccuracyMultiplier();
     public void RecordVehicleCollision(NPC victim);
     private void CheckNearestOfficer();

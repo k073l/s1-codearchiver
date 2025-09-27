@@ -233,7 +233,7 @@ public class Customer : NetworkBehaviour, ISaveable
     private void RecommendSupplier(Supplier supplier);
     private void RecommendCustomer(Customer friend);
     public virtual void CurrentContractEnded(EQuestState outcome);
-    public virtual float EvaluateDelivery(Contract contract, List<ItemInstance> providedItems, out float highestAddiction, out EDrugType mainTypeType, out int matchedProductCount);
+    public virtual float EvaluateDelivery(Contract contract, List<ItemInstance> providedItems, out float highestAddiction, out EDrugType mainTypeType, out int matchedProductCount, out float qualityDifference);
     [ServerRpc(RequireOwnership = false)]
     public void ChangeAddiction(float change);
     private void ConsumeProduct(ItemInstance item);
