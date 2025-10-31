@@ -33,6 +33,7 @@ public class CallInterface : Singleton<CallInterface>
     private Coroutine rolloutRoutine;
     private string highlight1Hex;
     public Action<PhoneCallData> CallCompleted;
+    public Action<PhoneCallData> CallStarted;
     public PhoneCallData ActiveCallData { get; private set; }
     public bool IsOpen { get; protected set; }
 

@@ -34,7 +34,6 @@ public class ModularSwitch : NetworkBehaviour
     private bool NetworkInitialize__LateScheduleOne_002EMisc_002EModularSwitchAssembly_002DCSharp_002Edll_Excuted;
     public override void Awake();
     public override void OnSpawnServer(NetworkConnection connection);
-    protected virtual void LateUpdate();
     public void Hovered();
     public void Interacted();
     [ServerRpc(RunLocally = true, RequireOwnership = false)]

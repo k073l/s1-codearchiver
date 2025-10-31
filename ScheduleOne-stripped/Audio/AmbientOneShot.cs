@@ -1,6 +1,7 @@
 using System;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
+using ScheduleOne.Map;
 using ScheduleOne.PlayerScripts;
 using UnityEngine;
 
@@ -24,6 +25,7 @@ public class AmbientOneShot : MonoBehaviour
     public EPlayTime PlayTime;
     public float MinDistance;
     public float MaxDistance;
+    public bool PlayWhileInSewer;
     private int timeSinceLastPlay;
     private void Start();
     private void OnDrawGizmosSelected();

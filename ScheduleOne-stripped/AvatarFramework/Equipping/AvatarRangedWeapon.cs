@@ -46,6 +46,7 @@ public class AvatarRangedWeapon : AvatarWeapon
     public bool IsRaised { get; protected set; }
 
     public override void Equip(Avatar _avatar);
+    public override void Unequip();
     public virtual void SetIsRaised(bool raised);
     private void Update();
     public override void ReceiveMessage(string message, object data);

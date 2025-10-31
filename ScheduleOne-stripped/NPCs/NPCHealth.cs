@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Runtime.CompilerServices;
 using FishNet;
 using FishNet.Object;
@@ -26,11 +27,13 @@ public class NPCHealth : NetworkBehaviour
     [Header("Settings")]
     public bool Invincible;
     public float MaxHealth;
+    public bool CanRevive;
     private NPC npc;
     public UnityEvent onDie;
     public UnityEvent onKnockedOut;
     public UnityEvent onDieOrKnockedOut;
     public UnityEvent onRevive;
+    public Action<float> onTakeDamage;
     private bool AfflictedWithLethalEffect;
     public SyncVar<float> syncVar____003CHealth_003Ek__BackingField;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002ENPCHealthAssembly_002DCSharp_002Edll_Excuted;
@@ -38,6 +41,7 @@ public class NPCHealth : NetworkBehaviour
     public float Health {[CompilerGenerated]
         get; [CompilerGenerated]
         private set; }
+    public float NormalizedHealth { get; }
     public bool IsDead { get; private set; }
     public bool IsKnockedOut { get; private set; }
     public int DaysPassedSinceDeath { get; private set; }
@@ -49,7 +53,7 @@ public class NPCHealth : NetworkBehaviour
     private void OnDestroy();
     public override void OnStartServer();
     public void Load(NPCHealthData healthData);
-    private void Update();
+    private IEnumerator AfflictWithLethalEffect();
     protected virtual void OnHourPass();
     public void SetAfflictedWithLethalEffect(bool value);
     public void SleepStart();
@@ -58,6 +62,7 @@ public class NPCHealth : NetworkBehaviour
     public virtual void Die();
     public virtual void KnockOut();
     public virtual void Revive();
+    public void RestoreHealth();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using EasyButtons;
 using FishNet;
 using FishNet.Connection;
 using FishNet.Managing;
@@ -13,8 +12,10 @@ using FishNet.Transporting;
 using ScheduleOne.AvatarFramework.Animation;
 using ScheduleOne.Combat;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Doors;
 using ScheduleOne.Dragging;
 using ScheduleOne.Management;
+using ScheduleOne.Map;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Skating;
 using ScheduleOne.Tools;
@@ -101,12 +102,14 @@ public class NPCMovement : NetworkBehaviour
     private float timeUntilNextStumble;
     private float timeSinceStumble;
     private Vector3 stumbleDirection;
-    private List<Vector3> desiredVelocityHistory;
+    private CircularQueue<Vector3> desiredVelocityHistory;
     private int desiredVelocityHistoryLength;
     private float velocityHistorySpacing;
     private float timeSinceLastVelocityHistoryRecord;
     private NavMeshPath agentCurrentPath;
+    private float agentCurrentSpeed;
     private Vector3[] agentCurrentPathCorners;
+    private Coroutine ladderClimbRoutine;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002ENPCMovementAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002ENPCMovementAssembly_002DCSharp_002Edll_Excuted;
     public bool HasDestination { get; protected set; }
@@ -117,6 +120,10 @@ public class NPCMovement : NetworkBehaviour
     public EStance Stance { get; protected set; }
     public float TimeSinceHitByCar { get; protected set; }
     public bool FaceDirectionInProgress => faceDirectionRoutine != null;
+    public bool IsOnLadder => (Object)(object)CurrentLadder != (Object)null;
+    public float CurrentLadderSpeed { get; protected set; }
+    public bool IsClimbingUpwards => CurrentLadderSpeed > 0.1f;
+    public Ladder CurrentLadder { get; protected set; }
     public Vector3 CurrentDestination { get; protected set; } = Vector3.zero;
     public NPCPathCache PathCache { get; private set; } = new NPCPathCache();
     public bool Disoriented { get; set; }
@@ -124,11 +131,9 @@ public class NPCMovement : NetworkBehaviour
     public override void Awake();
     private void Start();
     public override void OnStartClient();
-    public override void OnSpawnServer(NetworkConnection connection);
     protected virtual void Update();
-    protected virtual void LateUpdate();
+    public void SetAgentEnabled(bool enabled);
     private void UpdateRagdoll();
-    [Button]
     private void Stumble();
     private void UpdateDestination();
     protected virtual void FixedUpdate();
@@ -162,6 +167,7 @@ public class NPCMovement : NetworkBehaviour
     [ObserversRpc(RunLocally = true)]
     public void DeactivateRagdoll();
     private bool SmartSampleNavMesh(Vector3 position, out NavMeshHit hit, float minRadius = 1f, float maxRadius = 10f, int steps = 3);
+    public void SetDestination(Transform target);
     public void SetDestination(Vector3 pos);
     public void SetDestination(ITransitEntity entity);
     public void SetDestination(Vector3 pos, Action<WalkResult> callback = null, float maximumDistanceForSuccess = 1f, float cacheMaxDistSqr = 1f);
@@ -181,6 +187,8 @@ public class NPCMovement : NetworkBehaviour
     public bool CanGetTo(ITransitEntity entity, float proximityReq = 1f);
     public bool CanGetTo(Vector3 position, float proximityReq, out NavMeshPath path);
     private NavMeshPath GetPathTo(Vector3 position, float proximityReq = 1f);
+    public void TraverseLadder(Ladder ladder);
+    private void CancelTraverseLadder();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

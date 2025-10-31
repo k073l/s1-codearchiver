@@ -5,6 +5,7 @@ using FishNet.Connection;
 using FishNet.Object;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Levelling;
+using ScheduleOne.Networking;
 using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.Persistence.Loaders;
@@ -34,15 +35,12 @@ public class GraffitiManager : NetworkSingleton<GraffitiManager>, IBaseSaveable,
 
     public override void Awake();
     public override void OnStartServer();
-    private void Update();
     public virtual void InitializeSaveable();
     private void SprayPaintPurchaseCountChanged(float newValue);
     private void RankChange(FullRank oldRank, FullRank newRank);
     private void UpdateSprayPaintStockVariable();
     public virtual string GetSaveString();
     public void QueueSurfaceToReplicate(SpraySurface surface, NetworkConnection conn);
-    public void RemoveFromReplicationQueueIfPresent(SpraySurface surface);
-    private void ReplicateSurface();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

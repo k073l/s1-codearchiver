@@ -44,7 +44,6 @@ public class NPCManager : NetworkSingleton<NPCManager>, IBaseSaveable, ISaveable
     public override void Awake();
     protected override void Start();
     public virtual void InitializeSaveable();
-    public void Update();
     public static NPC GetNPC(string id);
     public static List<NPC> GetNPCsInRegion(EMapRegion region);
     public virtual string GetSaveString();

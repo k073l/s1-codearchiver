@@ -100,7 +100,7 @@ public class Customer : NetworkBehaviour, ISaveable
     public const float RELATIONSHIP_FOR_GUARANTEED_DEALER_RECOMMENDATION;
     public const float RELATIONSHIP_FOR_GUARANTEED_SUPPLIER_RECOMMENDATION;
     [CompilerGenerated]
-    [SyncVar]
+    [SyncVar( /*Could not decode attribute arguments.*/)]
     public float _003CCurrentAddiction_003Ek__BackingField;
     private ContractInfo offeredContractInfo;
     [CompilerGenerated]

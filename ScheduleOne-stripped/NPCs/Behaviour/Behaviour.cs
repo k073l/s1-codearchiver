@@ -34,38 +34,43 @@ public class Behaviour : NetworkBehaviour
     public NPC Npc => beh.Npc;
 
     public override void Awake();
-    public override void OnSpawnServer(NetworkConnection connection);
     protected override void OnValidate();
     public virtual void Enable();
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void SendEnable();
+    public void Enable_Networked(NetworkConnection conn);
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
-    public void Enable_Networked(NetworkConnection conn);
+    private void Enable_Client(NetworkConnection conn);
     public virtual void Disable();
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void SendDisable();
-    [ObserversRpc(RunLocally = true)]
-    [TargetRpc]
     public void Disable_Networked(NetworkConnection conn);
-    private void UpdateGameObjectName();
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
+    private void Disable_Client(NetworkConnection conn);
+    private void UpdateGameObjectName();
     public void Begin_Networked(NetworkConnection conn);
+    [ObserversRpc(RunLocally = true)]
+    [TargetRpc]
+    private void Begin_Client(NetworkConnection conn);
     protected virtual void Begin();
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void SendEnd();
-    [ObserversRpc(RunLocally = true)]
-    [TargetRpc]
     public void End_Networked(NetworkConnection conn);
+    [ObserversRpc(RunLocally = true)]
+    [TargetRpc]
+    private void End_Client(NetworkConnection conn);
     protected virtual void End();
-    [ObserversRpc(RunLocally = true)]
-    [TargetRpc]
     public void Pause_Networked(NetworkConnection conn);
-    protected virtual void Pause();
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
+    private void Pause_Client(NetworkConnection conn);
+    protected virtual void Pause();
     public void Resume_Networked(NetworkConnection conn);
+    [ObserversRpc(RunLocally = true)]
+    [TargetRpc]
+    private void Resume_Client(NetworkConnection conn);
     protected virtual void Resume();
     public virtual void BehaviourUpdate();
     public virtual void BehaviourLateUpdate();
@@ -80,41 +85,41 @@ public class Behaviour : NetworkBehaviour
     private void RpcWriter___Server_SendEnable_2166136261();
     public void RpcLogic___SendEnable_2166136261();
     private void RpcReader___Server_SendEnable_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Observers_Enable_Networked_328543758(NetworkConnection conn);
-    public void RpcLogic___Enable_Networked_328543758(NetworkConnection conn);
-    private void RpcReader___Observers_Enable_Networked_328543758(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Target_Enable_Networked_328543758(NetworkConnection conn);
-    private void RpcReader___Target_Enable_Networked_328543758(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Observers_Enable_Client_328543758(NetworkConnection conn);
+    private void RpcLogic___Enable_Client_328543758(NetworkConnection conn);
+    private void RpcReader___Observers_Enable_Client_328543758(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Target_Enable_Client_328543758(NetworkConnection conn);
+    private void RpcReader___Target_Enable_Client_328543758(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Server_SendDisable_2166136261();
     public void RpcLogic___SendDisable_2166136261();
     private void RpcReader___Server_SendDisable_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Observers_Disable_Networked_328543758(NetworkConnection conn);
-    public void RpcLogic___Disable_Networked_328543758(NetworkConnection conn);
-    private void RpcReader___Observers_Disable_Networked_328543758(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Target_Disable_Networked_328543758(NetworkConnection conn);
-    private void RpcReader___Target_Disable_Networked_328543758(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Observers_Begin_Networked_328543758(NetworkConnection conn);
-    public void RpcLogic___Begin_Networked_328543758(NetworkConnection conn);
-    private void RpcReader___Observers_Begin_Networked_328543758(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Target_Begin_Networked_328543758(NetworkConnection conn);
-    private void RpcReader___Target_Begin_Networked_328543758(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Observers_Disable_Client_328543758(NetworkConnection conn);
+    private void RpcLogic___Disable_Client_328543758(NetworkConnection conn);
+    private void RpcReader___Observers_Disable_Client_328543758(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Target_Disable_Client_328543758(NetworkConnection conn);
+    private void RpcReader___Target_Disable_Client_328543758(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Observers_Begin_Client_328543758(NetworkConnection conn);
+    private void RpcLogic___Begin_Client_328543758(NetworkConnection conn);
+    private void RpcReader___Observers_Begin_Client_328543758(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Target_Begin_Client_328543758(NetworkConnection conn);
+    private void RpcReader___Target_Begin_Client_328543758(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Server_SendEnd_2166136261();
     public void RpcLogic___SendEnd_2166136261();
     private void RpcReader___Server_SendEnd_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Observers_End_Networked_328543758(NetworkConnection conn);
-    public void RpcLogic___End_Networked_328543758(NetworkConnection conn);
-    private void RpcReader___Observers_End_Networked_328543758(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Target_End_Networked_328543758(NetworkConnection conn);
-    private void RpcReader___Target_End_Networked_328543758(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Observers_Pause_Networked_328543758(NetworkConnection conn);
-    public void RpcLogic___Pause_Networked_328543758(NetworkConnection conn);
-    private void RpcReader___Observers_Pause_Networked_328543758(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Target_Pause_Networked_328543758(NetworkConnection conn);
-    private void RpcReader___Target_Pause_Networked_328543758(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Observers_Resume_Networked_328543758(NetworkConnection conn);
-    public void RpcLogic___Resume_Networked_328543758(NetworkConnection conn);
-    private void RpcReader___Observers_Resume_Networked_328543758(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Target_Resume_Networked_328543758(NetworkConnection conn);
-    private void RpcReader___Target_Resume_Networked_328543758(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Observers_End_Client_328543758(NetworkConnection conn);
+    private void RpcLogic___End_Client_328543758(NetworkConnection conn);
+    private void RpcReader___Observers_End_Client_328543758(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Target_End_Client_328543758(NetworkConnection conn);
+    private void RpcReader___Target_End_Client_328543758(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Observers_Pause_Client_328543758(NetworkConnection conn);
+    private void RpcLogic___Pause_Client_328543758(NetworkConnection conn);
+    private void RpcReader___Observers_Pause_Client_328543758(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Target_Pause_Client_328543758(NetworkConnection conn);
+    private void RpcReader___Target_Pause_Client_328543758(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Observers_Resume_Client_328543758(NetworkConnection conn);
+    private void RpcLogic___Resume_Client_328543758(NetworkConnection conn);
+    private void RpcReader___Observers_Resume_Client_328543758(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Target_Resume_Client_328543758(NetworkConnection conn);
+    private void RpcReader___Target_Resume_Client_328543758(PooledReader PooledReader0, Channel channel);
     protected virtual void Awake_UserLogic_ScheduleOne_002ENPCs_002EBehaviour_002EBehaviour_Assembly_002DCSharp_002Edll();
 }

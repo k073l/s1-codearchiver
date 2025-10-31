@@ -17,6 +17,7 @@ public class CompassManager : Singleton<CompassManager>
 
     public class Element
     {
+        public bool LastState;
         public bool Visible;
         public RectTransform Rect;
         public CanvasGroup Group;

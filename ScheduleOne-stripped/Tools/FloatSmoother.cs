@@ -21,12 +21,10 @@ public class FloatSmoother
     private float SmoothingSpeed;
     private List<Override> overrides;
     private Override activeOverride;
-    private int activeCount;
     public float CurrentValue { get; private set; }
     public float Multiplier { get; private set; } = 1f;
 
     public void Initialize();
-    public void Destroy();
     public void SetDefault(float value);
     public void SetMultiplier(float value);
     public void SetSmoothingSpeed(float value);

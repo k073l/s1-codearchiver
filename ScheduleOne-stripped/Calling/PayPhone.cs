@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using ScheduleOne.Audio;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Interaction;
@@ -12,17 +14,23 @@ public class PayPhone : MonoBehaviour
 {
     public const float RING_INTERVAL;
     public const float RING_RANGE;
+    public PhoneCallData QueuedCall;
+    public PhoneCallData ActiveCall;
     public BlinkingLight Light;
     public AudioSourceController RingSound;
     public AudioSourceController AnswerSound;
     public InteractableObject IntObj;
     public Transform CameraPosition;
-    private float timeSinceLastRing;
+    private float lastRingTime;
     private const float ringRangeSquared;
-    public PhoneCallData QueuedCall => Singleton<CallManager>.Instance.QueuedCallData;
-    public PhoneCallData ActiveCall => Singleton<CallInterface>.Instance.ActiveCallData;
-
-    public void FixedUpdate();
+    private Coroutine periodicRingHandle;
+    private void Start();
+    private void OnDestroy();
+    private void OnCallStarted(PhoneCallData data);
+    private void OnCallCompleted(PhoneCallData data);
+    private void OnCallQueued(PhoneCallData data);
+    private void UpdateCallState();
+    private IEnumerator PeriodicRing();
     public void Hovered();
     public void Interacted();
     private bool CanInteract();

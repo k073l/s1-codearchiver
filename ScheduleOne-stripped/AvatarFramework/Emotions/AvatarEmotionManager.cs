@@ -26,7 +26,6 @@ public class AvatarEmotionManager : MonoBehaviour
     public bool IsSwitchingEmotion => emotionLerpRoutine != null;
 
     private void Start();
-    private void Update();
     public void UpdateEmotion();
     public void ConfigureNeutralFace(Texture2D faceTex, float restingBrowHeight, float restingBrowAngle, Eye.EyeLidConfiguration leftEyelidConfig, Eye.EyeLidConfiguration rightEyelidConfig);
     public virtual void AddEmotionOverride(string emotionName, string overrideLabel, float duration = 0f, int priority = 0);

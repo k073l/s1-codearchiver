@@ -31,14 +31,13 @@ public class EntityVisibility : NetworkBehaviour
     private List<RaycastHit> hits;
     private bool NetworkInitialize___EarlyScheduleOne_002EVision_002EEntityVisibilityAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EVision_002EEntityVisibilityAssembly_002DCSharp_002Edll_Excuted;
-    public float CurrentVisibility { get; protected set; }
-    public float Suspiciousness { get; protected set; }
+    public virtual float CurrentVisibility => CalculateVisibility();
+    public virtual float Suspiciousness => 0f;
     public List<EntityVisualState> VisualStates { get; protected set; } = new List<EntityVisualState>();
     public Vector3 CenterPoint { get; }
 
     public override void Awake();
     public override void OnStartClient();
-    protected virtual void FixedUpdate();
     private float CalculateVisibility();
     public VisibilityAttribute GetAttribute(string name);
     private void UpdateEnvironmentalVisibilityAttribute();

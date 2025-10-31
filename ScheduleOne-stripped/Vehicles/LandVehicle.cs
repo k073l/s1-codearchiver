@@ -36,6 +36,7 @@ using ScheduleOne.Tools;
 using ScheduleOne.UI;
 using ScheduleOne.Vehicles.AI;
 using ScheduleOne.Vehicles.Modification;
+using ScheduleOne.Vehicles.Sound;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -97,6 +98,8 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     public NavmeshCut NavmeshCut;
     public VehicleHumanoidCollider HumanoidColliderContainer;
     public POI POI;
+    public List<VehicleSound> Sounds;
+    public List<PlayerPusher> Pushers;
     [SerializeField]
     protected Transform centerOfMass;
     [SerializeField]
@@ -146,7 +149,8 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     [Header("Storage settings")]
     public StorageEntity Storage;
     private VehicleSeat localPlayerSeat;
-    private CircularQueue<float> previousSpeeds;
+    private bool _isOccupied;
+    private RollingAverage<float> previousSpeeds;
     private const int previousSpeedsSampleSize;
     [SyncVar( /*Could not decode attribute arguments.*/)]
     public float currentSteerAngle;
@@ -170,6 +174,7 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     public UnityEvent onVehicleStop;
     public UnityEvent onHandbrakeApplied;
     public UnityEvent<Collision> onCollision;
+    public UnityEvent<bool> onOccupy;
     public SyncVar<float> syncVar___currentSteerAngle;
     public SyncVar<bool> syncVar____003CbrakesApplied_003Ek__BackingField;
     public SyncVar<bool> syncVar____003CisReversing_003Ek__BackingField;
@@ -181,7 +186,6 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     public bool IsPlayerOwned { get; protected set; }
     public bool IsVisible { get; protected set; } = true;
     public Guid GUID { get; protected set; }
-    public float DistanceToLocalCamera { get; private set; }
     public Vector3 boundingBoxDimensions => new Vector3(boundingBox.size.x * ((Component)boundingBox).transform.localScale.x, boundingBox.size.y * ((Component)boundingBox).transform.localScale.y, boundingBox.size.z * ((Component)boundingBox).transform.localScale.z);
     public Transform driverEntryPoint => exitPoints[0];
     public Rigidbody Rb => rb;
@@ -193,7 +197,7 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     public int CurrentPlayerOccupancy => Seats.Count(default);
     public bool localPlayerIsDriver { get; protected set; }
     public bool localPlayerIsInVehicle { get; protected set; }
-    public bool isOccupied { get; private set; }
+    public bool isOccupied { get; set; }
     public Player DriverPlayer { get; }
     public List<Player> OccupantPlayers => (
         from s in Seats
@@ -244,7 +248,6 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     protected virtual void Update();
     private void OnDrawGizmos();
     protected virtual void FixedUpdate();
-    protected virtual void OnMinPass();
     protected virtual void LateUpdate();
     private void OnCollisionEnter(Collision collision);
     [ServerRpc(RequireOwnership = false)]
@@ -279,6 +282,8 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     private void SetSeatOccupant_Server(int seatIndex, NetworkConnection conn);
     private void Hovered();
     private void Interacted();
+    private void StartVehicle();
+    private void StopVehicle();
     private void EnterVehicle();
     public void ExitVehicle();
     private void EndJustExited();
@@ -307,6 +312,10 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     public void ExitPark_Networked(NetworkConnection conn, bool moveToExitPoint = true);
     public void ExitPark(bool moveToExitPoint = true);
     public void SetVisible(bool vis);
+    public void RegisterSound(VehicleSound sound);
+    public void DeregisterSound(VehicleSound sound);
+    public void RegisterPusher(PlayerPusher pusher);
+    public void DeregisterPusher(PlayerPusher pusher);
     public List<ItemInstance> GetContents();
     public virtual VehicleData GetVehicleData();
     public string GetSaveString();

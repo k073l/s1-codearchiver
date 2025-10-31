@@ -7,8 +7,9 @@ using UnityEngine;
 namespace ScheduleOne.Calling;
 public class CallManager : Singleton<CallManager>
 {
-    public PhoneCallData QueuedCallData { get; private set; }
+    private PhoneCallData QueuedCallData { get; set; }
 
+    public event Action<PhoneCallData> OnCallQueued;
     protected override void Start();
     protected override void OnDestroy();
     public void QueueCall(PhoneCallData data);

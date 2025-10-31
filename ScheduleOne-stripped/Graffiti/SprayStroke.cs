@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 namespace ScheduleOne.Graffiti;
@@ -17,4 +18,6 @@ public class SprayStroke
     public SprayStroke();
     public List<PixelData> GetPixelsFromStroke();
     public static List<SprayStroke> GetStrokesFromPixels(List<UShort2> coords, ESprayColor color, SpraySurface surface);
+    public void Serialize(BinaryWriter writer);
+    public static SprayStroke Deserialize(BinaryReader reader);
 }

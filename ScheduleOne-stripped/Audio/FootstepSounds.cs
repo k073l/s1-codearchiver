@@ -26,14 +26,16 @@ public class FootstepSounds : MonoBehaviour
     }
 
     public const float COOLDOWN_TIME;
+    [Range(0f, 4f)]
+    public float BaseVolumeMultiplier;
     public List<AudioSourceController> sources;
     public List<FootstepSoundGroup> soundGroups;
     private Dictionary<EMaterialType, FootstepSoundGroup> materialFootstepSounds;
     private float lastStepTime;
     public float VolumeMultiplier { get; set; } = 1f;
 
+    private void Awake();
     private void Start();
-    private void Update();
     public void Step(EMaterialType materialType, float hardness);
     public AudioSourceController GetFreeSource();
 }

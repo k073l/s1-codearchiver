@@ -35,6 +35,7 @@ public class AvatarLookController : MonoBehaviour
     private Vector3 overriddenLookTarget;
     private int overrideLookPriority;
     private bool overrideRotateBody;
+    private bool blockLookOverrides;
     private Vector3 lastFrameLookOriginPos;
     private Vector3 lastFrameLookOriginForward;
     public Transform ForceLookTarget;
@@ -51,6 +52,7 @@ public class AvatarLookController : MonoBehaviour
     private void UpdateNearestPlayer();
     private void LateUpdate();
     public unsafe void OverrideLookTarget(Vector3 targetPosition, int priority, bool rotateBody = false);
+    public void BlockLookTargetOverrides();
     private void LookForward();
     private void LerpTargetTransform();
     private Player GetNearestPlayer();

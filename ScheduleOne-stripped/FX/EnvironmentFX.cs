@@ -17,13 +17,6 @@ public class EnvironmentFX : Singleton<EnvironmentFX>
     public VolumetricFog VolumetricFog;
     public Light SunLight;
     public Light MoonLight;
-    [Header("Fog")]
-    [SerializeField]
-    protected Gradient fogColorGradient;
-    [SerializeField]
-    protected AnimationCurve fogEndDistanceCurve;
-    [SerializeField]
-    protected float fogEndDistanceMultiplier;
     [Header("Height Fog")]
     [SerializeField]
     protected Gradient HeightFogColor;
@@ -40,6 +33,9 @@ public class EnvironmentFX : Singleton<EnvironmentFX>
     protected AnimationCurve VolumetricFogIntensityCurve;
     [SerializeField]
     protected float VolumetricFogIntensityMultiplier;
+    [Header("Fog")]
+    [SerializeField]
+    private float fogEndDistanceMultiplier;
     [Header("God rays")]
     [SerializeField]
     protected AnimationCurve godRayIntensityCurve;
@@ -68,6 +64,7 @@ public class EnvironmentFX : Singleton<EnvironmentFX>
     private bool started;
     public FloatSmoother FogEndDistanceController;
     public float normalizedEnvironmentalBrightness => environmentalBrightnessCurve.Evaluate(((float)NetworkSingleton<TimeManager>.Instance.DailyMinTotal + NetworkSingleton<TimeManager>.Instance.TimeOnCurrentMinute / 1f) / 1440f);
+    public float FogEndDistanceMultiplier => fogEndDistanceMultiplier * FogEndDistanceController.CurrentValue;
 
     protected override void Start();
     private void Update();

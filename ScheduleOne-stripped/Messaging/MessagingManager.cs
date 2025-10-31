@@ -10,6 +10,7 @@ using FishNet.Serializing;
 using FishNet.Serializing.Generated;
 using FishNet.Transporting;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Networking;
 using ScheduleOne.NPCs;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.PlayerScripts;

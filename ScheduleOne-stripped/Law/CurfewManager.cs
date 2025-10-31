@@ -17,8 +17,13 @@ using UnityEngine.Events;
 namespace ScheduleOne.Law;
 public class CurfewManager : NetworkSingleton<CurfewManager>
 {
+    private const string NORMAL_MESSAGE;
+    private const string CURFEW_MESSAGE;
+    private const string WARNING_MESSAGE;
+    public const int HOUR_BEFORE_CURFEW;
     public const int WARNING_TIME;
     public const int CURFEW_START_TIME;
+    public const int HARD_CURFEW_START_TIME;
     public const int CURFEW_END_TIME;
     [Header("References")]
     public VMSBoard[] VMSBoards;
@@ -28,12 +33,14 @@ public class CurfewManager : NetworkSingleton<CurfewManager>
     public UnityEvent onCurfewDisabled;
     public UnityEvent onCurfewHint;
     public UnityEvent onCurfewWarning;
-    private bool warningPlayed;
+    public UnityEvent onCurfewStart;
+    public UnityEvent onCurfewHardStart;
+    public UnityEvent onCurfewEnd;
     private bool NetworkInitialize___EarlyScheduleOne_002ELaw_002ECurfewManagerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ELaw_002ECurfewManagerAssembly_002DCSharp_002Edll_Excuted;
     public bool IsEnabled { get; protected set; }
     public bool IsCurrentlyActive { get; protected set; }
-    public bool IsCurrentlyActiveWithTolerance { get; }
+    public bool IsHardCurfewActive { get; protected set; }
 
     protected override void Start();
     public override void OnSpawnServer(NetworkConnection connection);

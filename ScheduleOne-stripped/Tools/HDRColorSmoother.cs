@@ -24,12 +24,11 @@ public class HDRColorSmoother
     [SerializeField]
     private List<Override> overrides;
     private Override activeOverride;
-    private int activeCount;
+    private bool isBeingUpdated;
     public Color CurrentValue { get; private set; } = Color.white;
     public float Multiplier { get; private set; } = 1f;
 
     public void Initialize();
-    public void Destroy();
     public void SetDefault(Color value);
     public void SetMultiplier(float value);
     public void AddOverride(Color value, int priority, string label);

@@ -11,11 +11,12 @@ using ScheduleOne.Vehicles;
 using UnityEngine;
 
 namespace ScheduleOne.Map;
-public class OceanCollider : MonoBehaviour
+public class WaterCollider : MonoBehaviour
 {
     private bool localPlayerBeingWarped;
     private List<LandVehicle> warpedVehicles;
     public AudioSourceController SplashSound;
+    public Transform OverrideWarpPoint;
     private void OnTriggerEnter(Collider other);
     private IEnumerator WarpPlayer();
     private IEnumerator WarpVehicle(LandVehicle veh);

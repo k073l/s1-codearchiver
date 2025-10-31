@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using ScheduleOne.DevUtilities;
@@ -20,9 +21,8 @@ public class StorageVisualizer : MonoBehaviour
     protected int totalFootprintCapacity;
     protected Dictionary<StorableItemInstance, List<StoredItem>> activeStoredItems;
     public bool BlockRefreshes;
-    protected bool updateVisuals;
+    private bool isUpdatingVisuals;
     protected virtual void Awake();
-    protected virtual void Update();
     public void AddSlot(ItemSlot slot, bool update = false);
     public Dictionary<StorableItemInstance, int> GetVisualRepresentation();
     public virtual void RefreshVisuals();

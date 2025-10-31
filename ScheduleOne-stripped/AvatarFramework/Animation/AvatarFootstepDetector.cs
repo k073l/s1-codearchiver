@@ -7,7 +7,6 @@ using UnityEngine.Events;
 namespace ScheduleOne.AvatarFramework.Animation;
 public class AvatarFootstepDetector : MonoBehaviour
 {
-    public const float MAX_DETECTION_RANGE;
     public const float GROUND_DETECTION_RANGE;
     public Avatar Avatar;
     public Transform ReferencePoint;
@@ -15,6 +14,7 @@ public class AvatarFootstepDetector : MonoBehaviour
     public Transform RightBone;
     public float StepThreshold;
     public LayerMask GroundDetectionMask;
+    public float MaxDetectionRange;
     private bool leftDown;
     private bool rightDown;
     public UnityEvent<EMaterialType, float> onStep;

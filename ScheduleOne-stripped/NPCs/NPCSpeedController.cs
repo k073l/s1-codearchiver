@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ScheduleOne.NPCs;
 public class NPCSpeedController : MonoBehaviour
@@ -17,17 +18,19 @@ public class NPCSpeedController : MonoBehaviour
     [Header("Settings")]
     [Range(0f, 1f)]
     public float DefaultWalkSpeed;
-    public float SpeedMultiplier;
+    [SerializeField]
+    [FormerlySerializedAs("SpeedMultiplier")]
+    private float _SpeedMultiplier;
     [Header("References")]
     public NPCMovement Movement;
     protected List<SpeedControl> speedControlStack;
-    [Header("Debug")]
     public SpeedControl ActiveSpeedControl;
+    public float SpeedMultiplier { get; set; }
+
     private void Awake();
-    private void FixedUpdate();
-    private SpeedControl GetHighestPriorityControl();
     public void AddSpeedControl(SpeedControl control);
     public SpeedControl GetSpeedControl(string id);
     public bool DoesSpeedControlExist(string id);
     public void RemoveSpeedControl(string id);
+    private void UpdateActiveSpeedControl();
 }

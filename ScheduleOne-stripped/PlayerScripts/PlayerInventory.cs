@@ -49,6 +49,7 @@ public class PlayerInventory : PlayerSingleton<PlayerInventory>
     private ItemSlot discardSlot;
     [Header("Item Variables")]
     public List<ItemVariable> ItemVariables;
+    private int _equippedSlotIndex;
     public Action<bool> onInventoryStateChanged;
     public Action<int> onEquippedSlotChanged;
     private int PriorEquippedSlotIndex;
@@ -61,7 +62,7 @@ public class PlayerInventory : PlayerSingleton<PlayerInventory>
     public int TOTAL_SLOT_COUNT => 9 + (ManagementSlotEnabled ? 1 : 0);
     public CashSlot cashSlot { get; private set; }
     public CashInstance cashInstance { get; protected set; }
-    public int EquippedSlotIndex { get; protected set; } = -1;
+    public int EquippedSlotIndex { get; set; }
     public bool HotbarEnabled { get; protected set; } = true;
     public bool EquippingEnabled { get; protected set; } = true;
     public Equippable equippable { get; protected set; }

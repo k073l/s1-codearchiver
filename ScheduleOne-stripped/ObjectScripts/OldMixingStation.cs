@@ -95,7 +95,7 @@ public class OldMixingStation : GridItem, IUsable, IItemSlotOwner
     public void Interacted();
     [ServerRpc(RunLocally = true, RequireOwnership = false)]
     public void SetStoredInstance(NetworkConnection conn, int itemSlotIndex, ItemInstance instance);
-    [TargetRpc(RunLocally = true)]
+    [TargetRpc]
     [ObserversRpc(RunLocally = true)]
     private void SetStoredInstance_Internal(NetworkConnection conn, int itemSlotIndex, ItemInstance instance);
     [ServerRpc(RunLocally = true, RequireOwnership = false)]
@@ -104,13 +104,13 @@ public class OldMixingStation : GridItem, IUsable, IItemSlotOwner
     private void SetItemSlotQuantity_Internal(int itemSlotIndex, int quantity);
     [ServerRpc(RunLocally = true, RequireOwnership = false)]
     public void SetSlotLocked(NetworkConnection conn, int itemSlotIndex, bool locked, NetworkObject lockOwner, string lockReason);
-    [TargetRpc(RunLocally = true)]
+    [TargetRpc]
     [ObserversRpc(RunLocally = true)]
     private void SetSlotLocked_Internal(NetworkConnection conn, int itemSlotIndex, bool locked, NetworkObject lockOwner, string lockReason);
     [ServerRpc(RunLocally = true, RequireOwnership = false)]
     public void SetSlotFilter(NetworkConnection conn, int itemSlotIndex, SlotFilter filter);
     [ObserversRpc(RunLocally = true)]
-    [TargetRpc(RunLocally = true)]
+    [TargetRpc]
     private void SetSlotFilter_Internal(NetworkConnection conn, int itemSlotIndex, SlotFilter filter);
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void SetPlayerUser(NetworkObject playerObject);

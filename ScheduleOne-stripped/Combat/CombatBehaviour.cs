@@ -31,7 +31,6 @@ public class CombatBehaviour : Behaviour
     public bool DEBUG;
     [Header("General Setttings")]
     public float GiveUpRange;
-    public float GiveUpTime;
     public int GiveUpAfterSuccessfulHits;
     public bool PlayAngryVO;
     [Header("Movement settings")]
@@ -60,6 +59,7 @@ public class CombatBehaviour : Behaviour
     protected Vector3 currentSearchDestination;
     protected bool hasSearchDestination;
     private float nextAngryVO;
+    public Action onSuccessfulHit;
     private bool NetworkInitialize___EarlyScheduleOne_002ECombat_002ECombatBehaviourAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ECombat_002ECombatBehaviourAssembly_002DCSharp_002Edll_Excuted;
     public ICombatTargetable Target { get; protected set; }
@@ -84,7 +84,6 @@ public class CombatBehaviour : Behaviour
     protected virtual void StartCombat();
     protected virtual void EndCombat();
     public override void BehaviourUpdate();
-    protected virtual void FixedUpdate();
     protected void UpdateTimeout();
     protected virtual void UpdateLookAt();
     protected void SetMovementSpeed(float speed, string label = "combat", int priority = 5);

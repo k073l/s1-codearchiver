@@ -8,6 +8,7 @@ namespace ScheduleOne.ItemFramework;
 [Serializable]
 public abstract class ItemInstance
 {
+    public const int APPROXIMATE_BYTE_SIZE;
     [CodegenExclude]
     protected ItemDefinition definition;
     public string ID;

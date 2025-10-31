@@ -11,7 +11,7 @@ public class VehicleColors : Singleton<VehicleColors>
     {
         public EVehicleColor color;
         public string colorName;
-        public Material material;
+        public Color MaterialColor;
         public Color32 UIColor;
     }
 

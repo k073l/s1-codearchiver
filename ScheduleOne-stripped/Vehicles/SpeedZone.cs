@@ -8,8 +8,8 @@ public class SpeedZone : MonoBehaviour
     public static List<SpeedZone> speedZones;
     public BoxCollider col;
     public float speed;
+    private static List<SpeedZone> query;
     public virtual void Awake();
-    public static List<SpeedZone> GetSpeedZones(Vector3 point);
+    public static IEnumerable<SpeedZone> GetSpeedZones(Vector3 point);
     private void OnDrawGizmos();
-    private void OnDrawGizmosSelected();
 }

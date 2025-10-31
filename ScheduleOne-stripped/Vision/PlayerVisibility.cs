@@ -10,9 +10,12 @@ public class PlayerVisibility : EntityVisibility
     private Player player;
     private bool NetworkInitialize___EarlyScheduleOne_002EVision_002EPlayerVisibilityAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EVision_002EPlayerVisibilityAssembly_002DCSharp_002Edll_Excuted;
+    public override float Suspiciousness { get; }
+
     public override void Awake();
-    protected override void FixedUpdate();
-    private void UpdateSuspiciousness();
+    private void OnDestroy();
+    private void AddFlag_DisobeyingCurfew();
+    private void RemoveFlag_DisobeyingCurfew();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

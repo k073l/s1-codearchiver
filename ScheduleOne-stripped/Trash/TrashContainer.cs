@@ -7,6 +7,7 @@ using FishNet.Serializing;
 using FishNet.Serializing.Generated;
 using FishNet.Transporting;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Networking;
 using ScheduleOne.Persistence;
 using ScheduleOne.Variables;
 using UnityEngine;

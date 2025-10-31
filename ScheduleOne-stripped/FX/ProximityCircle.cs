@@ -7,6 +7,8 @@ public class ProximityCircle : MonoBehaviour
     [Header("References")]
     public DecalProjector Circle;
     private bool enabledThisFrame;
+    private Material materialInstance;
+    private void Awake();
     private void LateUpdate();
     public void SetRadius(float rad);
     public void SetAlpha(float alpha);

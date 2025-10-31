@@ -12,5 +12,6 @@ public enum EMaterialType
     Metal,
     Plastic,
     Rock,
-    Fabric
+    Fabric,
+    Water
 }

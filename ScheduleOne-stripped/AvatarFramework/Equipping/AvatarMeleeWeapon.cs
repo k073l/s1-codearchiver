@@ -24,7 +24,6 @@ public class AvatarMeleeWeapon : AvatarWeapon
         public AudioClip[] HitClips;
     }
 
-    public const float GruntChance;
     [Header("References")]
     public AudioSourceController AttackSound;
     public AudioSourceController HitSound;
@@ -35,6 +34,7 @@ public class AvatarMeleeWeapon : AvatarWeapon
     public float Damage;
     public float ImpactForce;
     public MeleeAttack[] Attacks;
+    public float GruntChance;
     private Coroutine attackRoutine;
     public override void Unequip();
     public override bool IsReadyToAttack();
