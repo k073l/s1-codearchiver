@@ -48,7 +48,6 @@ public class NPCInventory : NetworkBehaviour, IItemSlotOwner
     public int RandomCashMax;
     [Header("Random items")]
     public bool RandomItems;
-    public StorableItemDefinition[] RandomItemDefinitions;
     public RandomInventoryItem[] RandomInventoryItems;
     public int RandomItemMin;
     public int RandomItemMax;

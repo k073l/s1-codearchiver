@@ -89,7 +89,7 @@ public class CombatBehaviour : Behaviour
     protected void SetMovementSpeed(float speed, string label = "combat", int priority = 5);
     private void EnsureRangedWeaponRoutineIsRunning();
     protected Vector3 GetPredictedFutureTargetPosition(float lead_Min = 0f, float lead_Max = 2f);
-    protected unsafe override void SetDestination(Vector3 position, bool teleportIfFail = true);
+    protected unsafe override void SetDestination(Vector3 position, bool teleportIfFail = true, float successThreshold = 1f);
     [ObserversRpc(RunLocally = true)]
     protected virtual void SetWeapon(string weaponPath);
     protected virtual void OnCurrentWeaponChanged(AvatarWeapon weapon);
@@ -107,7 +107,7 @@ public class CombatBehaviour : Behaviour
     private void SetWeaponRaised(bool raised);
     protected void CheckTargetVisibility();
     public void MarkPlayerVisible();
-    protected bool IsTargetVisible();
+    protected bool IsTargetVisibleThisFrame();
     protected void ProcessVisionEvent(VisionEventReceipt visionEventReceipt);
     protected virtual void TargetSpotted();
     [ServerRpc(RequireOwnership = false)]
@@ -119,7 +119,7 @@ public class CombatBehaviour : Behaviour
     private Vector3 GetNextSearchLocation();
     protected virtual bool IsTargetValid();
     private void RepositionToTargetMeleeRange(Vector3 origin);
-    private Vector3 GetRandomReachablePointNear(Vector3 point, float randomRadius, float minDistance = 0f);
+    private unsafe bool GetRandomReachablePointNear(Vector3 originPoint, float randomRadius, out Vector3 randomPoint, float minDistance = 0f);
     protected float GetMinTargetDistance();
     protected float GetMaxTargetDistance();
     protected bool IsTargetInRange(Vector3 origin = default(Vector3));

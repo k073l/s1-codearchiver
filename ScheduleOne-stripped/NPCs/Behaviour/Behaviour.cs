@@ -77,7 +77,7 @@ public class Behaviour : NetworkBehaviour
     public virtual void ActiveMinPass();
     protected void SetPriority(int p);
     protected void SetDestination(ITransitEntity transitEntity, bool teleportIfFail = true);
-    protected unsafe virtual void SetDestination(Vector3 position, bool teleportIfFail = true);
+    protected unsafe virtual void SetDestination(Vector3 position, bool teleportIfFail = true, float successThreshold = 1f);
     protected virtual void WalkCallback(NPCMovement.WalkResult result);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
