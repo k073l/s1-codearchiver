@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.UI;
@@ -32,7 +33,6 @@ public class AudioSourceController : MonoBehaviour
 
     private void Awake();
     private IEnumerator Start();
-    private void DoPauseStuff();
     private void OnDestroy();
     private void OnValidate();
     private void Pause();
