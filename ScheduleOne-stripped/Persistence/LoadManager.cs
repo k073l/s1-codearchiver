@@ -13,6 +13,7 @@ using FishNet.Transporting.Yak;
 using FishySteamworks;
 using Pathfinding;
 using ScheduleOne.Audio;
+using ScheduleOne.AvatarFramework.Animation;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Economy;
 using ScheduleOne.Money;

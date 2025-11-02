@@ -13,6 +13,7 @@ public class AvatarLookController : MonoBehaviour
     public const float LookAtPlayerRange;
     public const float EyeContractRange;
     public const float AimIKRange;
+    public static Transform TempContainer;
     public bool DEBUG;
     [Header("References")]
     public AimIK Aim;
