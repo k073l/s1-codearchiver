@@ -4,138 +4,127 @@ using System.Collections.Generic;
 using System.Linq;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.FX;
+using ScheduleOne.Map;
+using ScheduleOne.Tools;
 using ScheduleOne.UI;
 using ScheduleOne.Vehicles;
 using ScheduleOne.Vision;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace ScheduleOne.PlayerScripts;
 public class PlayerMovement : PlayerSingleton<PlayerMovement>
 {
-    public class MovementEvent
-    {
-        public List<Action> actions;
-        public Vector3 LastUpdatedDistance;
-        public void Update(Vector3 newPosition);
-    }
-
-    public const float DEV_SPRINT_MULTIPLIER;
-    public const float GROUNDED_THRESHOLD;
-    public const float SLOPE_THRESHOLD;
-    public static float WalkSpeed;
-    public static float SprintMultiplier;
+    public const float DevSprintMultiplier;
+    public const float WalkSpeed;
     public static float StaticMoveSpeedMultiplier;
-    public const float StaminaRestoreDelay;
-    public static float JumpMultiplier;
-    public static float ControllerRadius;
-    public static float StandingControllerHeight;
-    public static float CrouchHeightMultiplier;
-    public static float CrouchTime;
+    public const float InputSensitivity;
+    public const float InputDeadZone;
+    public const float SlipperyMovementMultiplier;
+    public const float GroundedThreshold;
+    public const float SlopeThreshold;
+    public const float SlopeForce;
+    public const float SlopeForceRayLength;
+    public const float ControllerRadius;
+    public const float DefaultCharacterControllerHeight;
+    public const float CrouchHeightMultiplier;
+    public const float CrouchTime;
+    public const float CrouchSpeedMultipler;
+    public const float CrouchedVigIntensity;
+    public const float CrouchedVigSmoothness;
+    public const bool SprintingRequiresStamina;
+    public const float SprintChangeRate;
+    public const float SprintMultiplier;
     public const float StaminaDrainRate;
     public const float StaminaRestoreRate;
+    public const float StaminaRestoreDelay;
     public static float StaminaReserveMax;
-    public const float SprintChangeRate;
+    public const float JumpForce;
+    public static float JumpMultiplier;
+    public static float GravityMultiplier;
+    public const float BaseGravityMultiplier;
+    public const float VerticalLadderSpeedMultiplier;
+    public const float LateralLadderSpeedMultiplier;
+    public const float LadderTopBuffer;
+    public const float LadderPitchAdjustment;
+    public const float DismountForce;
+    public const float DismountForceDuration;
     [Header("References")]
     public Player Player;
     public CharacterController Controller;
-    [Header("Move settings")]
-    [SerializeField]
-    protected float sensitivity;
-    [SerializeField]
-    protected float dead;
-    public bool canMove;
-    public bool canJump;
-    public bool SprintingRequiresStamina;
-    public float MoveSpeedMultiplier;
-    public float SlipperyMovementMultiplier;
-    public bool ForceSprint;
     [Header("Jump/fall settings")]
-    [SerializeField]
-    protected float jumpForce;
-    [SerializeField]
-    protected float gravityMultiplier;
-    [SerializeField]
-    protected LayerMask groundDetectionMask;
-    [Header("Slope Settings")]
-    [SerializeField]
-    protected float slopeForce;
-    [SerializeField]
-    protected float slopeForceRayLength;
-    [Header("Crouch Settings")]
-    [SerializeField]
-    protected float crouchSpeedMultipler;
-    [SerializeField]
-    protected float Crouched_VigIntensity;
-    [SerializeField]
-    protected float Crouched_VigSmoothness;
-    [Header("Visibility Points")]
-    [SerializeField]
-    protected List<Transform> visibilityPointsToScale;
-    private Dictionary<Transform, float> originalVisibilityPointOffsets;
-    protected Vector3 movement;
-    protected float movementY;
-    public List<LandVehicle> recentlyDrivenVehicles;
-    private bool isJumping;
-    public float CurrentStaminaReserve;
+    [FormerlySerializedAs("groundDetectionMask")]
+    public LayerMask GroundDetectionMask;
     public Action<float> onStaminaReserveChanged;
     public Action onJump;
     public Action onLand;
-    public UnityEvent onCrouch;
-    public UnityEvent onUncrouch;
-    protected float horizontalAxis;
-    protected float verticalAxis;
-    protected float timeGrounded;
-    private Dictionary<int, MovementEvent> movementEvents;
+    public Action onCrouch;
+    public Action onUncrouch;
+    private Vector3 movement;
+    private Vector3 lastFrameMovement;
+    private float movementY;
+    private float timeOnLadderDismount;
+    private Vector3 ladderDismountDir;
+    private float horizontalAxis;
+    private float verticalAxis;
+    private Dictionary<int, MotionEvent> movementEvents;
     private float timeSinceStaminaDrain;
     private bool sprintActive;
     private bool sprintReleased;
+    private List<string> sprintBlockers;
     private Vector3 residualVelocityDirection;
     private float residualVelocityForce;
     private float residualVelocityDuration;
     private float residualVelocityTimeRemaining;
     private bool teleport;
     private Vector3 teleportPosition;
-    private List<string> sprintBlockers;
-    private Vector3 lastFrameMovement;
+    private float playerLadderYPosOnLastClimbSound;
     private Coroutine playerRotCoroutine;
-    public static float GravityMultiplier { get; set; } = 1f;
-    public float playerHeight { get; protected set; }
+    public bool CanMove { get; set; } = true;
+    public bool CanJump { get; set; } = true;
+    public float MoveSpeedMultiplier { get; set; } = 1f;
     public Vector3 Movement => movement;
-    public LandVehicle currentVehicle { get; protected set; }
-    public float airTime { get; protected set; }
-    public bool isCrouched { get; protected set; }
-    public float standingScale { get; protected set; } = 1f;
-    public bool isRagdolled { get; protected set; }
-    public bool isSprinting { get; protected set; }
-    public float CurrentSprintMultiplier { get; protected set; } = 1f;
+    public bool IsJumping { get; private set; }
+    public float TimeAirborne { get; private set; }
+    public float TimeGrounded { get; private set; }
     public bool IsGrounded { get; private set; } = true;
+    public bool IsCrouched { get; private set; }
+    public float StandingScale { get; private set; } = 1f;
+    public bool IsRagdolled { get; private set; }
+    public bool IsSprinting { get; private set; }
+    public bool ForceSprint { get; set; }
+    public float CurrentStaminaReserve { get; private set; } = StaminaReserveMax;
+    public float CurrentSprintMultiplier { get; private set; } = 1f;
+    public LandVehicle CurrentVehicle { get; protected set; }
+    public Ladder CurrentLadder { get; set; }
+    public bool IsOnLadder => (Object)(object)CurrentLadder != (Object)null;
 
     protected override void Awake();
     protected override void Start();
-    protected virtual void Update();
+    private void Update();
     private void FixedUpdate();
     private void LateUpdate();
-    protected virtual void Move();
+    private void Move();
     private void ClampMovement();
-    protected float GetSurfaceAngle();
-    private bool isGrounded();
-    protected void UpdateHorizontalAxis();
-    protected void UpdateVerticalAxis();
+    private float GetSurfaceAngle();
+    private bool GetIsGrounded();
+    public unsafe void Teleport(Vector3 position, bool alignFeetToPosition = false);
+    public void SetResidualVelocity(Vector3 dir, float force, float time);
+    public void WarpToNavMesh();
+    private void UpdateHorizontalAxis();
+    private void UpdateVerticalAxis();
     private IEnumerator Jump();
-    private void TryToggleCrouch();
-    public bool CanStand();
     public void SetCrouched(bool c);
+    private void TryToggleCrouch();
+    private bool CanStand();
     private void UpdateCrouchVignetteEffect();
     private void UpdatePlayerHeight();
     public void LerpPlayerRotation(Quaternion rotation, float lerpTime);
     private IEnumerator LerpPlayerRotation_Process(Quaternion endRotation, float lerpTime);
     private void EnterVehicle(LandVehicle vehicle);
     private void ExitVehicle(LandVehicle veh, Transform exitPoint);
-    public unsafe void Teleport(Vector3 position);
-    public void SetResidualVelocity(Vector3 dir, float force, float time);
-    public void WarpToNavMesh();
     public void RegisterMovementEvent(int threshold, Action action);
     public void DeregisterMovementEvent(Action action);
     private void UpdateMovementEvents();
@@ -143,4 +132,8 @@ public class PlayerMovement : PlayerSingleton<PlayerMovement>
     public void SetStamina(float value, bool notify = true);
     public void AddSprintBlocker(string tag);
     public void RemoveSprintBlocker(string tag);
+    public void MountLadder(Ladder ladder);
+    public void DismountLadder();
+    private void LadderMove();
+    private void PlayLadderClimbSound();
 }

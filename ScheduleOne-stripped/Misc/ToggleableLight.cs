@@ -1,11 +1,21 @@
 using ScheduleOne.ConstructableScripts;
 using ScheduleOne.DevUtilities;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ScheduleOne.Misc;
 public class ToggleableLight : MonoBehaviour
 {
-    public bool isOn;
+    private enum State
+    {
+        NotInitialized,
+        On,
+        Off
+    }
+
+    [SerializeField]
+    [FormerlySerializedAs("isOn")]
+    private bool _isOn;
     [Header("References")]
     [SerializeField]
     protected OptimizedLight[] lightSources;
@@ -18,11 +28,11 @@ public class ToggleableLight : MonoBehaviour
     [SerializeField]
     protected Material lightOffMat;
     private Constructable_GridBased constructable;
-    private bool lightsApplied;
+    private State state;
+    public bool isOn { get; set; }
+
     protected virtual void Awake();
-    private void OnValidate();
-    protected virtual void Update();
     public void TurnOn();
     public void TurnOff();
-    protected virtual void SetLights(bool active);
+    protected virtual void SetLights();
 }

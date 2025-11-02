@@ -56,7 +56,6 @@ public class DialogueController : MonoBehaviour
     private bool dialogueQueued;
     private string cachedGreeting;
     protected virtual void Start();
-    private void Update();
     private void Hovered();
     public void StartGenericDialogue(bool allowExit = true);
     private void Interacted();

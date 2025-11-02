@@ -169,7 +169,7 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     [ObserversRpc]
     private void SetTransform(NetworkConnection conn, Vector3 position, Quaternion rotation);
     protected virtual void MinPass();
-    protected virtual void Update();
+    protected virtual void UpdateVisionConeState(bool value);
     public virtual void SetVisible(bool visible, bool networked = false);
     [ObserversRpc(RunLocally = true)]
     private void SetVisible_Networked(bool visible);
@@ -209,8 +209,10 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
     public void EnterBuilding(NetworkConnection connection, string buildingGUID, int doorIndex);
+    protected virtual void EnterBuilding(string buildingGUID, int doorIndex);
     [ObserversRpc(RunLocally = true)]
     public void ExitBuilding(string buildingID = "");
+    protected virtual void ExitBuilding(NPCEnterableBuilding building);
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
     public void SetEquippable_Networked(NetworkConnection conn, string assetPath);

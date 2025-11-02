@@ -14,13 +14,14 @@ public class NPCResponses : MonoBehaviour
     public const float DEADLYASSAULT_RELATIONSHIPCHANGE;
     public const float AIMED_AT_RELATIONSHIPCHANGE;
     public const float PICKPOCKET_RELATIONSHIPCHANGE;
+    private const float INITIALIZED_TIME_OFFSET;
+    private const float TIME_THRESHOLD;
     protected float timeSinceLastImpact;
     protected float timeSinceAimedAt;
     protected NPC npc { get; private set; }
     protected NPCActions actions => npc.Actions;
 
     protected virtual void Awake();
-    protected virtual void Update();
     public virtual void GunshotHeard(NoiseEvent gunshotSound);
     public virtual void ExplosionHeard(NoiseEvent explosionSound);
     public virtual void NoticedPettyCrime(Player player);

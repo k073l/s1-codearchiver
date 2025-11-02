@@ -15,6 +15,7 @@ public class PlayerPusher : MonoBehaviour
     public float MaxPushForce;
     private Collider collider;
     private void Awake();
-    private void FixedUpdate();
+    private void OnDestroy();
+    public void SetEnabled(bool isEnabled);
     private void OnTriggerStay(Collider other);
 }

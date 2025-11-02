@@ -6,5 +6,5 @@ namespace ScheduleOne.Tools;
 public class PlayerSmoothedVelocityCalculator : SmoothedVelocityCalculator
 {
     public Player Player;
-    protected override void FixedUpdate();
+    public override Vector3 Velocity { get; }
 }

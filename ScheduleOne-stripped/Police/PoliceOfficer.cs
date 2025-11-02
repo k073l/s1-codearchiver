@@ -23,6 +23,7 @@ using ScheduleOne.Vehicles;
 using ScheduleOne.Vision;
 using ScheduleOne.VoiceOver;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace ScheduleOne.Police;
 public class PoliceOfficer : NPC
@@ -81,7 +82,7 @@ public class PoliceOfficer : NPC
 
     public override void Awake();
     protected override void Start();
-    protected override void Update();
+    protected void Update();
     protected override void MinPass();
     private void UpdateVision();
     private void CheckDeactivation();
@@ -113,6 +114,7 @@ public class PoliceOfficer : NPC
     private void UpdateChatter();
     private void ProcessVisionEvent(VisionEventReceipt visionEventReceipt);
     public static PoliceOfficer GetNearestOfficer(Vector3 position, out float distanceToTarget, bool onlyConscious = true);
+    private new void OnDie();
     public virtual void UpdateBodySearch();
     private bool CanInvestigate();
     private void UpdateExistingInvestigation();

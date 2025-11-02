@@ -22,6 +22,8 @@ public class StorableItemDefinition : ItemDefinition
     public float ResellMultiplier;
     [Header("Storable Item")]
     public StoredItem StoredItem;
+    [Range(0.1f, 5f)]
+    public float PickpocketDifficultyMultiplier;
     [Tooltip("Optional station item if this item can be used at a station.")]
     public StationItem StationItem;
     [Header("Other Settings")]

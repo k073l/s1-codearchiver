@@ -15,6 +15,7 @@ using ScheduleOne.GameTime;
 using ScheduleOne.Interaction;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Money;
+using ScheduleOne.Networking;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.UI;
 using UnityEngine;
@@ -23,6 +24,14 @@ using UnityEngine.Events;
 namespace ScheduleOne.NPCs;
 public class NPCInventory : NetworkBehaviour, IItemSlotOwner
 {
+    [Serializable]
+    public class RandomInventoryItem
+    {
+        public StorableItemDefinition ItemDefinition;
+        [Range(0f, 10f)]
+        public float Weight;
+    }
+
     public delegate bool ItemFilter(ItemInstance item);
     public InteractableObject PickpocketIntObj;
     public const float COOLDOWN;
@@ -39,7 +48,7 @@ public class NPCInventory : NetworkBehaviour, IItemSlotOwner
     public int RandomCashMax;
     [Header("Random items")]
     public bool RandomItems;
-    public StorableItemDefinition[] RandomItemDefinitions;
+    public RandomInventoryItem[] RandomInventoryItems;
     public int RandomItemMin;
     public int RandomItemMax;
     private NPC npc;
@@ -54,6 +63,9 @@ public class NPCInventory : NetworkBehaviour, IItemSlotOwner
     public override void OnSpawnServer(NetworkConnection connection);
     private void OnDestroy();
     protected virtual void OnSleepStart();
+    private StorableItemDefinition GetRandomInventoryItem();
+    [Button]
+    public float GetTotalRandomInventoryItemWeight();
     public int GetItemCount();
     public int _GetItemAmount(string id);
     public int GetIdenticalItemAmount(ItemInstance item);
@@ -78,7 +90,7 @@ public class NPCInventory : NetworkBehaviour, IItemSlotOwner
     [ServerRpc(RunLocally = true, RequireOwnership = false)]
     public void SetStoredInstance(NetworkConnection conn, int itemSlotIndex, ItemInstance instance);
     [ObserversRpc(RunLocally = true)]
-    [TargetRpc(RunLocally = true)]
+    [TargetRpc]
     private void SetStoredInstance_Internal(NetworkConnection conn, int itemSlotIndex, ItemInstance instance);
     [ServerRpc(RunLocally = true, RequireOwnership = false)]
     public void SetItemSlotQuantity(int itemSlotIndex, int quantity);
@@ -86,13 +98,13 @@ public class NPCInventory : NetworkBehaviour, IItemSlotOwner
     private void SetItemSlotQuantity_Internal(int itemSlotIndex, int quantity);
     [ServerRpc(RunLocally = true, RequireOwnership = false)]
     public void SetSlotLocked(NetworkConnection conn, int itemSlotIndex, bool locked, NetworkObject lockOwner, string lockReason);
-    [TargetRpc(RunLocally = true)]
+    [TargetRpc]
     [ObserversRpc(RunLocally = true)]
     private void SetSlotLocked_Internal(NetworkConnection conn, int itemSlotIndex, bool locked, NetworkObject lockOwner, string lockReason);
     [ServerRpc(RunLocally = true, RequireOwnership = false)]
     public void SetSlotFilter(NetworkConnection conn, int itemSlotIndex, SlotFilter filter);
     [ObserversRpc(RunLocally = true)]
-    [TargetRpc(RunLocally = true)]
+    [TargetRpc]
     private void SetSlotFilter_Internal(NetworkConnection conn, int itemSlotIndex, SlotFilter filter);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();

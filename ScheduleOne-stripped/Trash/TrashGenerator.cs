@@ -21,6 +21,8 @@ public class TrashGenerator : MonoBehaviour, IGUIDRegisterable, ISaveable
     [SerializeField]
     private int MaxTrashCount;
     [SerializeField]
+    private int TrashCountMultiplier;
+    [SerializeField]
     private List<TrashItem> generatedTrash;
     [Header("Settings")]
     public LayerMask GroundCheckMask;

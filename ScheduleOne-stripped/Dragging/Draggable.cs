@@ -23,8 +23,7 @@ public class Draggable : MonoBehaviour, IGUIDRegisterable
     public const float MAX_TARGET_OFFSET;
     private bool isBeingDragged;
     private Player currentDragger;
-    [SerializeField]
-    protected string BakedGUID;
+    public string BakedGUID;
     [Header("References")]
     public Rigidbody Rigidbody;
     public InteractableObject IntObj;
@@ -53,7 +52,7 @@ public class Draggable : MonoBehaviour, IGUIDRegisterable
     public void SetGUID(Guid guid);
     protected void OnValidate();
     protected void OnDestroy();
-    public void UpdateDraggable(float fixedDeltaTime);
+    public void UpdateDraggable();
     public void ApplyDragForces(Vector3 targetPosition);
     protected virtual void Hovered();
     protected virtual void Interacted();

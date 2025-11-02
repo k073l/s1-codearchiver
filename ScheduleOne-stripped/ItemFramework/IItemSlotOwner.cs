@@ -15,4 +15,5 @@ public interface IItemSlotOwner
     void SendItemSlotDataToClient(NetworkConnection conn);
     int GetTotalItemCount();
     int GetItemCount(string id);
+    int GetNonEmptySlotCount();
 }

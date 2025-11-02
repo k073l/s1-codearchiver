@@ -33,6 +33,7 @@ public class SpraySurface : NetworkBehaviour, IGUIDRegisterable
     [Header("References")]
     public Transform BottomLeftPoint;
     public DecalProjector Projector;
+    private Drawing drawing;
     private Drawing cachedDrawing;
     public Action onDrawingChanged;
     private List<int> pastRequestIDs;
@@ -40,7 +41,9 @@ public class SpraySurface : NetworkBehaviour, IGUIDRegisterable
     private bool NetworkInitialize__LateScheduleOne_002EGraffiti_002ESpraySurfaceAssembly_002DCSharp_002Edll_Excuted;
     public Guid GUID { get; protected set; }
     public NetworkObject CurrentEditor { get; private set; }
-    public Drawing Drawing { get; private set; }
+    public int DrawingStrokeCount { get; }
+    public Texture DrawingOutputTexture { get; }
+    public int DrawingPaintedPixelCount { get; }
     public EMapRegion Region { get; private set; }
     public bool HasDrawingBeenFinalized { get; private set; }
     public Vector3 TopRightPoint => BottomLeftPoint.TransformPoint(new Vector3((float)(-Width) * 0.006666671f, (float)Height * 0.006666671f, 0f));
@@ -63,10 +66,12 @@ public class SpraySurface : NetworkBehaviour, IGUIDRegisterable
     private void AddStrokes_Client(List<SprayStroke> newStrokes, int requestID);
     [ServerRpc(RequireOwnership = false)]
     public void ClearDrawing();
+    public void EnsureDrawingExists();
     private void CreateNewDrawing();
     public void CacheDrawing();
     public void RestoreFromCache();
     public Vector3 ToWorldPosition(UShort2 coordinate, float offset = 0f);
+    public void DrawPaintedPixel(PixelData data, bool applyTexture);
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void MarkDrawingFinalized();
     [ObserversRpc(RunLocally = true)]

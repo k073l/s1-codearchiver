@@ -27,7 +27,6 @@ public class StaticDoor : MonoBehaviour
     private int doorIndex;
     protected virtual void Awake();
     protected virtual void OnValidate();
-    protected virtual void Update();
     protected virtual void Hovered();
     protected virtual bool CanKnockNow();
     protected virtual bool IsKnockValid(out string message);

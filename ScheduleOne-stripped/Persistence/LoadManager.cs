@@ -13,6 +13,7 @@ using FishNet.Transporting.Yak;
 using FishySteamworks;
 using Pathfinding;
 using ScheduleOne.Audio;
+using ScheduleOne.AvatarFramework.Animation;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Economy;
 using ScheduleOne.Money;
@@ -60,6 +61,7 @@ public class LoadManager : PersistentSingleton<LoadManager>
     public UnityEvent onPreLoad;
     public UnityEvent onLoadComplete;
     public UnityEvent onSaveInfoLoaded;
+    private List<IStaggeredReplicator> staggeredReplicators;
     public string DefaultTutorialSaveFolder => Path.Combine(Application.streamingAssetsPath, "DefaultTutorialSave");
     public bool IsGameLoaded { get; protected set; }
     public bool IsLoading { get; protected set; }
@@ -94,4 +96,5 @@ public class LoadManager : PersistentSingleton<LoadManager>
     public void ExitToMenu(SaveInfo autoLoadSave = null, MainMenuPopup.Data mainMenuPopup = null, bool preventLeaveLobby = false);
     public static bool TryLoadSaveInfo(string saveFolderPath, int saveSlotIndex, out SaveInfo saveInfo, bool requireGameFile = false);
     public void RefreshSaveInfo();
+    public void AddStaggeredReplicator(IStaggeredReplicator replicator);
 }

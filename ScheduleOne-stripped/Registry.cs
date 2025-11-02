@@ -25,6 +25,7 @@ public class Registry : PersistentSingleton<Registry>
     [Serializable]
     public class ItemRegister
     {
+        [HideInInspector]
         public string name;
         public string ID;
         public string AssetPath;

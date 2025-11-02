@@ -11,6 +11,7 @@ using FishNet.Serializing.Generated;
 using FishNet.Transporting;
 using ScheduleOne.Combat;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Networking;
 using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.Persistence.Loaders;
@@ -29,6 +30,7 @@ public class TrashManager : NetworkSingleton<TrashManager>, IBaseSaveable, ISave
     }
 
     public const int TRASH_ITEM_LIMIT;
+    public const int TRASH_REPLICATIONS_PER_SECOND;
     public TrashItem[] TrashPrefabs;
     public TrashItem TrashBagPrefab;
     public TrashItemData[] GenerateableTrashItems;

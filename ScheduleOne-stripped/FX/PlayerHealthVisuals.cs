@@ -12,7 +12,7 @@ namespace ScheduleOne.FX;
 public class PlayerHealthVisuals : MonoBehaviour
 {
     [Header("References")]
-    public Volume GlobalVolume;
+    public Volume[] PPVolumes;
     [Header("Vignette")]
     public float VignetteAlpha_MaxHealth;
     public float VignetteAlpha_MinHealth;
@@ -26,7 +26,7 @@ public class PlayerHealthVisuals : MonoBehaviour
     [Header("Lens Dirt")]
     public float LensDirt_MaxHealth;
     public float LensDirt_MinHealth;
-    private Beautify _beautifySettings;
+    private Beautify[] _beautifySettings;
     private void Awake();
     private void Spawned();
     private void MinPass();

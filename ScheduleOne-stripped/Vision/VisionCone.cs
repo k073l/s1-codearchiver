@@ -74,6 +74,8 @@ public class VisionCone : NetworkBehaviour
     [Header("Notice Settings")]
     public float Attentiveness;
     public float Memory;
+    [Header("Sound Settings")]
+    public bool UseTremoloSound;
     [Header("Worldspace Icons")]
     public bool WorldspaceIconsEnabled;
     public WorldspacePopup QuestionMarkPopup;
@@ -100,7 +102,6 @@ public class VisionCone : NetworkBehaviour
     private void PlayerSpawned(Player plr);
     private void OnDisable();
     protected virtual void Update();
-    protected virtual void FixedUpdate();
     protected virtual void VisionUpdate();
     protected virtual void UpdateEvents(float tickTime);
     protected virtual void UpdateVision(float tickTime);

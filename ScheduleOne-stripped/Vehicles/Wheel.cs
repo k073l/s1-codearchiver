@@ -40,7 +40,7 @@ public class Wheel : MonoBehaviour
     public float DriftIntensity { get; protected set; }
 
     protected virtual void Start();
-    private void FixedUpdate();
+    public void FixedUpdateWheel();
     private void CheckDrifting();
     private void UpdateDriftEffects();
     private void UpdateDriftAudio();

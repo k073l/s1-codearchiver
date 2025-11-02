@@ -54,7 +54,6 @@ public class PursuitBehaviour : CombatBehaviour
     public override void BehaviourUpdate();
     public override void ActiveMinPass();
     protected override bool IsTargetValid();
-    protected override void FixedUpdate();
     protected virtual void UpdateInvestigatingBehaviour();
     protected virtual void UpdateArrestBehaviour();
     protected virtual void UpdateNonLethalBehaviour();
@@ -68,6 +67,7 @@ public class PursuitBehaviour : CombatBehaviour
     public void ResetArrestProgress();
     private void SetArrestCircleAlpha(float alpha);
     private void SetArrestCircleColor(Color col);
+    private void OnThirdPartyVisionEvent(VisionEventReceipt receipt);
     protected override void TargetSpotted();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();

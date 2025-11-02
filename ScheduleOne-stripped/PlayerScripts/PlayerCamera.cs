@@ -61,7 +61,7 @@ public class PlayerCamera : PlayerSingleton<PlayerCamera>
     private Coroutine focusRoutine;
     private float focusMouseX;
     private float focusMouseY;
-    private Dictionary<int, PlayerMovement.MovementEvent> movementEvents;
+    private Dictionary<int, MotionEvent> movementEvents;
     private float freeCamSpeed;
     private float mouseX;
     private float mouseY;

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using EasyButtons;
 using FishNet;
 using FishNet.Connection;
 using FishNet.Managing;
@@ -9,6 +10,7 @@ using FishNet.Serializing;
 using FishNet.Transporting;
 using ScheduleOne.Audio;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Networking;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Trash;
 using UnityEngine;
@@ -26,6 +28,7 @@ public class DragManager : NetworkSingleton<DragManager>
     public float ThrowForce;
     public float MassInfluence;
     private List<Draggable> AllDraggables;
+    private List<Draggable> CurrentlyUpdating;
     private Draggable lastThrownDraggable;
     private Draggable lastHeldDraggable;
     private bool NetworkInitialize___EarlyScheduleOne_002EDragging_002EDragManagerAssembly_002DCSharp_002Edll_Excuted;
@@ -51,6 +54,8 @@ public class DragManager : NetworkSingleton<DragManager>
     [TargetRpc]
     private void SetDraggableTransformData(NetworkConnection conn, string guid, Vector3 position, Quaternion rotation, Vector3 velocity);
     private Vector3 GetTargetPosition();
+    [Button]
+    public void EnsureAllDraggableGUIDsAreValid();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

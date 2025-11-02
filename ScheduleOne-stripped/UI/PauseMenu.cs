@@ -1,10 +1,10 @@
+using System;
 using ScheduleOne.AvatarFramework.Customization;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.UI.MainMenu;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace ScheduleOne.UI;
 public class PauseMenu : Singleton<PauseMenu>
@@ -20,8 +20,8 @@ public class PauseMenu : Singleton<PauseMenu>
     private bool lockedMouse;
     private bool crosshairVisible;
     private bool hudVisible;
-    public UnityEvent onPause;
-    public UnityEvent onResume;
+    public Action onPause;
+    public Action onResume;
     public bool IsPaused { get; protected set; }
 
     protected override void Awake();

@@ -35,6 +35,7 @@ public class AvatarAnimation : MonoBehaviour
     public const float MaxBoneOffsetSqr;
     public static Vector3 SITTING_OFFSET;
     public const float SEAT_TIME;
+    private bool _IsAvatarCulled;
     public bool DEBUG_MODE;
     private int framesActive;
     [Header("References")]
@@ -72,6 +73,7 @@ public class AvatarAnimation : MonoBehaviour
     public bool StandUpAnimationPlaying { get; protected set; }
     public bool IsAvatarCulled { get; private set; }
 
+    public event Action<bool> onAvatarCullStateChanged = default;
     protected virtual void Awake();
     protected virtual void Start();
     private void OnDestroy();

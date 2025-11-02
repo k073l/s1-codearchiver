@@ -18,7 +18,6 @@ using FishNet.Object.Synchronizing.Internal;
 using FishNet.Serializing;
 using FishNet.Serializing.Generated;
 using FishNet.Transporting;
-using FishySteamworks;
 using ScheduleOne.Audio;
 using ScheduleOne.AvatarFramework;
 using ScheduleOne.AvatarFramework.Animation;
@@ -205,6 +204,7 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
         get; [CompilerGenerated]
         [ServerRpc]
         set; } = Quaternion.identity;
+    public int EquippedItemSlotIndex { get; private set; } = -1;
     public BasicAvatarSettings CurrentAvatarSettings { get; protected set; }
     public ProductItemInstance ConsumedProduct { get; private set; }
     public int TimeSinceProductConsumed { get; private set; }
@@ -399,6 +399,11 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public void Taze();
     [ServerRpc(RunLocally = true)]
     public void SetInventoryItem(int index, ItemInstance item);
+    [ServerRpc(RunLocally = true)]
+    public void SetEquippedSlotIndex(int index);
+    public ItemInstance GetEquippedItem();
+    [ObserversRpc]
+    public void RemoveEquippedItemFromInventory(string id, int amount);
     private void GetNetworth(MoneyManager.FloatContainer container);
     [ServerRpc(RunLocally = true)]
     public void SendAppearance(BasicAvatarSettings settings);
@@ -602,6 +607,12 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     private void RpcWriter___Server_SetInventoryItem_2317364410(int index, ItemInstance item);
     public void RpcLogic___SetInventoryItem_2317364410(int index, ItemInstance item);
     private void RpcReader___Server_SetInventoryItem_2317364410(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Server_SetEquippedSlotIndex_3316948804(int index);
+    public void RpcLogic___SetEquippedSlotIndex_3316948804(int index);
+    private void RpcReader___Server_SetEquippedSlotIndex_3316948804(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Observers_RemoveEquippedItemFromInventory_3643459082(string id, int amount);
+    public void RpcLogic___RemoveEquippedItemFromInventory_3643459082(string id, int amount);
+    private void RpcReader___Observers_RemoveEquippedItemFromInventory_3643459082(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Server_SendAppearance_3281254764(BasicAvatarSettings settings);
     public void RpcLogic___SendAppearance_3281254764(BasicAvatarSettings settings);
     private void RpcReader___Server_SendAppearance_3281254764(PooledReader PooledReader0, Channel channel, NetworkConnection conn);

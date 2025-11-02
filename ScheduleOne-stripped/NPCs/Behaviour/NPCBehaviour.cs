@@ -15,6 +15,7 @@ using ScheduleOne.Doors;
 using ScheduleOne.GameTime;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Map;
+using ScheduleOne.Networking;
 using ScheduleOne.Product;
 using UnityEngine;
 using UnityEngine.Events;

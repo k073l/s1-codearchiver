@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using FishNet;
 using FishNet.Object;
@@ -32,8 +33,11 @@ public class NPCResponses_Civilian : NPCResponses
 
     public bool CanCallPolice;
     private EAttackResponse currentThreatResponse;
-    private float timeSinceLastThreat;
-    protected override void Update();
+    private float lastThreatTime;
+    private Coroutine resetCoroutine;
+    protected override void Awake();
+    private void ScheduleResetCoroutine();
+    private IEnumerator ResetAttackResponse();
     public override void GunshotHeard(NoiseEvent gunshotSound);
     public override void ExplosionHeard(NoiseEvent explosionSound);
     public override void PlayerFailedPickpocket(Player player);

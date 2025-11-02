@@ -1,3 +1,4 @@
+using System.Collections;
 using ScheduleOne.Audio;
 using UnityEngine;
 using UnityEngine.Events;
@@ -28,11 +29,15 @@ public class VehicleSound : MonoBehaviour
     private float currentIdleVolume;
     private float lastCollisionTime;
     private float lastCollisionMomentum;
+    private float volumeTarget;
+    private bool isUpdatingVolume;
     public LandVehicle Vehicle { get; private set; }
 
     protected virtual void Awake();
-    protected virtual void FixedUpdate();
-    private void UpdateIdle();
+    private void OnDestroy();
+    private void OnOccupy(bool isOccupied);
+    private IEnumerator AdjustVolume();
+    public void UpdateIdle();
     protected void HandbrakeApplied();
     protected void EngineStart();
     public void Honk();

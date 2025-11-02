@@ -66,6 +66,8 @@ public class MSGConversation : ISaveable
     public virtual void InitializeSaveable();
     public void SetCategories(List<EConversationCategory> cat);
     public void MoveToTop();
+    public bool ShouldReplicate();
+    public int GetReplicationByteSize();
     protected void CreateUI();
     public void EnsureUIExists();
     protected void RefreshPreviewText();
@@ -81,6 +83,7 @@ public class MSGConversation : ISaveable
     public MSGConversationData GetSaveData();
     public virtual string GetSaveString();
     public virtual void Load(MSGConversationData data);
+    public void ResetConversation();
     public void SetSliderValue(float value, Color color);
     public Response GetResponse(string label);
     public void ShowResponses(List<Response> _responses, float showResponseDelay = 0f, bool network = true);
