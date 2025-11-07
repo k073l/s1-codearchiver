@@ -58,11 +58,11 @@ public class PotActionBehaviour : Behaviour
 
     public override void Awake();
     public virtual void Initialize(Pot pot, EActionType actionType);
-    protected override void Begin();
-    protected override void Resume();
-    protected override void Pause();
+    public override void Begin();
+    public override void Resume();
+    public override void Pause();
     public override void Disable();
-    protected override void End();
+    public override void End();
     public override void ActiveMinPass();
     private void StartAction();
     private void StopAllActions();

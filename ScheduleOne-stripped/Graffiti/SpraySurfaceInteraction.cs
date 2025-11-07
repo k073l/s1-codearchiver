@@ -23,7 +23,7 @@ public class SpraySurfaceInteraction : MonoBehaviour
     public const int MAX_PIXELS_BEFORE_NEW_STROKE;
     public const int MANHATTAN_DISTANCE_BETWEEN_PAINTED_PIXELS;
     public const int XP_GAIN;
-    public const float CARTEL_INFLUENCE_REDUCTION;
+    public const float CARTEL_INFLUENCE_CHANGE;
     public const int PAINTED_PIXEL_LIMIT;
     public SpraySurface SpraySurface;
     public InteractableObject IntObj;

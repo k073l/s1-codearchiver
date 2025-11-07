@@ -11,6 +11,8 @@ public class ProductIconManager : Singleton<ProductIconManager>
     [Serializable]
     public class ProductIcon
     {
+        [HideInInspector]
+        public string name;
         public string ProductID;
         public string PackagingID;
         public Sprite Icon;

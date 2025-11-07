@@ -1,3 +1,4 @@
+using System;
 using EasyButtons;
 using ScheduleOne.Audio;
 using UnityEngine;
@@ -7,13 +8,14 @@ public class StorageDoorAnimation : MonoBehaviour
 {
     private bool overriddeIsOpen;
     private bool overrideState;
-    public Transform ItemContainer;
     [Header("Animations")]
     public Animation[] Anims;
     public AnimationClip OpenAnim;
     public AnimationClip CloseAnim;
     public AudioSourceController OpenSound;
     public AudioSourceController CloseSound;
+    private StorageEntity storageEntity;
+    private Transform itemContainer;
     public bool IsOpen { get; protected set; }
 
     private void Start();

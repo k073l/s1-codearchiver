@@ -23,7 +23,7 @@ public class FinishLabOvenBehaviour : Behaviour
 
     public override void Awake();
     public void SetTargetOven(LabOven oven);
-    protected override void End();
+    public override void End();
     public override void ActiveMinPass();
     [ObserversRpc(RunLocally = true)]
     private void StartAction();

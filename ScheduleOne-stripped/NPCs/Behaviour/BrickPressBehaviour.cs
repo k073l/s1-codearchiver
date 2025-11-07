@@ -20,11 +20,11 @@ public class BrickPressBehaviour : Behaviour
     public BrickPress Press { get; protected set; }
     public bool PackagingInProgress { get; protected set; }
 
-    protected override void Begin();
-    protected override void Resume();
-    protected override void Pause();
+    public override void Begin();
+    public override void Resume();
+    public override void Pause();
     public override void Disable();
-    protected override void End();
+    public override void End();
     public override void ActiveMinPass();
     private void StartPackaging();
     public void AssignStation(BrickPress press);

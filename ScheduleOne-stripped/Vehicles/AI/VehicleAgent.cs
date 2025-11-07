@@ -60,7 +60,6 @@ public class VehicleAgent : MonoBehaviour
     public const float OBSTACLE_MIN_RANGE;
     public const float OBSTACLE_MAX_RANGE;
     public const float MAX_STEER_ANGLE_OVERRIDE;
-    public const float KINEMATIC_MODE_MIN_DISTANCE;
     public const float INFREQUENT_UPDATE_RATE;
     public bool DEBUG_MODE;
     public DriveFlags Flags;
@@ -157,20 +156,21 @@ public class VehicleAgent : MonoBehaviour
     protected float targetSteerAngle_Normalized;
     protected float lateralOffset;
     protected PathSmoothingUtility.SmoothedPath path;
-    private float timeSinceLastNavigationCall;
+    private float timeOnLastNavigationCall;
     private float sweepTestFailedTime;
     private NavigationSettings currentNavigationSettings;
     private Coroutine navigationCalculationRoutine;
     private Coroutine reverseCoroutine;
-    public bool KinematicMode { get; protected set; }
     public bool AutoDriving { get; protected set; }
+    public bool KinematicMode => vehicle.Rb.isKinematic;
     public bool IsReversing => reverseCoroutine != null;
     public Vector3 TargetLocation { get; protected set; } = Vector3.zero;
-    protected float sampleStepSize => Mathf.Lerp(sampleStepSizeMin, sampleStepSizeMax, Mathf.Clamp01(vehicle.speed_Kmh / vehicle.TopSpeed));
-    protected float turnSpeedReductionRange => Mathf.Lerp(turnSpeedReductionMinRange, turnSpeedReductionMaxRange, Mathf.Clamp(vehicle.speed_Kmh / vehicle.TopSpeed, 0f, 1f));
+    protected float sampleStepSize => Mathf.Lerp(sampleStepSizeMin, sampleStepSizeMax, Mathf.Clamp01(vehicle.Speed_Kmh / vehicle.TopSpeed));
+    protected float turnSpeedReductionRange => Mathf.Lerp(turnSpeedReductionMinRange, turnSpeedReductionMaxRange, Mathf.Clamp(vehicle.Speed_Kmh / vehicle.TopSpeed, 0f, 1f));
     protected float maxSteerAngle => vehicle.ActualMaxSteeringAngle;
-    private Vector3 FrontOfVehiclePosition => ((Component)this).transform.position + ((Component)this).transform.forward * vehicleLength / 2f;
+    private Vector3 frontOfVehiclePosition => ((Component)this).transform.position + ((Component)this).transform.forward * vehicleLength / 2f;
     public bool NavigationCalculationInProgress => navigationCalculationRoutine != null;
+    private float timeSinceLastNavigationCall => Time.timeSinceLevelLoad - timeOnLastNavigationCall;
 
     private void Awake();
     protected virtual void Start();

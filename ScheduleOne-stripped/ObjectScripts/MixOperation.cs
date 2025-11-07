@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Effects;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Product;
-using ScheduleOne.Properties;
 using UnityEngine;
 
 namespace ScheduleOne.ObjectScripts;
@@ -16,6 +16,6 @@ public class MixOperation
     public int Quantity;
     public MixOperation(string productID, EQuality productQuality, string ingredientID, int quantity);
     public MixOperation();
-    public EDrugType GetOutput(out List<ScheduleOne.Properties.Property> properties);
+    public EDrugType GetOutput(out List<Effect> properties);
     public bool IsOutputKnown(out ProductDefinition knownProduct);
 }

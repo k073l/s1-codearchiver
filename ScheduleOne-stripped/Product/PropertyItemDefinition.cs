@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using ScheduleOne.Effects;
 using ScheduleOne.ItemFramework;
-using ScheduleOne.Properties;
 using UnityEngine;
 
 namespace ScheduleOne.Product;
@@ -10,7 +10,7 @@ namespace ScheduleOne.Product;
 public class PropertyItemDefinition : StorableItemDefinition
 {
     [Header("Properties")]
-    public List<ScheduleOne.Properties.Property> Properties;
-    public virtual void Initialize(List<ScheduleOne.Properties.Property> properties);
-    public bool HasProperty(ScheduleOne.Properties.Property property);
+    public List<Effect> Properties;
+    public virtual void Initialize(List<Effect> properties);
+    public bool HasProperty(Effect property);
 }

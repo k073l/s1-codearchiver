@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Persistence;
 using ScheduleOne.Quests;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace ScheduleOne.UI;
 public class QuestEntryHUDUI : MonoBehaviour

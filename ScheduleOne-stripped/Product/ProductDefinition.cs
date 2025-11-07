@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Effects;
 using ScheduleOne.ItemFramework;
-using ScheduleOne.Packaging;
 using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.Persistence.Loaders;
 using ScheduleOne.Product.Packaging;
-using ScheduleOne.Properties;
 using ScheduleOne.StationFramework;
 using UnityEngine;
 
@@ -27,6 +26,8 @@ public class ProductDefinition : PropertyItemDefinition, ISaveable
     public float BaseAddictiveness;
     [Header("Packaging that can be applied to this product. MUST BE ORDERED FROm LOWEST TO HIGHEST QUANTITY")]
     public PackagingDefinition[] ValidPackaging;
+    [Header("Product References")]
+    public FirstPersonProductConsumeAnimation ConsumeAnimation;
     public EDrugType DrugType => DrugTypes[0].DrugType;
     public float Price => NetworkSingleton<ProductManager>.Instance.GetPrice(this);
     public List<StationRecipe> Recipes { get; private set; } = new List<StationRecipe>();
@@ -40,11 +41,12 @@ public class ProductDefinition : PropertyItemDefinition, ISaveable
 
     public override ItemInstance GetDefaultInstance(int quantity = 1);
     public void OnValidate();
-    public void Initialize(List<ScheduleOne.Properties.Property> properties, List<EDrugType> drugTypes);
+    public void Initialize(List<Effect> properties, List<EDrugType> drugTypes);
     public virtual void InitializeSaveable();
     public float GetAddictiveness();
     public void CleanRecipes();
     public void AddRecipe(StationRecipe recipe);
+    public virtual void GenerateAppearanceSettings();
     public virtual ProductData GetSaveData();
     public virtual string GetSaveString();
 }

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.ObjectScripts;
-using ScheduleOne.Packaging;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Product;
 using ScheduleOne.UI;

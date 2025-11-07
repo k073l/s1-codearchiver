@@ -1,11 +1,11 @@
 using FishNet.Object;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Effects;
 using ScheduleOne.Employees;
 using ScheduleOne.GameTime;
 using ScheduleOne.Interaction;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Product;
-using ScheduleOne.Properties;
 using ScheduleOne.Tools;
 using ScheduleOne.UI;
 using UnityEngine;

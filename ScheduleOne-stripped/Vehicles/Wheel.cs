@@ -32,8 +32,6 @@ public class Wheel : MonoBehaviour
     private WheelHit wheelData;
     private WheelFrictionCurve forwardCurve;
     private WheelFrictionCurve sidewaysCurve;
-    private Transform wheelTransform;
-    public bool isStatic { get; protected set; }
     public bool IsDrifting { get; protected set; }
     public bool IsDrifting_Smoothed => DriftTime > 0.2f;
     public float DriftTime { get; protected set; }
@@ -41,11 +39,11 @@ public class Wheel : MonoBehaviour
 
     protected virtual void Start();
     public void FixedUpdateWheel();
+    public void FakeWheelRotation();
     private void CheckDrifting();
     private void UpdateDriftEffects();
     private void UpdateDriftAudio();
     private void ApplyFriction();
-    public virtual void SetIsStatic(bool s);
-    private void GroundWheelModel();
+    public virtual void SetPhysicsEnabled(bool enabled);
     public bool IsWheelGrounded();
 }

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using EasyButtons;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Effects;
 using ScheduleOne.GameTime;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Levelling;
 using ScheduleOne.Product;
-using ScheduleOne.Properties;
 using UnityEngine;
 
 namespace ScheduleOne.Economy;
@@ -17,7 +17,7 @@ public class CustomerData : ScriptableObject
 {
     public CustomerAffinityData DefaultAffinityData;
     [Header("Preferred Properties - Properties the customer prefers in a product.")]
-    public List<ScheduleOne.Properties.Property> PreferredProperties;
+    public List<Effect> PreferredProperties;
     [Header("Spending Behaviour")]
     public float MinWeeklySpend;
     public float MaxWeeklySpend;

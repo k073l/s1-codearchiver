@@ -6,5 +6,6 @@ public class VehicleHumanoidCollider : MonoBehaviour
 {
     public LandVehicle vehicle;
     private void Start();
+    private void LateUpdate();
     private void OnCollisionStay(Collision collision);
 }

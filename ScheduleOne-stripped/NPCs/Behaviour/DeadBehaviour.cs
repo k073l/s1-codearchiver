@@ -15,11 +15,11 @@ public class DeadBehaviour : Behaviour
 
     private void Start();
     private void OnDestroy();
-    protected override void Begin();
+    public override void Begin();
     public override void ActiveMinPass();
     private void SleepStart();
     private void EnterMedicalCentre();
-    protected override void End();
+    public override void End();
     public override void Disable();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();

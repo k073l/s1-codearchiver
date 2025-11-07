@@ -27,7 +27,7 @@ public class ManagementInterface : Singleton<ManagementInterface>
     public ClipboardScreen MainScreen;
     public ScheduleOne.UI.Management.ItemSelector ItemSelectorScreen;
     public NPCSelector NPCSelector;
-    public ScheduleOne.UI.Management.ObjectSelector ObjectSelector;
+    public ObjectSelector ObjectSelector;
     public RecipeSelector RecipeSelectorScreen;
     public TransitEntitySelector TransitEntitySelector;
     [SerializeField]

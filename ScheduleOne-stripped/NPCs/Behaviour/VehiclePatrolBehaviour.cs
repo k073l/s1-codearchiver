@@ -21,10 +21,10 @@ public class VehiclePatrolBehaviour : Behaviour
     private VehicleAgent Agent => Vehicle.Agent;
 
     public override void Awake();
-    protected override void Begin();
-    protected override void Resume();
-    protected override void Pause();
-    protected override void End();
+    public override void Begin();
+    public override void Resume();
+    public override void Pause();
+    public override void End();
     public void SetRoute(VehiclePatrolRoute route);
     private void StartPatrol();
     public override void ActiveMinPass();

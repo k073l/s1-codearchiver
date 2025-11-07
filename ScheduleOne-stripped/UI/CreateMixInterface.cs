@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Effects;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Product;
-using ScheduleOne.Properties;
 using ScheduleOne.Storage;
 using ScheduleOne.UI.Compass;
 using ScheduleOne.UI.Items;
@@ -48,10 +49,10 @@ public class CreateMixInterface : Singleton<CreateMixInterface>
     private void UpdateCanBegin();
     private void UpdateOutput();
     private void BeginPressed();
-    private List<ScheduleOne.Properties.Property> GetOutputProperties(ProductDefinition product, PropertyItemDefinition mixer);
+    private List<Effect> GetOutputProperties(ProductDefinition product, PropertyItemDefinition mixer);
     private bool IsOutputKnown(out ProductDefinition knownProduct);
-    private string GetPropertyListString(List<ScheduleOne.Properties.Property> properties);
-    private string GetPropertyString(ScheduleOne.Properties.Property property);
+    private string GetPropertyListString(List<Effect> properties);
+    private string GetPropertyString(Effect property);
     private bool CanBegin();
     public void Close();
     private bool HasProduct();

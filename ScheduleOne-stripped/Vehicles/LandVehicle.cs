@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using EPOOutline;
 using FishNet;
 using FishNet.Component.Ownership;
 using FishNet.Component.Transforming;
@@ -20,8 +18,6 @@ using FishNet.Transporting;
 using Pathfinding;
 using ScheduleOne.Combat;
 using ScheduleOne.DevUtilities;
-using ScheduleOne.EntityFramework;
-using ScheduleOne.GameTime;
 using ScheduleOne.Interaction;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Map;
@@ -36,27 +32,16 @@ using ScheduleOne.Tools;
 using ScheduleOne.UI;
 using ScheduleOne.Vehicles.AI;
 using ScheduleOne.Vehicles.Modification;
-using ScheduleOne.Vehicles.Sound;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
 namespace ScheduleOne.Vehicles;
-[RequireComponent(typeof(VehicleCamera))]
 [RequireComponent(typeof(NetworkTransform))]
 [RequireComponent(typeof(PredictedOwner))]
-[RequireComponent(typeof(VehicleCollisionDetector))]
 [RequireComponent(typeof(PhysicsDamageable))]
 public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
 {
-    [Serializable]
-    public class BodyMesh
-    {
-        public MeshRenderer Renderer;
-        public int MaterialIndex;
-    }
-
-    public delegate void VehiclePlayerEvent(Player player);
     public const float KINEMATIC_THRESHOLD_DISTANCE;
     public const float MAX_TURNOVER_SPEED;
     public const float TURNOVER_FORCE;
@@ -87,8 +72,8 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     protected InteractableObject intObj;
     [SerializeField]
     protected List<Transform> exitPoints;
-    [SerializeField]
-    protected Rigidbody rb;
+    public Rigidbody Rb;
+    public VehicleColor Color;
     public VehicleSeat[] Seats;
     public BoxCollider boundingBox;
     public VehicleAgent Agent;
@@ -98,8 +83,7 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     public NavmeshCut NavmeshCut;
     public VehicleHumanoidCollider HumanoidColliderContainer;
     public POI POI;
-    public List<VehicleSound> Sounds;
-    public List<PlayerPusher> Pushers;
+    private List<PlayerPusher> pushers;
     [SerializeField]
     protected Transform centerOfMass;
     [SerializeField]
@@ -133,15 +117,6 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     [Range(0f, 1f)]
     [SerializeField]
     protected float reverseMultiplier;
-    [Header("Color Settings")]
-    [SerializeField]
-    protected BodyMesh[] BodyMeshes;
-    public EVehicleColor DefaultColor;
-    private EVehicleColor DisplayedColor;
-    [Header("Outline settings")]
-    [SerializeField]
-    protected List<GameObject> outlineRenderers;
-    protected Outlinable outlineEffect;
     [Header("Control overrides")]
     public bool overrideControls;
     public float throttleOverride;
@@ -152,32 +127,32 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     private bool _isOccupied;
     private RollingAverage<float> previousSpeeds;
     private const int previousSpeedsSampleSize;
+    [CompilerGenerated]
     [SyncVar( /*Could not decode attribute arguments.*/)]
-    public float currentSteerAngle;
+    public float _003CCurrentSteerAngle_003Ek__BackingField;
     private float lastFrameSteerAngle;
     private float lastReplicatedSteerAngle;
     private bool justExitedVehicle;
     [CompilerGenerated]
     [SyncVar( /*Could not decode attribute arguments.*/)]
-    public bool _003CbrakesApplied_003Ek__BackingField;
+    public bool _003CBrakesApplied_003Ek__BackingField;
     [CompilerGenerated]
     [SyncVar( /*Could not decode attribute arguments.*/)]
-    public bool _003CisReversing_003Ek__BackingField;
+    public bool _003CIsReversing_003Ek__BackingField;
     private Vector3 lastFramePosition;
     private Transform closestExitPoint;
+    private float timeOnSpawn;
+    private float timeOnLastOccupied;
     [HideInInspector]
     public ParkData CurrentParkData;
     private VehicleLoader loader;
-    public VehiclePlayerEvent onPlayerEnterVehicle;
-    public VehiclePlayerEvent onPlayerExitVehicle;
-    public UnityEvent onVehicleStart;
-    public UnityEvent onVehicleStop;
-    public UnityEvent onHandbrakeApplied;
-    public UnityEvent<Collision> onCollision;
-    public UnityEvent<bool> onOccupy;
-    public SyncVar<float> syncVar___currentSteerAngle;
-    public SyncVar<bool> syncVar____003CbrakesApplied_003Ek__BackingField;
-    public SyncVar<bool> syncVar____003CisReversing_003Ek__BackingField;
+    public Action onVehicleStart;
+    public Action onVehicleStop;
+    public Action onHandbrakeApplied;
+    public Action<Collision> onCollision;
+    public SyncVar<float> syncVar____003CCurrentSteerAngle_003Ek__BackingField;
+    public SyncVar<bool> syncVar____003CBrakesApplied_003Ek__BackingField;
+    public SyncVar<bool> syncVar____003CIsReversing_003Ek__BackingField;
     private bool NetworkInitialize___EarlyScheduleOne_002EVehicles_002ELandVehicleAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EVehicles_002ELandVehicleAssembly_002DCSharp_002Edll_Excuted;
     public string VehicleName => vehicleName;
@@ -186,37 +161,45 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     public bool IsPlayerOwned { get; protected set; }
     public bool IsVisible { get; protected set; } = true;
     public Guid GUID { get; protected set; }
-    public Vector3 boundingBoxDimensions => new Vector3(boundingBox.size.x * ((Component)boundingBox).transform.localScale.x, boundingBox.size.y * ((Component)boundingBox).transform.localScale.y, boundingBox.size.z * ((Component)boundingBox).transform.localScale.z);
+    public Vector3 BoundingBoxDimensions => new Vector3(boundingBox.size.x * ((Component)boundingBox).transform.localScale.x, boundingBox.size.y * ((Component)boundingBox).transform.localScale.y, boundingBox.size.z * ((Component)boundingBox).transform.localScale.z);
     public Transform driverEntryPoint => exitPoints[0];
-    public Rigidbody Rb => rb;
     public float ActualMaxSteeringAngle { get; }
     public bool MaxSteerAngleOverridden { get; private set; }
     public float OverriddenMaxSteerAngle { get; private set; }
-    public EVehicleColor OwnedColor { get; private set; } = EVehicleColor.White;
     public int Capacity => Seats.Length;
     public int CurrentPlayerOccupancy => Seats.Count(default);
-    public bool localPlayerIsDriver { get; protected set; }
-    public bool localPlayerIsInVehicle { get; protected set; }
-    public bool isOccupied { get; set; }
+    public bool LocalPlayerIsDriver { get; protected set; }
+    public bool LocalPlayerIsInVehicle { get; protected set; }
+    public bool IsOccupied { get; set; }
     public Player DriverPlayer { get; }
     public List<Player> OccupantPlayers => (
         from s in Seats
         where s.isOccupied
         select s.Occupant).ToList();
     public NPC[] OccupantNPCs { get; protected set; } = new NPC[0];
-    public float speed_Kmh { get; protected set; }
-    public float speed_Ms => speed_Kmh / 3.6f;
-    public float speed_Mph => speed_Kmh * 0.621371f;
+    public float Speed_Kmh { get; protected set; }
+    public float Speed_Ms => Speed_Kmh / 3.6f;
+    public float Speed_Mph => Speed_Kmh * 0.621371f;
+    public bool IsPhysicallySimulated { get; protected set; }
     public float currentThrottle { get; protected set; }
-    public bool brakesApplied {[CompilerGenerated]
+    public float CurrentSteerAngle {[CompilerGenerated]
         get; [CompilerGenerated]
         set; }
-    public bool isReversing {[CompilerGenerated]
+
+    [HideInInspector]
+    public bool BrakesApplied {[CompilerGenerated]
         get; [CompilerGenerated]
         set; }
-    public bool isStatic { get; protected set; }
+
+    [HideInInspector]
+    public bool IsReversing {[CompilerGenerated]
+        get; [CompilerGenerated]
+        set; }
     public bool handbrakeApplied { get; protected set; }
     public float boundingBaseOffset => ((Component)this).transform.InverseTransformPoint(((Component)boundingBox).transform.position).y + boundingBox.size.y * 0.5f;
+    private float timeSinceSpawn => Time.timeSinceLevelLoad - timeOnSpawn;
+    public float timeSinceLastOccupied => Time.timeSinceLevelLoad - timeOnLastOccupied;
+    public EVehicleColor OwnedColor { get; private set; } = EVehicleColor.White;
     public bool isParked => (Object)(object)CurrentParkingLot != (Object)null;
     public ParkingLot CurrentParkingLot { get; protected set; }
     public ParkingSpot CurrentParkingSpot { get; protected set; }
@@ -227,9 +210,9 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     public List<string> LocalExtraFiles { get; set; } = new List<string>();
     public List<string> LocalExtraFolders { get; set; } = new List<string>();
     public bool HasChanged { get; set; } = true;
-    public float SyncAccessor_currentSteerAngle { get; set; }
-    public bool SyncAccessor__003CbrakesApplied_003Ek__BackingField { get; set; }
-    public bool SyncAccessor__003CisReversing_003Ek__BackingField { get; set; }
+    public float SyncAccessor__003CCurrentSteerAngle_003Ek__BackingField { get; set; }
+    public bool SyncAccessor__003CBrakesApplied_003Ek__BackingField { get; set; }
+    public bool SyncAccessor__003CIsReversing_003Ek__BackingField { get; set; }
 
     public override void Awake();
     public virtual void InitializeSaveable();
@@ -246,9 +229,9 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     protected virtual void OnDestroy();
     private void GetNetworth(MoneyManager.FloatContainer container);
     protected virtual void Update();
-    private void OnDrawGizmos();
     protected virtual void FixedUpdate();
-    protected virtual void LateUpdate();
+    private void UpdateSpeedCalculation();
+    private void UpdateOutOfBounds();
     private void OnCollisionEnter(Collision collision);
     [ServerRpc(RequireOwnership = false)]
     protected virtual void SetOwner(NetworkConnection conn);
@@ -262,18 +245,20 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     protected virtual void UpdateThrottle();
     protected virtual void ApplyThrottle();
     public void ApplyHandbrake();
+    private void ApplyDownForce();
+    private void UpdateTurnOver();
+    protected virtual void UpdateSteerAngle();
     [ServerRpc(RequireOwnership = false)]
     private void SetSteeringAngle(float sa);
-    protected virtual void UpdateSteerAngle();
     protected virtual void ApplySteerAngle();
-    private void DelaySetStatic(bool stat);
-    public virtual void SetIsStatic(bool stat);
     public void AlignTo(Transform target, EParkingAlignment type, bool network = false);
     public Tuple<Vector3, Quaternion> GetAlignmentTransform(Transform target, EParkingAlignment type);
     public float GetVehicleValue();
     public void OverrideMaxSteerAngle(float maxAngle);
     public void ResetMaxSteerAngle();
     public void SetObstaclesActive(bool active);
+    private void UpdatePhysicallySimulated(bool forceApply = false);
+    private bool ShouldBePhysicallySimulated();
     public VehicleSeat GetFirstFreeSeat();
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
@@ -299,10 +284,8 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     [TargetRpc]
     [ObserversRpc(RunLocally = true)]
     protected virtual void SetOwnedColor(NetworkConnection conn, EVehicleColor col);
-    public virtual void ApplyColor(EVehicleColor col);
+    public void ApplyColor(EVehicleColor col);
     public void ApplyOwnedColor();
-    public void ShowOutline(BuildableItem.EOutlineColor color);
-    public void HideOutline();
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
     private void Park_Networked(NetworkConnection conn, ParkData parkData);
@@ -312,8 +295,6 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     public void ExitPark_Networked(NetworkConnection conn, bool moveToExitPoint = true);
     public void ExitPark(bool moveToExitPoint = true);
     public void SetVisible(bool vis);
-    public void RegisterSound(VehicleSound sound);
-    public void DeregisterSound(VehicleSound sound);
     public void RegisterPusher(PlayerPusher pusher);
     public void DeregisterPusher(PlayerPusher pusher);
     public List<ItemInstance> GetContents();

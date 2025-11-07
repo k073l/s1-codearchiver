@@ -4,7 +4,6 @@ using ScheduleOne.Audio;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.NPCs;
-using ScheduleOne.Packaging;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Product.Packaging;
@@ -17,7 +16,6 @@ public class CocaineInstance : ProductItemInstance
     public CocaineInstance();
     public CocaineInstance(ItemDefinition definition, int quantity, EQuality quality, PackagingDefinition packaging = null);
     public override ItemInstance GetCopy(int overrideQuantity = -1);
-    public override void SetupPackagingVisuals(FilledPackagingVisuals visuals);
     public override ItemData GetItemData();
     public override void ApplyEffectsToNPC(NPC npc);
     public override void ClearEffectsFromNPC(NPC npc);

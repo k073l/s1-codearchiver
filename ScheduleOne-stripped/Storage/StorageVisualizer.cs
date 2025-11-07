@@ -1,10 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using ScheduleOne.DevUtilities;
 using ScheduleOne.ItemFramework;
-using ScheduleOne.Persistence;
 using ScheduleOne.Tiles;
 using UnityEngine;
 
@@ -21,7 +18,6 @@ public class StorageVisualizer : MonoBehaviour
     protected int totalFootprintCapacity;
     protected Dictionary<StorableItemInstance, List<StoredItem>> activeStoredItems;
     public bool BlockRefreshes;
-    private bool isUpdatingVisuals;
     protected virtual void Awake();
     public void AddSlot(ItemSlot slot, bool update = false);
     public Dictionary<StorableItemInstance, int> GetVisualRepresentation();

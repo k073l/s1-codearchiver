@@ -52,10 +52,10 @@ public class BodySearchBehaviour : Behaviour
     private DialogueDatabase dialogueDatabase => officer.DialogueHandler.Database;
 
     public override void Awake();
-    protected override void Begin();
-    protected override void Resume();
-    protected override void End();
-    protected override void Pause();
+    public override void Begin();
+    public override void Resume();
+    public override void End();
+    public override void Pause();
     public override void BehaviourUpdate();
     private void UpdateSearch();
     protected virtual void UpdateMovement();

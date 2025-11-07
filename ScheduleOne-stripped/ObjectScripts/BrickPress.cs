@@ -19,7 +19,6 @@ using ScheduleOne.EntityFramework;
 using ScheduleOne.Interaction;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Management;
-using ScheduleOne.Packaging;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.PlayerTasks;
@@ -63,7 +62,6 @@ public class BrickPress : GridItem, IUsable, IItemSlotOwner, ITransitEntity, ICo
     public Transform PressTransform;
     public Transform PressTransform_Raised;
     public Transform PressTransform_Lowered;
-    public Transform PressTransform_Compressed;
     public AudioSourceController SlamSound;
     public ConfigurationReplicator configReplicator;
     [Header("Prefabs")]

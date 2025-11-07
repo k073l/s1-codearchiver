@@ -28,7 +28,6 @@ public class CartelInfluence : NetworkBehaviour
     }
 
     public const float INFLUENCE_TO_UNLOCK_NEXT_REGION;
-    public const float PASSIVE_INFLUENCE_GAIN_PER_DAY;
     [Header("Settings")]
     public RegionInfluenceData[] DefaultRegionInfluence;
     private List<RegionInfluenceData> regionInfluence;

@@ -6,7 +6,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using EasyButtons;
 using FishNet;
-using FishNet.Component.Transforming;
 using FishNet.Connection;
 using FishNet.Managing;
 using FishNet.Managing.Logging;

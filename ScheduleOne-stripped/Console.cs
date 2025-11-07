@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FishNet;
+using FishNet.Object;
 using ScheduleOne.Cutscenes;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Employees;
@@ -457,6 +458,15 @@ public class Console : Singleton<Console>
         public override string CommandWord => "forcesleep";
         public override string CommandDescription => "Forces all players to immediately sleep.";
         public override string ExampleUsage => "forcesleep";
+
+        public override void Execute(List<string> args);
+    }
+
+    public class DestroyNPCs : ConsoleCommand
+    {
+        public override string CommandWord => "destroynpcs";
+        public override string CommandDescription => "Destroys all NPCs in the scene, including employees and dealers.";
+        public override string ExampleUsage => "destroynpcs";
 
         public override void Execute(List<string> args);
     }

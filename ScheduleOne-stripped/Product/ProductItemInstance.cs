@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using FishNet.Serializing.Helping;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Effects;
 using ScheduleOne.Equipping;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.NPCs;
-using ScheduleOne.Packaging;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Product.Packaging;
-using ScheduleOne.Properties;
 using ScheduleOne.Storage;
 using UnityEngine;
 
@@ -44,7 +43,6 @@ public class ProductItemInstance : QualityItemInstance
     public virtual void SetPackaging(PackagingDefinition def);
     private Equippable GetEquippable();
     private StoredItem GetStoredItem();
-    public virtual void SetupPackagingVisuals(FilledPackagingVisuals visuals);
     private Sprite GetIcon();
     public override ItemData GetItemData();
     public virtual float GetAddictiveness();

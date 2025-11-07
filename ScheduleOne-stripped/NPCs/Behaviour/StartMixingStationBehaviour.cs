@@ -23,8 +23,8 @@ public class StartMixingStationBehaviour : Behaviour
 
     public override void Awake();
     public void AssignStation(MixingStation station);
-    protected override void End();
-    protected override void Pause();
+    public override void End();
+    public override void Pause();
     public override void ActiveMinPass();
     [ObserversRpc(RunLocally = true)]
     private void StartCook();
