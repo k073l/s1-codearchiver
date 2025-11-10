@@ -78,6 +78,7 @@ public class GameInput : PersistentSingleton<GameInput>
     public static Vector2 CameraAxis;
     public static float MouseWheelAxis;
     public static bool ControllerComboActive;
+    private float vehicleDriveAxis;
     private List<ButtonCode> buttonsDownThisFrame;
     private List<ButtonCode> buttonsDown;
     private List<ButtonCode> buttonsUpThisFrame;
