@@ -93,8 +93,6 @@ public class ProductManager : NetworkSingleton<ProductManager>, IBaseSaveable, I
     public override void OnStartClient();
     private void Update();
     private void Clean();
-    [TargetRpc]
-    public void SetIsDoneReplicating(NetworkConnection conn);
     [ServerRpc(RequireOwnership = false)]
     public void SetMethDiscovered();
     [ServerRpc(RequireOwnership = false)]
@@ -172,9 +170,6 @@ public class ProductManager : NetworkSingleton<ProductManager>, IBaseSaveable, I
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();
-    private void RpcWriter___Target_SetIsDoneReplicating_328543758(NetworkConnection conn);
-    public void RpcLogic___SetIsDoneReplicating_328543758(NetworkConnection conn);
-    private void RpcReader___Target_SetIsDoneReplicating_328543758(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Server_SetMethDiscovered_2166136261();
     public void RpcLogic___SetMethDiscovered_2166136261();
     private void RpcReader___Server_SetMethDiscovered_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);

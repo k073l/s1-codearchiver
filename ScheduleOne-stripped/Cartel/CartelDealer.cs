@@ -1,4 +1,3 @@
-using System;
 using FishNet;
 using FishNet.Connection;
 using FishNet.Managing;
@@ -9,7 +8,6 @@ using FishNet.Serializing.Generated;
 using FishNet.Transporting;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Economy;
-using ScheduleOne.GameTime;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Product;
 using ScheduleOne.Product.Packaging;
@@ -35,10 +33,9 @@ public class CartelDealer : Dealer
     private GoonPool GoonPool => NetworkSingleton<Cartel>.Instance.GoonPool;
 
     protected override void Start();
-    public override void OnStartServer();
     public override void OnSpawnServer(NetworkConnection connection);
-    private void RandomizeInventory();
-    private void RandomizeAppearance();
+    public void RandomizeInventory();
+    public void RandomizeAppearance();
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
     private void ConfigureGoonSettings(NetworkConnection conn, CartelGoonAppearance appearance, float moveSpeed);

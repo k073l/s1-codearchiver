@@ -60,7 +60,8 @@ public class NPCBehaviour : NetworkBehaviour
     public void Summon(string buildingGUID, int doorIndex, float duration);
     [ServerRpc(RequireOwnership = false)]
     public void ConsumeProduct(ProductItemInstance product);
-    protected virtual void OnKnockOut();
+    private void OnKnockOut();
+    private void OnRevive();
     protected virtual void OnDie();
     public Behaviour GetBehaviour(string BehaviourName);
     public virtual void Update();

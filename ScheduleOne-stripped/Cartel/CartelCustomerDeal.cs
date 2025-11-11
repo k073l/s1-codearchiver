@@ -3,6 +3,7 @@ using FishNet;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Map;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace ScheduleOne.Cartel;
 public class CartelCustomerDeal : CartelActivity
@@ -13,4 +14,5 @@ public class CartelCustomerDeal : CartelActivity
     public override void Activate(EMapRegion region);
     protected override void MinPassed();
     protected override void Deactivate();
+    private void DealerUnconscious();
 }

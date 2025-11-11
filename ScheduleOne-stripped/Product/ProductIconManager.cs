@@ -25,6 +25,7 @@ public class ProductIconManager : Singleton<ProductIconManager>
     public string IconContainerPath;
     public ProductDefinition[] Products;
     public PackagingDefinition[] Packaging;
+    protected override void Awake();
     public Sprite GetIcon(string productID, string packagingID, bool ignoreError = false);
     public Sprite GenerateIcons(string productID);
     private Texture2D GenerateProductTexture(string productID, string packagingID);

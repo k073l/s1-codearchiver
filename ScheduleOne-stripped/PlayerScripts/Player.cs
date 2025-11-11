@@ -168,6 +168,7 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
         get; [CompilerGenerated]
         [ServerRpc(RunLocally = true)]
         set; }
+    public bool IsInVehicle => (Object)(object)SyncAccessor__003CCurrentVehicle_003Ek__BackingField != (Object)null;
     public VehicleSeat CurrentVehicleSeat { get; private set; }
     public LandVehicle LastDrivenVehicle { get; private set; }
     public float TimeSinceVehicleExit { get; protected set; }

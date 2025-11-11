@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using EasyButtons;
 using FishNet;
 using FishNet.Connection;
 using FishNet.Managing;
@@ -39,6 +40,8 @@ public class CartelRegionActivities : NetworkBehaviour
     public override void OnSpawnServer(NetworkConnection connection);
     public void HourPass();
     private void TryStartActivity();
+    [Button]
+    public void ActivateDeal();
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
     private void StartActivity(NetworkConnection conn, int activityIndex);
