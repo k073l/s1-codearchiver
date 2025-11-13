@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 namespace ScheduleOne.Equipping;
-public class Equippable_Viewmodel : Equippable_StorableItem
+public class Equippable_Viewmodel : Equippable
 {
     [Header("Viewmodel settings")]
     public Vector3 localPosition;

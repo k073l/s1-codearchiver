@@ -18,11 +18,11 @@ public class ProductIconManager : Singleton<ProductIconManager>
         public Sprite Icon;
     }
 
+    public const string ProductIconPath;
     [SerializeField]
     private List<ProductIcon> icons;
     [Header("Product and packaging")]
     public IconGenerator IconGenerator;
-    public string IconContainerPath;
     public ProductDefinition[] Products;
     public PackagingDefinition[] Packaging;
     protected override void Awake();

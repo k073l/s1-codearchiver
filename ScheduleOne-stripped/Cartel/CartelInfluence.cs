@@ -39,6 +39,7 @@ public class CartelInfluence : NetworkBehaviour
     private void Start();
     public override void OnSpawnServer(NetworkConnection connection);
     protected override void OnValidate();
+    [ServerRpc(RequireOwnership = false)]
     public void ChangeInfluence(EMapRegion region, float amount);
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
@@ -51,6 +52,9 @@ public class CartelInfluence : NetworkBehaviour
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();
+    private void RpcWriter___Server_ChangeInfluence_2792544924(EMapRegion region, float amount);
+    public void RpcLogic___ChangeInfluence_2792544924(EMapRegion region, float amount);
+    private void RpcReader___Server_ChangeInfluence_2792544924(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
     private void RpcWriter___Observers_SetInfluence_2071772313(NetworkConnection conn, EMapRegion region, float influence);
     public void RpcLogic___SetInfluence_2071772313(NetworkConnection conn, EMapRegion region, float influence);
     private void RpcReader___Observers_SetInfluence_2071772313(PooledReader PooledReader0, Channel channel);
