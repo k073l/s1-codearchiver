@@ -42,6 +42,7 @@ public class CurfewManager : NetworkSingleton<CurfewManager>
     public bool IsCurrentlyActive { get; protected set; }
     public bool IsHardCurfewActive { get; protected set; }
 
+    public override void Awake();
     protected override void Start();
     public override void OnSpawnServer(NetworkConnection connection);
     [ObserversRpc]
@@ -61,5 +62,5 @@ public class CurfewManager : NetworkSingleton<CurfewManager>
     private void RpcWriter___Observers_Disable_2166136261();
     public void RpcLogic___Disable_2166136261();
     private void RpcReader___Observers_Disable_2166136261(PooledReader PooledReader0, Channel channel);
-    public override void Awake();
+    protected override void Awake_UserLogic_ScheduleOne_002ELaw_002ECurfewManager_Assembly_002DCSharp_002Edll();
 }

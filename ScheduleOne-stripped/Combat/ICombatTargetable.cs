@@ -26,4 +26,5 @@ public interface ICombatTargetable : IDamageable, ISightable
 
     void RecordLastKnownPosition(bool resetTimeSinceLastSeen);
     float GetSearchTime();
+    bool IsNull();
 }
