@@ -84,7 +84,7 @@ public class PoliceOfficer : NPC
     protected override void Start();
     protected override void OnDestroy();
     protected void Update();
-    protected override void MinPass();
+    protected override void OnTick();
     private void UpdateVision();
     private void CheckDeactivation();
     [ServerRpc(RunLocally = true, RequireOwnership = false)]

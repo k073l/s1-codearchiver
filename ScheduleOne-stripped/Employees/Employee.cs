@@ -101,7 +101,7 @@ public class Employee : NPC
     protected void MarkIsWorking();
     private void SetWaitOutside(bool wait);
     protected virtual bool ShouldIdle();
-    protected override void MinPass();
+    protected override void OnTick();
     private void OnSleepEnd();
     public void SetIsPaid();
     public override bool ShouldSave();

@@ -170,9 +170,10 @@ public class Customer : NetworkBehaviour, ISaveable
     private void SetUpDialogue();
     private void SetupPoI();
     public virtual void InitializeSaveable();
-    protected virtual void MinPass();
+    protected virtual void OnMinPass();
+    protected virtual void OnTick();
     private void OfferContractToDealer(ContractInfo info, Dealer dealer);
-    protected virtual void DayPass();
+    protected virtual void OnDayPass();
     private void UpdateDealAttendance();
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
