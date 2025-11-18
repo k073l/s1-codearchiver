@@ -7,6 +7,7 @@ using FishNet.Object;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.Law;
+using ScheduleOne.Networking;
 using ScheduleOne.NPCs.Schedules;
 using ScheduleOne.Persistence;
 using ScheduleOne.PlayerScripts;

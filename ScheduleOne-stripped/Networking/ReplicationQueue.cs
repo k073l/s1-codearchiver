@@ -24,18 +24,22 @@ public class ReplicationQueue : NetworkSingleton<ReplicationQueue>
     }
 
     public const int RATE_LIMIT_BYTES_PER_SECOND;
+    public const int MAX_REPLICATION_DURATION;
     private Dictionary<NetworkConnection, List<ReplicationRequest>> requestsByConnection;
     private List<ReplicationRequest> queue;
     private int currentByteBudget;
     private float timeOnLastReplicationTaskRPC;
+    private float timeOnReplicationStart;
     private bool NetworkInitialize___EarlyScheduleOne_002ENetworking_002EReplicationQueueAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENetworking_002EReplicationQueueAssembly_002DCSharp_002Edll_Excuted;
     public bool ReplicationDoneForLocalPlayer { get; private set; }
+    public bool LocalPlayerReplicationTimedOut { get; }
     public string CurrentReplicationTask { get; private set; } = string.Empty;
 
     public static void Enqueue(string taskName, NetworkConnection target, Action<NetworkConnection> callback, int approximateSizeBytes = 32);
     public static float GetReplicationDuration(int approximateSizeBytes);
     public override void OnStartServer();
+    public override void OnStartClient();
     public override void OnSpawnServer(NetworkConnection connection);
     [TargetRpc]
     private void SetReplicationDone(NetworkConnection conn);

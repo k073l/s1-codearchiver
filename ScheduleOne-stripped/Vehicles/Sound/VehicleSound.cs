@@ -1,45 +1,40 @@
+using System;
 using System.Collections;
 using ScheduleOne.Audio;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace ScheduleOne.Vehicles.Sound;
 public class VehicleSound : MonoBehaviour
 {
     public const float COLLISION_SOUND_COOLDOWN;
-    public float VolumeMultiplier;
+    public const float AUDIO_LERP_SPEED;
+    public const float MinCollisionMomentum;
+    public const float MaxCollisionMomentum;
+    public const float MinCollisionVolume;
+    public const float MaxCollisionVolume;
+    public const float MinCollisionPitch;
+    public const float MaxCollisionPitch;
+    public float EngineVolumeMultiplier;
+    public float EnginePitchMultiplier;
     [Header("References")]
     public AudioSourceController EngineStartSource;
     public AudioSourceController EngineIdleSource;
     public AudioSourceController EngineLoopSource;
     public AudioSourceController HandbrakeSource;
-    public AudioSourceController HonkSource;
     public AudioSourceController ImpactSound;
-    [Header("Impact Sounds")]
-    public float MinCollisionMomentum;
-    public float MaxCollisionMomentum;
-    public float MinCollisionVolume;
-    public float MaxCollisionVolume;
-    public float MinCollisionPitch;
-    public float MaxCollisionPitch;
     [Header("Engine Loop Settings")]
     public AnimationCurve EngineLoopPitchCurve;
-    public float EngineLoopPitchMultiplier;
     public AnimationCurve EngineLoopVolumeCurve;
-    private float currentIdleVolume;
     private float lastCollisionTime;
     private float lastCollisionMomentum;
-    private float volumeTarget;
-    private bool isUpdatingVolume;
+    private Coroutine volumeRoutine;
     public LandVehicle Vehicle { get; private set; }
 
     protected virtual void Awake();
-    private void OnDestroy();
-    private void OnOccupy(bool isOccupied);
-    private IEnumerator AdjustVolume();
-    public void UpdateIdle();
-    protected void HandbrakeApplied();
-    protected void EngineStart();
-    public void Honk();
+    private void EngineStart();
+    private void HandbrakeApplied();
+    private void StartUpdateVolume();
+    private void UpdateIdle(bool engineRunning);
+    private void UpdateEngineLoop(bool engineRunning, float normalizedspeed);
     private void OnCollision(Collision collision);
 }

@@ -53,6 +53,7 @@ public class Phone : PlayerSingleton<Phone>
     protected virtual void Update();
     protected override void OnDestroy();
     private void ToggleFlashlight();
+    private void LateUpdate();
     public void SetOpenable(bool o);
     public void SetIsOpen(bool o);
     public void SetIsHorizontal(bool h);

@@ -37,6 +37,7 @@ public class TimeManager : NetworkSingleton<TimeManager>, IBaseSaveable, ISaveab
     public Action onUpdate;
     public Action onFixedUpdate;
     public Action<int> onTimeSkip;
+    public Action onUnscaledMinPass;
     public Action onTick;
     public Action onTimeChanged;
     public Action onSleepStart;

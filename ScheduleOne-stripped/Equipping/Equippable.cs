@@ -11,4 +11,5 @@ public class Equippable : MonoBehaviour
     public bool CanPickUpWhenEquipped;
     public virtual void Equip(ItemInstance item);
     public virtual void Unequip();
+    protected virtual void Update();
 }

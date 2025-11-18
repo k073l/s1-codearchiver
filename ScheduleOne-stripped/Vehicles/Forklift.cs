@@ -54,7 +54,7 @@ public class Forklift : LandVehicle
     public override void Awake();
     protected override void Update();
     protected override void FixedUpdate();
-    protected new virtual void LateUpdate();
+    protected virtual void LateUpdate();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

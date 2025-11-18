@@ -95,7 +95,7 @@ public class Skateboard : NetworkBehaviour
     public UnityEvent OnPushStart;
     public UnityEvent<float> OnJump;
     public UnityEvent OnLand;
-    private int horizontalInput;
+    private float horizontalInput;
     private bool jumpReleased;
     private float timeSinceLastJump;
     private float timeGrounded;

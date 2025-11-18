@@ -9,8 +9,11 @@ using UnityEngine.SceneManagement;
 namespace ScheduleOne.Audio;
 public class AudioManager : PersistentSingleton<AudioManager>
 {
-    public const float MIN_WORLD_MUSIC_VOLUME_MULTIPLIER;
-    public const float MUSIC_FADE_TIME;
+    private const float MinWorldMusicVolumeMulitplier;
+    private const float MusicFadeTime;
+    private const float MinGameVolume;
+    private const float MaxGameVolume;
+    private const float GameVolumeLerpSpeed;
     [Range(0f, 2f)]
     [SerializeField]
     protected float masterVolume;
@@ -41,9 +44,6 @@ public class AudioManager : PersistentSingleton<AudioManager>
     public AudioMixerGroup MenuMixer;
     public AudioMixerGroup MusicMixer;
     private float currentGameVolume;
-    private const float minGameVolume;
-    private const float maxGameVolume;
-    private float gameVolumeMultiplier;
     public AudioMixerSnapshot DefaultSnapshot;
     public AudioMixerSnapshot DistortedSnapshot;
     public float MasterVolume => masterVolume;
@@ -65,9 +65,9 @@ public class AudioManager : PersistentSingleton<AudioManager>
     protected override void Awake();
     protected override void Start();
     protected void Update();
-    public void SetGameVolumeMultipler(float value);
     public void SetDistorted(bool distorted, float transition = 5f);
     private void SetGameVolume(float value);
+    private float ValueToVolume(float value);
     public float GetVolume(EAudioType audioType, bool scaled = true);
     public void SetMasterVolume(float volume);
     public void SetVolume(EAudioType type, float volume);

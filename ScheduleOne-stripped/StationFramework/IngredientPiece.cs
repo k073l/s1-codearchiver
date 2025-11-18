@@ -7,7 +7,6 @@ namespace ScheduleOne.StationFramework;
 public class IngredientPiece : MonoBehaviour
 {
     public const float LIQUID_FRICTION;
-    public LiquidContainer CurrentLiquidContainer;
     [Header("References")]
     public Transform ModelContainer;
     public ParticleSystem DissolveParticles;
@@ -20,6 +19,7 @@ public class IngredientPiece : MonoBehaviour
     private float defaultDrag;
     private Coroutine dissolveParticleRoutine;
     public float CurrentDissolveAmount { get; private set; }
+    public LiquidContainer CurrentLiquidContainer { get; private set; }
 
     private void Start();
     private void Update();

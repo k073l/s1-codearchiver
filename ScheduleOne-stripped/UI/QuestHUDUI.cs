@@ -24,7 +24,6 @@ public class QuestHUDUI : MonoBehaviour
     public void Destroy();
     public void UpdateUI();
     public void UpdateMainLabel();
-    public void UpdateExpiry();
     public void UpdateShade();
     public void BopIcon();
     private void FadeIn();

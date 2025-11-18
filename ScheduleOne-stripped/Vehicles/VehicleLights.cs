@@ -34,7 +34,6 @@ public class VehicleLights : NetworkBehaviour
     public Light[] brakeLightSources;
     public Material brakeLightMat_On;
     public Material brakeLightMat_Off;
-    public Material brakeLightMat_Ambient;
     protected bool brakeLightsOn;
     protected bool brakeLightsApplied;
     [Header("Reverse lights")]

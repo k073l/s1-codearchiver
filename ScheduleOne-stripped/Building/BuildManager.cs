@@ -6,7 +6,6 @@ using ScheduleOne.Audio;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.EntityFramework;
 using ScheduleOne.ItemFramework;
-using ScheduleOne.Storage;
 using ScheduleOne.Tiles;
 using Unity.AI.Navigation;
 using UnityEngine;
@@ -42,8 +41,6 @@ public class BuildManager : Singleton<BuildManager>
 
     protected override void Awake();
     public void StartBuilding(ItemInstance item);
-    public void StartBuildingStoredItem(ItemInstance item);
-    public void StartPlacingCash(ItemInstance item);
     public void StopBuilding();
     public void PlayBuildSound(BuildableItemDefinition.EBuildSoundType type, Vector3 point);
     public void DisableColliders(GameObject obj);
@@ -56,5 +53,4 @@ public class BuildManager : Singleton<BuildManager>
     public GridItem CreateGridItem(ItemInstance item, Grid grid, Vector2 originCoordinate, int rotation, string guid = "");
     public ProceduralGridItem CreateProceduralGridItem(ItemInstance item, int rotationAngle, List<CoordinateProceduralTilePair> matches, string guid = "");
     public SurfaceItem CreateSurfaceItem(ItemInstance item, Surface parentSurface, Vector3 relativePosition, Quaternion relativeRotation, string guid = "");
-    public void CreateStoredItem(StorableItemInstance item, IStorageEntity parentStorageEntity, StorageGrid grid, Vector2 originCoord, float rotation);
 }

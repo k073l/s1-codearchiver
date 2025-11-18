@@ -5,6 +5,14 @@ namespace ScheduleOne.Product;
 [Serializable]
 public class WeedAppearanceSettings
 {
+    public enum EWeedAppearanceType
+    {
+        Main,
+        Secondary,
+        Leaf,
+        Stem
+    }
+
     public Color32 MainColor;
     public Color32 SecondaryColor;
     public Color32 LeafColor;

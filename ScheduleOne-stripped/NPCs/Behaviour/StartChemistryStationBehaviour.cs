@@ -28,7 +28,7 @@ public class StartChemistryStationBehaviour : Behaviour
 
     public override void Awake();
     public void SetTargetStation(ChemistryStation station);
-    protected override void End();
+    public override void End();
     public override void ActiveMinPass();
     public override void BehaviourUpdate();
     [ObserversRpc(RunLocally = true)]

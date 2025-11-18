@@ -8,9 +8,12 @@ namespace ScheduleOne.Quests;
 public class Quest_DealForCartel : Quest
 {
     public QuestEntry MainEntry;
+    public QuestEntry EndTruceEntry;
     private CartelDealInfo dealInfo;
     public void Initialize(CartelDealInfo dealInfo);
+    public override void Begin(bool network = true);
     protected override void MinPass();
     private void UpdateTimingLabel();
     public void NotifyDealCompleted();
+    public void NotifyTruceEnded();
 }

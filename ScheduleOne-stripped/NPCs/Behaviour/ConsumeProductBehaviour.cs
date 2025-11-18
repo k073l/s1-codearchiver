@@ -41,11 +41,11 @@ public class ConsumeProductBehaviour : Behaviour
     private void SetProduct(ProductItemInstance _product);
     [ObserversRpc(RunLocally = true)]
     public void ClearEffects();
-    protected override void Begin();
-    protected override void Resume();
+    public override void Begin();
+    public override void Resume();
     private void TryConsume();
     public override void Disable();
-    protected override void End();
+    public override void End();
     private void ConsumeWeed();
     private void ConsumeMeth();
     private void ConsumeCocaine();

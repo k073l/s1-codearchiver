@@ -12,7 +12,7 @@ public class Benji : Dealer
     public UnityEvent onRecruitmentRequested;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002ECharacterClasses_002EBenjiAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002ECharacterClasses_002EBenjiAssembly_002DCSharp_002Edll_Excuted;
-    protected override void MinPass();
+    protected override void OnTick();
     protected override void AddCustomer(Customer customer);
     public override void RemoveCustomer(Customer customer);
     protected override void RecruitmentRequested();

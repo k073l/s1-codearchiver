@@ -114,12 +114,12 @@ public class Quest : MonoBehaviour, IGUIDRegisterable, ISaveable
     private void JournalEntryHoverStart();
     public int GetMinsUntilExpiry();
     public string GetExpiryText();
-    public virtual QuestHUDUI SetupHudUI();
+    public virtual QuestHUDUI SetupHUDUI();
     public void UpdateHUDUI();
+    public void DestroyHUDUI();
     public void BopHUDUI();
     public virtual string GetQuestTitle();
     public QuestEntry GetFirstActiveEntry();
-    private void DestroyHudUI();
     public virtual RectTransform CreateDetailDisplay(RectTransform parent);
     public void DestroyDetailDisplay();
     public virtual bool ShouldSave();

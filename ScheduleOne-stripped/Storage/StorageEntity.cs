@@ -18,7 +18,6 @@ using ScheduleOne.PlayerScripts;
 using ScheduleOne.Tools;
 using ScheduleOne.UI;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace ScheduleOne.Storage;
 public class StorageEntity : NetworkBehaviour, IItemSlotOwner
@@ -47,17 +46,13 @@ public class StorageEntity : NetworkBehaviour, IItemSlotOwner
     [Tooltip("If the distance between this StorageEntity and the player is greater than this, the StorageMenu will be closed.")]
     [Range(0f, 10f)]
     public float MaxAccessDistance;
-    [Header("Events")]
-    [Tooltip("Invoked when this StorageEntity is accessed in the StorageMenu")]
-    public UnityEvent onOpened;
-    [Tooltip("Invoked when the StorageMenu is closed.")]
-    public UnityEvent onClosed;
-    [Tooltip("Invoked when the contents change in any way. i.e. an item is added, removed, or the quantity of an item changes.")]
-    public UnityEvent onContentsChanged;
+    public Action onOpened;
+    public Action onClosed;
+    public Action onContentsChanged;
     private bool NetworkInitialize___EarlyScheduleOne_002EStorage_002EStorageEntityAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EStorage_002EStorageEntityAssembly_002DCSharp_002Edll_Excuted;
-    public bool IsOpened => (Object)(object)CurrentAccessor != (Object)null;
-    public Player CurrentAccessor { get; protected set; }
+    public bool IsOpened => (Object)(object)CurrentPlayerAccessor != (Object)null;
+    public Player CurrentPlayerAccessor { get; protected set; }
     public int ItemCount => ((IItemSlotOwner)this).GetTotalItemCount();
     public List<ItemSlot> ItemSlots { get; set; } = new List<ItemSlot>();
 

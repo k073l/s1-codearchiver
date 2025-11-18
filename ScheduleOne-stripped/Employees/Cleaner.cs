@@ -70,7 +70,7 @@ public class Cleaner : Employee, IConfigurable
     protected override void Fire();
     public override void OnSpawnServer(NetworkConnection connection);
     public void SendConfigurationToClient(NetworkConnection conn);
-    protected override void MinPass();
+    protected override void UpdateBehaviour();
     private void TryStartNewTask();
     private TrashContainerItem GetFirstNonFullBin(TrashContainerItem[] bins);
     public override void SetIdle(bool idle);

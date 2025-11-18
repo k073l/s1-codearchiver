@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using ScheduleOne.Building;
-using ScheduleOne.DevUtilities;
 using ScheduleOne.Equipping;
 using ScheduleOne.ItemFramework;
 using UnityEngine;
@@ -17,9 +15,6 @@ public class Equippable_Cash : Equippable_Viewmodel
     public List<Transform> Under300Stacks;
     public Transform Container_300Plus;
     public List<Transform> PlusStacks;
-    protected override void Update();
-    protected override void StartBuildingStoredItem();
-    protected override void StopBuildingStoredItem();
     public override void Equip(ItemInstance item);
     public override void Unequip();
     private void UpdateCashVisuals();

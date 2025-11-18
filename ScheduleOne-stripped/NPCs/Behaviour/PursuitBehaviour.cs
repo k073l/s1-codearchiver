@@ -48,8 +48,8 @@ public class PursuitBehaviour : CombatBehaviour
     public override void Awake();
     private void OnDestroy();
     protected override void SetTarget(NetworkObject target);
-    protected override void Begin();
-    protected override void Resume();
+    public override void Begin();
+    public override void Resume();
     public override void Disable();
     public override void BehaviourUpdate();
     public override void ActiveMinPass();

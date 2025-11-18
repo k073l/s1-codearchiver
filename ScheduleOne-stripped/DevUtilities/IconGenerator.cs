@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using EasyButtons;
 using ScheduleOne.ItemFramework;
-using ScheduleOne.Packaging;
 using ScheduleOne.Product;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -15,7 +14,8 @@ public class IconGenerator : Singleton<IconGenerator>
     public class PackagingVisuals
     {
         public string PackagingID;
-        public FilledPackagingVisuals Visuals;
+        public MultiTypeVisualsSetter ProductVisuals;
+        public Transform TopLevelTransform;
     }
 
     public int IconSize;

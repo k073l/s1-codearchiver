@@ -11,6 +11,8 @@ using FishNet.Serializing.Generated;
 using FishNet.Transporting;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Economy;
+using ScheduleOne.Effects;
+using ScheduleOne.Effects.MixMaps;
 using ScheduleOne.GameTime;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Map;
@@ -20,8 +22,6 @@ using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.Persistence.Loaders;
 using ScheduleOne.PlayerScripts;
-using ScheduleOne.Properties;
-using ScheduleOne.Properties.MixMaps;
 using ScheduleOne.StationFramework;
 using ScheduleOne.UI;
 using ScheduleOne.Variables;
@@ -93,8 +93,6 @@ public class ProductManager : NetworkSingleton<ProductManager>, IBaseSaveable, I
     public override void OnStartClient();
     private void Update();
     private void Clean();
-    [TargetRpc]
-    public void SetIsDoneReplicating(NetworkConnection conn);
     [ServerRpc(RequireOwnership = false)]
     public void SetMethDiscovered();
     [ServerRpc(RequireOwnership = false)]
@@ -145,10 +143,10 @@ public class ProductManager : NetworkSingleton<ProductManager>, IBaseSaveable, I
     [ObserversRpc(RunLocally = true)]
     public void CreateMixRecipe(NetworkConnection conn, string product, string mixer, string output);
     public StationRecipe GetRecipe(string product, string mixer);
-    public StationRecipe GetRecipe(List<ScheduleOne.Properties.Property> productProperties, ScheduleOne.Properties.Property mixerProperty);
+    public StationRecipe GetRecipe(List<Effect> productProperties, Effect mixerProperty);
     [TargetRpc]
     private void GiveItem(NetworkConnection conn, string id);
-    public ProductDefinition GetKnownProduct(EDrugType type, List<ScheduleOne.Properties.Property> properties);
+    public ProductDefinition GetKnownProduct(EDrugType type, List<Effect> properties);
     public float GetPrice(ProductDefinition product);
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void SendPrice(string productID, float value);
@@ -167,14 +165,11 @@ public class ProductManager : NetworkSingleton<ProductManager>, IBaseSaveable, I
     [ServerRpc(RequireOwnership = false)]
     private void SendFinishAndNameMix(string productID, string ingredientID, string mixName, string mixID);
     public static float CalculateProductValue(ProductDefinition product, float baseValue);
-    public static float CalculateProductValue(float baseValue, List<ScheduleOne.Properties.Property> properties);
+    public static float CalculateProductValue(float baseValue, List<Effect> properties);
     public virtual string GetSaveString();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();
-    private void RpcWriter___Target_SetIsDoneReplicating_328543758(NetworkConnection conn);
-    public void RpcLogic___SetIsDoneReplicating_328543758(NetworkConnection conn);
-    private void RpcReader___Target_SetIsDoneReplicating_328543758(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Server_SetMethDiscovered_2166136261();
     public void RpcLogic___SetMethDiscovered_2166136261();
     private void RpcReader___Server_SetMethDiscovered_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);

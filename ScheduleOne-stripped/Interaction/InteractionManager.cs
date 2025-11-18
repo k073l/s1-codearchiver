@@ -50,6 +50,7 @@ public class InteractionManager : Singleton<InteractionManager>
     protected virtual void Update();
     protected virtual void LateUpdate();
     protected virtual void CheckHover();
+    public bool IsAnythingBlockingInteraction();
     protected virtual void CheckInteraction();
     protected virtual void CheckRightClick();
     protected virtual BuildableItem GetHoveredBuildableItem();

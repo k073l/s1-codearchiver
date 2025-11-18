@@ -32,7 +32,7 @@ public class FaceTargetBehaviour : Behaviour
     public void SetTarget(Vector3 position, float countDown = 5f);
     [ObserversRpc(RunLocally = true)]
     private void SetTargetLocal(Vector3 position);
-    protected override void Begin();
+    public override void Begin();
     public override void BehaviourUpdate();
     private Vector3 GetTargetPosition();
     public override void Disable();

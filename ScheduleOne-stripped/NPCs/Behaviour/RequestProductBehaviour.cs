@@ -48,8 +48,8 @@ public class RequestProductBehaviour : Behaviour
     [ObserversRpc(RunLocally = true)]
     public void AssignTarget(NetworkObject plr);
     protected virtual void Start();
-    protected override void Begin();
-    protected override void End();
+    public override void Begin();
+    public override void End();
     public override void Disable();
     public override void ActiveMinPass();
     private bool IsTargetDestinationValid();

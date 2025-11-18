@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using FishNet.Serializing.Helping;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
@@ -48,6 +47,7 @@ public class QuestEntry : MonoBehaviour
 
     [CodegenExclude]
     public EQuestState State => state;
+    public int QuestEntryIndex => ParentQuest.Entries.IndexOf(this);
 
     protected virtual void Awake();
     protected virtual void Start();

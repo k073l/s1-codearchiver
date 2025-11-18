@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Effects;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.ObjectScripts;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.PlayerTasks.Tasks;
 using ScheduleOne.Product;
-using ScheduleOne.Properties;
 using ScheduleOne.StationFramework;
 using ScheduleOne.UI.Compass;
 using ScheduleOne.UI.Items;
@@ -57,9 +57,9 @@ public class MixingStationCanvas : Singleton<MixingStationCanvas>
     private void UpdateDisplayMode();
     private void UpdateInstruction();
     private void UpdatePreview();
-    private string GetPropertyListString(List<ScheduleOne.Properties.Property> properties);
-    private string GetPropertyString(ScheduleOne.Properties.Property property);
-    private List<ScheduleOne.Properties.Property> GetOutputProperties(ProductDefinition product, PropertyItemDefinition mixer);
+    private string GetPropertyListString(List<Effect> properties);
+    private string GetPropertyString(Effect property);
+    private List<Effect> GetOutputProperties(ProductDefinition product, PropertyItemDefinition mixer);
     private bool IsOutputKnown(out ProductDefinition knownProduct);
     private void UpdateBeginButton();
     public void BeginButtonPressed();

@@ -8,5 +8,6 @@ public class VehicleSaleSign : MonoBehaviour
 {
     public TextMeshPro NameLabel;
     public TextMeshPro PriceLabel;
+    public LandVehicle VehiclePrefab;
     private void Awake();
 }

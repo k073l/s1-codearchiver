@@ -76,10 +76,10 @@ public class CombatBehaviour : Behaviour
     [TargetRpc]
     protected void SetTarget_Client(NetworkConnection conn, NetworkObject target);
     protected virtual void SetTarget(NetworkObject target);
-    protected override void Begin();
-    protected override void Resume();
-    protected override void Pause();
-    protected override void End();
+    public override void Begin();
+    public override void Resume();
+    public override void Pause();
+    public override void End();
     public override void Disable();
     protected virtual void StartCombat();
     protected virtual void EndCombat();

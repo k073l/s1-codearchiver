@@ -35,10 +35,10 @@ public class CheckpointBehaviour : Behaviour
     private Transform standPoint => Checkpoint.StandPoints[Mathf.Clamp(Checkpoint.AssignedNPCs.IndexOf(base.Npc), 0, Checkpoint.StandPoints.Length - 1)];
     private DialogueDatabase dialogueDatabase => base.Npc.DialogueHandler.Database;
 
-    protected override void Begin();
-    protected override void Resume();
-    protected override void End();
-    protected override void Pause();
+    public override void Begin();
+    public override void Resume();
+    public override void End();
+    public override void Pause();
     public override void ActiveMinPass();
     [ObserversRpc(RunLocally = true)]
     public void SetCheckpoint(CheckpointManager.ECheckpointLocation loc);

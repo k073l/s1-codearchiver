@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using ScheduleOne.Audio;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Effects;
 using ScheduleOne.Money;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.PlayerTasks;
 using ScheduleOne.Product;
-using ScheduleOne.Properties;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -49,11 +49,11 @@ public class NewMixScreen : Singleton<NewMixScreen>
     protected override void Awake();
     private void Exit(ExitAction action);
     protected virtual void Update();
-    public void Open(List<ScheduleOne.Properties.Property> properties, EDrugType drugType, float productMarketValue);
+    public void Open(List<Effect> properties, EDrugType drugType, float productMarketValue);
     public void Close();
     public void RandomizeButtonClicked();
     public void ConfirmButtonClicked();
-    public string GenerateUniqueName(ScheduleOne.Properties.Property[] properties = null, EDrugType drugType = EDrugType.Marijuana);
+    public string GenerateUniqueName(Effect[] properties = null, EDrugType drugType = EDrugType.Marijuana);
     protected void RefreshNameButtons();
     public void OnNameValueChanged(string newVal);
 }

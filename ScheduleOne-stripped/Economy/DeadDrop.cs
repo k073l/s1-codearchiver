@@ -7,7 +7,6 @@ using ScheduleOne.Map;
 using ScheduleOne.Storage;
 using ScheduleOne.Variables;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace ScheduleOne.Economy;
 public class DeadDrop : MonoBehaviour, IGUIDRegisterable

@@ -25,11 +25,11 @@ public class CallPoliceBehaviour : Behaviour
     public Crime ReportedCrime;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002EBehaviour_002ECallPoliceBehaviourAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002EBehaviour_002ECallPoliceBehaviourAssembly_002DCSharp_002Edll_Excuted;
-    protected override void Begin();
+    public override void Begin();
     public void SetData(NetworkObject player, Crime crime);
-    protected override void Resume();
-    protected override void End();
-    protected override void Pause();
+    public override void Resume();
+    public override void End();
+    public override void Pause();
     public override void BehaviourUpdate();
     private void RefreshIcon();
     [ObserversRpc(RunLocally = true)]

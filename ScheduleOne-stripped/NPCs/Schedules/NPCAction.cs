@@ -32,6 +32,7 @@ public abstract class NPCAction : NetworkBehaviour
     protected override void OnValidate();
     private void GetReferences();
     protected virtual void Start();
+    private void OnDestroy();
     public virtual void Started();
     public virtual void LateStarted();
     public virtual void JumpTo();

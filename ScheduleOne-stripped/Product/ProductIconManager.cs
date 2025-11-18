@@ -11,18 +11,21 @@ public class ProductIconManager : Singleton<ProductIconManager>
     [Serializable]
     public class ProductIcon
     {
+        [HideInInspector]
+        public string name;
         public string ProductID;
         public string PackagingID;
         public Sprite Icon;
     }
 
+    public const string ProductIconPath;
     [SerializeField]
     private List<ProductIcon> icons;
     [Header("Product and packaging")]
     public IconGenerator IconGenerator;
-    public string IconContainerPath;
     public ProductDefinition[] Products;
     public PackagingDefinition[] Packaging;
+    protected override void Awake();
     public Sprite GetIcon(string productID, string packagingID, bool ignoreError = false);
     public Sprite GenerateIcons(string productID);
     private Texture2D GenerateProductTexture(string productID, string packagingID);

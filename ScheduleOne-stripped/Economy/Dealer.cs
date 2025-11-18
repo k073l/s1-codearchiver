@@ -98,7 +98,7 @@ public class Dealer : NPC, IItemSlotOwner
     public override void OnSpawnServer(NetworkConnection connection);
     private void SetupPoI();
     private void SetUpDialogue();
-    protected override void MinPass();
+    protected override void OnTick();
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void MarkAsRecommended();
     [ObserversRpc(RunLocally = true)]

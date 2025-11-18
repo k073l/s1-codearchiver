@@ -24,9 +24,9 @@ public class GenericDialogueBehaviour : Behaviour
     private void SetTargetPlayer(NetworkObject player);
     public override void Enable();
     public override void Disable();
-    protected override void Begin();
-    protected override void Resume();
-    protected override void End();
+    public override void Begin();
+    public override void Resume();
+    public override void End();
     public override void ActiveMinPass();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();

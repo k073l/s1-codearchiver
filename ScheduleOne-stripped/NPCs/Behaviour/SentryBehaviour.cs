@@ -21,10 +21,10 @@ public class SentryBehaviour : Behaviour
     private Transform standPoint => AssignedLocation.StandPoints[AssignedLocation.AssignedOfficers.IndexOf(officer)];
 
     public override void Awake();
-    protected override void Begin();
-    protected override void Resume();
-    protected override void End();
-    protected override void Pause();
+    public override void Begin();
+    public override void Resume();
+    public override void End();
+    public override void Pause();
     public override void Disable();
     public void AssignLocation(SentryLocation loc);
     public void UnassignLocation();

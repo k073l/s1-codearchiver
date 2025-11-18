@@ -5,6 +5,7 @@ using ScheduleOne.Audio;
 using ScheduleOne.ObjectScripts;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.PlayerTasks;
+using ScheduleOne.Product;
 using ScheduleOne.Product.Packaging;
 using ScheduleOne.Tools;
 using UnityEngine;
