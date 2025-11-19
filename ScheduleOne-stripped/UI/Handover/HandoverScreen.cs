@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using EasyButtons;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Economy;
+using ScheduleOne.GameTime;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Money;
+using ScheduleOne.Persistence.Datas;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Product;
 using ScheduleOne.Quests;
@@ -85,6 +88,8 @@ public class HandoverScreen : Singleton<HandoverScreen>
     private void Update();
     private void OpenTutorial();
     public void CloseTutorial();
+    [Button]
+    public void TestOpen();
     public virtual void Open(Contract contract, Customer customer, EMode mode, Action<EHandoverOutcome, List<ItemInstance>, float> callback, Func<List<ItemInstance>, float, float> successChanceMethod, bool _requireFullChanceOfSuccess = false);
     public virtual void Close(EHandoverOutcome outcome);
     public void DonePressed();
