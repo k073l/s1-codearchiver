@@ -37,7 +37,6 @@ public class TimeManager : NetworkSingleton<TimeManager>, IBaseSaveable, ISaveab
     public Action onUpdate;
     public Action onFixedUpdate;
     public Action<int> onTimeSkip;
-    public Action onUnscaledMinPass;
     public Action onTick;
     public Action onTimeChanged;
     public Action onSleepStart;
@@ -92,6 +91,7 @@ public class TimeManager : NetworkSingleton<TimeManager>, IBaseSaveable, ISaveab
     private IEnumerator TickLoop();
     private IEnumerator TimeLoop();
     private IEnumerator StaggeredMinPass(float staggerTime);
+    private void PassMinute();
     private void Tick();
     public void SetTime(int _time, bool local = false);
     public void SetElapsedDays(int days);
