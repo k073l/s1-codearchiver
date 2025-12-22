@@ -16,4 +16,5 @@ public class BuildableItemDefinition : StorableItemDefinition
 
     public BuildableItem BuiltItem;
     public EBuildSoundType BuildSoundType;
+    public override void ValidateDefinition();
 }

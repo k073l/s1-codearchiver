@@ -16,14 +16,15 @@ public class Product_Equippable : Equippable_Viewmodel
     [Header("References")]
     public ProductVisualsSetter Visuals;
     public Transform ModelContainer;
-    private FirstPersonProductConsumeAnimation consumeAnimation;
+    private ProductConsumeAnimation consumeAnimation;
     private bool isConsumable;
     private float consumeTime;
     private bool consumingInProgress;
     private Vector3 defaultModelPosition;
     private Coroutine consumeRoutine;
+    private bool mouseUp;
     public string ConsumeDescription => consumeAnimation.ConsumeDescription;
-    public float ConsumeTime => consumeAnimation.ConsumeTime;
+    public float PrepareDuration => consumeAnimation.PrepareDuration;
     public float EffectsApplyDelay => consumeAnimation.EffectsApplyDelay;
 
     public override void Equip(ItemInstance item);

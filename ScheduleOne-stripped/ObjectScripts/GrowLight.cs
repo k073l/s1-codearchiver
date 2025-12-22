@@ -16,7 +16,7 @@ public class GrowLight : ProceduralGridItem
     private bool NetworkInitialize__LateScheduleOne_002EObjectScripts_002EGrowLightAssembly_002DCSharp_002Edll_Excuted;
     public override void InitializeProceduralGridItem(ItemInstance instance, int _rotation, List<CoordinateProceduralTilePair> _footprintTileMatches, string GUID);
     public void SetIsOn(bool isOn);
-    public override void DestroyItem(bool callOnServer = true);
+    protected override void Destroy();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

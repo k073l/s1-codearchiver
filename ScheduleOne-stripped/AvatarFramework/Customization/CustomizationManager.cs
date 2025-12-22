@@ -1,17 +1,19 @@
 using ScheduleOne.DevUtilities;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ScheduleOne.AvatarFramework.Customization;
 public class CustomizationManager : Singleton<CustomizationManager>
 {
     public delegate void AvatarSettingsChanged(AvatarSettings settings);
-    public const string CHARACTER_SETTINGS_PATH;
+    public const string AppearancesFolderPath;
     [SerializeField]
     private AvatarSettings ActiveSettings;
     public Avatar TemplateAvatar;
     public TMP_InputField SaveInputField;
     public TMP_InputField LoadInputField;
+    public Toggle GenerateCombinedLayerToggle;
     public AvatarSettingsChanged OnAvatarSettingsChanged;
     public AvatarSettings DefaultSettings;
     private bool isEditingOriginal;

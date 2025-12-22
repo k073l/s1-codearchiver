@@ -106,6 +106,7 @@ public class ViewmodelSway : PlayerSingleton<ViewmodelSway>
     public override void OnStartClient(bool IsOwner);
     protected void Update();
     private void InventoryStateChanged(bool active);
+    private void OnEquippedSlotChanged(int slotIndex);
     public void RefreshViewmodel();
     protected void BreatheBob();
     protected void Sway();

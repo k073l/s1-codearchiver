@@ -2,8 +2,8 @@ using System;
 
 namespace ScheduleOne.Persistence.Datas;
 [Serializable]
-public class BrickPressConfigurationData : SaveData
+public class BrickPressConfigurationData : RenamableConfigurationData
 {
     public ObjectFieldData Destination;
-    public BrickPressConfigurationData(ObjectFieldData destination);
+    public BrickPressConfigurationData(StringFieldData name, ObjectFieldData destination);
 }

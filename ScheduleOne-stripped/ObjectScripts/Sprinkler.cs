@@ -37,7 +37,7 @@ public class Sprinkler : GridItem
     private void SendWater();
     [ObserversRpc(RunLocally = true)]
     private void Water();
-    public void ApplyWater(float normalizedAmount);
+    public void AddWater(float normalizedAmount);
     protected virtual List<Pot> GetPots();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();

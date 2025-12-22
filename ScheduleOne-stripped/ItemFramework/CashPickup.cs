@@ -11,7 +11,7 @@ using ScheduleOne.ObjectScripts.Cash;
 using UnityEngine;
 
 namespace ScheduleOne.ItemFramework;
-public class CashPickup : ItemPickup
+public class CashPickup : NetworkedItemPickup
 {
     [SyncVar(OnChange = "ValueChanged")]
     public float Value;

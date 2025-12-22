@@ -23,6 +23,7 @@ using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.Persistence.Loaders;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.Tiles;
 using ScheduleOne.UI.Management;
 using ScheduleOne.Variables;
 using TMPro;
@@ -71,6 +72,7 @@ public class Property : NetworkBehaviour, ISaveable
     [HideInInspector]
     public List<BuildableItem> BuildableItems;
     public List<IConfigurable> Configurables;
+    public readonly List<Grid> Grids;
     private BoxCollider[] propertyBoundsColliders;
     private PropertyLoader loader;
     private List<string> savedObjectPaths;
@@ -83,6 +85,9 @@ public class Property : NetworkBehaviour, ISaveable
     public bool IsContentCulled { get; set; }
     public string PropertyName => propertyName;
     public string PropertyCode => propertyCode;
+
+    [field: SerializeField]
+    public float AmbientTemperature { get; private set; } = 20f;
     public int LoadingDockCount => LoadingDocks.Length;
     public string SaveFolderName => propertyName;
     public string SaveFileName => SaveManager.MakeFileSafe(propertyName);

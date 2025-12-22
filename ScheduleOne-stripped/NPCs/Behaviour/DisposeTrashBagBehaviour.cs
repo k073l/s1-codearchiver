@@ -24,14 +24,14 @@ public class DisposeTrashBagBehaviour : Behaviour
     private Cleaner Cleaner => (Cleaner)base.Npc;
 
     public void SetTargetBag(TrashBag bag);
-    public override void Begin();
+    public override void Activate();
     public override void Resume();
     private void StartAction();
     public override void Pause();
     public override void Disable();
-    public override void End();
+    public override void Deactivate();
     private void StopAllActions();
-    public override void ActiveMinPass();
+    public override void OnActiveTick();
     private void GoToTarget();
     [ObserversRpc(RunLocally = true)]
     private void GrabTrash();

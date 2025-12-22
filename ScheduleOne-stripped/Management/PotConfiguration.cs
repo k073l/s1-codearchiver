@@ -3,6 +3,7 @@ using System.Linq;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Employees;
 using ScheduleOne.EntityFramework;
+using ScheduleOne.Growing;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.NPCs;
 using ScheduleOne.ObjectScripts;
@@ -23,6 +24,8 @@ public class PotConfiguration : EntityConfiguration
     public TransitRoute DestinationRoute { get; protected set; }
 
     public PotConfiguration(ConfigurationReplicator replicator, IConfigurable configurable, Pot pot);
+    public bool IsAdditiveSelected(ItemDefinition additive);
+    public string[] GetSelectedSeedIDs();
     public override void Reset();
     private void DestinationChanged(BuildableItem item);
     public bool DestinationFilter(BuildableItem obj, out string reason);

@@ -20,12 +20,12 @@ public class PackagingStationBehaviour : Behaviour
     public PackagingStation Station { get; protected set; }
     public bool PackagingInProgress { get; protected set; }
 
-    public override void Begin();
+    public override void Activate();
     public override void Resume();
     public override void Pause();
     public override void Disable();
-    public override void End();
-    public override void ActiveMinPass();
+    public override void Deactivate();
+    public override void OnActiveTick();
     private void StartPackaging();
     public void AssignStation(PackagingStation station);
     public bool IsAtStation();

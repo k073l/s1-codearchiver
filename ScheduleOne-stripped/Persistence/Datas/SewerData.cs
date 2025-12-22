@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace ScheduleOne.Persistence.Datas;
 public class SewerData : SaveData
 {
@@ -8,5 +10,6 @@ public class SewerData : SaveData
     public int HoursSinceLastSewerGoblinAppearance;
     public int RandomKeyPossessorIndex;
     public bool RandomKeyPossessorSet;
-    public SewerData(bool isSewerUnlocked, bool isRandomWorldKeyCollected, int randomSewerKeyLocationIndex, bool hasSewerKingBeenDefeated, int hoursSinceLastSewerGoblinAppearance, int randomKeyPossessorIndex);
+    public List<int> ActiveMushroomLocationIndices;
+    public SewerData(bool isSewerUnlocked, bool isRandomWorldKeyCollected, int randomSewerKeyLocationIndex, bool hasSewerKingBeenDefeated, int hoursSinceLastSewerGoblinAppearance, int randomKeyPossessorIndex, List<int> activeMushroomLocationIndices);
 }

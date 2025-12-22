@@ -69,6 +69,7 @@ public class CombatBehaviour : Behaviour
     public bool IsTargetImmediatelyVisible { get; private set; }
 
     public override void Awake();
+    private void Start();
     public override void OnSpawnServer(NetworkConnection connection);
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void SetTargetAndEnable_Server(NetworkObject target);
@@ -76,10 +77,10 @@ public class CombatBehaviour : Behaviour
     [TargetRpc]
     protected void SetTarget_Client(NetworkConnection conn, NetworkObject target);
     protected virtual void SetTarget(NetworkObject target);
-    public override void Begin();
+    public override void Activate();
     public override void Resume();
     public override void Pause();
-    public override void End();
+    public override void Deactivate();
     public override void Disable();
     protected virtual void StartCombat();
     protected virtual void EndCombat();

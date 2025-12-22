@@ -21,11 +21,13 @@ public class ConsumeProductBehaviour : Behaviour
 {
     public AvatarEquippable JointPrefab;
     public AvatarEquippable PipePrefab;
+    public AvatarEquippable ShroomPrefab;
     private ProductItemInstance product;
     private Coroutine consumeRoutine;
     public AudioSourceController WeedConsumeSound;
     public AudioSourceController MethConsumeSound;
     public AudioSourceController SnortSound;
+    public AudioSourceController EatSound;
     public ParticleSystem SmokeExhaleParticles;
     [Header("Debug")]
     public ProductDefinition TestProduct;
@@ -41,14 +43,15 @@ public class ConsumeProductBehaviour : Behaviour
     private void SetProduct(ProductItemInstance _product);
     [ObserversRpc(RunLocally = true)]
     public void ClearEffects();
-    public override void Begin();
+    public override void Activate();
     public override void Resume();
     private void TryConsume();
     public override void Disable();
-    public override void End();
+    public override void Deactivate();
     private void ConsumeWeed();
     private void ConsumeMeth();
     private void ConsumeCocaine();
+    private void ConsumeShrooms();
     [ObserversRpc]
     private void ApplyEffects();
     private void Clear();

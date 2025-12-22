@@ -178,8 +178,6 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
         select s.Occupant).ToList();
     public NPC[] OccupantNPCs { get; protected set; } = new NPC[0];
     public float Speed_Kmh { get; protected set; }
-    public float Speed_Ms => Speed_Kmh / 3.6f;
-    public float Speed_Mph => Speed_Kmh * 0.621371f;
     public bool IsPhysicallySimulated { get; protected set; }
     public float currentThrottle { get; protected set; }
     public float CurrentSteerAngle {[CompilerGenerated]

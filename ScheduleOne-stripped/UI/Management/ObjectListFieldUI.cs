@@ -26,8 +26,10 @@ public class ObjectListFieldUI : MonoBehaviour
 
     public void Bind(List<ObjectListField> field);
     private void Refresh(List<BuildableItem> newVal);
+    private void RemoveEntryClicked(int index);
     private bool AreFieldsUniform();
     public void Clicked();
     private bool ObjectValid(BuildableItem obj, out string reason);
     public void ObjectsSelected(List<BuildableItem> objs);
+    public void Clear();
 }

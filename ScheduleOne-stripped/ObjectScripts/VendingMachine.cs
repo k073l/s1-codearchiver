@@ -38,7 +38,7 @@ public class VendingMachine : NetworkBehaviour, IGUIDRegisterable, IGenericSavea
     [Header("Settings")]
     public int LitStartTime;
     public int LitOnEndTime;
-    public ItemPickup CukePrefab;
+    public NetworkedItemPickup CukePrefab;
     public CashPickup CashPrefab;
     [Header("References")]
     public MeshRenderer DoorMesh;
@@ -67,7 +67,7 @@ public class VendingMachine : NetworkBehaviour, IGUIDRegisterable, IGenericSavea
     private bool NetworkInitialize__LateScheduleOne_002EObjectScripts_002EVendingMachineAssembly_002DCSharp_002Edll_Excuted;
     public bool IsBroken { get; protected set; }
     public int DaysUntilRepair { get; protected set; }
-    public ItemPickup lastDroppedItem { get; protected set; }
+    public NetworkedItemPickup lastDroppedItem { get; protected set; }
     public Guid GUID { get; protected set; }
 
     [Button]

@@ -170,7 +170,6 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     private void SetTransform(NetworkConnection conn, Vector3 position, Quaternion rotation);
     protected virtual void MinPass();
     protected virtual void OnTick();
-    protected virtual void UpdateVisionConeState(bool value);
     public virtual void SetVisible(bool visible, bool networked = false);
     [ObserversRpc(RunLocally = true)]
     private void SetVisible_Networked(bool visible);

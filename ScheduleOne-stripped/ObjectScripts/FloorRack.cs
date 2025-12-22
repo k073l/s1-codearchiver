@@ -27,7 +27,6 @@ public class FloorRack : GridItem, IProceduralTileContainer
     public List<FloorRack> GetSurroundingRacks();
     public override bool CanShareTileWith(List<GridItem> obstacles);
     public override bool CanBeDestroyed(out string reason);
-    public override void DestroyItem(bool callOnServer = true);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

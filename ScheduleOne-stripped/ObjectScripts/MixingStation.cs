@@ -107,7 +107,7 @@ public class MixingStation : GridItem, IUsable, IItemSlotOwner, ITransitEntity, 
     public NetworkObject PlayerUserObject {[CompilerGenerated]
         get; [CompilerGenerated]
         set; }
-    public string Name => base.ItemInstance.Name;
+    public string Name => GetManagementName();
     public List<ItemSlot> InputSlots { get; set; } = new List<ItemSlot>();
     public List<ItemSlot> OutputSlots { get; set; } = new List<ItemSlot>();
     public Transform LinkOrigin => uiPoint;
@@ -137,10 +137,12 @@ public class MixingStation : GridItem, IUsable, IItemSlotOwner, ITransitEntity, 
     public override void Awake();
     protected override void Start();
     public override void InitializeGridItem(ItemInstance instance, Grid grid, Vector2 originCoordinate, int rotation, string GUID);
+    public override string GetManagementName();
+    public override string GetDefaultManagementName();
     public override void OnSpawnServer(NetworkConnection connection);
     public void SendConfigurationToClient(NetworkConnection conn);
     public override bool CanBeDestroyed(out string reason);
-    public override void DestroyItem(bool callOnServer = true);
+    protected override void Destroy();
     private void TimeSkipped(int minsPassed);
     protected virtual void MinPass();
     [ServerRpc(RequireOwnership = false, RunLocally = true)]

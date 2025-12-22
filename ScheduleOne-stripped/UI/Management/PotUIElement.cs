@@ -1,5 +1,6 @@
 using ScheduleOne.Management;
 using ScheduleOne.ObjectScripts;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;

@@ -67,7 +67,8 @@ public class PlayerInventory : PlayerSingleton<PlayerInventory>
     public bool EquippingEnabled { get; protected set; } = true;
     public Equippable equippable { get; protected set; }
     public HotbarSlot equippedSlot { get; }
-    public bool isAnythingEquipped { get; }
+    public ItemInstance EquippedItem { get; }
+    public bool isAnythingEquipped => EquippedItem != null;
 
     public HotbarSlot IndexAllSlots(int index);
     protected override void Awake();

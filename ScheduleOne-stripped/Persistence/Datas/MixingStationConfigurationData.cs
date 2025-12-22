@@ -2,9 +2,9 @@ using System;
 
 namespace ScheduleOne.Persistence.Datas;
 [Serializable]
-public class MixingStationConfigurationData : SaveData
+public class MixingStationConfigurationData : RenamableConfigurationData
 {
     public ObjectFieldData Destination;
     public NumberFieldData Threshold;
-    public MixingStationConfigurationData(ObjectFieldData destination, NumberFieldData threshold);
+    public MixingStationConfigurationData(StringFieldData name, ObjectFieldData destination, NumberFieldData threshold);
 }

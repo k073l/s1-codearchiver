@@ -23,9 +23,9 @@ public class SewerGoblinRetrieveBehaviour : Behaviour
     public Player Target => sewerGoblin.TargetPlayer;
 
     public override void Awake();
-    public override void Begin();
+    public override void Activate();
     public override void Resume();
-    public override void End();
+    public override void Deactivate();
     public override void Pause();
     private void StartBehaviour();
     private void StopBehaviour();

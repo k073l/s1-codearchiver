@@ -59,11 +59,8 @@ public class VisionCone : NetworkBehaviour
     public const float MinorWidth;
     public const float MinorHeight;
     public bool DEBUG;
-    public bool DisableSightUpdates;
     public Transform VisionOrigin;
-    public bool DEBUG_FRUSTRUM;
     [Header("Vision Settings")]
-    public bool VisionEnabled;
     public AnimationCurve VisionFalloff;
     public LayerMask VisibilityBlockingLayers;
     [Range(0f, 2f)]
@@ -100,8 +97,8 @@ public class VisionCone : NetworkBehaviour
 
     public override void Awake();
     private void PlayerSpawned(Player plr);
+    private void OnEnable();
     private void OnDisable();
-    protected virtual void Update();
     protected virtual void VisionUpdate();
     protected virtual void UpdateEvents(float tickTime);
     protected virtual void UpdateVision(float tickTime);

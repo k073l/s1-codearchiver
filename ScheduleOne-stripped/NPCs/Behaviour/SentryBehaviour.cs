@@ -21,14 +21,14 @@ public class SentryBehaviour : Behaviour
     private Transform standPoint => AssignedLocation.StandPoints[AssignedLocation.AssignedOfficers.IndexOf(officer)];
 
     public override void Awake();
-    public override void Begin();
+    public override void Activate();
     public override void Resume();
-    public override void End();
+    public override void Deactivate();
     public override void Pause();
     public override void Disable();
     public void AssignLocation(SentryLocation loc);
     public void UnassignLocation();
-    public override void ActiveMinPass();
+    public override void OnActiveTick();
     private void SetFlashlightEquipped(bool equipped);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();

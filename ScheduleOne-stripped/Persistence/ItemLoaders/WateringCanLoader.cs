@@ -1,5 +1,4 @@
 using ScheduleOne.ItemFramework;
-using ScheduleOne.ObjectScripts.WateringCan;
 using ScheduleOne.Persistence.Datas;
 using UnityEngine;
 

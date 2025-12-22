@@ -35,6 +35,7 @@ public class Task
     private List<Draggable> multiDragTargets;
     private bool isMultiDragging;
     private List<Clickable> forcedClickables;
+    protected LayerMask clickablesLayerMask;
     public virtual string TaskName { get; protected set; }
     public string CurrentInstruction { get; protected set; } = string.Empty;
     public bool TaskActive { get; private set; }

@@ -15,6 +15,7 @@ public class CleanerConfiguration : EntityConfiguration
     public List<TrashContainerItem> binItems { get; private set; } = new List<TrashContainerItem>();
     public EmployeeHome assignedHome { get; private set; }
 
+    public override bool AllowRename();
     public CleanerConfiguration(ConfigurationReplicator replicator, IConfigurable configurable, Cleaner _cleaner);
     public override void Reset();
     private bool IsObjValid(BuildableItem obj, out string reason);

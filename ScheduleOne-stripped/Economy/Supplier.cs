@@ -107,7 +107,7 @@ public class Supplier : NPC
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
     private void EnableDeliveries(NetworkConnection conn);
-    public void SetUnlockMessage();
+    private void SendUnlockMessage();
     protected override void CreateMessageConversation();
     protected virtual void DeaddropRequested();
     protected virtual void DeaddropConfirmed(List<PhoneShopInterface.CartEntry> cart, float totalPrice);

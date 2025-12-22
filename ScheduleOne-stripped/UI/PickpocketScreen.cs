@@ -52,6 +52,7 @@ public class PickpocketScreen : Singleton<PickpocketScreen>
     public bool TutorialOpen { get; private set; }
 
     protected override void Awake();
+    protected override void Start();
     public void Open(NPC _npc);
     private void Exit(ExitAction action);
     private void Update();

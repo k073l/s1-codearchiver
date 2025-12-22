@@ -21,7 +21,8 @@ public class PackagerConfiguration : EntityConfiguration
     public Packager packager { get; protected set; }
     public EmployeeHome assignedHome { get; private set; }
 
-    public PackagerConfiguration(ConfigurationReplicator replicator, IConfigurable configurable, Packager _botanist);
+    public override bool AllowRename();
+    public PackagerConfiguration(ConfigurationReplicator replicator, IConfigurable configurable, Packager _packager);
     public override void Reset();
     private bool IsStationValid(BuildableItem obj, out string reason);
     public void AssignedStationsChanged(List<BuildableItem> objects);

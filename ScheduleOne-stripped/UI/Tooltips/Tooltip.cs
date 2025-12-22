@@ -6,9 +6,10 @@ namespace ScheduleOne.UI.Tooltips;
 public class Tooltip : MonoBehaviour
 {
     [Header("Settings")]
+    [TextArea(3, 10)]
     public string text;
     public Vector2 labelOffset;
-    private RectTransform rect;
+    public RectTransform LabelOriginRect;
     private Canvas canvas;
     public Vector3 labelPosition { get; }
     public bool isWorldspace { get; private set; }

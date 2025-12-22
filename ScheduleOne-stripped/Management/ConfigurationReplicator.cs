@@ -58,6 +58,10 @@ public class ConfigurationReplicator : NetworkBehaviour
     private void SendQualityField(int fieldIndex, EQuality quality);
     [ObserversRpc]
     private void ReceiveQualityField(int fieldIndex, EQuality value);
+    [ServerRpc(RequireOwnership = false)]
+    private void SendStringField(int fieldIndex, string value);
+    [ObserversRpc]
+    private void ReceiveStringField(int fieldIndex, string value);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();
@@ -109,5 +113,11 @@ public class ConfigurationReplicator : NetworkBehaviour
     private void RpcWriter___Observers_ReceiveQualityField_3536682170(int fieldIndex, EQuality value);
     private void RpcLogic___ReceiveQualityField_3536682170(int fieldIndex, EQuality value);
     private void RpcReader___Observers_ReceiveQualityField_3536682170(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Server_SendStringField_2801973956(int fieldIndex, string value);
+    private void RpcLogic___SendStringField_2801973956(int fieldIndex, string value);
+    private void RpcReader___Server_SendStringField_2801973956(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Observers_ReceiveStringField_2801973956(int fieldIndex, string value);
+    private void RpcLogic___ReceiveStringField_2801973956(int fieldIndex, string value);
+    private void RpcReader___Observers_ReceiveStringField_2801973956(PooledReader PooledReader0, Channel channel);
     public override void Awake();
 }

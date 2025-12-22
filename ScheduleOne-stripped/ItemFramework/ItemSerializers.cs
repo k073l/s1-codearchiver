@@ -36,12 +36,15 @@ public static class ItemSerializers
     public static void WriteCocaineInstance(this Writer writer, CocaineInstance value);
     public static CocaineInstance ReadCocaineInstance(this Reader reader);
     private static CocaineInstance DirectReadCocaineInstance(this Reader reader);
+    public static void WriteShroomInstance(this Writer writer, ShroomInstance value);
+    public static ShroomInstance ReadShroomInstance(this Reader reader);
+    private static ShroomInstance DirectReadShroomInstance(this Reader reader);
     public static void WriteIntegerItemInstance(this Writer writer, IntegerItemInstance value);
     public static IntegerItemInstance ReadIntegerItemInstance(this Reader reader);
     private static IntegerItemInstance DirectReadIntegerItemInstance(this Reader reader);
-    public static void WriteWateringCanInstance(this Writer writer, WateringCanInstance value);
-    public static WateringCanInstance ReadWateringCanInstance(this Reader reader);
-    private static WateringCanInstance DirectReadWateringCanInstance(this Reader reader);
+    public static void WriteWateringCanInstance(this Writer writer, WaterContainerInstance value);
+    public static WaterContainerInstance ReadWateringCanInstance(this Reader reader);
+    private static WaterContainerInstance DirectReadWateringCanInstance(this Reader reader);
     public static void WriteTrashGrabberInstance(this Writer writer, TrashGrabberInstance value);
     public static TrashGrabberInstance ReadTrashGrabberInstance(this Reader reader);
     private static TrashGrabberInstance DirectReadTrashGrabberInstance(this Reader reader);

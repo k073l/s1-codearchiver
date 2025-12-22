@@ -41,6 +41,8 @@ public class AudioSourceController : MonoBehaviour
     public void ApplyVolume();
     public void ApplyPitch();
     public virtual void Play();
-    public virtual void PlayOneShot(bool duplicateAudioSource = false);
+    public virtual void PlayOneShot();
+    public void DuplicateAndPlayOneShot();
+    public virtual void DuplicateAndPlayOneShot(Transform parent);
     public void Stop();
 }

@@ -11,7 +11,6 @@ public abstract class ItemInstance
     public const int APPROXIMATE_BYTE_SIZE;
     [CodegenExclude]
     protected ItemDefinition definition;
-    public string ID;
     public int Quantity;
     [CodegenExclude]
     public Action onDataChanged;
@@ -19,6 +18,7 @@ public abstract class ItemInstance
     public Action requestClearSlot;
     [CodegenExclude]
     public ItemDefinition Definition { get; }
+    public string ID { get; protected set; } = string.Empty;
 
     [CodegenExclude]
     public virtual string Name => Definition.Name;
@@ -52,4 +52,5 @@ public abstract class ItemInstance
     public virtual ItemData GetItemData();
     public virtual float GetMonetaryValue();
     public void RequestClearSlot();
+    public void SetID(string id);
 }

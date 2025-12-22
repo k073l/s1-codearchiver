@@ -46,9 +46,13 @@ public class ShopListing
     [Header("Color")]
     public bool UseIconTint;
     public Color IconTint;
+    [Header("Visibility")]
+    public bool ConditionalVisibility;
+    public string ConditionalVisibilityVariableName;
     public Action onStockChanged;
     private NumberVariable stockVariable;
     private NumberVariable purchasedQuantityVariable;
+    private BoolVariable conditionalVisibilityVariable;
     public bool IsInStock => true;
     public float Price { get; }
     public bool IsUnlimitedStock => !LimitedStock;

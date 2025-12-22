@@ -35,11 +35,12 @@ public class SewerManager : NetworkSingleton<SewerManager>, IBaseSaveable, ISave
 
     public ItemDefinition SewerKeyItem;
     public AudioSourceController SewerUnlockSound;
-    public ItemPickup RandomWorldSewerKeyPickup;
+    public NetworkedItemPickup RandomWorldSewerKeyPickup;
     public Transform[] RandomSewerKeyLocations;
     public SewerKing SewerKingNPC;
     public SewerGoblin SewerGoblinNPC;
     public KeyPossessor[] SewerKeyPossessors;
+    public SewerMushrooms SewerMushrooms;
     private SewerLoader loader;
     private bool NetworkInitialize___EarlyScheduleOne_002EMap_002ESewerManagerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EMap_002ESewerManagerAssembly_002DCSharp_002Edll_Excuted;

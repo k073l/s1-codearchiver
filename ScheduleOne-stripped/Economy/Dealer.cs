@@ -20,6 +20,7 @@ using ScheduleOne.Map;
 using ScheduleOne.Messaging;
 using ScheduleOne.Money;
 using ScheduleOne.NPCs;
+using ScheduleOne.NPCs.Behaviour;
 using ScheduleOne.NPCs.Relation;
 using ScheduleOne.NPCs.Schedules;
 using ScheduleOne.Persistence;
@@ -52,7 +53,6 @@ public class Dealer : NPC, IItemSlotOwner
     public Action onContractAccepted;
     [Header("Dealer References")]
     public NPCEnterableBuilding Home;
-    public NPCSignal_HandleDeal DealSignal;
     public NPCEvent_StayInBuilding HomeEvent;
     public DialogueController_Dealer DialogueController;
     [Header("Dialogue stuff")]
@@ -70,12 +70,14 @@ public class Dealer : NPC, IItemSlotOwner
     public string CompletedDealsVariable;
     [Header("UnityEvents")]
     public UnityEvent onRecommended;
+    public UnityEvent onCompleteDeal;
     private ItemSlot[] overflowSlots;
     private Contract currentContract;
     private DialogueController.DialogueChoice recruitChoice;
     private DialogueController.DialogueChoice collectCashChoice;
     private DialogueController.DialogueChoice assignCustomersChoice;
     private int itemCountOnTradeStart;
+    private DealerAttendDealBehaviour _attendDealBehaviour;
     public SyncVar<float> syncVar____003CCash_003Ek__BackingField;
     private bool NetworkInitialize___EarlyScheduleOne_002EEconomy_002EDealerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EEconomy_002EDealerAssembly_002DCSharp_002Edll_Excuted;
@@ -116,7 +118,7 @@ public class Dealer : NPC, IItemSlotOwner
     private bool CanCollectCash(out string reason);
     private void UpdateCollectCashChoice(float oldCash, float newCash, bool asServer);
     private void CollectCash();
-    private void UpdateCurrentDeal();
+    private void CheckCurrentDealValidity();
     private bool CanOfferRecruitment(out string reason);
     private void CheckAttendStart();
     public virtual bool ShouldAcceptContract(ContractInfo contractInfo, Customer customer);

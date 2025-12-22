@@ -109,7 +109,7 @@ public class ChemistryStation : GridItem, IUsable, IItemSlotOwner, ITransitEntit
         get; [CompilerGenerated]
         set; }
     public ChemistryCookOperation CurrentCookOperation { get; set; }
-    public string Name => base.ItemInstance.Name;
+    public string Name => GetManagementName();
     public List<ItemSlot> InputSlots { get; set; } = new List<ItemSlot>();
     public List<ItemSlot> OutputSlots { get; set; } = new List<ItemSlot>();
     public Transform LinkOrigin => UIPoint;
@@ -136,10 +136,11 @@ public class ChemistryStation : GridItem, IUsable, IItemSlotOwner, ITransitEntit
     public void SetConfigurer(NetworkObject player);
     public override void Awake();
     public override void InitializeGridItem(ItemInstance instance, Grid grid, Vector2 originCoordinate, int rotation, string GUID);
+    public override string GetManagementName();
     public override void OnSpawnServer(NetworkConnection connection);
     public void SendConfigurationToClient(NetworkConnection conn);
     public override bool CanBeDestroyed(out string reason);
-    public override void DestroyItem(bool callOnServer = true);
+    protected override void Destroy();
     protected virtual void MinPass();
     private void TimeSkipped(int minsSkippped);
     private void UpdateClock();

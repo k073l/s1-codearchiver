@@ -6,6 +6,7 @@ using ScheduleOne.StationFramework;
 using ScheduleOne.Storage;
 using ScheduleOne.UI.Shop;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ScheduleOne.ItemFramework;
 [Serializable]
@@ -15,6 +16,7 @@ public class StorableItemDefinition : ItemDefinition
     [Header("Purchasing")]
     public float BasePurchasePrice;
     public List<ShopListing.CategoryInstance> ShopCategories;
+    [Header("Unlocking")]
     public bool RequiresLevelToPurchase;
     public FullRank RequiredRank;
     [Header("Reselling")]
@@ -27,9 +29,11 @@ public class StorableItemDefinition : ItemDefinition
     [Tooltip("Optional station item if this item can be used at a station.")]
     public StationItem StationItem;
     [Header("Other Settings")]
+    [FormerlySerializedAs("CombatUtilityForNPCs")]
     [Range(0f, 1f)]
-    public float CombatUtilityForNPCs;
-    public bool IsPurchasable { get; }
+    public float CombatUtility;
+    public bool IsUnlocked => GetIsUnlocked();
 
     public override ItemInstance GetDefaultInstance(int quantity = 1);
+    protected virtual bool GetIsUnlocked();
 }

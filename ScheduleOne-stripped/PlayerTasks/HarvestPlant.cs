@@ -2,7 +2,6 @@ using FishNet.Object;
 using ScheduleOne.Audio;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Growing;
-using ScheduleOne.Interaction;
 using ScheduleOne.ObjectScripts;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.UI;

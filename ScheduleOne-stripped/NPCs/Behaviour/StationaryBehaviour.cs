@@ -3,7 +3,7 @@ public class StationaryBehaviour : Behaviour
 {
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002EBehaviour_002EStationaryBehaviourAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002EBehaviour_002EStationaryBehaviourAssembly_002DCSharp_002Edll_Excuted;
-    public override void Begin();
+    public override void Activate();
     public override void Resume();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();

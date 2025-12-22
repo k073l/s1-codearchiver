@@ -45,7 +45,6 @@ public class SoilPourer : GridItem
     private void SendPourSoil();
     [ObserversRpc(RunLocally = true)]
     private void PourSoil();
-    private void ApplySoil(string ID);
     public void FillHovered();
     public void FillInteracted();
     [ServerRpc(RequireOwnership = false, RunLocally = true)]

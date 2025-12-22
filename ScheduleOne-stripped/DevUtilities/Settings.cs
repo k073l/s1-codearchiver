@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using ScheduleOne.Audio;
 using ScheduleOne.Networking;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.UI;
-using Steamworks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
@@ -12,7 +12,7 @@ using UnityEngine.Rendering.Universal;
 namespace ScheduleOne.DevUtilities;
 public class Settings : PersistentSingleton<Settings>
 {
-    public enum UnitType
+    public enum EUnitType
     {
         Metric,
         Imperial
@@ -20,8 +20,6 @@ public class Settings : PersistentSingleton<Settings>
 
     public const float MinYPos;
     public const string BETA_ARG;
-    public const string DISABLE_COUNTRY_CHECK_ARG;
-    public const bool COUNTRY_CHECK;
     public List<string> LaunchArgs;
     public DisplaySettings DisplaySettings;
     public DisplaySettings UnappliedDisplaySettings;
@@ -43,12 +41,11 @@ public class Settings : PersistentSingleton<Settings>
     private InputActionMap playerControls;
     public Action onDisplayChanged;
     public Action onInputsApplied;
-    public UnitType unitType { get; protected set; }
     public bool PausingFreezesTime { get; }
+    public EUnitType UnitType { get; private set; }
 
     protected override void Awake();
     protected override void Start();
-    private void CheckCountryCode();
     public void ApplyDisplaySettings(DisplaySettings settings);
     private void MoveMainWindowTo(DisplayInfo displayInfo);
     public void ReloadGraphicsSettings();
@@ -70,4 +67,5 @@ public class Settings : PersistentSingleton<Settings>
     public void WriteOtherSettings(OtherSettings settings);
     public OtherSettings ReadOtherSettings();
     public string GetActionControlPath(string actionName);
+    private EUnitType GetDefaultUnitTypeForPlayer();
 }

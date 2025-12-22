@@ -17,11 +17,11 @@ public class FootPatrolBehaviour : Behaviour
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002EBehaviour_002EFootPatrolBehaviourAssembly_002DCSharp_002Edll_Excuted;
     public PatrolGroup Group { get; protected set; }
 
-    public override void Begin();
+    public override void Activate();
     public override void Resume();
     public override void Pause();
-    public override void End();
-    public override void ActiveMinPass();
+    public override void Deactivate();
+    public override void OnActiveTick();
     private void SetFlashlightEquipped(bool equipped);
     public void SetGroup(PatrolGroup group);
     public bool IsReadyToAdvance();

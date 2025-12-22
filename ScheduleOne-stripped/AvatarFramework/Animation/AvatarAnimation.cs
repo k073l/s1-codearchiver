@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using RootMotion.FinalIK;
 using ScheduleOne.DevUtilities;
-using ScheduleOne.GameTime;
 using ScheduleOne.NPCs;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Skating;
@@ -27,7 +25,7 @@ public class AvatarAnimation : MonoBehaviour
         Right
     }
 
-    public const bool GLOBAL_USE_IMPOSTOR;
+    public const bool ImpostorsEnabled;
     public const float AnimationRangeSqr;
     public const float FrustrumCullMinDist;
     public const float RunningAnimationSpeed;
@@ -35,9 +33,7 @@ public class AvatarAnimation : MonoBehaviour
     public const float MaxBoneOffsetSqr;
     public static Vector3 SITTING_OFFSET;
     public const float SEAT_TIME;
-    private bool _IsAvatarCulled;
     public bool DEBUG_MODE;
-    private int framesActive;
     [Header("References")]
     public Animator animator;
     public Transform HipBone;
@@ -52,12 +48,10 @@ public class AvatarAnimation : MonoBehaviour
     public LayerMask GroundingMask;
     public string StandUpFromBackClipName;
     public string StandUpFromFrontClipName;
-    public bool UseImpostor;
     public bool AllowCulling;
     public UnityEvent onStandupStart;
     public UnityEvent onStandupDone;
     public UnityEvent onHeavyFlinch;
-    private BoneTransform[] standingBoneTransforms;
     private BoneTransform[] standUpFromBackBoneTransforms;
     private BoneTransform[] standUpFromFrontBoneTransforms;
     private BoneTransform[] ragdollBoneTransforms;
@@ -65,7 +59,6 @@ public class AvatarAnimation : MonoBehaviour
     private Coroutine seatRoutine;
     private Skateboard activeSkateboard;
     private bool animationEnabled;
-    private AnimatorCullingMode initialCullingMode;
     public bool IsCrouched { get; protected set; }
     public bool IsSeated => (Object)(object)CurrentSeat != (Object)null;
     public float TimeSinceSitEnd { get; protected set; } = 1000f;
@@ -73,14 +66,9 @@ public class AvatarAnimation : MonoBehaviour
     public bool StandUpAnimationPlaying { get; protected set; }
     public bool IsAvatarCulled { get; private set; }
 
-    public event Action<bool> onAvatarCullStateChanged = default;
     protected virtual void Awake();
-    protected virtual void Start();
-    private void OnDestroy();
-    private void OnEnable();
+    private void Start();
     private void Update();
-    private void InfrequentUpdate();
-    private void MinPass();
     private void UpdateAnimationActive();
     public void SetDirection(float dir);
     public void SetStrafe(float strafe);
@@ -95,7 +83,6 @@ public class AvatarAnimation : MonoBehaviour
     private void AlignPositionToHips();
     private bool ShouldGetUpFromBack();
     private void PopulateBoneTransforms(BoneTransform[] boneTransforms);
-    private List<Pose> GetBoneTransforms();
     private void PopulateAnimationStartBoneTransforms(string clipName, BoneTransform[] boneTransforms);
     public void SetTrigger(string trigger);
     public void ResetTrigger(string trigger);

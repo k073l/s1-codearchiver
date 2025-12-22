@@ -31,7 +31,6 @@ public class DryingRackCanvas : Singleton<DryingRackCanvas>
     public bool isOpen { get; protected set; }
     public DryingRack Rack { get; protected set; }
 
-    protected override void Awake();
     protected override void Start();
     private void MinPass();
     protected virtual void Update();

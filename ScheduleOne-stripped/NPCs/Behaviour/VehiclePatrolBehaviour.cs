@@ -21,13 +21,13 @@ public class VehiclePatrolBehaviour : Behaviour
     private VehicleAgent Agent => Vehicle.Agent;
 
     public override void Awake();
-    public override void Begin();
+    public override void Activate();
     public override void Resume();
     public override void Pause();
-    public override void End();
+    public override void Deactivate();
     public void SetRoute(VehiclePatrolRoute route);
     private void StartPatrol();
-    public override void ActiveMinPass();
+    public override void OnActiveTick();
     private void DriveTo(Vector3 location);
     private void NavigationCallback(VehicleAgent.ENavigationResult status);
     private bool IsAsCloseAsPossible(Vector3 pos, out Vector3 closestPosition);

@@ -8,7 +8,16 @@ public class Draggable : Clickable
     public enum EDragProjectionMode
     {
         CameraForward,
-        FlatCameraForward
+        FlatCameraForward,
+        CustomPlane
+    }
+
+    public enum ERotationAxis
+    {
+        FlatCameraForward,
+        LocalX,
+        LocalY,
+        LocalZ
     }
 
     [Header("Drag Force")]
@@ -17,8 +26,10 @@ public class Draggable : Clickable
     [Header("Rotation")]
     public bool RotationEnabled;
     public float TorqueMultiplier;
+    public ERotationAxis RotationAxis;
     [Header("Settings")]
     public EDragProjectionMode DragProjectionMode;
+    public Transform CustomDragPlane;
     public bool DisableGravityWhenDragged;
     public float NormalRBDrag;
     public float HeldRBDrag;

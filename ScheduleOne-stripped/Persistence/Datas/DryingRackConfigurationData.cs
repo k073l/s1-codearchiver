@@ -2,9 +2,9 @@ using System;
 
 namespace ScheduleOne.Persistence.Datas;
 [Serializable]
-public class DryingRackConfigurationData : SaveData
+public class DryingRackConfigurationData : RenamableConfigurationData
 {
     public QualityFieldData TargetQuality;
     public ObjectFieldData Destination;
-    public DryingRackConfigurationData(QualityFieldData targetquality, ObjectFieldData destination);
+    public DryingRackConfigurationData(StringFieldData name, QualityFieldData targetquality, ObjectFieldData destination);
 }

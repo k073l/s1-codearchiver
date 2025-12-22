@@ -20,6 +20,7 @@ public class ChemistConfiguration : EntityConfiguration
     public Chemist chemist { get; protected set; }
     public EmployeeHome assignedHome { get; private set; }
 
+    public override bool AllowRename();
     public ChemistConfiguration(ConfigurationReplicator replicator, IConfigurable configurable, Chemist _chemist);
     public override void Reset();
     private bool IsStationValid(BuildableItem obj, out string reason);
