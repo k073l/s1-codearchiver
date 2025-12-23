@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Runtime.CompilerServices;
-using EasyButtons;
 using FishNet;
 using FishNet.Connection;
 using FishNet.Managing;
@@ -103,9 +102,10 @@ public class MushroomBed : GrowContainer, IConfigurable
     public void PlayMixFXAtPoint(Vector3 point);
     protected override void OnTileTemperatureChanged(Tile tile, float newTemp);
     public override bool ContainsGrowable();
-    [Button]
-    private void TestCreateColony();
-    public void CreateAndAssignColony(ShroomSpawnDefinition shroomSpawn);
+    public override float GetGrowthProgressNormalized();
+    [ServerRpc(RequireOwnership = false)]
+    public void CreateAndAssignColony_Server(string shroomSpawnID);
+    private void CreateAndAssignColony(ShroomSpawnDefinition shroomSpawn);
     public void AssignColony(ShroomColony colony);
     private void OnColonyFullyHarvested();
     protected override void ClearSoil();
@@ -121,6 +121,9 @@ public class MushroomBed : GrowContainer, IConfigurable
     private void RpcWriter___Server_SetConfigurer_3323014238(NetworkObject player);
     public void RpcLogic___SetConfigurer_3323014238(NetworkObject player);
     private void RpcReader___Server_SetConfigurer_3323014238(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Server_CreateAndAssignColony_Server_3615296227(string shroomSpawnID);
+    public void RpcLogic___CreateAndAssignColony_Server_3615296227(string shroomSpawnID);
+    private void RpcReader___Server_CreateAndAssignColony_Server_3615296227(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
     public override bool ReadSyncVar___ScheduleOne_002EObjectScripts_002EMushroomBed(PooledReader PooledReader0, uint UInt321, bool Boolean2);
     public override void Awake();
 }

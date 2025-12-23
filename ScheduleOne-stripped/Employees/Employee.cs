@@ -73,6 +73,7 @@ public class Employee : NPC
     public int TimeSinceLastWorked { get; private set; }
     public bool SyncAccessor__003CPaidForToday_003Ek__BackingField { get; set; }
 
+    public override void Awake();
     protected override void Start();
     public override void OnStartServer();
     public override void OnSpawnServer(NetworkConnection connection);
@@ -146,5 +147,5 @@ public class Employee : NPC
     public void RpcLogic___SubmitNoWorkReason_15643032(string reason, string fix, int priority = 0);
     private void RpcReader___Observers_SubmitNoWorkReason_15643032(PooledReader PooledReader0, Channel channel);
     public override bool ReadSyncVar___ScheduleOne_002EEmployees_002EEmployee(PooledReader PooledReader0, uint UInt321, bool Boolean2);
-    public override void Awake();
+    protected override void Awake_UserLogic_ScheduleOne_002EEmployees_002EEmployee_Assembly_002DCSharp_002Edll();
 }

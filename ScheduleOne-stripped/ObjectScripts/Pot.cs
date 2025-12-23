@@ -110,13 +110,13 @@ public class Pot : GrowContainer, IConfigurable
     public override float GetGrowSurfaceSideLength();
     public override float GetTemperatureGrowthMultiplier();
     public override bool ContainsGrowable();
+    public override float GetGrowthProgressNormalized();
     public void SetSoilState(ESoilState state);
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
-    public void PlantSeed_Server(string seedID, float normalizedSeedProgress, float yieldLevel, float qualityLevel);
+    public void PlantSeed_Server(string seedID, float normalizedSeedProgress);
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
-    private void PlantSeed_Client(NetworkConnection conn, string seedID, float normalizedSeedProgress, float yieldLevel, float qualityLevel);
-    private void PlantSeed(string seedID, float normalizedSeedProgress, float yieldLevel, float qualityLevel);
+    private void PlantSeed_Client(NetworkConnection conn, string seedID, float normalizedSeedProgress);
     [ServerRpc(RequireOwnership = false)]
     public void SetGrowthProgress_Server(float progress);
     [ObserversRpc]
@@ -139,14 +139,14 @@ public class Pot : GrowContainer, IConfigurable
     private void RpcWriter___Server_SetConfigurer_3323014238(NetworkObject player);
     public void RpcLogic___SetConfigurer_3323014238(NetworkObject player);
     private void RpcReader___Server_SetConfigurer_3323014238(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Server_PlantSeed_Server_2530605204(string seedID, float normalizedSeedProgress, float yieldLevel, float qualityLevel);
-    public void RpcLogic___PlantSeed_Server_2530605204(string seedID, float normalizedSeedProgress, float yieldLevel, float qualityLevel);
-    private void RpcReader___Server_PlantSeed_Server_2530605204(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Observers_PlantSeed_Client_709433087(NetworkConnection conn, string seedID, float normalizedSeedProgress, float yieldLevel, float qualityLevel);
-    private void RpcLogic___PlantSeed_Client_709433087(NetworkConnection conn, string seedID, float normalizedSeedProgress, float yieldLevel, float qualityLevel);
-    private void RpcReader___Observers_PlantSeed_Client_709433087(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Target_PlantSeed_Client_709433087(NetworkConnection conn, string seedID, float normalizedSeedProgress, float yieldLevel, float qualityLevel);
-    private void RpcReader___Target_PlantSeed_Client_709433087(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Server_PlantSeed_Server_606697822(string seedID, float normalizedSeedProgress);
+    public void RpcLogic___PlantSeed_Server_606697822(string seedID, float normalizedSeedProgress);
+    private void RpcReader___Server_PlantSeed_Server_606697822(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Observers_PlantSeed_Client_4077118173(NetworkConnection conn, string seedID, float normalizedSeedProgress);
+    private void RpcLogic___PlantSeed_Client_4077118173(NetworkConnection conn, string seedID, float normalizedSeedProgress);
+    private void RpcReader___Observers_PlantSeed_Client_4077118173(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Target_PlantSeed_Client_4077118173(NetworkConnection conn, string seedID, float normalizedSeedProgress);
+    private void RpcReader___Target_PlantSeed_Client_4077118173(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Server_SetGrowthProgress_Server_431000436(float progress);
     public void RpcLogic___SetGrowthProgress_Server_431000436(float progress);
     private void RpcReader___Server_SetGrowthProgress_Server_431000436(PooledReader PooledReader0, Channel channel, NetworkConnection conn);

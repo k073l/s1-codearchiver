@@ -41,6 +41,7 @@ public class Settings : PersistentSingleton<Settings>
     private InputActionMap playerControls;
     public Action onDisplayChanged;
     public Action onInputsApplied;
+    public static bool ChristmasEventActive { get; private set; }
     public bool PausingFreezesTime { get; }
     public EUnitType UnitType { get; private set; }
 

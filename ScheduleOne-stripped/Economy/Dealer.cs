@@ -12,6 +12,7 @@ using FishNet.Object.Synchronizing.Internal;
 using FishNet.Serializing;
 using FishNet.Serializing.Generated;
 using FishNet.Transporting;
+using ScheduleOne.AvatarFramework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Dialogue;
 using ScheduleOne.GameTime;
@@ -71,6 +72,8 @@ public class Dealer : NPC, IItemSlotOwner
     [Header("UnityEvents")]
     public UnityEvent onRecommended;
     public UnityEvent onCompleteDeal;
+    [Header("Seasonal Events")]
+    public AvatarSettings ChristmasOutfit;
     private ItemSlot[] overflowSlots;
     private Contract currentContract;
     private DialogueController.DialogueChoice recruitChoice;

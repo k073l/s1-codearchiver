@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using FishNet;
-using FishNet.Component.Ownership;
 using FishNet.Component.Transforming;
 using FishNet.Connection;
 using FishNet.Managing;
@@ -21,7 +20,6 @@ using ScheduleOne.Product;
 using UnityEngine;
 
 namespace ScheduleOne.Growing;
-[RequireComponent(typeof(PredictedSpawn))]
 [RequireComponent(typeof(NetworkTransform))]
 public class ShroomColony : NetworkBehaviour
 {

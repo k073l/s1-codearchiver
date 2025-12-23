@@ -14,6 +14,7 @@ using UnityEngine;
 namespace ScheduleOne.Growing;
 public abstract class Plant : MonoBehaviour
 {
+    public const float BaseQualityLevel;
     [Header("References")]
     public Transform VisualsContainer;
     public PlantGrowthStage[] GrowthStages;
@@ -25,25 +26,24 @@ public abstract class Plant : MonoBehaviour
     [Header("Settings")]
     public SeedDefinition SeedDefinition;
     public int GrowthTime;
-    public float BaseYieldLevel;
-    public float BaseQualityLevel;
+    public int BaseYieldQuantity;
     public string HarvestTarget;
     [Header("Trash")]
     public TrashItem PlantScrapPrefab;
-    [Header("Plant data")]
-    public float YieldLevel;
-    public float QualityLevel;
     [HideInInspector]
     public List<int> ActiveHarvestables;
     public Action onFullyHarvested;
     public Pot Pot { get; protected set; }
     public float NormalizedGrowthProgress { get; protected set; }
     public bool IsFullyGrown => NormalizedGrowthProgress >= 1f;
+    public float YieldMultiplier { get; private set; } = 1f;
+    public float QualityLevel { get; private set; } = 0.5f;
     public PlantGrowthStage FinalGrowthStage => GrowthStages[GrowthStages.Length - 1];
 
     private void Awake();
-    public virtual void Initialize(NetworkObject pot, float growthProgress = 0f, float yieldLevel = 0f, float qualityLevel = 0f);
+    public virtual void Initialize(NetworkObject pot, float growthProgress);
     public virtual void MinPass();
+    public void AdditiveApplied(AdditiveDefinition additive, bool isInitialApplication);
     public virtual void SetNormalizedGrowthProgress(float progress);
     protected virtual void UpdateVisuals();
     public virtual void SetHarvestableActive(int index, bool active);

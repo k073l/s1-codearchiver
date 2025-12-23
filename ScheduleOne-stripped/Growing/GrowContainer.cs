@@ -135,6 +135,7 @@ public abstract class GrowContainer : GridItem, IUsable, ITransitEntity
     public abstract void SetGrowableVisible(bool visible);
     public abstract float GetGrowSurfaceSideLength();
     public abstract bool ContainsGrowable();
+    public abstract float GetGrowthProgressNormalized();
     public virtual void SetSoil(SoilDefinition soil);
     public void ChangeSoilAmount(float amount);
     public void SetSoilAmount(float amount);

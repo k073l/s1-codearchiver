@@ -13,7 +13,7 @@ public class AdditiveDefinition : StorableItemDefinition
     public float QualityChange { get; private set; }
 
     [field: SerializeField]
-    public float YieldChange { get; private set; }
+    public float YieldMultiplier { get; private set; } = 1f;
 
     [field: SerializeField]
     public float InstantGrowth { get; private set; }
