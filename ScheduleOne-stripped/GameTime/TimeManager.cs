@@ -43,8 +43,6 @@ public class TimeManager : NetworkSingleton<TimeManager>, IBaseSaveable, ISaveab
     public Action onSleepEnd;
     public UnityEvent onFirstNight;
     public const int SelectedWakeTime;
-    private GameDateTime sleepStartTime;
-    private int sleepEndTime;
     private float defaultFixedTimeScale;
     private TimeLoader loader;
     private bool NetworkInitialize___EarlyScheduleOne_002EGameTime_002ETimeManagerAssembly_002DCSharp_002Edll_Excuted;

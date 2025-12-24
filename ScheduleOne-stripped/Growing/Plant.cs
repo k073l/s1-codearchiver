@@ -42,7 +42,7 @@ public abstract class Plant : MonoBehaviour
 
     private void Awake();
     public virtual void Initialize(NetworkObject pot, float growthProgress);
-    public virtual void MinPass();
+    public virtual void MinPass(int mins);
     public void AdditiveApplied(AdditiveDefinition additive, bool isInitialApplication);
     public virtual void SetNormalizedGrowthProgress(float progress);
     protected virtual void UpdateVisuals();

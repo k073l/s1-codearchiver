@@ -67,6 +67,8 @@ public abstract class GrowContainer : GridItem, IUsable, ITransitEntity
     [HideInInspector]
     [SyncVar( /*Could not decode attribute arguments.*/)]
     public NetworkObject _003CPlayerUserObject_003Ek__BackingField;
+    public Action onMinPass;
+    public Action<int> onTimeSkip;
     protected float _currentSoilAmount;
     protected float _currentMoistureAmount;
     protected int _remainingSoilUses;
