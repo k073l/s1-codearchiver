@@ -33,6 +33,8 @@ public class AvatarAnimation : MonoBehaviour
     public const float MaxBoneOffsetSqr;
     public static Vector3 SITTING_OFFSET;
     public const float SEAT_TIME;
+    private const string StandUpFromBackClipName;
+    private const string StandUpFromFrontClipName;
     public bool DEBUG_MODE;
     [Header("References")]
     public Animator animator;
@@ -46,8 +48,6 @@ public class AvatarAnimation : MonoBehaviour
     public AvatarIKController IKController;
     [Header("Settings")]
     public LayerMask GroundingMask;
-    public string StandUpFromBackClipName;
-    public string StandUpFromFrontClipName;
     public bool AllowCulling;
     public UnityEvent onStandupStart;
     public UnityEvent onStandupDone;

@@ -59,6 +59,4 @@ public class CustomerData : ScriptableObject
     public void RandomizeFavouriteEffects();
     [Button]
     public void RandomizeTiming();
-    [Button]
-    public void ClearInvalid();
 }
