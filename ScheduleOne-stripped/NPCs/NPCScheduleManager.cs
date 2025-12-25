@@ -42,7 +42,8 @@ public class NPCScheduleManager : MonoBehaviour
     public void DisableSchedule();
     [Button]
     public void InitializeActions();
-    protected virtual void MinPass();
+    protected virtual void OnMinPass();
+    protected virtual void OnTick();
     private List<NPCAction> GetActionsOccurringAt(int time);
     private List<NPCAction> GetActionsTotallyOccurringWithinRange(int min, int max, bool checkShouldStart);
     private void StartAction(NPCAction action);

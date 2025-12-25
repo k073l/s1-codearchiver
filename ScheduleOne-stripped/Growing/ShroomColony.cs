@@ -11,6 +11,7 @@ using FishNet.Serializing.Generated;
 using FishNet.Transporting;
 using ScheduleOne.Audio;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.GameTime;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.ObjectScripts;
 using ScheduleOne.Persistence;

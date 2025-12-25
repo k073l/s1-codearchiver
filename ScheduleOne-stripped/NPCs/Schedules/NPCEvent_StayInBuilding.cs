@@ -28,7 +28,7 @@ public class NPCEvent_StayInBuilding : NPCEvent
     public override void Awake();
     public override string GetName();
     public override void Started();
-    public override void ActiveMinPassed();
+    public override void OnActiveTick();
     public override void LateStarted();
     public override void JumpTo();
     public override void End();
