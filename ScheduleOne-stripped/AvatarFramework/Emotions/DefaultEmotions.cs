@@ -13,4 +13,5 @@ public static class DefaultEmotions
     public const string Meth;
     public const string Cocaine;
     public const string Zombie;
+    public const string Shroom;
 }

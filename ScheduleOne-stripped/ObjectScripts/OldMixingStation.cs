@@ -78,7 +78,7 @@ public class OldMixingStation : GridItem, IUsable, IItemSlotOwner
     public override void Awake();
     protected override void Start();
     public override void OnSpawnServer(NetworkConnection connection);
-    public override void DestroyItem(bool callOnServer = true);
+    protected override void Destroy();
     private void MinPass();
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]

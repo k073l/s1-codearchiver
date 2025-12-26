@@ -11,6 +11,7 @@ namespace ScheduleOne.FX;
 public class PostProcessingManager : Singleton<PostProcessingManager>
 {
     [Header("References")]
+    public UniversalRendererData rendererData;
     public Volume GlobalVolume;
     [Header("Vignette")]
     public float Vig_DefaultIntensity;
@@ -31,8 +32,10 @@ public class PostProcessingManager : Singleton<PostProcessingManager>
     private Bloom bloom;
     private ChromaticAberration chromaticAberration;
     private ColorAdjustments colorAdjustments;
+    private PsychedelicFullScreenFeature _psychedelicFullScreenFeature;
     protected override void Awake();
     public void Update();
+    protected override void OnDestroy();
     private void UpdateEffects();
     public void OverrideVignette(float intensity, float smoothness);
     public void ResetVignette();
@@ -41,4 +44,10 @@ public class PostProcessingManager : Singleton<PostProcessingManager>
     public void SetSaturation(float value);
     public void SetBloomThreshold(float threshold);
     public void SetBlur(float blurLevel);
+    public void SetPsychedelicEffectActive(bool isActive);
+    public void SetPsychedelicEffectProperties(PsychedelicFullScreenData data);
+    public void SetPsychedelicEffectProperties(PsychedelicFullScreenFeature.MaterialProperties properties);
+    public PsychedelicFullScreenFeature.MaterialProperties GetActivePsychedelicEffectProperties();
+    public PsychedelicFullScreenData GetPsychedelicEffectDataPreset(string presetName);
+    public void PrintValueOfPsychedelicEffectBlend();
 }

@@ -27,7 +27,7 @@ public class NPCEvent_LocationDialogue : NPCEvent
     public override string GetName();
     public override void OnSpawnServer(NetworkConnection connection);
     public override void Started();
-    public override void ActiveMinPassed();
+    public override void OnActiveTick();
     public override void LateStarted();
     public override void JumpTo();
     public override void End();

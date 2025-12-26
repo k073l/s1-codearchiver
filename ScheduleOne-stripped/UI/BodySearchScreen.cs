@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ScheduleOne.Audio;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.NPCs;
@@ -32,6 +33,7 @@ public class BodySearchScreen : Singleton<BodySearchScreen>
     public Animation TutorialAnimation;
     public RectTransform TutorialContainer;
     public Animation ResetAnimation;
+    public AudioSourceController FailSound;
     private List<ItemSlotUI> slots;
     public UnityEvent onSearchClear;
     public UnityEvent onSearchFail;
@@ -42,9 +44,11 @@ public class BodySearchScreen : Singleton<BodySearchScreen>
     private Color[] defaultItemIconColors;
     private float speedBoost;
     private NPC searcher;
+    private bool _caught;
     public bool IsOpen { get; private set; }
     public bool TutorialOpen { get; private set; }
 
+    protected override void Awake();
     protected override void Start();
     private void SetupSlots();
     private void Update();

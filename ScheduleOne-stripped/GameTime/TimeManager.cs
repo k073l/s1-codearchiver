@@ -37,14 +37,12 @@ public class TimeManager : NetworkSingleton<TimeManager>, IBaseSaveable, ISaveab
     public Action onUpdate;
     public Action onFixedUpdate;
     public Action<int> onTimeSkip;
-    public Action onTick;
+    public ActionList onTick;
     public Action onTimeChanged;
     public Action onSleepStart;
     public Action onSleepEnd;
     public UnityEvent onFirstNight;
     public const int SelectedWakeTime;
-    private GameDateTime sleepStartTime;
-    private int sleepEndTime;
     private float defaultFixedTimeScale;
     private TimeLoader loader;
     private bool NetworkInitialize___EarlyScheduleOne_002EGameTime_002ETimeManagerAssembly_002DCSharp_002Edll_Excuted;
@@ -90,7 +88,7 @@ public class TimeManager : NetworkSingleton<TimeManager>, IBaseSaveable, ISaveab
     private void SetHostSleepDone(bool done);
     private IEnumerator TickLoop();
     private IEnumerator TimeLoop();
-    private IEnumerator StaggeredMinPass(float staggerTime);
+    private IEnumerator StaggeredInvoke(List<Action> listeners, float staggerTime);
     private void PassMinute();
     private void Tick();
     public void SetTime(int _time, bool local = false);

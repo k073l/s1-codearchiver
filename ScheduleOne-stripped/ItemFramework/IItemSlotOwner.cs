@@ -1,7 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FishNet.Connection;
 using FishNet.Object;
+using ScheduleOne.DevUtilities;
+using ScheduleOne.Product;
+using UnityEngine;
 
 namespace ScheduleOne.ItemFramework;
 public interface IItemSlotOwner
@@ -13,7 +17,9 @@ public interface IItemSlotOwner
     void SetSlotLocked(NetworkConnection conn, int itemSlotIndex, bool locked, NetworkObject lockOwner, string lockReason);
     void SetSlotFilter(NetworkConnection conn, int itemSlotIndex, SlotFilter filter);
     void SendItemSlotDataToClient(NetworkConnection conn);
-    int GetTotalItemCount();
-    int GetItemCount(string id);
+    private void Send(NetworkConnection conn2);
+    }int GetQuantitySum();
+    int GetQuantityOfItem(string id);
     int GetNonEmptySlotCount();
+    ItemSlot GetFirstSlotContaining(string id);
 }

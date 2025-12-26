@@ -26,6 +26,7 @@ public class StorageMenu : Singleton<StorageMenu>
     public StorageEntity OpenedStorageEntity { get; protected set; }
 
     protected override void Awake();
+    protected override void Start();
     public virtual void Open(IItemSlotOwner owner, string title, string subtitle);
     public virtual void Open(StorageEntity entity);
     private void Open(string title, string subtitle, IItemSlotOwner owner);

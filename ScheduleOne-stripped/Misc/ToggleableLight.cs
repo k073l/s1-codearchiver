@@ -1,4 +1,3 @@
-using ScheduleOne.ConstructableScripts;
 using ScheduleOne.DevUtilities;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -27,7 +26,6 @@ public class ToggleableLight : MonoBehaviour
     protected Material lightOnMat;
     [SerializeField]
     protected Material lightOffMat;
-    private Constructable_GridBased constructable;
     private State state;
     public bool isOn { get; set; }
 

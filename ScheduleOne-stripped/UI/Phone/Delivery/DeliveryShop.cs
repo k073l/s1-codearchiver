@@ -4,6 +4,7 @@ using ScheduleOne.DevUtilities;
 using ScheduleOne.Money;
 using ScheduleOne.Property;
 using ScheduleOne.UI.Shop;
+using ScheduleOne.Variables;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;

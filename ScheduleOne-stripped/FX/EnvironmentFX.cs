@@ -61,6 +61,14 @@ public class EnvironmentFX : Singleton<EnvironmentFX>
     public AnimationCurve environmentalBrightnessCurve;
     [Header("Bloom")]
     public AnimationCurve bloomThreshholdCurve;
+    [Header("Gloabl Shader Properties")]
+    [SerializeField]
+    private float _environmentScrollSpeed;
+    [SerializeField]
+    private float _testPercentage;
+    private float _scrollTime;
+    private float _scrollValue;
+    private bool _scrollTActive;
     private bool started;
     public FloatSmoother FogEndDistanceController;
     public float normalizedEnvironmentalBrightness => environmentalBrightnessCurve.Evaluate(((float)NetworkSingleton<TimeManager>.Instance.DailyMinTotal + NetworkSingleton<TimeManager>.Instance.TimeOnCurrentMinute / 1f) / 1440f);
@@ -69,5 +77,7 @@ public class EnvironmentFX : Singleton<EnvironmentFX>
     protected override void Start();
     private void Update();
     private void UpdateVisuals();
+    public void SetEnvironmentScrollingActive(bool active);
+    public void SetEnvironmentScrollingSpeedByPercentage(float percentage);
     protected override void OnDestroy();
 }

@@ -24,6 +24,7 @@ using ScheduleOne.Persistence.Loaders;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Property;
 using ScheduleOne.Quests;
+using ScheduleOne.Tools;
 using ScheduleOne.UI;
 using ScheduleOne.UI.MainMenu;
 using ScheduleOne.UI.Phone;

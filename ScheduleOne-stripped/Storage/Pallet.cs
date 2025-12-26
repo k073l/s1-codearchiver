@@ -18,7 +18,7 @@ using ScheduleOne.Vehicles;
 using UnityEngine;
 
 namespace ScheduleOne.Storage;
-public class Pallet : NetworkBehaviour, IStorageEntity
+public class Pallet : NetworkBehaviour
 {
     public static List<Pallet> palletsOwnedByLocalPlayer;
     public static int sizeX;

@@ -135,7 +135,7 @@ public class LabOven : GridItem, IUsable, IItemSlotOwner, ITransitEntity, IConfi
     public NetworkObject PlayerUserObject {[CompilerGenerated]
         get; [CompilerGenerated]
         set; }
-    public string Name => base.ItemInstance.Name;
+    public string Name => GetManagementName();
     public List<ItemSlot> InputSlots { get; set; } = new List<ItemSlot>();
     public List<ItemSlot> OutputSlots { get; set; } = new List<ItemSlot>();
     public Transform LinkOrigin => UIPoint;
@@ -162,6 +162,7 @@ public class LabOven : GridItem, IUsable, IItemSlotOwner, ITransitEntity, IConfi
     public void SetConfigurer(NetworkObject player);
     public override void Awake();
     public override void InitializeGridItem(ItemInstance instance, Grid grid, Vector2 originCoordinate, int rotation, string GUID);
+    public override string GetManagementName();
     public override void OnSpawnServer(NetworkConnection connection);
     public void SendConfigurationToClient(NetworkConnection conn);
     private void Update();
@@ -170,7 +171,7 @@ public class LabOven : GridItem, IUsable, IItemSlotOwner, ITransitEntity, IConfi
     private void UpdateOvenAppearance();
     private void Exit(ExitAction action);
     public override bool CanBeDestroyed(out string reason);
-    public override void DestroyItem(bool callOnServer = true);
+    protected override void Destroy();
     public void SetOvenLit(bool lit);
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void SetPlayerUser(NetworkObject playerObject);

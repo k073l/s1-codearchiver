@@ -26,11 +26,13 @@ public class Surface : MonoBehaviour, IGUIDRegisterable
     [Header("Settings")]
     public ESurfaceType SurfaceType;
     public List<EFace> ValidFaces;
-    public ScheduleOne.Property.Property ParentProperty;
     [SerializeField]
     protected string BakedGUID;
     public Guid GUID { get; protected set; }
     public Transform Container => ((Component)ParentProperty.Container).transform;
+
+    [field: SerializeField]
+    public ScheduleOne.Property.Property ParentProperty { get; private set; }
 
     [Button]
     public void RegenerateGUID();

@@ -53,7 +53,7 @@ public class StorageEntity : NetworkBehaviour, IItemSlotOwner
     private bool NetworkInitialize__LateScheduleOne_002EStorage_002EStorageEntityAssembly_002DCSharp_002Edll_Excuted;
     public bool IsOpened => (Object)(object)CurrentPlayerAccessor != (Object)null;
     public Player CurrentPlayerAccessor { get; protected set; }
-    public int ItemCount => ((IItemSlotOwner)this).GetTotalItemCount();
+    public int ItemCount => ((IItemSlotOwner)this).GetQuantitySum();
     public List<ItemSlot> ItemSlots { get; set; } = new List<ItemSlot>();
 
     public override void Awake();

@@ -6,8 +6,10 @@ using ScheduleOne.Management.UI;
 using ScheduleOne.Tools;
 using ScheduleOne.UI;
 using ScheduleOne.UI.Management;
+using ScheduleOne.UI.Tooltips;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ScheduleOne.Management;
 public class ManagementInterface : Singleton<ManagementInterface>
@@ -21,15 +23,18 @@ public class ManagementInterface : Singleton<ManagementInterface>
 
     public const float PANEL_SLIDE_TIME;
     [Header("References")]
+    public Canvas Canvas;
     public TextMeshProUGUI NothingSelectedLabel;
     public TextMeshProUGUI DifferentTypesSelectedLabel;
     public RectTransform PanelContainer;
     public ClipboardScreen MainScreen;
-    public ScheduleOne.UI.Management.ItemSelector ItemSelectorScreen;
+    public ItemSelector ItemSelectorScreen;
     public NPCSelector NPCSelector;
     public ObjectSelector ObjectSelector;
     public RecipeSelector RecipeSelectorScreen;
     public TransitEntitySelector TransitEntitySelector;
+    public StringSetter StringSetterScreen;
+    public Button RenameButton;
     [SerializeField]
     protected ConfigurableTypePanel[] ConfigPanelPrefabs;
     public List<IConfigurable> Configurables;
@@ -44,4 +49,5 @@ public class ManagementInterface : Singleton<ManagementInterface>
     private void InitializeConfigPanel();
     private void DestroyConfigPanel();
     public ConfigPanel GetConfigPanelPrefab(EConfigurableType type);
+    public void RenameButtonClicked();
 }

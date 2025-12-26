@@ -50,7 +50,7 @@ public class BuildManager : Singleton<BuildManager>
     public void ApplyMaterial(GameObject obj, Material mat, bool allMaterials = true);
     public void DisableNavigation(GameObject obj);
     public void DisableCanvases(GameObject obj);
-    public GridItem CreateGridItem(ItemInstance item, Grid grid, Vector2 originCoordinate, int rotation, string guid = "");
+    public GridItem CreateGridItem(ItemInstance item, Grid grid, Vector2 originCoordinate, int rotation, string guid = "", Action<GridItem> onBeforeSpawn = null);
     public ProceduralGridItem CreateProceduralGridItem(ItemInstance item, int rotationAngle, List<CoordinateProceduralTilePair> matches, string guid = "");
     public SurfaceItem CreateSurfaceItem(ItemInstance item, Surface parentSurface, Vector3 relativePosition, Quaternion relativeRotation, string guid = "");
 }

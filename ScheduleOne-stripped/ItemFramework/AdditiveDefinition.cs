@@ -1,5 +1,4 @@
 using System;
-using ScheduleOne.Growing;
 using UnityEngine;
 
 namespace ScheduleOne.ItemFramework;
@@ -7,5 +6,17 @@ namespace ScheduleOne.ItemFramework;
 [CreateAssetMenu(fileName = "AdditiveDefinition", menuName = "ScriptableObjects/Item Definitions/AdditiveDefinition", order = 1)]
 public class AdditiveDefinition : StorableItemDefinition
 {
-    public Additive AdditivePrefab;
+    [field: SerializeField]
+    public Material DisplayMaterial { get; private set; }
+
+    [field: SerializeField]
+    public float QualityChange { get; private set; }
+
+    [field: SerializeField]
+    public float YieldMultiplier { get; private set; } = 1f;
+
+    [field: SerializeField]
+    public float InstantGrowth { get; private set; }
+
+    public override void ValidateDefinition();
 }

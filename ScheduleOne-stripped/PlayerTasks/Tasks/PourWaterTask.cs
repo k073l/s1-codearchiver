@@ -1,7 +1,7 @@
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Growing;
 using ScheduleOne.ItemFramework;
-using ScheduleOne.ObjectScripts;
-using ScheduleOne.ObjectScripts.WateringCan;
+using ScheduleOne.PlayerScripts;
 using ScheduleOne.UI;
 using ScheduleOne.Variables;
 using UnityEngine;
@@ -13,9 +13,9 @@ public class PourWaterTask : PourOntoTargetTask
     public static bool hintShown;
     protected override bool UseCoverage => true;
     protected override bool FailOnEmpty => false;
-    protected override Pot.ECameraPosition CameraPosition => Pot.ECameraPosition.BirdsEye;
+    protected override GrowContainerCameraHandler.ECameraPosition CameraPosition => GrowContainerCameraHandler.ECameraPosition.BirdsEye;
 
-    public PourWaterTask(Pot _pot, ItemInstance _itemInstance, Pourable _pourablePrefab);
+    public PourWaterTask(GrowContainer _growContainer, ItemInstance _itemInstance, Pourable _pourablePrefab);
     public override void StopTask();
     public override void TargetReached();
 }

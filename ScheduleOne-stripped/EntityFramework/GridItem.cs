@@ -18,19 +18,11 @@ using UnityEngine;
 namespace ScheduleOne.EntityFramework;
 public class GridItem : BuildableItem
 {
-    public enum EGridType
-    {
-        All,
-        IndoorOnly,
-        OutdoorOnly
-    }
-
-    [Header("Grid item data")]
+    [HideInInspector]
     public List<CoordinateFootprintTilePair> CoordinateFootprintTilePairs;
-    public EGridType GridType;
-    public Guid OwnerGridGUID;
-    public Vector2 OriginCoordinate;
-    public int Rotation;
+    protected Guid _ownerGridGUID;
+    protected Vector2 _originCoordinate;
+    protected int _rotation;
     public List<CoordinatePair> CoordinatePairs;
     private bool NetworkInitialize___EarlyScheduleOne_002EEntityFramework_002EGridItemAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EEntityFramework_002EGridItemAssembly_002DCSharp_002Edll_Excuted;
@@ -40,20 +32,23 @@ public class GridItem : BuildableItem
     public Grid OwnerGrid { get; protected set; }
 
     public override void Awake();
-    public override void OnStartClient();
-    protected override void SendInitToClient(NetworkConnection conn);
+    protected override void SendInitializationToServer();
+    protected override void SendInitializationToClient(NetworkConnection conn);
     [ServerRpc(RequireOwnership = false)]
-    public void SendGridItemData(ItemInstance instance, string gridGUID, Vector2 originCoordinate, int rotation, string GUID);
+    public void InitializeGridItem_Server(ItemInstance instance, string gridGUID, Vector2 originCoordinate, int rotation, string GUID);
     [TargetRpc]
     [ObserversRpc(RunLocally = true)]
-    public virtual void InitializeGridItem(NetworkConnection conn, ItemInstance instance, string gridGUID, Vector2 originCoordinate, int rotation, string GUID);
+    private void InitializeGridItem_Client(NetworkConnection conn, ItemInstance instance, string gridGUID, Vector2 originCoordinate, int rotation, string GUID);
     public virtual void InitializeGridItem(ItemInstance instance, Grid grid, Vector2 originCoordinate, int rotation, string GUID);
     protected void SetGridData(Guid gridGUID, Vector2 originCoordinate, int rotation);
     private int ValidateRotation(int rotation);
     private void ProcessGridData();
     private void RefreshTransform();
     private void ClearPositionData();
-    public override void DestroyItem(bool callOnServer = true);
+    protected override void Destroy();
+    protected virtual void OnTileTemperatureChanged(Tile tile, float newTemp);
+    public float GetAverageTileTemperature();
+    public float GetAverageCosmeticTileTemperature();
     public virtual void CalculateFootprintTileIntersections();
     public void SetFootprintTileVisiblity(bool visible);
     public FootprintTile GetFootprintTile(Coordinate coord);
@@ -63,13 +58,13 @@ public class GridItem : BuildableItem
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();
-    private void RpcWriter___Server_SendGridItemData_2821640832(ItemInstance instance, string gridGUID, Vector2 originCoordinate, int rotation, string GUID);
-    public void RpcLogic___SendGridItemData_2821640832(ItemInstance instance, string gridGUID, Vector2 originCoordinate, int rotation, string GUID);
-    private void RpcReader___Server_SendGridItemData_2821640832(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Target_InitializeGridItem_1883577149(NetworkConnection conn, ItemInstance instance, string gridGUID, Vector2 originCoordinate, int rotation, string GUID);
-    public virtual void RpcLogic___InitializeGridItem_1883577149(NetworkConnection conn, ItemInstance instance, string gridGUID, Vector2 originCoordinate, int rotation, string GUID);
-    private void RpcReader___Target_InitializeGridItem_1883577149(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Observers_InitializeGridItem_1883577149(NetworkConnection conn, ItemInstance instance, string gridGUID, Vector2 originCoordinate, int rotation, string GUID);
-    private void RpcReader___Observers_InitializeGridItem_1883577149(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Server_InitializeGridItem_Server_2821640832(ItemInstance instance, string gridGUID, Vector2 originCoordinate, int rotation, string GUID);
+    public void RpcLogic___InitializeGridItem_Server_2821640832(ItemInstance instance, string gridGUID, Vector2 originCoordinate, int rotation, string GUID);
+    private void RpcReader___Server_InitializeGridItem_Server_2821640832(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Target_InitializeGridItem_Client_1883577149(NetworkConnection conn, ItemInstance instance, string gridGUID, Vector2 originCoordinate, int rotation, string GUID);
+    private void RpcLogic___InitializeGridItem_Client_1883577149(NetworkConnection conn, ItemInstance instance, string gridGUID, Vector2 originCoordinate, int rotation, string GUID);
+    private void RpcReader___Target_InitializeGridItem_Client_1883577149(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Observers_InitializeGridItem_Client_1883577149(NetworkConnection conn, ItemInstance instance, string gridGUID, Vector2 originCoordinate, int rotation, string GUID);
+    private void RpcReader___Observers_InitializeGridItem_Client_1883577149(PooledReader PooledReader0, Channel channel);
     protected override void Awake_UserLogic_ScheduleOne_002EEntityFramework_002EGridItem_Assembly_002DCSharp_002Edll();
 }

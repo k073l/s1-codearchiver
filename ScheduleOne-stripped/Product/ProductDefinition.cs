@@ -27,7 +27,7 @@ public class ProductDefinition : PropertyItemDefinition, ISaveable
     [Header("Packaging that can be applied to this product. MUST BE ORDERED FROm LOWEST TO HIGHEST QUANTITY")]
     public PackagingDefinition[] ValidPackaging;
     [Header("Product References")]
-    public FirstPersonProductConsumeAnimation ConsumeAnimation;
+    public ProductConsumeAnimation ConsumeAnimation;
     public EDrugType DrugType => DrugTypes[0].DrugType;
     public float Price => NetworkSingleton<ProductManager>.Instance.GetPrice(this);
     public List<StationRecipe> Recipes { get; private set; } = new List<StationRecipe>();

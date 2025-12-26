@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using EasyButtons;
 using FishNet.Object;
-using ScheduleOne.ConstructableScripts;
 using ScheduleOne.DevUtilities;
-using ScheduleOne.Growing;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Levelling;
 using ScheduleOne.Persistence;
@@ -33,23 +31,18 @@ public class Registry : PersistentSingleton<Registry>
     }
 
     [SerializeField]
-    private List<ObjectRegister> ObjectRegistry;
-    [SerializeField]
     private List<ItemRegister> ItemRegistry;
     [SerializeField]
     private List<ItemRegister> ItemsAddedAtRuntime;
     private Dictionary<int, ItemRegister> ItemDictionary;
     private Dictionary<string, string> itemIDAliases;
-    public List<SeedDefinition> Seeds;
     private void OnValidate();
     protected override void Awake();
-    public static GameObject GetPrefab(string id);
     public static ItemDefinition GetItem(string ID);
     public static bool ItemExists(string ID);
     public static T GetItem<T>(string ID)
         where T : ItemDefinition;
     public ItemDefinition _GetItem(string ID, bool warnIfNonExistent = true);
-    public static Constructable GetConstructable(string id);
     private static int GetHash(string ID);
     private static string RemoveAssetsAndPrefab(string originalString);
     protected override void Start();

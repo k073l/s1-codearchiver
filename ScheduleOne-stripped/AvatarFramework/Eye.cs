@@ -43,7 +43,7 @@ public class Eye : MonoBehaviour
     private void Awake();
     public void SetSize(float size);
     public void SetLidColor(Color color);
-    public void SetEyeballMaterial(Material mat, Color col);
+    public void SetEyeballMaterial(Material mat);
     public void SetEyeballColor(Color col, float emission = 0.115f, bool writeDefault = true);
     public void ResetEyeballColor();
     public void ConfigureEyeLight(Color color, float intensity);

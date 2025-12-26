@@ -21,7 +21,7 @@ public class NPCSignal_WaitForDelivery : NPCSignal
     public override void LateStarted();
     public override void JumpTo();
     private void EnsureNPCHasEnoughCash();
-    public override void ActiveMinPassed();
+    public override void OnActiveTick();
     public override void Interrupt();
     public override void Resume();
     public override void End();

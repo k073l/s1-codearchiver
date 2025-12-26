@@ -4,6 +4,7 @@ using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.Law;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.UI.Items;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -55,6 +56,7 @@ public class HUD : Singleton<HUD>
     private Coroutine blackOverlayFade;
     private bool radialIndicatorSetThisFrame;
     protected override void Awake();
+    protected override void Start();
     public void SetCrosshairVisible(bool vis);
     public void SetBlackOverlayVisible(bool vis, float fadeTime);
     private void Update();

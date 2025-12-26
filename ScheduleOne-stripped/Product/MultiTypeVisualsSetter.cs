@@ -6,6 +6,7 @@ public class MultiTypeVisualsSetter : MonoBehaviour
     public WeedVisualsSetter WeedVisuals;
     public MethVisualsSetter MethVisuals;
     public CocaineVisualsSetter CocaineVisuals;
+    public ShroomVisualsSetter ShroomVisuals;
     private void Awake();
     public void ApplyVisuals(ProductItemInstance itemInstance);
     public void ApplyVisuals(ProductDefinition product);

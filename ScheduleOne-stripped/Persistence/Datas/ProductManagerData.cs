@@ -17,6 +17,7 @@ public class ProductManagerData : SaveData
     public WeedProductData[] CreatedWeed;
     public MethProductData[] CreatedMeth;
     public CocaineProductData[] CreatedCocaine;
+    public ShroomProductData[] CreatedShrooms;
     public ContractReceipt[] ContractReceipts;
-    public ProductManagerData(string[] discoveredProducts, string[] listedProducts, NewMixOperation activeOperation, bool isMixComplete, MixRecipeData[] mixRecipes, StringIntPair[] productPrices, string[] favouritedProducts, WeedProductData[] createdWeed, MethProductData[] createdMeth, CocaineProductData[] createdCocaine, ContractReceipt[] receipts);
+    public ProductManagerData(string[] discoveredProducts, string[] listedProducts, NewMixOperation activeOperation, bool isMixComplete, MixRecipeData[] mixRecipes, StringIntPair[] productPrices, string[] favouritedProducts, WeedProductData[] createdWeed, MethProductData[] createdMeth, CocaineProductData[] createdCocaine, ShroomProductData[] createdShrooms, ContractReceipt[] receipts);
 }

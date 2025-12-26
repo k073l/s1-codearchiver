@@ -2,8 +2,8 @@ using System;
 
 namespace ScheduleOne.Persistence.Datas;
 [Serializable]
-public class LabOvenConfigurationData : SaveData
+public class LabOvenConfigurationData : RenamableConfigurationData
 {
     public ObjectFieldData Destination;
-    public LabOvenConfigurationData(ObjectFieldData destination);
+    public LabOvenConfigurationData(StringFieldData name, ObjectFieldData destination);
 }

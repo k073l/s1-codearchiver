@@ -14,7 +14,7 @@ public static class NavMeshUtility
     public const float SAMPLE_CACHE_MAX_SQR_DIST;
     public const float MAX_CACHE_SIZE;
     public static float GetPathLength(NavMeshPath path);
-    public static Transform GetAccessPoint(ITransitEntity entity, NPC npc);
+    public static Transform GetReachableAccessPoint(ITransitEntity entity, NPC npc);
     public static bool IsAtTransitEntity(ITransitEntity entity, NPC npc, float distanceThreshold = 0.4f);
     public static int GetNavMeshAgentID(string name);
     public static bool SamplePosition(Vector3 sourcePosition, out NavMeshHit hit, float maxDistance, int areaMask, bool useCache = true);

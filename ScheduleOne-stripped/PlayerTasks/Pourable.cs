@@ -1,7 +1,7 @@
 using System;
 using ScheduleOne.Audio;
 using ScheduleOne.DevUtilities;
-using ScheduleOne.ObjectScripts;
+using ScheduleOne.Growing;
 using ScheduleOne.Trash;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -29,8 +29,7 @@ public class Pourable : Draggable
     [Header("Trash")]
     public TrashItem TrashItem;
     [HideInInspector]
-    public Pot TargetPot;
-    public float currentQuantity;
+    public GrowContainer TargetGrowContainer;
     protected bool hasPoured;
     protected bool autoSetCurrentQuantity;
     private float[] particleMinSizes;
@@ -38,6 +37,7 @@ public class Pourable : Draggable
     private AverageAcceleration accelerometer;
     public bool IsPouring { get; protected set; }
     public float NormalizedPourRate { get; private set; }
+    public float CurrentQuantity { get; protected set; }
 
     protected virtual void Start();
     protected override void Update();

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using EasyButtons;
 using FishNet;
 using ScheduleOne.AvatarFramework.Equipping;
 using ScheduleOne.DevUtilities;
@@ -26,10 +27,14 @@ public class Ambush : CartelActivity
     [Header("Settings")]
     public AvatarWeapon[] RangedWeapons;
     public AvatarWeapon[] MeleeWeapons;
+    [Header("Debugging & Development")]
+    public EMapRegion region;
     public override void Activate(EMapRegion region);
     protected override void Deactivate();
     protected override void MinPassed();
     private bool CanPlayerBeAmbushed(Player player);
     private void ContractReceiptRecorded(ContractReceipt receipt);
     private void SpawnAmbush(Player target, Vector3[] potentialSpawnPoints);
+    [Button]
+    public void TriggerAmbushForPlayer();
 }

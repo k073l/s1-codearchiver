@@ -48,6 +48,7 @@ public class NPCInventory : NetworkBehaviour, IItemSlotOwner
     public int RandomCashMax;
     [Header("Random items")]
     public bool RandomItems;
+    public bool AllowDuplicateRandomItems;
     public RandomInventoryItem[] RandomInventoryItems;
     public int RandomItemMin;
     public int RandomItemMax;
@@ -63,11 +64,11 @@ public class NPCInventory : NetworkBehaviour, IItemSlotOwner
     public override void OnSpawnServer(NetworkConnection connection);
     private void OnDestroy();
     protected virtual void OnSleepStart();
-    private StorableItemDefinition GetRandomInventoryItem();
+    public void AddRandomItemsToInventory();
+    private void AddRandomCashInstance();
+    private StorableItemDefinition GetRandomInventoryItem(List<string> excludeIDs);
     [Button]
     public float GetTotalRandomInventoryItemWeight();
-    public int GetItemCount();
-    public int _GetItemAmount(string id);
     public int GetIdenticalItemAmount(ItemInstance item);
     public int GetMaxItemCount(string[] ids);
     public bool CanItemFit(ItemInstance item);

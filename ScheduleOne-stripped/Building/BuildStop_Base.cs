@@ -1,4 +1,5 @@
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Heatmap;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.UI;
 using UnityEngine;

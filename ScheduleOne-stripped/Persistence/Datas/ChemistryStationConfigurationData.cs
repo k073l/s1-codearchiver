@@ -2,9 +2,9 @@ using System;
 
 namespace ScheduleOne.Persistence.Datas;
 [Serializable]
-public class ChemistryStationConfigurationData : SaveData
+public class ChemistryStationConfigurationData : RenamableConfigurationData
 {
     public StationRecipeFieldData Recipe;
     public ObjectFieldData Destination;
-    public ChemistryStationConfigurationData(StationRecipeFieldData recipe, ObjectFieldData destination);
+    public ChemistryStationConfigurationData(StringFieldData name, StationRecipeFieldData recipe, ObjectFieldData destination);
 }

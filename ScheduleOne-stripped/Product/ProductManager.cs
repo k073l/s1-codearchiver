@@ -21,7 +21,6 @@ using ScheduleOne.NPCs;
 using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.Persistence.Loaders;
-using ScheduleOne.PlayerScripts;
 using ScheduleOne.StationFramework;
 using ScheduleOne.UI;
 using ScheduleOne.Variables;
@@ -49,10 +48,12 @@ public class ProductManager : NetworkSingleton<ProductManager>, IBaseSaveable, I
     public WeedDefinition DefaultWeed;
     public CocaineDefinition DefaultCocaine;
     public MethDefinition DefaultMeth;
+    public ShroomDefinition DefaultShroom;
     [Header("Mix Maps")]
     public MixerMap WeedMixMap;
     public MixerMap MethMixMap;
     public MixerMap CokeMixMap;
+    public MixerMap ShroomMixMap;
     private List<ProductDefinition> createdProducts;
     public Action<NewMixOperation> onMixCompleted;
     public Action<ProductDefinition> onNewProductCreated;
@@ -68,11 +69,14 @@ public class ProductManager : NetworkSingleton<ProductManager>, IBaseSaveable, I
     public Action<StationRecipe> onMixRecipeAdded;
     private Dictionary<ProductDefinition, float> ProductPrices;
     private ProductDefinition highestValueProduct;
+    private List<NetworkConnection> productDataSentTo;
+    public Action<NetworkConnection> onProductDataSentToConnection;
     private ProductManagerLoader loader;
     private bool NetworkInitialize___EarlyScheduleOne_002EProduct_002EProductManagerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EProduct_002EProductManagerAssembly_002DCSharp_002Edll_Excuted;
     public static bool MethDiscovered => DiscoveredProducts.Any(default);
     public static bool CocaineDiscovered => DiscoveredProducts.Any(default);
+    public static bool ShroomsDiscovered => DiscoveredProducts.Any(default);
     public static bool IsAcceptingOrders { get; private set; } = true;
     public NewMixOperation CurrentMixOperation { get; private set; }
     public bool IsMixingInProgress => CurrentMixOperation != null;
@@ -87,6 +91,7 @@ public class ProductManager : NetworkSingleton<ProductManager>, IBaseSaveable, I
     public bool HasChanged { get; set; } = true;
     public int LoadOrder { get; }
 
+    public bool HasSentProductDataToConnection(NetworkConnection conn);
     public override void Awake();
     protected override void Start();
     public override void OnStartServer();
@@ -97,6 +102,8 @@ public class ProductManager : NetworkSingleton<ProductManager>, IBaseSaveable, I
     public void SetMethDiscovered();
     [ServerRpc(RequireOwnership = false)]
     public void SetCocaineDiscovered();
+    [ServerRpc(RequireOwnership = false)]
+    public void SetShroomsDiscovered();
     [ObserversRpc(RunLocally = true)]
     public void RecordContractReceipt(ContractReceipt receipt);
     public List<ContractReceipt> GetContractReceipts(EMapRegion region, List<EContractParty> dealCompleterTypes, int maxMinsAgo);
@@ -136,6 +143,11 @@ public class ProductManager : NetworkSingleton<ProductManager>, IBaseSaveable, I
     [TargetRpc]
     [ObserversRpc(RunLocally = true)]
     private void CreateMeth(NetworkConnection conn, string name, string id, EDrugType type, List<string> properties, MethAppearanceSettings appearance);
+    [ServerRpc(RequireOwnership = false, RunLocally = true)]
+    public void CreateShroom_Server(string name, string id, EDrugType type, List<string> properties, ShroomAppearanceSettings appearance);
+    [TargetRpc]
+    [ObserversRpc(RunLocally = true)]
+    private void CreateShroom_Client(NetworkConnection conn, string name, string id, EDrugType type, List<string> properties, ShroomAppearanceSettings appearance);
     private void RefreshHighestValueProduct();
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void SendMixRecipe(string product, string mixer, string output);
@@ -144,8 +156,6 @@ public class ProductManager : NetworkSingleton<ProductManager>, IBaseSaveable, I
     public void CreateMixRecipe(NetworkConnection conn, string product, string mixer, string output);
     public StationRecipe GetRecipe(string product, string mixer);
     public StationRecipe GetRecipe(List<Effect> productProperties, Effect mixerProperty);
-    [TargetRpc]
-    private void GiveItem(NetworkConnection conn, string id);
     public ProductDefinition GetKnownProduct(EDrugType type, List<Effect> properties);
     public float GetPrice(ProductDefinition product);
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
@@ -176,6 +186,9 @@ public class ProductManager : NetworkSingleton<ProductManager>, IBaseSaveable, I
     private void RpcWriter___Server_SetCocaineDiscovered_2166136261();
     public void RpcLogic___SetCocaineDiscovered_2166136261();
     private void RpcReader___Server_SetCocaineDiscovered_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Server_SetShroomsDiscovered_2166136261();
+    public void RpcLogic___SetShroomsDiscovered_2166136261();
+    private void RpcReader___Server_SetShroomsDiscovered_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
     private void RpcWriter___Observers_RecordContractReceipt_1401448548(ContractReceipt receipt);
     public void RpcLogic___RecordContractReceipt_1401448548(ContractReceipt receipt);
     private void RpcReader___Observers_RecordContractReceipt_1401448548(PooledReader PooledReader0, Channel channel);
@@ -227,6 +240,14 @@ public class ProductManager : NetworkSingleton<ProductManager>, IBaseSaveable, I
     private void RpcReader___Target_CreateMeth_1869045686(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Observers_CreateMeth_1869045686(NetworkConnection conn, string name, string id, EDrugType type, List<string> properties, MethAppearanceSettings appearance);
     private void RpcReader___Observers_CreateMeth_1869045686(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Server_CreateShroom_Server_2261384965(string name, string id, EDrugType type, List<string> properties, ShroomAppearanceSettings appearance);
+    public void RpcLogic___CreateShroom_Server_2261384965(string name, string id, EDrugType type, List<string> properties, ShroomAppearanceSettings appearance);
+    private void RpcReader___Server_CreateShroom_Server_2261384965(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Target_CreateShroom_Client_812995776(NetworkConnection conn, string name, string id, EDrugType type, List<string> properties, ShroomAppearanceSettings appearance);
+    private void RpcLogic___CreateShroom_Client_812995776(NetworkConnection conn, string name, string id, EDrugType type, List<string> properties, ShroomAppearanceSettings appearance);
+    private void RpcReader___Target_CreateShroom_Client_812995776(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Observers_CreateShroom_Client_812995776(NetworkConnection conn, string name, string id, EDrugType type, List<string> properties, ShroomAppearanceSettings appearance);
+    private void RpcReader___Observers_CreateShroom_Client_812995776(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Server_SendMixRecipe_852232071(string product, string mixer, string output);
     public void RpcLogic___SendMixRecipe_852232071(string product, string mixer, string output);
     private void RpcReader___Server_SendMixRecipe_852232071(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
@@ -235,9 +256,6 @@ public class ProductManager : NetworkSingleton<ProductManager>, IBaseSaveable, I
     private void RpcReader___Target_CreateMixRecipe_1410895574(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Observers_CreateMixRecipe_1410895574(NetworkConnection conn, string product, string mixer, string output);
     private void RpcReader___Observers_CreateMixRecipe_1410895574(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Target_GiveItem_2971853958(NetworkConnection conn, string id);
-    private void RpcLogic___GiveItem_2971853958(NetworkConnection conn, string id);
-    private void RpcReader___Target_GiveItem_2971853958(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Server_SendPrice_606697822(string productID, float value);
     public void RpcLogic___SendPrice_606697822(string productID, float value);
     private void RpcReader___Server_SendPrice_606697822(PooledReader PooledReader0, Channel channel, NetworkConnection conn);

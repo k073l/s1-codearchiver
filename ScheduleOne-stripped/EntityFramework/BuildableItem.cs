@@ -1,7 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using EasyButtons;
 using EPOOutline;
 using FishNet;
 using FishNet.Component.Ownership;
@@ -24,7 +24,7 @@ using UnityEngine.Events;
 
 namespace ScheduleOne.EntityFramework;
 [RequireComponent(typeof(PredictedSpawn))]
-public class BuildableItem : NetworkBehaviour, IGUIDRegisterable, ISaveable
+public abstract class BuildableItem : NetworkBehaviour, IGUIDRegisterable, ISaveable
 {
     public enum EOutlineColor
     {
@@ -65,7 +65,7 @@ public class BuildableItem : NetworkBehaviour, IGUIDRegisterable, ISaveable
     public Guid GUID { get; protected set; }
     public bool IsCulled { get; protected set; }
     public GameObject BuildHandler => buildHandler;
-    public bool LocallyBuilt { get; protected set; }
+    protected bool _locallyBuilt { get; set; }
     public string SaveFolderName => ItemInstance.ID + "_" + GUID.ToString().Substring(0, 6);
     public string SaveFileName => "Data";
     public Loader Loader => null;
@@ -74,35 +74,31 @@ public class BuildableItem : NetworkBehaviour, IGUIDRegisterable, ISaveable
     public List<string> LocalExtraFolders { get; set; } = new List<string>();
     public bool HasChanged { get; set; }
 
-    [Button]
-    public void AddChildMeshes();
     public void SetLocallyBuilt();
     public override void Awake();
     protected virtual void Start();
     protected virtual ScheduleOne.Property.Property GetProperty(Transform searchTransform = null);
+    public virtual string GetManagementName();
+    public virtual string GetDefaultManagementName();
     public virtual void InitializeSaveable();
     public override void OnSpawnServer(NetworkConnection connection);
-    protected virtual void SendInitToClient(NetworkConnection conn);
-    [ServerRpc(RequireOwnership = false)]
-    public void SendBuildableItemData(ItemInstance instance, string GUID, string parentPropertyCode);
-    [ObserversRpc]
-    [TargetRpc]
-    public void ReceiveBuildableItemData(NetworkConnection conn, ItemInstance instance, string GUID, string parentPropertyCode);
-    public virtual void InitializeBuildableItem(ItemInstance instance, string GUID, string parentPropertyCode);
+    public override void OnStartClient();
+    protected abstract void SendInitializationToClient(NetworkConnection conn);
+    protected abstract void SendInitializationToServer();
+    protected void InitializeBuildableItem(ItemInstance instance, string GUID, string parentPropertyCode);
     public bool CanBePickedUp(out string reason);
     public virtual bool CanBeDestroyed(out string reason);
-    public virtual void PickupItem();
-    public virtual void DestroyItem(bool callOnServer = true);
-    [ServerRpc(RequireOwnership = false)]
-    private void Destroy_Networked();
-    [ObserversRpc]
-    private void DestroyItemWrapper();
+    public void PickupItem();
+    protected virtual void Destroy();
+    [ServerRpc(RequireOwnership = false, RunLocally = true)]
+    private void Destroy_Server();
+    [ObserversRpc(RunLocally = true)]
+    private void Destroy_Client();
     public void SetGUID(Guid guid);
-    public static Color32 GetColorFromOutlineColorEnum(EOutlineColor col);
+    private static Color32 GetColorFromOutlineColorEnum(EOutlineColor col);
     public virtual void ShowOutline(Color color);
     public void ShowOutline(EOutlineColor color);
     public virtual void HideOutline();
-    public Vector3 GetFurthestPointFromBoundingCollider(Vector3 pos);
     public bool GetPenetration(out float x, out float z, out float y);
     private bool HasLoS_IgnoreBuildables(Vector3 point);
     public virtual void SetCulled(bool culled);
@@ -113,19 +109,11 @@ public class BuildableItem : NetworkBehaviour, IGUIDRegisterable, ISaveable
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();
-    private void RpcWriter___Server_SendBuildableItemData_3537728543(ItemInstance instance, string GUID, string parentPropertyCode);
-    public void RpcLogic___SendBuildableItemData_3537728543(ItemInstance instance, string GUID, string parentPropertyCode);
-    private void RpcReader___Server_SendBuildableItemData_3537728543(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Observers_ReceiveBuildableItemData_3859851844(NetworkConnection conn, ItemInstance instance, string GUID, string parentPropertyCode);
-    public void RpcLogic___ReceiveBuildableItemData_3859851844(NetworkConnection conn, ItemInstance instance, string GUID, string parentPropertyCode);
-    private void RpcReader___Observers_ReceiveBuildableItemData_3859851844(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Target_ReceiveBuildableItemData_3859851844(NetworkConnection conn, ItemInstance instance, string GUID, string parentPropertyCode);
-    private void RpcReader___Target_ReceiveBuildableItemData_3859851844(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Server_Destroy_Networked_2166136261();
-    private void RpcLogic___Destroy_Networked_2166136261();
-    private void RpcReader___Server_Destroy_Networked_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Observers_DestroyItemWrapper_2166136261();
-    private void RpcLogic___DestroyItemWrapper_2166136261();
-    private void RpcReader___Observers_DestroyItemWrapper_2166136261(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Server_Destroy_Server_2166136261();
+    private void RpcLogic___Destroy_Server_2166136261();
+    private void RpcReader___Server_Destroy_Server_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Observers_Destroy_Client_2166136261();
+    private void RpcLogic___Destroy_Client_2166136261();
+    private void RpcReader___Observers_Destroy_Client_2166136261(PooledReader PooledReader0, Channel channel);
     protected virtual void Awake_UserLogic_ScheduleOne_002EEntityFramework_002EBuildableItem_Assembly_002DCSharp_002Edll();
 }

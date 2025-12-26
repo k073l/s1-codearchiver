@@ -76,7 +76,7 @@ public class DryingRack : GridItem, IUsable, IItemSlotOwner, ITransitEntity, ICo
         get; [CompilerGenerated]
         set; }
     public List<ItemSlot> ItemSlots { get; set; } = new List<ItemSlot>();
-    public string Name => base.ItemInstance.Name;
+    public string Name => GetManagementName();
     public List<ItemSlot> InputSlots { get; set; } = new List<ItemSlot>();
     public List<ItemSlot> OutputSlots { get; set; } = new List<ItemSlot>();
     public Transform LinkOrigin => uiPoint;
@@ -107,11 +107,12 @@ public class DryingRack : GridItem, IUsable, IItemSlotOwner, ITransitEntity, ICo
     public void SetConfigurer(NetworkObject player);
     public override void Awake();
     public override void InitializeGridItem(ItemInstance instance, Grid grid, Vector2 originCoordinate, int rotation, string GUID);
+    public override string GetManagementName();
     public override void OnSpawnServer(NetworkConnection connection);
     public void SendConfigurationToClient(NetworkConnection conn);
     private void Exit(ExitAction action);
     public override bool CanBeDestroyed(out string reason);
-    public override void DestroyItem(bool callOnServer = true);
+    protected override void Destroy();
     private void MinPass();
     public bool CanStartOperation();
     public void StartOperation();

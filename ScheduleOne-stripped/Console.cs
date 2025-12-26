@@ -26,6 +26,7 @@ using ScheduleOne.UI;
 using ScheduleOne.Variables;
 using ScheduleOne.Vehicles;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace ScheduleOne;
 public class Console : Singleton<Console>
@@ -123,8 +124,8 @@ public class Console : Singleton<Console>
     public class Teleport : ConsoleCommand
     {
         public override string CommandWord => "teleport";
-        public override string CommandDescription => "Teleports the player to the specified location";
-        public override string ExampleUsage => "teleport townhall, teleport barn";
+        public override string CommandDescription => "Teleports the player to the specified location, property, or NPC.";
+        public override string ExampleUsage => "teleport townhall, teleport barn, teleport jessi_waters";
 
         public override void Execute(List<string> args);
     }

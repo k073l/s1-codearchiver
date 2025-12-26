@@ -1,6 +1,7 @@
 using ScheduleOne.Management;
 using ScheduleOne.ObjectScripts;
 using ScheduleOne.UI.Stations;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 

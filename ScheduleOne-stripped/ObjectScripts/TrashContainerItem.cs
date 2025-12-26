@@ -30,7 +30,7 @@ public class TrashContainerItem : GridItem, ITransitEntity
     private float calculatedPickupRadius;
     private bool NetworkInitialize___EarlyScheduleOne_002EObjectScripts_002ETrashContainerItemAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EObjectScripts_002ETrashContainerItemAssembly_002DCSharp_002Edll_Excuted;
-    public string Name => base.ItemInstance.Name;
+    public string Name => GetManagementName();
     public List<ItemSlot> InputSlots { get; set; } = new List<ItemSlot>();
     public List<ItemSlot> OutputSlots { get; set; } = new List<ItemSlot>();
     public Transform LinkOrigin => ((Component)this).transform;

@@ -25,7 +25,7 @@ public class FloatSmoother
     public float Multiplier { get; private set; } = 1f;
 
     public void Initialize();
-    public void SetDefault(float value);
+    public void SetDefault(float value, bool apply = true);
     public void SetMultiplier(float value);
     public void SetSmoothingSpeed(float value);
     public void AddOverride(float value, int priority, string label);

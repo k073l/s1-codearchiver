@@ -20,5 +20,6 @@ public struct DisplaySettings
     public float UIScale;
     public float CameraBobbing;
     public int ActiveDisplayIndex;
+    public Settings.EUnitType UnitType;
     public static List<Resolution> GetResolutions();
 }

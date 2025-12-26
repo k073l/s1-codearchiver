@@ -42,7 +42,8 @@ public abstract class NPCAction : NetworkBehaviour
     public virtual void ResumeFailed();
     public virtual void Skipped();
     public virtual void ActiveUpdate();
-    public virtual void ActiveMinPassed();
+    public virtual void OnActiveTick();
+    public virtual void OnActiveMinPass();
     public virtual void PendingMinPassed();
     public virtual void MinPassed();
     public virtual bool ShouldStart();

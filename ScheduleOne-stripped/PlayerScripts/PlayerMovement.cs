@@ -123,6 +123,7 @@ public class PlayerMovement : PlayerSingleton<PlayerMovement>
     private void UpdatePlayerHeight();
     public void LerpPlayerRotation(Quaternion rotation, float lerpTime);
     private IEnumerator LerpPlayerRotation_Process(Quaternion endRotation, float lerpTime);
+    public void SetPlayerRotation(Quaternion rotation);
     private void EnterVehicle(LandVehicle vehicle);
     private void ExitVehicle(LandVehicle veh, Transform exitPoint);
     public void RegisterMovementEvent(int threshold, Action action);

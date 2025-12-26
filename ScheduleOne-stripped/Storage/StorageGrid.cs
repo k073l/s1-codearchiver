@@ -7,7 +7,9 @@ public class StorageGrid : MonoBehaviour
 {
     public static float gridSize;
     public List<StorageTile> storageTiles;
+    [HideInInspector]
     public List<StorageTile> freeTiles;
+    [HideInInspector]
     public List<CoordinateStorageTilePair> coordinateStorageTilePairs;
     protected Dictionary<Coordinate, StorageTile> coordinateToTile;
     protected virtual void Awake();

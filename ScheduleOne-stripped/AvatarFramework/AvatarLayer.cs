@@ -10,7 +10,7 @@ public class AvatarLayer : ScriptableObject
     public string AssetPath;
     public Texture2D Texture;
     public Texture2D Normal;
-    public Texture2D Normal_DefaultFormat;
+    public Texture2D Normal_DefaultImportType;
     public int Order;
     public Material CombinedMaterial;
 }

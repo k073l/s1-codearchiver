@@ -29,14 +29,13 @@ public class InteractionCanvas : Singleton<InteractionCanvas>
     public RectTransform BackgroundImage;
     [Header("Prefabs")]
     public GameObject WSLabelPrefab;
-    private bool interactionDisplayEnabledThisFrame;
+    private bool _interactionDisplayEnabledThisFrame;
+    private Coroutine _displayScaleLerpRoutine;
     [HideInInspector]
     public List<WorldSpaceLabel> ActiveWSlabels;
-    private Coroutine ILerpDisplayScale_Coroutine;
-    public float TempDisplayScale { get; set; } = 1f;
+    public float displayScale { get; set; } = 1f;
 
     protected virtual void LateUpdate();
     public void EnableInteractionDisplay(Vector3 pos, Sprite icon, string spriteText, string message, Color messageColor, Color iconColor);
     public void LerpDisplayScale(float endScale);
-    protected IEnumerator ILerpDisplayScale(float startScale, float endScale);
 }

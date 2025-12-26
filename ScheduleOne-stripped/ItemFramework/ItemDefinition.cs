@@ -26,4 +26,5 @@ public class ItemDefinition : ScriptableObject
     [Header("Legal Status")]
     public ELegalStatus legalStatus;
     public virtual ItemInstance GetDefaultInstance(int quantity = 1);
+    public virtual void ValidateDefinition();
 }

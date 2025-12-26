@@ -48,10 +48,10 @@ public class RequestProductBehaviour : Behaviour
     [ObserversRpc(RunLocally = true)]
     public void AssignTarget(NetworkObject plr);
     protected virtual void Start();
-    public override void Begin();
-    public override void End();
+    public override void Activate();
+    public override void Deactivate();
     public override void Disable();
-    public override void ActiveMinPass();
+    public override void OnActiveTick();
     private bool IsTargetDestinationValid();
     private bool GetNewDestination(out Vector3 dest);
     public static bool IsTargetValid(Player player);

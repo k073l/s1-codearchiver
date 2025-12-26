@@ -37,15 +37,15 @@ public class MoveItemBehaviour : Behaviour
 
     public void Initialize(TransitRoute route, ItemInstance _itemToRetrieveTemplate, int _maxMoveAmount = -1, bool _skipPickup = false);
     public void Resume(TransitRoute route, ItemInstance _itemToRetrieveTemplate, int _maxMoveAmount = -1);
-    public override void Begin();
+    public override void Activate();
     public override void Pause();
     public override void Resume();
-    public override void End();
+    public override void Deactivate();
     public override void Disable();
     private void StartTransit();
     private bool IsNpcInventoryItemValid(ItemInstance item);
     private void EndTransit();
-    public override void ActiveMinPass();
+    public override void OnActiveTick();
     public void WalkToSource();
     public void GrabItem();
     private void TakeItem();

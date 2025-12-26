@@ -34,12 +34,12 @@ public class FleeBehaviour : Behaviour
     public void SetEntityToFlee(NetworkObject entity);
     [ObserversRpc(RunLocally = true)]
     public void SetPointToFlee(Vector3 point);
-    public override void Begin();
+    public override void Activate();
     public override void Resume();
-    public override void End();
+    public override void Deactivate();
     public override void Pause();
     private void StartFlee();
-    public override void ActiveMinPass();
+    public override void OnActiveTick();
     public override void BehaviourUpdate();
     private void Stop();
     private void Flee();

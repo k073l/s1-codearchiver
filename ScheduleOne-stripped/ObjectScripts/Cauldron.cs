@@ -74,6 +74,7 @@ public class Cauldron : GridItem, IUsable, IItemSlotOwner, ITransitEntity, IConf
     public ToggleableLight Light;
     public ConfigurationReplicator configReplicator;
     public BoxCollider TrashSpawnVolume;
+    public Transform LeafDragProjectionPlane;
     [Header("Prefabs")]
     public StationItem CocaLeafPrefab;
     public StationItem GasolinePrefab;
@@ -111,7 +112,7 @@ public class Cauldron : GridItem, IUsable, IItemSlotOwner, ITransitEntity, IConf
     public NetworkObject PlayerUserObject {[CompilerGenerated]
         get; [CompilerGenerated]
         set; }
-    public string Name => base.ItemInstance.Name;
+    public string Name => GetManagementName();
     public List<ItemSlot> InputSlots { get; set; } = new List<ItemSlot>();
     public List<ItemSlot> OutputSlots { get; set; } = new List<ItemSlot>();
     public Transform LinkOrigin => UIPoint;
@@ -139,10 +140,11 @@ public class Cauldron : GridItem, IUsable, IItemSlotOwner, ITransitEntity, IConf
     public void SetConfigurer(NetworkObject player);
     public override void Awake();
     public override void InitializeGridItem(ItemInstance instance, Grid grid, Vector2 originCoordinate, int rotation, string GUID);
+    public override string GetManagementName();
     protected override void Start();
     public override void OnSpawnServer(NetworkConnection connection);
     public void SendConfigurationToClient(NetworkConnection conn);
-    public override void DestroyItem(bool callOnServer = true);
+    protected override void Destroy();
     private void MinPass();
     private void TimeSkipped(int minsPassed);
     private void Exit(ExitAction action);

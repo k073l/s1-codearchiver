@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using EasyButtons;
+using ScheduleOne.FX;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Product;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 namespace ScheduleOne.DevUtilities;
 public class IconGenerator : Singleton<IconGenerator>
@@ -28,6 +30,7 @@ public class IconGenerator : Singleton<IconGenerator>
     public Transform ItemContainer;
     public GameObject Canvas;
     public List<PackagingVisuals> Visuals;
+    public UniversalRendererData rendererData;
     protected override void Awake();
     [Button]
     public void GenerateIcon();

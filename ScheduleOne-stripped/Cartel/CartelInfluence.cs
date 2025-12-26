@@ -9,7 +9,6 @@ using FishNet.Serializing;
 using FishNet.Serializing.Generated;
 using FishNet.Transporting;
 using ScheduleOne.DevUtilities;
-using ScheduleOne.GameTime;
 using ScheduleOne.Map;
 using ScheduleOne.UI;
 using UnityEngine;
@@ -28,6 +27,7 @@ public class CartelInfluence : NetworkBehaviour
     }
 
     public const float INFLUENCE_TO_UNLOCK_NEXT_REGION;
+    public const float WESTVILLE_MAX_INFLUENCE;
     [Header("Settings")]
     public RegionInfluenceData[] DefaultRegionInfluence;
     private List<RegionInfluenceData> regionInfluence;
@@ -36,7 +36,6 @@ public class CartelInfluence : NetworkBehaviour
     private bool NetworkInitialize__LateScheduleOne_002ECartel_002ECartelInfluenceAssembly_002DCSharp_002Edll_Excuted;
     public RegionInfluenceData[] GetAllRegionInfluence();
     public override void Awake();
-    private void Start();
     public override void OnSpawnServer(NetworkConnection connection);
     protected override void OnValidate();
     [ServerRpc(RequireOwnership = false)]
@@ -45,7 +44,6 @@ public class CartelInfluence : NetworkBehaviour
     [TargetRpc]
     public void SetInfluence(NetworkConnection conn, EMapRegion region, float influence);
     public float GetInfluence(EMapRegion region);
-    private void OnSleepEnd();
     [ObserversRpc(RunLocally = true)]
     private void ChangeInfluence(EMapRegion region, float oldInfluence, float newInfluence);
     private RegionInfluenceData GetRegionData(EMapRegion region);

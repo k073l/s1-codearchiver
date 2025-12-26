@@ -8,6 +8,8 @@ using ScheduleOne.DevUtilities;
 using ScheduleOne.EntityFramework;
 using ScheduleOne.Tools;
 using ScheduleOne.UI;
+using ScheduleOne.UI.Compass;
+using ScheduleOne.UI.Items;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
@@ -107,6 +109,7 @@ public class PlayerCamera : PlayerSingleton<PlayerCamera>
     public bool LookRaycast_ExcludeBuildables(float range, out RaycastHit hit, LayerMask layerMask, bool includeTriggers = true);
     private void OnDrawGizmosSelected();
     public bool Raycast_ExcludeBuildables(Vector3 origin, Vector3 direction, float range, out RaycastHit hit, LayerMask layerMask, bool includeTriggers = false, float radius = 0f, float maxAngleDifference = 0f);
+    public Ray GetMouseRay();
     public bool MouseRaycast(float range, out RaycastHit hit, LayerMask layerMask, bool includeTriggers = true, float radius = 0f);
     public bool LookSpherecast(float range, float radius, out RaycastHit hit, LayerMask layerMask);
     public void OverrideTransform(Vector3 worldPos, Quaternion rot, float lerpTime, bool keepParented = false);
@@ -133,6 +136,8 @@ public class PlayerCamera : PlayerSingleton<PlayerCamera>
     public void ResetRotation();
     public void FocusCameraOnTarget(Transform target);
     public void StopFocus();
+    public void OpenInterface(bool keepInventoryVisible = false, bool keepCompassVisible = false);
+    public void CloseInterface(float cameraLerpTime = 0.2f, bool reenableCameraInput = true);
     public void StartCameraShake(float intensity, float duration = -1f, bool decreaseOverTime = true);
     public void StopCameraShake();
     public void UpdateCameraBob();

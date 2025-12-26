@@ -31,7 +31,7 @@ public class NPCSignal_DriveToCarPark : NPCSignal
     public override void Skipped();
     public override void ResumeFailed();
     public override void JumpTo();
-    public override void ActiveMinPassed();
+    public override void OnActiveTick();
     protected override void WalkCallback(NPCMovement.WalkResult result);
     private Vector3 GetWalkDestination();
     private void DriveCallback(VehicleAgent.ENavigationResult result);

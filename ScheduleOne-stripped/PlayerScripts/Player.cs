@@ -193,7 +193,7 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public float Scale { get; private set; } = 1f;
     public ScheduleOne.Property.Property CurrentProperty { get; protected set; }
     public ScheduleOne.Property.Property LastVisitedProperty { get; protected set; }
-    public Business CurrentBusiness { get; protected set; }
+    public Business CurrentBusiness { get; }
     public EMapRegion CurrentRegion { get; protected set; }
     public Vector3 PlayerBasePosition => ((Component)this).transform.position - ((Component)this).transform.up * (CharacterController.height / 2f);
     public Vector3 CameraPosition {[CompilerGenerated]

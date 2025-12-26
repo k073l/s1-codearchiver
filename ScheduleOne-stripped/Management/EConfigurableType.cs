@@ -12,5 +12,8 @@ public enum EConfigurableType
     Cleaner,
     BrickPress,
     MixingStation,
-    DryingRack
+    DryingRack,
+    SpawnStation,
+    MushroomBed,
+    Storage
 }

@@ -28,7 +28,7 @@ public class NPCEvent_Sit : NPCEvent
     public override void Started();
     public override void OnSpawnServer(NetworkConnection connection);
     public override void LateStarted();
-    public override void ActiveMinPassed();
+    public override void OnActiveTick();
     public override void JumpTo();
     public override void End();
     public override void Interrupt();

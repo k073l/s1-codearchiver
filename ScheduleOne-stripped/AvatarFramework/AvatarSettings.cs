@@ -43,8 +43,10 @@ public class AvatarSettings : ScriptableObject
     public List<LayerSetting> FaceLayerSettings;
     public List<LayerSetting> BodyLayerSettings;
     public List<AccessorySetting> AccessorySettings;
+    [CodegenExclude]
     public bool UseCombinedLayer;
-    public string CombinedLayerPath;
+    [CodegenExclude]
+    public AvatarLayer CombinedLayer;
     [CodegenExclude]
     public Texture2D ImpostorTexture;
     public float UpperEyelidRestingPosition => LeftEyeRestingState.topLidOpen;

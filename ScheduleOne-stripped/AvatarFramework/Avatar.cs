@@ -15,11 +15,10 @@ namespace ScheduleOne.AvatarFramework;
 public class Avatar : MonoBehaviour
 {
     public const int MAX_ACCESSORIES;
-    public const bool USE_COMBINED_LAYERS;
+    public const bool CombinedLayersEnabled;
     public const float DEFAULT_SMOOTHNESS;
     private static float maleShoulderScale;
     private static float femaleShoulderScale;
-    public bool DEBUG;
     [Header("References")]
     public AvatarAnimation Animation;
     public AvatarLookController LookController;
@@ -48,7 +47,7 @@ public class Avatar : MonoBehaviour
     [Header("Settings")]
     public AvatarSettings InitialAvatarSettings;
     public Material DefaultAvatarMaterial;
-    public bool UseImpostor;
+    public bool UseCombinedLayer;
     public UnityEvent<bool, bool, bool> onRagdollChange;
     [Header("Data - readonly")]
     [SerializeField]

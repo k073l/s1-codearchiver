@@ -1,11 +1,12 @@
 using ScheduleOne.Equipping;
+using ScheduleOne.Growing;
+using ScheduleOne.ItemFramework;
 using ScheduleOne.PlayerTasks.Tasks;
+using UnityEngine;
 
 namespace ScheduleOne.ObjectScripts.Soil;
 public class Equippable_Soil : Equippable_Pourable
 {
-    public override string InteractionLabel { get; set; } = "Pour soil";
-
-    protected override bool CanPour(Pot pot, out string reason);
-    protected override void StartPourTask(Pot pot);
+    protected override bool CanPour(GrowContainer growContainer, out string reason);
+    protected override void StartPourTask(GrowContainer growContainer);
 }

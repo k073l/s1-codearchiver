@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using EasyButtons;
 using ScheduleOne.DevUtilities;
 using UnityEngine;
 using UnityEngine.Events;
@@ -27,17 +26,11 @@ public class EyeController : MonoBehaviour
     [SerializeField]
     protected float eyeSize;
     [Header("Eyelid Settings")]
-    [SerializeField]
-    protected Color leftEyeLidColor;
-    [SerializeField]
-    protected Color rightEyeLidColor;
     public Eye.EyeLidConfiguration LeftRestingEyeState;
     public Eye.EyeLidConfiguration RightRestingEyeState;
     [Header("Eyeball Settings")]
     [SerializeField]
     protected Material eyeBallMaterial;
-    [SerializeField]
-    protected Color eyeBallColor;
     [Header("Pupil State")]
     [Range(0f, 1f)]
     public float PupilDilation;
@@ -60,15 +53,14 @@ public class EyeController : MonoBehaviour
     private Eye.EyeLidConfiguration defaultLeftEyeRestingState;
     private Eye.EyeLidConfiguration defaultRightEyeRestingState;
     private float defaultDilation;
+    private Color defaultEyeballColor;
+    private Color currentEyeballColor;
     public bool EyesOpen { get; protected set; } = true;
 
     protected virtual void Awake();
     protected void Update();
     private void OnEnable();
-    [Button]
-    public void ApplySettings();
-    public void SetEyeballTint(Color col);
-    public void OverrideEyeballTint(Color col);
+    public void SetEyeballTint(Color col, bool overrideDefault = false);
     public void ResetEyeballTint();
     public void OverrideEyeLids(Eye.EyeLidConfiguration eyeLidConfiguration);
     public void ResetEyeLids();
@@ -76,6 +68,8 @@ public class EyeController : MonoBehaviour
     public void SetEyesOpen(bool open);
     private void ApplyDilation();
     public void SetPupilDilation(float dilation, bool writeDefault = true);
+    public void SetEyeballMaterial(Material material);
+    public void ResetEyeballMaterial();
     public void ResetPupilDilation();
     private void ApplyRestingEyeLidState();
     public void ForceBlink();

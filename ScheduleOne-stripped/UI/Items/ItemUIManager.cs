@@ -15,7 +15,6 @@ public class ItemUIManager : Singleton<ItemUIManager>
 {
     [Header("References")]
     public Canvas Canvas;
-    public GraphicRaycaster[] Raycasters;
     public RectTransform CashDragAmountContainer;
     public RectTransform InputsContainer;
     public ItemInfoPanel InfoPanel;
@@ -31,6 +30,7 @@ public class ItemUIManager : Singleton<ItemUIManager>
     private Vector2 mouseOffset;
     private int draggedAmount;
     private RectTransform tempIcon;
+    private List<GraphicRaycaster> _raycasters;
     private bool isDraggingCash;
     private float draggedCashAmount;
     private List<ItemSlot> PrimarySlots;
@@ -45,6 +45,7 @@ public class ItemUIManager : Singleton<ItemUIManager>
 
     protected override void Awake();
     protected virtual void Update();
+    public void AddRaycaster(GraphicRaycaster raycaster);
     protected virtual void LateUpdate();
     private void UpdateCashDragSelectorUI();
     private void UpdateCashDragAmount(CashInstance instance);

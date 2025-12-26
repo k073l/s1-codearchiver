@@ -8,7 +8,7 @@ namespace ScheduleOne.AvatarFramework.Customization;
 [CreateAssetMenu(fileName = "BasicAvatarSettings", menuName = "ScriptableObjects/BasicAvatarSettings", order = 1)]
 public class BasicAvatarSettings : ScriptableObject
 {
-    public const float GENDER_MULTIPLIER;
+    public const float GenderScaleMultiplier;
     public const string MaleUnderwearPath;
     public const string FemaleUnderwearPath;
     public int Gender;

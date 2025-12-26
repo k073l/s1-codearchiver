@@ -47,14 +47,14 @@ public class VehiclePursuitBehaviour : Behaviour
     public override void Awake();
     private void OnDestroy();
     public void BeginAsSighted();
-    public override void Begin();
+    public override void Activate();
     public override void Resume();
     public override void Pause();
-    public override void End();
+    public override void Deactivate();
     public virtual void AssignTarget(Player target);
     private void StartPursuit();
     public override void BehaviourUpdate();
-    public override void ActiveMinPass();
+    public override void OnActiveTick();
     protected virtual void FixedUpdate();
     private void UpdateDestination();
     private bool IsTargetValid();
