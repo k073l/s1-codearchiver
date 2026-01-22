@@ -52,5 +52,6 @@ public abstract class ItemInstance
     public virtual ItemData GetItemData();
     public virtual float GetMonetaryValue();
     public void RequestClearSlot();
+    public virtual int GetTotalAmount();
     public void SetID(string id);
 }

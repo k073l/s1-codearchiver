@@ -10,6 +10,6 @@ public class Quest_GearingUp : Quest
     public Supplier Supplier;
     private bool setCollectionPosition;
     protected override void Start();
-    protected override void MinPass();
+    protected override void OnMinPass();
     private void DropReady();
 }

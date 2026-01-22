@@ -19,7 +19,6 @@ using UnityEngine;
 namespace ScheduleOne.Cartel;
 public class Cartel : NetworkSingleton<Cartel>, IBaseSaveable, ISaveable
 {
-    public bool TEST_MODE;
     [Header("References")]
     public CartelActivities Activities;
     public CartelInfluence Influence;

@@ -145,8 +145,8 @@ public class Cauldron : GridItem, IUsable, IItemSlotOwner, ITransitEntity, IConf
     public override void OnSpawnServer(NetworkConnection connection);
     public void SendConfigurationToClient(NetworkConnection conn);
     protected override void Destroy();
-    private void MinPass();
-    private void TimeSkipped(int minsPassed);
+    private void OnMinPass();
+    private void OnTimePass(int minutes);
     private void Exit(ExitAction action);
     public void Hovered();
     public void Interacted();

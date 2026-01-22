@@ -6,5 +6,5 @@ public class Quest_WeNeedToCook : Quest
 {
     public Quest[] PrerequisiteQuests;
     public Supplier MethSupplier;
-    protected override void MinPass();
+    protected override void OnMinPass();
 }

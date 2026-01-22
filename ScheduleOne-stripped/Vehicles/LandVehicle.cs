@@ -18,6 +18,7 @@ using FishNet.Transporting;
 using Pathfinding;
 using ScheduleOne.Combat;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Graffiti;
 using ScheduleOne.Interaction;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Map;
@@ -83,6 +84,8 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     public NavmeshCut NavmeshCut;
     public VehicleHumanoidCollider HumanoidColliderContainer;
     public POI POI;
+    [SerializeField]
+    private SpraySurface[] _spraySurfaces;
     private List<PlayerPusher> pushers;
     [SerializeField]
     protected Transform centerOfMass;
@@ -117,10 +120,14 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     [Range(0f, 1f)]
     [SerializeField]
     protected float reverseMultiplier;
-    [Header("Control overrides")]
+    [HideInInspector]
     public bool overrideControls;
+    [HideInInspector]
     public float throttleOverride;
+    [HideInInspector]
     public float steerOverride;
+    [HideInInspector]
+    public bool handbrakeOverride;
     [Header("Storage settings")]
     public StorageEntity Storage;
     private VehicleSeat localPlayerSeat;
@@ -128,15 +135,18 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     private RollingAverage<float> previousSpeeds;
     private const int previousSpeedsSampleSize;
     [CompilerGenerated]
+    [HideInInspector]
     [SyncVar( /*Could not decode attribute arguments.*/)]
     public float _003CCurrentSteerAngle_003Ek__BackingField;
     private float lastFrameSteerAngle;
     private float lastReplicatedSteerAngle;
     private bool justExitedVehicle;
     [CompilerGenerated]
+    [HideInInspector]
     [SyncVar( /*Could not decode attribute arguments.*/)]
     public bool _003CBrakesApplied_003Ek__BackingField;
     [CompilerGenerated]
+    [HideInInspector]
     [SyncVar( /*Could not decode attribute arguments.*/)]
     public bool _003CIsReversing_003Ek__BackingField;
     private Vector3 lastFramePosition;
@@ -183,17 +193,13 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     public float CurrentSteerAngle {[CompilerGenerated]
         get; [CompilerGenerated]
         set; }
-
-    [HideInInspector]
     public bool BrakesApplied {[CompilerGenerated]
         get; [CompilerGenerated]
         set; }
-
-    [HideInInspector]
     public bool IsReversing {[CompilerGenerated]
         get; [CompilerGenerated]
         set; }
-    public bool handbrakeApplied { get; protected set; }
+    public bool HandbrakeApplied { get; protected set; }
     public float boundingBaseOffset => ((Component)this).transform.InverseTransformPoint(((Component)boundingBox).transform.position).y + boundingBox.size.y * 0.5f;
     private float timeSinceSpawn => Time.timeSinceLevelLoad - timeOnSpawn;
     public float timeSinceLastOccupied => Time.timeSinceLevelLoad - timeOnLastOccupied;
@@ -228,6 +234,7 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     private void GetNetworth(MoneyManager.FloatContainer container);
     protected virtual void Update();
     protected virtual void FixedUpdate();
+    private void LateUpdate();
     private void UpdateSpeedCalculation();
     private void UpdateOutOfBounds();
     private void OnCollisionEnter(Collision collision);
@@ -242,12 +249,17 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     public void DestroyVehicle();
     protected virtual void UpdateThrottle();
     protected virtual void ApplyThrottle();
-    public void ApplyHandbrake();
     private void ApplyDownForce();
     private void UpdateTurnOver();
     protected virtual void UpdateSteerAngle();
     [ServerRpc(RequireOwnership = false)]
     private void SetSteeringAngle(float sa);
+    private void SetIsBraking(bool braking);
+    [ServerRpc(RequireOwnership = false, RunLocally = true)]
+    private void SetIsBreaking_Server(bool braking);
+    private void SetIsReversing(bool reversing);
+    [ServerRpc(RequireOwnership = false, RunLocally = true)]
+    private void SetIsReversing_Server(bool reversing);
     protected virtual void ApplySteerAngle();
     public void AlignTo(Transform target, EParkingAlignment type, bool network = false);
     public Tuple<Vector3, Quaternion> GetAlignmentTransform(Transform target, EParkingAlignment type);
@@ -297,6 +309,7 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     public void DeregisterPusher(PlayerPusher pusher);
     public List<ItemInstance> GetContents();
     public virtual VehicleData GetVehicleData();
+    protected List<SpraySurfaceData> GetSpraySurfaceData();
     public string GetSaveString();
     private ItemSet GetContentsSet();
     public virtual void Load(VehicleData data, string containerPath);
@@ -323,6 +336,12 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     private void RpcWriter___Server_SetSteeringAngle_431000436(float sa);
     private void RpcLogic___SetSteeringAngle_431000436(float sa);
     private void RpcReader___Server_SetSteeringAngle_431000436(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Server_SetIsBreaking_Server_1140765316(bool braking);
+    private void RpcLogic___SetIsBreaking_Server_1140765316(bool braking);
+    private void RpcReader___Server_SetIsBreaking_Server_1140765316(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Server_SetIsReversing_Server_1140765316(bool reversing);
+    private void RpcLogic___SetIsReversing_Server_1140765316(bool reversing);
+    private void RpcReader___Server_SetIsReversing_Server_1140765316(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
     private void RpcWriter___Observers_SetSeatOccupant_3428404692(NetworkConnection conn, int seatIndex, NetworkConnection occupant);
     private void RpcLogic___SetSeatOccupant_3428404692(NetworkConnection conn, int seatIndex, NetworkConnection occupant);
     private void RpcReader___Observers_SetSeatOccupant_3428404692(PooledReader PooledReader0, Channel channel);

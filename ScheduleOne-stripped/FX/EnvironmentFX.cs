@@ -71,7 +71,7 @@ public class EnvironmentFX : Singleton<EnvironmentFX>
     private bool _scrollTActive;
     private bool started;
     public FloatSmoother FogEndDistanceController;
-    public float normalizedEnvironmentalBrightness => environmentalBrightnessCurve.Evaluate(((float)NetworkSingleton<TimeManager>.Instance.DailyMinTotal + NetworkSingleton<TimeManager>.Instance.TimeOnCurrentMinute / 1f) / 1440f);
+    public float normalizedEnvironmentalBrightness => environmentalBrightnessCurve.Evaluate(NetworkSingleton<TimeManager>.Instance.NormalizedTimeOfDay);
     public float FogEndDistanceMultiplier => fogEndDistanceMultiplier * FogEndDistanceController.CurrentValue;
 
     protected override void Start();

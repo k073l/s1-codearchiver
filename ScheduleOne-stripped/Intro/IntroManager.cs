@@ -7,7 +7,6 @@ using ScheduleOne.Audio;
 using ScheduleOne.AvatarFramework.Customization;
 using ScheduleOne.Clothing;
 using ScheduleOne.DevUtilities;
-using ScheduleOne.GameTime;
 using ScheduleOne.Persistence;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Property;

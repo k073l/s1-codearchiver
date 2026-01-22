@@ -14,6 +14,7 @@ using ScheduleOne.AvatarFramework.Equipping;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Dialogue;
 using ScheduleOne.FX;
+using ScheduleOne.GameTime;
 using ScheduleOne.Law;
 using ScheduleOne.Map;
 using ScheduleOne.NPCs;
@@ -116,6 +117,8 @@ public class PoliceOfficer : NPC
     private void ProcessVisionEvent(VisionEventReceipt visionEventReceipt);
     public static PoliceOfficer GetNearestOfficer(Vector3 position, out float distanceToTarget, bool onlyConscious = true);
     private new void OnDie();
+    public void SetRandomAvoidancePriority();
+    public void SetAvoidancePriority(int priority);
     public virtual void UpdateBodySearch();
     private bool CanInvestigate();
     private void UpdateExistingInvestigation();

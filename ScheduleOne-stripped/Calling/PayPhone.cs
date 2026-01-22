@@ -14,6 +14,7 @@ public class PayPhone : MonoBehaviour
 {
     public const float RING_INTERVAL;
     public const float RING_RANGE;
+    private const float ringRangeSquared;
     public PhoneCallData QueuedCall;
     public PhoneCallData ActiveCall;
     public BlinkingLight Light;
@@ -22,7 +23,6 @@ public class PayPhone : MonoBehaviour
     public InteractableObject IntObj;
     public Transform CameraPosition;
     private float lastRingTime;
-    private const float ringRangeSquared;
     private Coroutine periodicRingHandle;
     private void Start();
     private void OnDestroy();

@@ -12,7 +12,7 @@ public class Quest_DealForCartel : Quest
     private CartelDealInfo dealInfo;
     public void Initialize(CartelDealInfo dealInfo);
     public override void Begin(bool network = true);
-    protected override void MinPass();
+    protected override void OnMinPass();
     private void UpdateTimingLabel();
     public void NotifyDealCompleted();
     public void NotifyTruceEnded();

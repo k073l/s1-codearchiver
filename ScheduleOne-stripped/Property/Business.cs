@@ -46,6 +46,7 @@ public class Business : Property, ISaveable
     private void TimeSkipped(int minsPassed);
     public override string GetSaveString();
     public override void Load(PropertyData propertyData, string dataString);
+    public override bool CanDeliverToProperty();
     protected override void RecieveOwned();
     [ServerRpc(RequireOwnership = false)]
     public void StartLaunderingOperation(float amount, int minutesSinceStarted = 0);

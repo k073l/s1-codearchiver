@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using ScheduleOne.Vehicles.Modification;
 using UnityEngine;
 
@@ -12,5 +13,6 @@ public class VehicleData : SaveData
     public Quaternion Rotation;
     public string Color;
     public ItemSet VehicleContents;
-    public VehicleData(Guid guid, string code, Vector3 pos, Quaternion rot, EVehicleColor col, ItemSet vehicleContents);
+    public List<SpraySurfaceData> SpraySurfaces;
+    public VehicleData(Guid guid, string code, Vector3 pos, Quaternion rot, EVehicleColor col, ItemSet vehicleContents, List<SpraySurfaceData> spraySurfaces);
 }

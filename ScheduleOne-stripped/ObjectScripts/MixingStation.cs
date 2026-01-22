@@ -91,6 +91,9 @@ public class MixingStation : GridItem, IUsable, IItemSlotOwner, ITransitEntity, 
     public UnityEvent onMixDone;
     public UnityEvent onOutputCollected;
     public UnityEvent onStartButtonClicked;
+    [Header("Animations")]
+    [SerializeField]
+    protected PlayAnimation _mixerAnimator;
     public SyncVar<NetworkObject> syncVar____003CNPCUserObject_003Ek__BackingField;
     public SyncVar<NetworkObject> syncVar____003CPlayerUserObject_003Ek__BackingField;
     public SyncVar<NetworkObject> syncVar____003CCurrentPlayerConfigurer_003Ek__BackingField;
@@ -143,18 +146,20 @@ public class MixingStation : GridItem, IUsable, IItemSlotOwner, ITransitEntity, 
     public void SendConfigurationToClient(NetworkConnection conn);
     public override bool CanBeDestroyed(out string reason);
     protected override void Destroy();
-    private void TimeSkipped(int minsPassed);
-    protected virtual void MinPass();
+    protected virtual void OnMinPass();
+    protected virtual void OnTimePass(int minutes);
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void SendMixingOperation(MixOperation operation, int mixTime);
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
-    public virtual void SetMixOperation(NetworkConnection conn, MixOperation operation, int mixTIme);
+    public virtual void SetMixOperation(NetworkConnection conn, MixOperation operation, int mixTime);
+    protected virtual void SetMixerToLowered();
     public virtual void MixingStart();
     [ObserversRpc]
     public void MixingDone_Networked();
     public virtual void MixingDone();
     public bool DoesOutputHaveSpace(StationRecipe recipe);
+    private bool IsCurrentMixingOperationComplete();
     public List<ItemInstance> GetIngredients();
     public int GetMixQuantity();
     public bool CanStartMix();
@@ -206,10 +211,10 @@ public class MixingStation : GridItem, IUsable, IItemSlotOwner, ITransitEntity, 
     private void RpcWriter___Server_SendMixingOperation_2669582547(MixOperation operation, int mixTime);
     public void RpcLogic___SendMixingOperation_2669582547(MixOperation operation, int mixTime);
     private void RpcReader___Server_SendMixingOperation_2669582547(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Observers_SetMixOperation_1073078804(NetworkConnection conn, MixOperation operation, int mixTIme);
-    public virtual void RpcLogic___SetMixOperation_1073078804(NetworkConnection conn, MixOperation operation, int mixTIme);
+    private void RpcWriter___Observers_SetMixOperation_1073078804(NetworkConnection conn, MixOperation operation, int mixTime);
+    public virtual void RpcLogic___SetMixOperation_1073078804(NetworkConnection conn, MixOperation operation, int mixTime);
     private void RpcReader___Observers_SetMixOperation_1073078804(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Target_SetMixOperation_1073078804(NetworkConnection conn, MixOperation operation, int mixTIme);
+    private void RpcWriter___Target_SetMixOperation_1073078804(NetworkConnection conn, MixOperation operation, int mixTime);
     private void RpcReader___Target_SetMixOperation_1073078804(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Observers_MixingDone_Networked_2166136261();
     public void RpcLogic___MixingDone_Networked_2166136261();

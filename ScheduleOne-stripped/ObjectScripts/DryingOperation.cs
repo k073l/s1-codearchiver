@@ -8,8 +8,8 @@ public class DryingOperation
     public string ItemID;
     public int Quantity;
     public EQuality StartQuality;
-    public int Time;
-    public DryingOperation(string itemID, int quantity, EQuality startQuality, int time);
+    public float Time;
+    public DryingOperation(string itemID, int quantity, EQuality startQuality, float time);
     public DryingOperation();
     public void IncreaseQuality();
     public QualityItemInstance GetQualityItemInstance();

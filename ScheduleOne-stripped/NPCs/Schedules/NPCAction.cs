@@ -23,7 +23,7 @@ public abstract class NPCAction : NetworkBehaviour
     protected string ActionName => "ActionName";
     public bool IsEvent => this is NPCEvent;
     public bool IsSignal => this is NPCSignal;
-    public bool IsActive { get; protected set; }
+    public bool IsActive { get; }
     public bool HasStarted { get; protected set; }
     public virtual int Priority => priority;
     protected NPCMovement movement => npc.Movement;

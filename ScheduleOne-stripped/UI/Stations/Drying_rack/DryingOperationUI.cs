@@ -15,6 +15,7 @@ public class DryingOperationUI : MonoBehaviour
     public TextMeshProUGUI QuantityLabel;
     public Button Button;
     public Tooltip Tooltip;
+    private float _dryMultiplier;
     public DryingOperation AssignedOperation { get; protected set; }
     public RectTransform Alignment { get; private set; }
 
@@ -22,6 +23,7 @@ public class DryingOperationUI : MonoBehaviour
     public void SetAlignment(RectTransform alignment);
     public void RefreshQuantity();
     public void Start();
+    public void SetDryRate(float dryMultiplier);
     public void UpdatePosition();
     private void Clicked();
 }

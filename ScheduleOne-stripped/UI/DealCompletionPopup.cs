@@ -28,10 +28,15 @@ public class DealCompletionPopup : Singleton<DealCompletionPopup>
     public Gradient SatisfactionGradient;
     public AudioSourceController SoundEffect;
     public TextMeshProUGUI[] BonusLabels;
+    [Header("Animations")]
+    [SerializeField]
+    private Animation _animation;
     private Coroutine routine;
+    private AnimationState _animationState;
     public bool IsPlaying { get; protected set; }
 
     protected override void Awake();
     public void PlayPopup(Customer customer, float satisfaction, float originalRelationshipDelta, float basePayment, List<Contract.BonusPayment> bonuses);
+    private IEnumerator PlayPopupRoutine(Customer customer, float satisfaction, float originalRelationshipDelta, float basePayment, List<Contract.BonusPayment> bonuses);
     private void SetRelationshipLabel(float delta);
 }

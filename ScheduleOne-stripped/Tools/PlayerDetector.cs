@@ -27,7 +27,7 @@ public class PlayerDetector : MonoBehaviour
     private void Awake();
     private void Start();
     private void OnDestroy();
-    private void MinPass();
+    private void OnTick();
     private void OnTriggerEnter(Collider other);
     private void FixedUpdate();
     private void OnTriggerExit(Collider other);

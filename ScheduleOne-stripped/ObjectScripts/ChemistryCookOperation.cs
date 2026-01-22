@@ -1,5 +1,6 @@
 using FishNet.Serializing.Helping;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.GameTime;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.StationFramework;
 using ScheduleOne.UI.Stations;
@@ -22,4 +23,5 @@ public class ChemistryCookOperation
     public ChemistryCookOperation(string recipeID, EQuality productQuality, Color startLiquidColor, float liquidLevel, int currentTime = 0);
     public ChemistryCookOperation();
     public void Progress(int mins);
+    public bool IsComplete();
 }

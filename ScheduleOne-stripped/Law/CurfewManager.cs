@@ -50,7 +50,7 @@ public class CurfewManager : NetworkSingleton<CurfewManager>
     public void Enable(NetworkConnection conn);
     [ObserversRpc]
     public void Disable();
-    private void MinPass();
+    private void OnUncappedMinPass();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

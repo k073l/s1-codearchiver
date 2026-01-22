@@ -30,6 +30,8 @@ public class CartelRegionActivities : NetworkBehaviour
     [Header("References")]
     public CartelAmbushLocation[] AmbushLocations;
     public CartelDealer CartelDealer;
+    [Header("Development & Debugging")]
+    public int _debugActivityIndex;
     private bool NetworkInitialize___EarlyScheduleOne_002ECartel_002ECartelRegionActivitiesAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ECartel_002ECartelRegionActivitiesAssembly_002DCSharp_002Edll_Excuted;
     public CartelActivity CurrentActivity { get; private set; }
@@ -40,6 +42,9 @@ public class CartelRegionActivities : NetworkBehaviour
     public override void OnSpawnServer(NetworkConnection connection);
     public void HourPass();
     private void TryStartActivity();
+    [Button]
+    public void StartActivity();
+    private void StartAcivity(int activityIndex);
     [Button]
     public void ActivateDeal();
     [ObserversRpc(RunLocally = true)]

@@ -27,7 +27,7 @@ public class Quest_UnfavourableAgreements : Quest
     protected override void Start();
     private void CheckQuestStart();
     public override void Begin(bool network = true);
-    protected override void MinPass();
+    protected override void OnMinPass();
     public override void SetQuestState(EQuestState state, bool network = true);
     private void MeetingEnded();
     private void DriveCallback(VehicleAgent.ENavigationResult result);

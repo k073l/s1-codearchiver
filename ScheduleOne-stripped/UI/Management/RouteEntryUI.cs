@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.EntityFramework;
 using ScheduleOne.Management;
 using TMPro;
 using UnityEngine;
@@ -11,7 +12,9 @@ namespace ScheduleOne.UI.Management;
 public class RouteEntryUI : MonoBehaviour
 {
     [Header("References")]
+    public Image SourceIcon;
     public TextMeshProUGUI SourceLabel;
+    public Image DestinationIcon;
     public TextMeshProUGUI DestinationLabel;
     public Image FilterIcon;
     public UnityEvent onDeleteClicked;

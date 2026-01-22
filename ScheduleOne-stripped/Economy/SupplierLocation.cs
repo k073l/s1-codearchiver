@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using ScheduleOne.DevUtilities;
+using ScheduleOne.GameTime;
 using ScheduleOne.Map;
 using ScheduleOne.Storage;
 using UnityEngine;
@@ -20,6 +23,9 @@ public class SupplierLocation : MonoBehaviour
     public Supplier ActiveSupplier { get; private set; }
 
     public void Awake();
+    private void Start();
+    private void OnSleep();
     private void OnDestroy();
     public void SetActiveSupplier(Supplier supplier);
+    private void SetDeliveryBaysVisible(bool visible);
 }

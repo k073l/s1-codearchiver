@@ -141,8 +141,8 @@ public class ChemistryStation : GridItem, IUsable, IItemSlotOwner, ITransitEntit
     public void SendConfigurationToClient(NetworkConnection conn);
     public override bool CanBeDestroyed(out string reason);
     protected override void Destroy();
-    protected virtual void MinPass();
-    private void TimeSkipped(int minsSkippped);
+    protected virtual void OnMinPass();
+    private void OnTimePass(int minutes);
     private void UpdateClock();
     protected virtual void Update();
     public Beaker CreateBeaker();

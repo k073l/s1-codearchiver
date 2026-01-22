@@ -19,17 +19,33 @@ using ScheduleOne.Persistence.Datas;
 using ScheduleOne.Storage;
 using ScheduleOne.Tiles;
 using ScheduleOne.UI.Management;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace ScheduleOne.ObjectScripts;
 [RequireComponent(typeof(ConfigurationReplicator))]
 public class PlaceableStorageEntity : GridItem, ITransitEntity, IUsable, IConfigurable
 {
+    private enum ENameLabelVisibility
+    {
+        None,
+        WhenNotDefault,
+        Always
+    }
+
     [Header("References")]
     public StorageEntity StorageEntity;
     public Transform[] accessPoints;
     [SerializeField]
     private Transform _linkOrigin;
+    [SerializeField]
+    private TextMeshPro[] _nameLabels;
+    [Header("Settings")]
+    [SerializeField]
+    private bool _showNameLabels;
+    [SerializeField]
+    private ENameLabelVisibility _nameLabelVisibility;
     [CompilerGenerated]
     [HideInInspector]
     [SyncVar( /*Could not decode attribute arguments.*/)]
@@ -90,6 +106,8 @@ public class PlaceableStorageEntity : GridItem, ITransitEntity, IUsable, IConfig
     protected override void Destroy();
     public override BuildableItemData GetBaseData();
     public override DynamicSaveData GetSaveData();
+    private void NameChanged(string newName);
+    private void UpdateNameLabels();
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void SetConfigurer(NetworkObject player);
     public void SendConfigurationToClient(NetworkConnection conn);

@@ -64,6 +64,14 @@ public class Customer : NetworkBehaviour, ISaveable
         public EQuality MinimumQuality;
     }
 
+    [Serializable]
+    public class ProductPurchaseRecord
+    {
+        public string ProductID;
+        public int Quantity;
+        public float TotalSpent;
+    }
+
     public enum ESampleFeedback
     {
         WrongProduct,
@@ -74,6 +82,8 @@ public class Customer : NetworkBehaviour, ISaveable
     public static Action<Customer> onCustomerUnlocked;
     public static List<Customer> LockedCustomers;
     public static List<Customer> UnlockedCustomers;
+    public const int QualityTierTolerance;
+    public const int MaxOrderQuantityPerProduct;
     public const float AFFINITY_MAX_EFFECT;
     public const float PROPERTY_MAX_EFFECT;
     public const float QUALITY_MAX_EFFECT;
@@ -143,6 +153,7 @@ public class Customer : NetworkBehaviour, ISaveable
     public int TimeSinceInstantDealOffered { get; protected set; } = 1000000;
     public int OfferedDeals { get; protected set; }
     public int CompletedDeliveries { get; protected set; }
+    public List<ProductPurchaseRecord> WeeklyPurchaseRecord { get; protected set; } = new List<ProductPurchaseRecord>();
     public bool HasBeenRecommended {[CompilerGenerated]
         get; [CompilerGenerated]
         protected set; }
@@ -161,6 +172,7 @@ public class Customer : NetworkBehaviour, ISaveable
     public float SyncAccessor__003CCurrentAddiction_003Ek__BackingField { get; set; }
     public bool SyncAccessor__003CHasBeenRecommended_003Ek__BackingField { get; set; }
 
+    public static int MinsSinceLastDealOfferedAllCustomers();
     public override void Awake();
     protected override void OnValidate();
     private void Start();
@@ -173,16 +185,18 @@ public class Customer : NetworkBehaviour, ISaveable
     protected virtual void OnMinPass();
     protected virtual void OnTick();
     private void OfferContractToDealer(ContractInfo info, Dealer dealer);
-    protected virtual void OnDayPass();
+    protected virtual void OnSleepStart();
     private void UpdateDealAttendance();
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
     private void ConfigureDealSignal(NetworkConnection conn, int startTime, bool active);
     private void UpdateOfferExpiry();
+    [Button]
     public void ForceDealOffer();
-    private List<ProductDefinition> GetOrderableProducts(Dealer dealer);
+    private List<ProductDefinition> GetOrderableProducts(Dealer dealer = null);
+    private List<Tuple<ProductDefinition, int>> GetOrderableProductsWithQuantities(Dealer dealer = null);
     private ContractInfo TryGenerateContract(Dealer dealer);
-    private ProductDefinition GetWeightedRandomProduct(Dealer dealer, out float appeal);
+    private ProductDefinition GetWeightedRandomProduct(Dealer dealer, out float appeal, out int orderableQuantity);
     protected virtual void OnCustomerUnlocked(NPCRelationData.EUnlockType unlockType, bool notify);
     public void SetHasBeenRecommended();
     public virtual void OfferContract(ContractInfo info);
@@ -192,8 +206,6 @@ public class Customer : NetworkBehaviour, ISaveable
     public virtual void ExpireOffer();
     public virtual void AssignContract(Contract contract);
     protected virtual void NotifyPlayerOfContract(ContractInfo contract, MessageChain offerMessage, bool canAccept, bool canReject, bool canCounterOffer = true);
-    [ServerRpc(RequireOwnership = false, RunLocally = true)]
-    private void SendSetUpResponseCallbacks();
     [ObserversRpc(RunLocally = true)]
     private void SetUpResponseCallbacks();
     protected virtual void AcceptContractClicked();
@@ -228,13 +240,14 @@ public class Customer : NetworkBehaviour, ISaveable
     [ServerRpc(RequireOwnership = false)]
     private void ProcessHandoverServerSide(HandoverScreen.EHandoverOutcome outcome, List<ItemInstance> items, bool handoverByPlayer, float totalPayment, ProductList productList, float satisfaction, NetworkObject dealerObject);
     [ObserversRpc]
-    private void ProcessHandoverClient(float satisfaction, bool handoverByPlayer, string npcToRecommend);
+    private void ProcessHandoverClient(float satisfaction, bool handoverByPlayer, string npcToRecommend, HandoverScreen.EHandoverOutcome outcome);
     public void ContractWellReceived(string npcToRecommend);
     private void RecommendDealer(Dealer dealer);
     private void RecommendSupplier(Supplier supplier);
     private void RecommendCustomer(Customer friend);
     public virtual void CurrentContractEnded(EQuestState outcome);
     public virtual float EvaluateDelivery(Contract contract, List<ItemInstance> providedItems, out float highestAddiction, out EDrugType mainTypeType, out int matchedProductCount, out float qualityDifference);
+    public void CalculateTopWeeklyPurchases(out List<StringIntPair> mostPurchasedProducts, out float totalSpent);
     [ServerRpc(RequireOwnership = false)]
     public void ChangeAddiction(float change);
     private void ConsumeProduct(ItemInstance item);
@@ -301,9 +314,6 @@ public class Customer : NetworkBehaviour, ISaveable
     private void RpcWriter___Server_ExpireOffer_2166136261();
     public virtual void RpcLogic___ExpireOffer_2166136261();
     private void RpcReader___Server_ExpireOffer_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Server_SendSetUpResponseCallbacks_2166136261();
-    private void RpcLogic___SendSetUpResponseCallbacks_2166136261();
-    private void RpcReader___Server_SendSetUpResponseCallbacks_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
     private void RpcWriter___Observers_SetUpResponseCallbacks_2166136261();
     private void RpcLogic___SetUpResponseCallbacks_2166136261();
     private void RpcReader___Observers_SetUpResponseCallbacks_2166136261(PooledReader PooledReader0, Channel channel);
@@ -325,9 +335,9 @@ public class Customer : NetworkBehaviour, ISaveable
     private void RpcWriter___Server_ProcessHandoverServerSide_3760244802(HandoverScreen.EHandoverOutcome outcome, List<ItemInstance> items, bool handoverByPlayer, float totalPayment, ProductList productList, float satisfaction, NetworkObject dealerObject);
     private void RpcLogic___ProcessHandoverServerSide_3760244802(HandoverScreen.EHandoverOutcome outcome, List<ItemInstance> items, bool handoverByPlayer, float totalPayment, ProductList productList, float satisfaction, NetworkObject dealerObject);
     private void RpcReader___Server_ProcessHandoverServerSide_3760244802(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Observers_ProcessHandoverClient_537707335(float satisfaction, bool handoverByPlayer, string npcToRecommend);
-    private void RpcLogic___ProcessHandoverClient_537707335(float satisfaction, bool handoverByPlayer, string npcToRecommend);
-    private void RpcReader___Observers_ProcessHandoverClient_537707335(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Observers_ProcessHandoverClient_2441224929(float satisfaction, bool handoverByPlayer, string npcToRecommend, HandoverScreen.EHandoverOutcome outcome);
+    private void RpcLogic___ProcessHandoverClient_2441224929(float satisfaction, bool handoverByPlayer, string npcToRecommend, HandoverScreen.EHandoverOutcome outcome);
+    private void RpcReader___Observers_ProcessHandoverClient_2441224929(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Server_ChangeAddiction_431000436(float change);
     public void RpcLogic___ChangeAddiction_431000436(float change);
     private void RpcReader___Server_ChangeAddiction_431000436(PooledReader PooledReader0, Channel channel, NetworkConnection conn);

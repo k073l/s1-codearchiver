@@ -21,7 +21,7 @@ public class VehicleDetector : MonoBehaviour
     private void Start();
     private void OnDestroy();
     private void OnTriggerEnter(Collider other);
-    private void MinPass();
+    private void OnTick();
     private void OnTriggerExit(Collider other);
     private void SortVehicles();
     public void SetIgnoreNewCollisions(bool ignore);

@@ -6,8 +6,7 @@ namespace ScheduleOne.Persistence.Datas;
 [Serializable]
 public class SpraySurfaceData : SaveData
 {
-    public string GUID;
-    public bool HasDrawingBeenFinalized;
     public List<SprayStroke> Strokes;
-    public SpraySurfaceData(string guid, bool hasDrawingBeenFinalized, List<SprayStroke> strokes);
+    public bool ContainsCartelGraffiti;
+    public SpraySurfaceData(List<SprayStroke> strokes, bool containsCartelGraffiti);
 }

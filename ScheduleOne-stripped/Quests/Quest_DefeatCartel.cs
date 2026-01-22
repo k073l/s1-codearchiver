@@ -28,7 +28,7 @@ public class Quest_DefeatCartel : Quest
     public GameObject BanditScheduleContainer;
     protected override void Start();
     private void OnSleepEnd();
-    protected override void MinPass();
+    protected override void OnMinPass();
     public override void SetQuestEntryState(int entryIndex, EQuestState state, bool network = true);
     public void PlayCountdownMusic();
     private void Defeat();

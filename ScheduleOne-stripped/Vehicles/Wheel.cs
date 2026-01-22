@@ -1,4 +1,5 @@
 using System;
+using EasyButtons;
 using ScheduleOne.Audio;
 using UnityEngine;
 
@@ -50,4 +51,6 @@ public class Wheel : MonoBehaviour
     private void ApplyFriction();
     public virtual void SetPhysicsEnabled(bool enabled);
     public bool IsWheelGrounded();
+    [Button]
+    private void ApplyDefaultWheelModelPosition();
 }

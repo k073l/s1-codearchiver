@@ -70,7 +70,7 @@ public class Employee : NPC
     public bool IsMale { get; private set; } = true;
     protected int AppearanceIndex { get; private set; }
     public EEmployeeType EmployeeType => Type;
-    public int TimeSinceLastWorked { get; private set; }
+    public int TicksSinceLastWork { get; private set; }
     public bool SyncAccessor__003CPaidForToday_003Ek__BackingField { get; set; }
 
     public override void Awake();

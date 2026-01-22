@@ -14,7 +14,6 @@ namespace ScheduleOne.ObjectScripts;
 public class Bed : NetworkBehaviour
 {
     public const int MIN_SLEEP_TIME;
-    public const float SLEEP_TIME_SCALE;
     [Header("References")]
     [SerializeField]
     protected InteractableObject intObj;

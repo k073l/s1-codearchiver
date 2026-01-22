@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using FishNet.Object;
 using ScheduleOne.Audio;
-using ScheduleOne.Cartel;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Interaction;
-using ScheduleOne.Levelling;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.UI;
 using ScheduleOne.UI.Compass;
@@ -19,12 +17,10 @@ namespace ScheduleOne.Graffiti;
 [RequireComponent(typeof(SpraySurface))]
 public class SpraySurfaceInteraction : MonoBehaviour
 {
-    public const float CAMERA_MOVE_TIME;
-    public const int MAX_PIXELS_BEFORE_NEW_STROKE;
-    public const int MANHATTAN_DISTANCE_BETWEEN_PAINTED_PIXELS;
-    public const int XP_GAIN;
-    public const float CARTEL_INFLUENCE_CHANGE;
-    public const int PAINTED_PIXEL_LIMIT;
+    private const float CameraLerpTime;
+    private const int MaxPixelsBeforeNewStroke;
+    private const int ManhattanDistanceBetweenPaintedPixels;
+    private const int FixedPaintedPixelLimit;
     public SpraySurface SpraySurface;
     public InteractableObject IntObj;
     public Transform CameraPosition;
@@ -32,14 +28,21 @@ public class SpraySurfaceInteraction : MonoBehaviour
     public Image SprayImg;
     public AudioSourceController SpraySound;
     public AudioSourceController CleanSound;
+    public bool _allowDraw;
+    [Header("Settings")]
+    [SerializeField]
+    public float PaintedPixelLimitMultiplier;
     private ESprayColor selectedColor;
+    private byte selectedStrokeSize;
     private UShort2 lastPaintedPixelCoord;
     private bool paintedLastFrame;
     private List<UShort2> currentStrokePixels;
     private bool isPaintingStroke;
     private float timeSinceStrokeStart;
+    private int _startPaintedPixelCount;
     public bool IsOpen { get; private set; }
     private bool confirmationPanelOpen => ((Component)Singleton<GraffitiMenu>.Instance.ConfirmPanel).gameObject.activeSelf;
+    private int _paintedPixelLimit => Mathf.RoundToInt(25000f * PaintedPixelLimitMultiplier);
 
     private void Awake();
     private void Start();
@@ -49,8 +52,10 @@ public class SpraySurfaceInteraction : MonoBehaviour
     private void ResizeCanvas();
     private void Update();
     private void UpdateCursor();
+    private void UpdateSpraySound();
+    private void CheckCameraInBounds();
     private void FixedUpdate();
-    private void StartStroke();
+    private void StartStroke(bool recordHistory = true);
     private void EndStroke(bool stopSpraySound);
     private bool GetCursorPositionOnSurface(out ushort pixelX, out ushort pixelY);
     private Ray GetCursorRay();
@@ -60,9 +65,11 @@ public class SpraySurfaceInteraction : MonoBehaviour
     private void Exit(ExitAction action);
     private void Open();
     private void Close();
-    private void Reward();
     private void EquippedSlotChanged(int equippedSlotIndex);
     private void SetColor(ESprayColor color);
+    private void SetStrokeSize(byte strokeSize);
+    private void UpdateRemainingPaintIndicator();
+    public void Undo();
     private void Clear();
     private static bool IsSprayCanEquipped();
     private static bool IsGraffitiCleanerEquipped();

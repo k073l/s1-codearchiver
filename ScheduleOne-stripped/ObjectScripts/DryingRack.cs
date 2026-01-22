@@ -33,6 +33,9 @@ namespace ScheduleOne.ObjectScripts;
 public class DryingRack : GridItem, IUsable, IItemSlotOwner, ITransitEntity, IConfigurable
 {
     public const int DRY_MINS_PER_TIER;
+    public const float MAX_DRY_MULTIPLIER;
+    public const float WARMTH_MIN_THRESHOLD;
+    public const float WARMTH_MAX_THRESHOLD;
     [Header("Settings")]
     public int ItemCapacity;
     [Header("References")]
@@ -45,9 +48,14 @@ public class DryingRack : GridItem, IUsable, IItemSlotOwner, ITransitEntity, ICo
     public StorageVisualizer HangingVisuals;
     public Transform[] HangAlignments;
     public ConfigurationReplicator configReplicator;
+    [SerializeField]
+    private Transform _qualityEffectContianer;
     [Header("UI")]
     public DryingRackUIElement WorldspaceUIPrefab;
     public Sprite typeIcon;
+    [Header("Fonts")]
+    [SerializeField]
+    private ColorFont _qualityColourFont;
     [CompilerGenerated]
     [HideInInspector]
     [SyncVar( /*Could not decode attribute arguments.*/)]
@@ -63,6 +71,7 @@ public class DryingRack : GridItem, IUsable, IItemSlotOwner, ITransitEntity, ICo
     public Action<DryingOperation> onOperationComplete;
     public Action onOperationsChanged;
     private ItemSlot[] hangSlots;
+    private ParticleSystem[] _qualityParticleEffect;
     private List<int> requestIDs;
     public SyncVar<NetworkObject> syncVar____003CNPCUserObject_003Ek__BackingField;
     public SyncVar<NetworkObject> syncVar____003CPlayerUserObject_003Ek__BackingField;
@@ -113,7 +122,8 @@ public class DryingRack : GridItem, IUsable, IItemSlotOwner, ITransitEntity, ICo
     private void Exit(ExitAction action);
     public override bool CanBeDestroyed(out string reason);
     protected override void Destroy();
-    private void MinPass();
+    private void OnMinPass();
+    private void OnTimePass(int minutes);
     public bool CanStartOperation();
     public void StartOperation();
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
@@ -131,6 +141,9 @@ public class DryingRack : GridItem, IUsable, IItemSlotOwner, ITransitEntity, ICo
     private void SetOperationQuantity(int opIndex, int quantity);
     public int GetTotalDryingItems();
     public void RefreshHangingVisuals();
+    private void RefreshDryingEffects();
+    public float GetDryMultiplier();
+    private void SetQualityEffect(int index, bool isActive, EQuality quality = EQuality.Standard);
     public WorldspaceUIElement CreateWorldspaceUI();
     public void DestroyWorldspaceUI();
     [ServerRpc(RequireOwnership = false, RunLocally = true)]

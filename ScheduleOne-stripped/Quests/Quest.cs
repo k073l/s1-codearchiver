@@ -99,7 +99,8 @@ public class Quest : MonoBehaviour, IGUIDRegisterable, ISaveable
     public virtual void SetQuestState(EQuestState state, bool network = true);
     protected virtual bool ShouldShowJournalEntry();
     public virtual void SetQuestEntryState(int entryIndex, EQuestState state, bool network = true);
-    protected virtual void MinPass();
+    protected virtual void OnMinPass();
+    protected virtual void OnUncappedMinPass();
     protected virtual void CheckExpiry();
     private void CheckAutoComplete();
     protected virtual bool CanExpire();

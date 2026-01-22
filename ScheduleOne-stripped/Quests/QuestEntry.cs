@@ -3,6 +3,7 @@ using FishNet.Serializing.Helping;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.Map;
+using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.UI;
 using ScheduleOne.UI.Compass;
@@ -60,6 +61,7 @@ public class QuestEntry : MonoBehaviour
     public virtual void SetState(EQuestState newState, bool network = true);
     protected virtual bool ShouldShowPoI();
     protected virtual void UpdatePoI();
+    public virtual void SetPoIColor(string componentName, string colourName);
     public void SetPoILocation(Vector3 location);
     public void CreatePoI();
     public void DestroyPoI();

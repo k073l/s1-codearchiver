@@ -169,6 +169,7 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     [ObserversRpc]
     private void SetTransform(NetworkConnection conn, Vector3 position, Quaternion rotation);
     protected virtual void MinPass();
+    protected virtual void OnUncappedMinPass();
     protected virtual void OnTick();
     public virtual void SetVisible(bool visible, bool networked = false);
     [ObserversRpc(RunLocally = true)]
@@ -215,7 +216,7 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     protected virtual void ExitBuilding(NPCEnterableBuilding building);
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
-    public void SetEquippable_Networked(NetworkConnection conn, string assetPath);
+    public void SetEquippable_Client(NetworkConnection conn, string assetPath);
     public AvatarEquippable SetEquippable_Networked_Return(NetworkConnection conn, string assetPath);
     public AvatarEquippable SetEquippable_Return(string assetPath);
     [ObserversRpc(RunLocally = false, ExcludeServer = true)]
@@ -329,11 +330,11 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     private void RpcWriter___Observers_ExitBuilding_3615296227(string buildingID = "");
     public void RpcLogic___ExitBuilding_3615296227(string buildingID = "");
     private void RpcReader___Observers_ExitBuilding_3615296227(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Observers_SetEquippable_Networked_2971853958(NetworkConnection conn, string assetPath);
-    public void RpcLogic___SetEquippable_Networked_2971853958(NetworkConnection conn, string assetPath);
-    private void RpcReader___Observers_SetEquippable_Networked_2971853958(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Target_SetEquippable_Networked_2971853958(NetworkConnection conn, string assetPath);
-    private void RpcReader___Target_SetEquippable_Networked_2971853958(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Observers_SetEquippable_Client_2971853958(NetworkConnection conn, string assetPath);
+    public void RpcLogic___SetEquippable_Client_2971853958(NetworkConnection conn, string assetPath);
+    private void RpcReader___Observers_SetEquippable_Client_2971853958(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Target_SetEquippable_Client_2971853958(NetworkConnection conn, string assetPath);
+    private void RpcReader___Target_SetEquippable_Client_2971853958(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Observers_SetEquippable_Networked_ExcludeServer_2971853958(NetworkConnection conn, string assetPath);
     private void RpcLogic___SetEquippable_Networked_ExcludeServer_2971853958(NetworkConnection conn, string assetPath);
     private void RpcReader___Observers_SetEquippable_Networked_ExcludeServer_2971853958(PooledReader PooledReader0, Channel channel);

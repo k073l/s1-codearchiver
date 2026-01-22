@@ -35,6 +35,8 @@ public class MessagesApp : App<MessagesApp>
     public RectTransform relationshipContainer;
     public Scrollbar relationshipScrollbar;
     public Tooltip relationshipTooltip;
+    public RectTransform debtContainer;
+    public Text debtLabel;
     public RectTransform standardsContainer;
     public Image standardsStar;
     public Tooltip standardsTooltip;
