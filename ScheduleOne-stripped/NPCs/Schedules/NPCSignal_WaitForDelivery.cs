@@ -23,6 +23,7 @@ public class NPCSignal_WaitForDelivery : NPCSignal
     public override void JumpTo();
     private void EnsureNPCHasEnoughCash();
     public override void OnActiveTick();
+    private void CheckWarp();
     public override void Interrupt();
     public override void Resume();
     public override void End();

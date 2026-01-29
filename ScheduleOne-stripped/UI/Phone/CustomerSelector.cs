@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Economy;
+using ScheduleOne.ItemFramework;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;

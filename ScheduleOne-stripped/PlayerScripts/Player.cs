@@ -248,7 +248,6 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public static Player GetPlayer(string playerCode);
     public override void Awake();
     public virtual void InitializeSaveable();
-    protected virtual void Start();
     protected virtual void OnDestroy();
     public override void OnStartClient();
     private void PlayerLoaded();

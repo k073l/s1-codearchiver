@@ -66,7 +66,7 @@ public class Recycler : NetworkBehaviour
     public void Start();
     public override void OnSpawnServer(NetworkConnection connection);
     private void OnDestroy();
-    private void MinPass();
+    private void OnTick();
     public void HandleInteracted();
     public void ButtonInteracted();
     public void CashInteracted();

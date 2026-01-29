@@ -5,5 +5,5 @@ namespace ScheduleOne.Quests;
 public class Quest_SecuringSupplies : Quest
 {
     public Supplier Supplier;
-    protected override void OnMinPass();
+    protected override void OnUncappedMinPass();
 }

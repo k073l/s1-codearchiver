@@ -99,11 +99,11 @@ public class ProductManager : NetworkSingleton<ProductManager>, IBaseSaveable, I
     public override void OnStartClient();
     private void Update();
     private void Clean();
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void SetMethDiscovered();
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void SetCocaineDiscovered();
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void SetShroomsDiscovered();
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]

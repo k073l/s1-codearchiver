@@ -481,15 +481,6 @@ public class Console : Singleton<Console>
         public override void Execute(List<string> args);
     }
 
-    public class SetItemQuality : ConsoleCommand
-    {
-        public override string CommandWord => "setitemquality";
-        public override string CommandDescription => "Sets the quality of the equipped item";
-        public override string ExampleUsage => "setitemquality standard, setitemquality premium";
-
-        public override void Execute(List<string> args);
-    }
-
     [Serializable]
     public class LabelledGameObject
     {

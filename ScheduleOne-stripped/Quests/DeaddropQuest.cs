@@ -11,7 +11,7 @@ public class DeaddropQuest : Quest
 
     public override void Begin(bool network = true);
     public void SetDrop(DeadDrop drop);
-    protected override void OnMinPass();
+    protected override void OnUncappedMinPass();
     private void OnDestroy();
     public override void End();
     public override void SetQuestState(EQuestState state, bool network = true);

@@ -6,6 +6,7 @@ using ScheduleOne.Economy;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Money;
 using ScheduleOne.Product;
+using ScheduleOne.UI.Tooltips;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -73,7 +74,7 @@ public class DealerManagementApp : App<DealerManagementApp>
     private void BackPressed();
     private void NextPressed();
     public void AssignCustomer();
-    private void SetDropDown();
+    private void RefreshDropdown();
     private void OnDropdownValueChanged(int value);
     private void OnDropdownOpen();
 }

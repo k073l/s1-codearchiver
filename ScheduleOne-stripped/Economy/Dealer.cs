@@ -40,6 +40,12 @@ using UnityEngine.Events;
 namespace ScheduleOne.Economy;
 public class Dealer : NPC, IItemSlotOwner
 {
+    private enum EAmountSortOrder
+    {
+        LowToHigh,
+        HighToLow
+    }
+
     public const int MAX_CUSTOMERS;
     public const int DEAL_ARRIVAL_DELAY;
     public const int MIN_TRAVEL_TIME;
@@ -150,8 +156,6 @@ public class Dealer : NPC, IItemSlotOwner
     public List<Tuple<ProductDefinition, EQuality, int>> GetOrderableProducts(EQuality minQuality);
     public int GetOrderableProductQuantity(string productID, EQuality minQuality, EQuality maxQuality);
     [Button]
-    public void TestGetAvailableProducts();
-    [Button]
     private List<Tuple<ProductDefinition, EQuality, int>> GetAvailableProducts();
     private EDealWindow GetDealWindow();
     private int GetContractCountInWindow(EDealWindow window);
@@ -161,7 +165,8 @@ public class Dealer : NPC, IItemSlotOwner
     protected virtual void RecruitmentRequested();
     public void RemoveContractItems(Contract contract, EQuality targetQuality, out List<ItemInstance> items);
     private List<ProductItemInstance> RemoveAndReturnProductFromInventory(string productID, int requiredQuantity, EQuality targetQuality);
-    private List<ItemSlot> FilterAndSortSlots(List<ItemSlot> slots, string productID, EQuality productQuality);
+    private void SplitItemSlot(ItemSlot slot);
+    private List<ItemSlot> FilterAndSortSlots(List<ItemSlot> slots, string productID, EQuality productQuality, EAmountSortOrder amountSortOrder);
     public List<ItemSlot> GetAllSlots();
     public void AddItemToInventory(ItemInstance item);
     public void TryMoveOverflowItems();

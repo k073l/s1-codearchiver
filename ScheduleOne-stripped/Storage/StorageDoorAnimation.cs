@@ -6,6 +6,8 @@ using UnityEngine;
 namespace ScheduleOne.Storage;
 public class StorageDoorAnimation : MonoBehaviour
 {
+    [SerializeField]
+    private bool _loggingEnabled;
     private bool overriddeIsOpen;
     private bool overrideState;
     [SerializeField]

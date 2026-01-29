@@ -18,7 +18,7 @@ public class Quest_WelcomeToHylandPoint : Quest
     public float ExplosionMaxDist;
     public float ExplosionMinDist;
     private float cameraLookTime;
-    protected override void OnMinPass();
+    protected override void OnUncappedMinPass();
     private void Update();
     public override void SetQuestState(EQuestState state, bool network = true);
     public void BlowupRV();

@@ -153,7 +153,7 @@ public class ChemistryStation : GridItem, IUsable, IItemSlotOwner, ITransitEntit
     [TargetRpc]
     public void SetCookOperation(NetworkConnection conn, ChemistryCookOperation operation);
     [ObserversRpc]
-    public void FinalizeOperation();
+    private void FinalizeOperation();
     public void ResetStation();
     public bool DoesOutputHaveSpace(StationRecipe recipe);
     public List<ItemInstance> GetIngredients();
@@ -206,7 +206,7 @@ public class ChemistryStation : GridItem, IUsable, IItemSlotOwner, ITransitEntit
     private void RpcWriter___Target_SetCookOperation_1024887225(NetworkConnection conn, ChemistryCookOperation operation);
     private void RpcReader___Target_SetCookOperation_1024887225(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Observers_FinalizeOperation_2166136261();
-    public void RpcLogic___FinalizeOperation_2166136261();
+    private void RpcLogic___FinalizeOperation_2166136261();
     private void RpcReader___Observers_FinalizeOperation_2166136261(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Server_SetPlayerUser_3323014238(NetworkObject playerObject);
     public void RpcLogic___SetPlayerUser_3323014238(NetworkObject playerObject);

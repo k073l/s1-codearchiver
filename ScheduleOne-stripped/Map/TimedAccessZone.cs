@@ -10,6 +10,6 @@ public class TimedAccessZone : AccessZone
     public int OpenTime;
     public int CloseTime;
     protected virtual void Start();
-    protected virtual void MinPass();
+    protected virtual void OnUncappedMinPass();
     protected virtual bool GetIsOpen();
 }

@@ -25,6 +25,7 @@ public class FinishLabOvenBehaviour : Behaviour
     public void SetTargetOven(LabOven oven);
     public override void Deactivate();
     public override void OnActiveTick();
+    public override void BehaviourUpdate();
     [ObserversRpc(RunLocally = true)]
     private void StartAction();
     private bool CanActionStart();

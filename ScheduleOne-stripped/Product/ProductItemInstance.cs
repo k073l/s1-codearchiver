@@ -25,7 +25,7 @@ public class ProductItemInstance : QualityItemInstance
 
     [CodegenExclude]
     public int Amount { get; }
-    public override string Name => base.Name + (((Object)(object)packaging == (Object)null) ? " (Unpackaged)" : string.Empty);
+    public override string Name => base.Name + (((Object)(object)packaging != (Object)null) ? (" (" + packaging.Quantity + ")") : " (Unpackaged)");
 
     [CodegenExclude]
     public override Equippable Equippable => GetEquippable();

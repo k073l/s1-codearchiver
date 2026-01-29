@@ -21,6 +21,7 @@ public class SpraySurfaceInteraction : MonoBehaviour
     private const int MaxPixelsBeforeNewStroke;
     private const int ManhattanDistanceBetweenPaintedPixels;
     private const int FixedPaintedPixelLimit;
+    private const int CanvasPadding;
     public SpraySurface SpraySurface;
     public InteractableObject IntObj;
     public Transform CameraPosition;
