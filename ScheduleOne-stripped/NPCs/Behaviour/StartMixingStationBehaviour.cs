@@ -26,6 +26,7 @@ public class StartMixingStationBehaviour : Behaviour
     public override void Deactivate();
     public override void Pause();
     public override void OnActiveTick();
+    public override void BehaviourUpdate();
     [ObserversRpc(RunLocally = true)]
     private void StartCook();
     private bool CanCookStart();

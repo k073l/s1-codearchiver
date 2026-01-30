@@ -57,6 +57,7 @@ public class MoveItemBehaviour : Behaviour
     public bool IsTransitRouteValid(TransitRoute route, ItemInstance templateItem, out string invalidReason);
     public bool IsTransitRouteValid(TransitRoute route, string itemID);
     public bool IsDestinationValid(TransitRoute route, ItemInstance item);
+    public bool IsDestinationValid(TransitRoute route, ItemInstance item, out string invalidReason);
     public bool CanGetToSource(TransitRoute route);
     private Transform GetSourceAccessPoint(TransitRoute route);
     private bool IsAtSource();

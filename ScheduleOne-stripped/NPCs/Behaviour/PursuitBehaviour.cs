@@ -1,4 +1,5 @@
 using System;
+using FishNet;
 using FishNet.Object;
 using ScheduleOne.AvatarFramework.Equipping;
 using ScheduleOne.Combat;

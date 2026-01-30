@@ -174,7 +174,6 @@ public class Customer : NetworkBehaviour, ISaveable
 
     public static int MinsSinceLastDealOfferedAllCustomers();
     public override void Awake();
-    protected override void OnValidate();
     private void Start();
     public override void OnStartClient();
     public override void OnSpawnServer(NetworkConnection connection);

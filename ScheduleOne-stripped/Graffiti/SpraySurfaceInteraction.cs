@@ -49,7 +49,6 @@ public class SpraySurfaceInteraction : MonoBehaviour
     private void Start();
     private void PlayerSpawned();
     private void OnDestroy();
-    private void OnValidate();
     private void ResizeCanvas();
     private void Update();
     private void UpdateCursor();

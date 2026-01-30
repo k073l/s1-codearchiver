@@ -46,7 +46,6 @@ public class DialogueHandler : MonoBehaviour
     public void InitializeDialogue(DialogueContainer container);
     public void InitializeDialogue(DialogueContainer dialogueContainer, bool enableDialogueBehaviour = true, string entryNodeLabel = "ENTRY");
     public void InitializeDialogue(string dialogueContainerName, bool enableDialogueBehaviour = true, string entryNodeLabel = "ENTRY");
-    public virtual bool CanBeginConversation();
     public void OverrideShownDialogue(string _overrideText);
     public void StopOverride();
     public virtual void EndDialogue();

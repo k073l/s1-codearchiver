@@ -8,8 +8,6 @@ using FishNet.Connection;
 using FishNet.Managing;
 using FishNet.Object;
 using FishNet.Object.Delegating;
-using FishNet.Object.Synchronizing;
-using FishNet.Object.Synchronizing.Internal;
 using FishNet.Serializing;
 using FishNet.Serializing.Generated;
 using FishNet.Transporting;
@@ -43,7 +41,6 @@ using ScheduleOne.VoiceOver;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
 namespace ScheduleOne.NPCs;
 [RequireComponent(typeof(NPCHealth))]
@@ -103,16 +100,12 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     [Header("GUID")]
     public string BakedGUID;
     public Action<bool> onVisibilityChanged;
-    [HideInInspector]
-    [SyncVar]
-    public NetworkObject PlayerConversant;
     private Coroutine resetUnsettledCoroutine;
     private List<int> impactHistory;
     private int headlightStartTime;
     private int heaedLightsEndTime;
     protected float defaultAggression;
     private Coroutine lerpScaleRoutine;
-    public SyncVar<NetworkObject> syncVar___PlayerConversant;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002ENPCAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002ENPCAssembly_002DCSharp_002Edll_Excuted;
     public string fullName { get; }
@@ -148,7 +141,6 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     public bool isUnsettled { get; protected set; }
     public bool IsPanicked => TimeSincePanicked < 20f;
     public float TimeSincePanicked { get; protected set; } = 1000f;
-    public NetworkObject SyncAccessor_PlayerConversant { get; set; }
 
     public void RecordLastKnownPosition(bool resetTimeSinceLastSeen);
     public float GetSearchTime();
@@ -162,7 +154,6 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     protected virtual string GetMessagingName();
     public virtual Sprite GetMessagingIcon();
     public void SendTextMessage(string message);
-    protected override void OnValidate();
     protected virtual void Start();
     protected virtual void OnDestroy();
     public override void OnSpawnServer(NetworkConnection connection);
@@ -201,8 +192,6 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     public void SendWorldSpaceDialogue(string text, float duration);
     [ObserversRpc(RunLocally = true)]
     public void ShowWorldSpaceDialogue(string text, float duration);
-    [ServerRpc(RequireOwnership = false, RunLocally = true)]
-    public void SetConversant(NetworkObject player);
     private void Hovered_Internal();
     private void Interacted_Internal();
     protected virtual void Hovered();
@@ -319,9 +308,6 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     private void RpcWriter___Observers_ShowWorldSpaceDialogue_606697822(string text, float duration);
     public void RpcLogic___ShowWorldSpaceDialogue_606697822(string text, float duration);
     private void RpcReader___Observers_ShowWorldSpaceDialogue_606697822(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Server_SetConversant_3323014238(NetworkObject player);
-    public void RpcLogic___SetConversant_3323014238(NetworkObject player);
-    private void RpcReader___Server_SetConversant_3323014238(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
     private void RpcWriter___Observers_EnterBuilding_3905681115(NetworkConnection connection, string buildingGUID, int doorIndex);
     public void RpcLogic___EnterBuilding_3905681115(NetworkConnection connection, string buildingGUID, int doorIndex);
     private void RpcReader___Observers_EnterBuilding_3905681115(PooledReader PooledReader0, Channel channel);
@@ -396,6 +382,5 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     private void RpcWriter___Observers_SetRelationship_431000436(float relationship);
     private void RpcLogic___SetRelationship_431000436(float relationship);
     private void RpcReader___Observers_SetRelationship_431000436(PooledReader PooledReader0, Channel channel);
-    public override bool ReadSyncVar___ScheduleOne_002ENPCs_002ENPC(PooledReader PooledReader0, uint UInt321, bool Boolean2);
     protected virtual void Awake_UserLogic_ScheduleOne_002ENPCs_002ENPC_Assembly_002DCSharp_002Edll();
 }
