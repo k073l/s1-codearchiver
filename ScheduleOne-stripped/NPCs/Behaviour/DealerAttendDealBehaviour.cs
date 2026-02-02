@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using FishNet;
 using ScheduleOne.Economy;
+using ScheduleOne.ItemFramework;
 using ScheduleOne.Quests;
 using UnityEngine;
 

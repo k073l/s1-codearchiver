@@ -42,5 +42,6 @@ public class BasicAvatarSettings : ScriptableObject
     public T SetValue<T>(string fieldName, T value);
     public T GetValue<T>(string fieldName);
     public AvatarSettings GetAvatarSettings();
+    public static Color GetNippleColor(Color skinColor);
     public virtual string GetJson(bool prettyPrint = true);
 }

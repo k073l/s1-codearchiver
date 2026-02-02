@@ -8,4 +8,6 @@ public static class XPAmounts
     public const int ESCAPED_ARREST;
     public const int ESCAPED_WANTED;
     public const int ESCAPED_WANTED2;
+    public const int NEW_MIXTURE_DISCOVERED;
+    public const int GRAFFITI_SPRAYED;
 }

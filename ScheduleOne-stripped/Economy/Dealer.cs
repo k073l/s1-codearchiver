@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using EasyButtons;
 using FishNet;
 using FishNet.Connection;
 using FishNet.Managing;
@@ -13,6 +14,7 @@ using FishNet.Serializing;
 using FishNet.Serializing.Generated;
 using FishNet.Transporting;
 using ScheduleOne.AvatarFramework;
+using ScheduleOne.Cartel;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Dialogue;
 using ScheduleOne.GameTime;
@@ -38,6 +40,12 @@ using UnityEngine.Events;
 namespace ScheduleOne.Economy;
 public class Dealer : NPC, IItemSlotOwner
 {
+    private enum EAmountSortOrder
+    {
+        LowToHigh,
+        HighToLow
+    }
+
     public const int MAX_CUSTOMERS;
     public const int DEAL_ARRIVAL_DELAY;
     public const int MIN_TRAVEL_TIME;
@@ -46,6 +54,8 @@ public class Dealer : NPC, IItemSlotOwner
     public const float CASH_REMINDER_THRESHOLD;
     public const float RELATIONSHIP_CHANGE_PER_DEAL;
     public static Color32 DealerLabelColor;
+    public const int NegativeQualityTolerance;
+    public const int PositiveQualityTolerance;
     public static Action<Dealer> onDealerRecruited;
     public static List<Dealer> AllPlayerDealers;
     [CompilerGenerated]
@@ -65,8 +75,6 @@ public class Dealer : NPC, IItemSlotOwner
     public string HomeName;
     public float SigningFee;
     public float Cut;
-    public bool SellInsufficientQualityItems;
-    public bool SellExcessQualityItems;
     [Header("Variables")]
     public string CompletedDealsVariable;
     [Header("UnityEvents")]
@@ -127,10 +135,10 @@ public class Dealer : NPC, IItemSlotOwner
     public virtual bool ShouldAcceptContract(ContractInfo contractInfo, Customer customer);
     public virtual void ContractedOffered(ContractInfo contractInfo, Customer customer);
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
-    public void SendAddCustomer(string npcID);
+    public void AddCustomer_Server(string npcID);
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
-    private void AddCustomer(NetworkConnection conn, string npcID);
+    private void AddCustomer_Client(NetworkConnection conn, string npcID);
     protected virtual void AddCustomer(Customer customer);
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void SendRemoveCustomer(string npcID);
@@ -145,21 +153,26 @@ public class Dealer : NPC, IItemSlotOwner
     [ServerRpc(RequireOwnership = false)]
     public void SubmitPayment(float payment);
     public void TryRobDealer();
-    public List<ProductDefinition> GetOrderableProducts();
-    public int GetProductCount(string productID, EQuality minQuality, EQuality maxQuality);
+    public List<Tuple<ProductDefinition, EQuality, int>> GetOrderableProducts(EQuality minQuality);
+    public int GetOrderableProductQuantity(string productID, EQuality minQuality, EQuality maxQuality);
+    [Button]
+    private List<Tuple<ProductDefinition, EQuality, int>> GetAvailableProducts();
     private EDealWindow GetDealWindow();
     private int GetContractCountInWindow(EDealWindow window);
     private void AddContract(Contract contract);
     private void CustomerContractEnded(Contract contract);
     private void SortContracts();
     protected virtual void RecruitmentRequested();
-    public bool RemoveContractItems(Contract contract, EQuality targetQuality, out List<ItemInstance> items);
-    private List<ItemInstance> GetItems(string ID, int requiredQuantity, Func<ProductItemInstance, bool> qualityCheck, out int returnedQuantity);
+    public void RemoveContractItems(Contract contract, EQuality targetQuality, out List<ItemInstance> items);
+    private List<ProductItemInstance> RemoveAndReturnProductFromInventory(string productID, int requiredQuantity, EQuality targetQuality);
+    private void SplitItemSlot(ItemSlot slot);
+    private List<ItemSlot> FilterAndSortSlots(List<ItemSlot> slots, string productID, EQuality productQuality, EAmountSortOrder amountSortOrder);
     public List<ItemSlot> GetAllSlots();
     public void AddItemToInventory(ItemInstance item);
     public void TryMoveOverflowItems();
     public int GetTotalInventoryItemCount();
     public int GetPackagedProductAmount();
+    public virtual void CheckNotifyPlayerOfDeal(Dealer cartelDealer, Contract contract);
     [ServerRpc(RunLocally = true, RequireOwnership = false)]
     public void SetStoredInstance(NetworkConnection conn, int itemSlotIndex, ItemInstance instance);
     [ObserversRpc(RunLocally = true)]
@@ -199,14 +212,14 @@ public class Dealer : NPC, IItemSlotOwner
     private void RpcReader___Observers_SetIsRecruited_328543758(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Target_SetIsRecruited_328543758(NetworkConnection conn);
     private void RpcReader___Target_SetIsRecruited_328543758(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Server_SendAddCustomer_3615296227(string npcID);
-    public void RpcLogic___SendAddCustomer_3615296227(string npcID);
-    private void RpcReader___Server_SendAddCustomer_3615296227(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Observers_AddCustomer_2971853958(NetworkConnection conn, string npcID);
-    private void RpcLogic___AddCustomer_2971853958(NetworkConnection conn, string npcID);
-    private void RpcReader___Observers_AddCustomer_2971853958(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Target_AddCustomer_2971853958(NetworkConnection conn, string npcID);
-    private void RpcReader___Target_AddCustomer_2971853958(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Server_AddCustomer_Server_3615296227(string npcID);
+    public void RpcLogic___AddCustomer_Server_3615296227(string npcID);
+    private void RpcReader___Server_AddCustomer_Server_3615296227(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Observers_AddCustomer_Client_2971853958(NetworkConnection conn, string npcID);
+    private void RpcLogic___AddCustomer_Client_2971853958(NetworkConnection conn, string npcID);
+    private void RpcReader___Observers_AddCustomer_Client_2971853958(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Target_AddCustomer_Client_2971853958(NetworkConnection conn, string npcID);
+    private void RpcReader___Target_AddCustomer_Client_2971853958(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Server_SendRemoveCustomer_3615296227(string npcID);
     public void RpcLogic___SendRemoveCustomer_3615296227(string npcID);
     private void RpcReader___Server_SendRemoveCustomer_3615296227(PooledReader PooledReader0, Channel channel, NetworkConnection conn);

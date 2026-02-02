@@ -45,7 +45,7 @@ public class DeliveryManager : NetworkSingleton<DeliveryManager>, IBaseSaveable,
     protected override void Start();
     public virtual void InitializeSaveable();
     public override void OnSpawnServer(NetworkConnection connection);
-    private void OnMinPass();
+    private void OnTimePass(int minutes);
     public bool IsLoadingBayFree(ScheduleOne.Property.Property destination, int loadingDockIndex);
     [ServerRpc(RequireOwnership = false)]
     public void SendDelivery(DeliveryInstance delivery);

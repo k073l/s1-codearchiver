@@ -52,7 +52,6 @@ public class SaveManager : PersistentSingleton<SaveManager>
     public void CheckSaveFolderInitialized();
     public static bool HasWritePermissionOnDir(string path);
     private void Update();
-    public void DelayedSave();
     public void Save();
     public void Save(string saveFolderPath);
     private void ClearBaseLevelOutdatedSaves(string saveFolderPath);

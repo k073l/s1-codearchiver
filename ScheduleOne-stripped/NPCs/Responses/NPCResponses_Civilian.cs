@@ -31,7 +31,10 @@ public class NPCResponses_Civilian : NPCResponses
         ExplosionHeard
     }
 
+    [Header("Response Settings")]
     public bool CanCallPolice;
+    public bool OverrideThreatResponses;
+    public EAttackResponse ThreatResponseOverride;
     private EAttackResponse currentThreatResponse;
     private float lastThreatTime;
     private Coroutine resetCoroutine;

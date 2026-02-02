@@ -8,6 +8,8 @@ public class StorageDoorAnimation : MonoBehaviour
 {
     private bool overriddeIsOpen;
     private bool overrideState;
+    [SerializeField]
+    private bool _disableItemContainerWhenClosed;
     [Header("Animations")]
     public Animation[] Anims;
     public AnimationClip OpenAnim;
@@ -24,7 +26,7 @@ public class StorageDoorAnimation : MonoBehaviour
     [Button]
     public void Close();
     public void SetIsOpen(bool open);
-    private void DisableItems();
+    protected virtual void RefreshItemsVisible();
     public void OverrideState(bool open);
     public void ResetOverride();
 }

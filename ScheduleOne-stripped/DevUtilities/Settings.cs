@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using ScheduleOne.Audio;
 using ScheduleOne.Networking;
 using ScheduleOne.PlayerScripts;
@@ -39,8 +41,9 @@ public class Settings : PersistentSingleton<Settings>
     [Range(0f, 1f)]
     public float CameraBobIntensity;
     private InputActionMap playerControls;
-    public Action onDisplayChanged;
     public Action onInputsApplied;
+    public Action onDisplaySettingsApplied;
+    public Action onUnappliedDisplayIndexChanged;
     public static bool ChristmasEventActive { get; private set; }
     public bool PausingFreezesTime { get; }
     public EUnitType UnitType { get; private set; }

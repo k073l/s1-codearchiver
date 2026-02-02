@@ -18,12 +18,13 @@ public class GraffitiManager : NetworkSingleton<GraffitiManager>, IBaseSaveable,
 {
     private const string SPRAY_PAINT_STOCK_VARIABLE;
     private const string SPRAY_PAINTS_PURCHASED_VARIABLE;
+    [SerializeField]
+    private AnimationCurve _falloffCurve;
+    private Dictionary<byte, float[]> _falloffTableCache;
     private GraffitiLoader loader;
-    private List<Tuple<SpraySurface, NetworkConnection>> surfaceReplicationQueue;
-    private float timeUntilNextReplication;
     private bool NetworkInitialize___EarlyScheduleOne_002EGraffiti_002EGraffitiManagerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EGraffiti_002EGraffitiManagerAssembly_002DCSharp_002Edll_Excuted;
-    public List<SpraySurface> SpraySurfaces { get; private set; } = new List<SpraySurface>();
+    public List<WorldSpraySurface> WorldSpraySurfaces { get; private set; } = new List<WorldSpraySurface>();
     public string SaveFolderName => "Graffiti";
     public string SaveFileName => "Graffiti";
     public Loader Loader => loader;
@@ -41,6 +42,8 @@ public class GraffitiManager : NetworkSingleton<GraffitiManager>, IBaseSaveable,
     private void UpdateSprayPaintStockVariable();
     public virtual string GetSaveString();
     public void QueueSurfaceToReplicate(SpraySurface surface, NetworkConnection conn);
+    public float GetPixelStrength(byte strokeSize, int pixelIndex);
+    private float[] GetFalloffTable(int strokeSize);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

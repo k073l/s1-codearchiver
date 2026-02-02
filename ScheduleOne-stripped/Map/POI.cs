@@ -32,6 +32,7 @@ public class POI : MonoBehaviour
     public string MainText { get; protected set; } = string.Empty;
     public RectTransform UI { get; protected set; }
     public RectTransform IconContainer { get; protected set; }
+    public FontSetter FontSetter { get; protected set; }
 
     private void OnEnable();
     private void OnDisable();

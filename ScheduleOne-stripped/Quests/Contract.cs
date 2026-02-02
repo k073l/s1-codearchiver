@@ -29,6 +29,7 @@ public class Contract : Quest
     }
 
     public const int DefaultExpiryTime;
+    public const float ExcessProductsMatchSumMultiplier;
     public static List<Contract> Contracts;
     [Header("Contract Settings")]
     public ProductList ProductList;
@@ -44,11 +45,14 @@ public class Contract : Quest
     protected override void Start();
     public virtual void InitializeContract(string title, string description, QuestEntryData[] entries, string guid, Customer customer, float payment, ProductList products, string deliveryLocationGUID, QuestWindowConfig deliveryWindow, int pickupScheduleIndex, GameDateTime acceptTime);
     public virtual void SilentlyInitializeContract(string title, string description, QuestEntryData[] entries, string guid, Customer customer, float payment, ProductList products, string deliveryLocationGUID, QuestWindowConfig deliveryWindow, int pickupScheduleIndex, GameDateTime acceptTime);
-    protected override void MinPass();
+    protected override void OnUncappedMinPass();
     private void OnDestroy();
     private void UpdateTiming();
+    public void UpdatePoI();
     public override void End();
     public override void Complete(bool network = true);
+    public override void Expire(bool network = true);
+    public override void Fail(bool network = true);
     public void SetDealer(Dealer dealer);
     public virtual void SubmitPayment(float bonusTotal);
     protected override void SendExpiryReminder();
@@ -57,6 +61,7 @@ public class Contract : Quest
     protected override bool CanExpire();
     public bool DoesProductListMatchSpecified(List<ItemInstance> items, bool enforceQuality);
     public float GetProductListMatch(List<ItemInstance> items, out int matchedProductCount);
+    private Dictionary<ProductItemInstance, float> GetDescendingMatchRatings(ProductList.Entry requestedItem, List<ItemInstance> providedItems);
     public override SaveData GetSaveData();
     public new bool ShouldSave();
 }

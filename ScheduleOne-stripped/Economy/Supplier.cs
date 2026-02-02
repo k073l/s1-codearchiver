@@ -51,6 +51,7 @@ public class Supplier : NPC
     public const int DEADDROP_WAIT_PER_ITEM;
     public const int DEADDROP_MAX_WAIT;
     public const int DEADDROP_ITEM_LIMIT;
+    public const float MeetingEndDistance;
     public const float DELIVERY_RELATIONSHIP_REQUIREMENT;
     public static Color32 SupplierLabelColor;
     [Header("Supplier Settings")]
@@ -97,6 +98,7 @@ public class Supplier : NPC
     [ObserversRpc]
     private void SetUnlocked();
     protected override void MinPass();
+    protected override void OnTick();
     protected void HourPass();
     private void OnTimeSkip(int minsSlept);
     [ObserversRpc(RunLocally = true)]

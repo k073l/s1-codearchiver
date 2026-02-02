@@ -43,6 +43,7 @@ public class NPCScheduleManager : MonoBehaviour
     [Button]
     public void InitializeActions();
     protected virtual void OnMinPass();
+    private void UpdateActions();
     protected virtual void OnTick();
     private List<NPCAction> GetActionsOccurringAt(int time);
     private List<NPCAction> GetActionsTotallyOccurringWithinRange(int min, int max, bool checkShouldStart);

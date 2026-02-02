@@ -7,6 +7,6 @@ namespace ScheduleOne.Quests;
 public class Quest_Packagers : Quest_Employees
 {
     public QuestEntry AssignWorkEntry;
-    protected override void MinPass();
+    protected override void OnMinPass();
     public override List<Employee> GetEmployees();
 }

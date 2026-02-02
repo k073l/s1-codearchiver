@@ -10,7 +10,7 @@ public abstract class Quest_Employees : Quest
     public QuestEntry AssignBedEntry;
     public QuestEntry PayEntry;
     public abstract List<Employee> GetEmployees();
-    protected override void MinPass();
+    protected override void OnUncappedMinPass();
     protected bool AreAnyEmployeesAssignedBeds();
     protected bool AreAnyEmployeesPaid();
 }

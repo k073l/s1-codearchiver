@@ -6,6 +6,7 @@ using System.Linq;
 using AeLa.EasyFeedback;
 using FishNet;
 using FishNet.Component.Scenes;
+using FishNet.Managing;
 using FishNet.Transporting;
 using FishNet.Transporting.Multipass;
 using FishNet.Transporting.Tugboat;

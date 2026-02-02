@@ -6,5 +6,6 @@ public class DryingRackConfigurationData : RenamableConfigurationData
 {
     public QualityFieldData TargetQuality;
     public ObjectFieldData Destination;
-    public DryingRackConfigurationData(StringFieldData name, QualityFieldData targetquality, ObjectFieldData destination);
+    public NumberFieldData StartThreshold;
+    public DryingRackConfigurationData(StringFieldData name, QualityFieldData targetquality, ObjectFieldData destination, NumberFieldData startThreshold);
 }

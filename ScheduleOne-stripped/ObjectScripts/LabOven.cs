@@ -166,8 +166,8 @@ public class LabOven : GridItem, IUsable, IItemSlotOwner, ITransitEntity, IConfi
     public override void OnSpawnServer(NetworkConnection connection);
     public void SendConfigurationToClient(NetworkConnection conn);
     private void Update();
-    private void MinPass();
-    private void TimeSkipped(int minsSkippped);
+    private void OnUncappedMinPass();
+    private void OnTimePass(int minutes);
     private void UpdateOvenAppearance();
     private void Exit(ExitAction action);
     public override bool CanBeDestroyed(out string reason);

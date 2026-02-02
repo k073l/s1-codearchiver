@@ -25,7 +25,7 @@ public class ProductItemInstance : QualityItemInstance
 
     [CodegenExclude]
     public int Amount { get; }
-    public override string Name => base.Name + (((Object)(object)packaging == (Object)null) ? " (Unpackaged)" : string.Empty);
+    public override string Name => base.Name + (((Object)(object)packaging != (Object)null) ? (" (" + packaging.Quantity + ")") : " (Unpackaged)");
 
     [CodegenExclude]
     public override Equippable Equippable => GetEquippable();
@@ -46,10 +46,11 @@ public class ProductItemInstance : QualityItemInstance
     private Sprite GetIcon();
     public override ItemData GetItemData();
     public virtual float GetAddictiveness();
-    public float GetSimilarity(ProductDefinition other, EQuality quality);
+    public float GetSimilarity(ProductDefinition other, EQuality otherQuality);
     public virtual void ApplyEffectsToNPC(NPC npc);
     public virtual void ClearEffectsFromNPC(NPC npc);
     public virtual void ApplyEffectsToPlayer(Player player);
     public virtual void ClearEffectsFromPlayer(Player Player);
     public override float GetMonetaryValue();
+    public override int GetTotalAmount();
 }

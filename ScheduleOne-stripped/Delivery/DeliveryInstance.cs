@@ -35,5 +35,5 @@ public class DeliveryInstance
     public int GetTimeStatus();
     public void SetStatus(EDeliveryStatus status);
     public void AddItemsToDeliveryVehicle();
-    public void OnMinPass();
+    public void OnTimePass(int minutes);
 }

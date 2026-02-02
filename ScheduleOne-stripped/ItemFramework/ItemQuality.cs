@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace ScheduleOne.ItemFramework;
@@ -13,5 +14,6 @@ public static class ItemQuality
     public static Color Poor_Color;
     public static Color Trash_Color;
     public static EQuality GetQuality(float qualityScalar);
+    public static EQuality ShiftQuality(EQuality baseQuality, int shiftAmount);
     public static Color GetColor(EQuality quality);
 }

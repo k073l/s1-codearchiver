@@ -26,7 +26,6 @@ public class TVInterface : MonoBehaviour
     public bool IsOpen { get; private set; }
 
     public void Awake();
-    public void Start();
     private void OnDestroy();
     private void MinPass();
     public void Open();

@@ -34,6 +34,11 @@ public class Phone : PlayerSingleton<Phone>
     public float LookOffsetMax;
     public float LookOffsetMin;
     public float OpenVerticalOffset;
+    [Header("Fonts")]
+    [SerializeField]
+    private ColorFont _generalColorFont;
+    [SerializeField]
+    private ColorFont _productColorFont;
     public Action onPhoneOpened;
     public Action onPhoneClosed;
     public Action closeApps;
@@ -46,6 +51,7 @@ public class Phone : PlayerSingleton<Phone>
     public bool isOpenable { get; protected set; } = true;
     public bool FlashlightOn { get; protected set; }
     public float ScaledLookOffset => Mathf.Lerp(LookOffsetMax, LookOffsetMin, CanvasScaler.NormalizedCanvasScaleFactor);
+    public ColorFont GeneralColorFont => _generalColorFont;
 
     protected override void Awake();
     public override void OnStartClient(bool IsOwner);
@@ -53,7 +59,6 @@ public class Phone : PlayerSingleton<Phone>
     protected virtual void Update();
     protected override void OnDestroy();
     private void ToggleFlashlight();
-    private void LateUpdate();
     public void SetOpenable(bool o);
     public void SetIsOpen(bool o);
     public void SetIsHorizontal(bool h);

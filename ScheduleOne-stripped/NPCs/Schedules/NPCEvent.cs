@@ -17,6 +17,7 @@ public class NPCEvent : NPCAction
     [Button]
     public void ApplyEndTime();
     public override void OnActiveMinPass();
+    public override void OnActiveTick();
     public override void PendingMinPassed();
     public override string GetName();
     public override string GetTimeDescription();

@@ -48,6 +48,7 @@ public class HUD : Singleton<HUD>
     public RectTransform UnreadMessagesPrompt;
     public TextMeshProUGUI SleepPrompt;
     public TextMeshProUGUI CurfewPrompt;
+    public CanvasGroup NotificationsCanvasGroup;
     [Header("Settings")]
     public Gradient RedGreenGradient;
     private int SampleSize;

@@ -44,8 +44,7 @@ public class LawController : Singleton<LawController>, IBaseSaveable, ISaveable
     protected override void Start();
     protected override void OnDestroy();
     private void OnLoadComplete();
-    private void MinPass();
-    private void HourPass();
+    private void OnUncappedMinPass();
     private void DayPass();
     public LawActivitySettings GetSettings();
     public LawActivitySettings GetSettings(EDay day);

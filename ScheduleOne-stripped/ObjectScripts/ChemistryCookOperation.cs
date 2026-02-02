@@ -22,4 +22,5 @@ public class ChemistryCookOperation
     public ChemistryCookOperation(string recipeID, EQuality productQuality, Color startLiquidColor, float liquidLevel, int currentTime = 0);
     public ChemistryCookOperation();
     public void Progress(int mins);
+    public bool IsComplete();
 }

@@ -6,12 +6,9 @@ using UnityEngine;
 using VolumetricFogAndMist2;
 
 namespace ScheduleOne.FX;
-[ExecuteInEditMode]
 public class EnvironmentFX : Singleton<EnvironmentFX>
 {
     [Header("References")]
-    [SerializeField]
-    protected WindZone windZone;
     [SerializeField]
     protected TimeOfDayController timeOfDayController;
     public VolumetricFog VolumetricFog;
@@ -66,18 +63,20 @@ public class EnvironmentFX : Singleton<EnvironmentFX>
     private float _environmentScrollSpeed;
     [SerializeField]
     private float _testPercentage;
+    public FloatSmoother FogEndDistanceController;
     private float _scrollTime;
     private float _scrollValue;
     private bool _scrollTActive;
-    private bool started;
-    public FloatSmoother FogEndDistanceController;
-    public float normalizedEnvironmentalBrightness => environmentalBrightnessCurve.Evaluate(((float)NetworkSingleton<TimeManager>.Instance.DailyMinTotal + NetworkSingleton<TimeManager>.Instance.TimeOnCurrentMinute / 1f) / 1440f);
+    private Color _defaultDistantTreeMatColor;
+    private Color _defaultGrassMatColor;
+    public float normalizedEnvironmentalBrightness => environmentalBrightnessCurve.Evaluate(NetworkSingleton<TimeManager>.Instance.NormalizedTimeOfDay);
     public float FogEndDistanceMultiplier => fogEndDistanceMultiplier * FogEndDistanceController.CurrentValue;
 
+    protected override void Awake();
     protected override void Start();
+    protected override void OnDestroy();
     private void Update();
     private void UpdateVisuals();
     public void SetEnvironmentScrollingActive(bool active);
     public void SetEnvironmentScrollingSpeedByPercentage(float percentage);
-    protected override void OnDestroy();
 }

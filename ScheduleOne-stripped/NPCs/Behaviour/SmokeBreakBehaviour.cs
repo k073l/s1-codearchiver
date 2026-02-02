@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using EasyButtons;
-using FishNet.Object;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.NPCs.Other;
@@ -33,8 +32,8 @@ public class SmokeBreakBehaviour : Behaviour
     private Transform _currentSmokeLocation;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002EBehaviour_002ESmokeBreakBehaviourAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002EBehaviour_002ESmokeBreakBehaviourAssembly_002DCSharp_002Edll_Excuted;
-    public override void OnStartServer();
     private void SetupEvents();
+    private void CleanUp();
     public override void Enable();
     public override void Activate();
     public override void Deactivate();

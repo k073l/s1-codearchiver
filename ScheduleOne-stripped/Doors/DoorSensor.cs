@@ -16,9 +16,11 @@ public class DoorSensor : MonoBehaviour
     private List<Collider> exclude;
     private List<NPC> npcsInContact;
     private List<Player> playersInContact;
+    private float maxContactDistanceSqr;
     private void Awake();
     private void UpdateCollider();
     private void OnTriggerEnter(Collider other);
     private void OnTriggerExit(Collider other);
     private void FixedUpdate();
+    private void RemoveInvalidContacts();
 }

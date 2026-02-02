@@ -1,11 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using FishNet;
 using FishNet.Connection;
 using FishNet.Managing;
 using FishNet.Object;
 using FishNet.Object.Delegating;
+using FishNet.Object.Synchronizing;
+using FishNet.Object.Synchronizing.Internal;
 using FishNet.Serializing;
 using FishNet.Serializing.Generated;
 using FishNet.Transporting;
@@ -14,6 +17,7 @@ using ScheduleOne.AvatarFramework.Equipping;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Dialogue;
 using ScheduleOne.FX;
+using ScheduleOne.GameTime;
 using ScheduleOne.Law;
 using ScheduleOne.Map;
 using ScheduleOne.NPCs;
@@ -38,7 +42,10 @@ public class PoliceOfficer : NPC
     public const float MAX_CHATTER_INTERVAL;
     public static Action<VisionEventReceipt> OnPoliceVisionEvent;
     public static List<PoliceOfficer> Officers;
-    public LandVehicle AssignedVehicle;
+    [CompilerGenerated]
+    [SyncVar]
+    [HideInInspector]
+    public bool _003CIgnorePlayers_003Ek__BackingField;
     [Header("References")]
     public PursuitBehaviour PursuitBehaviour;
     public VehiclePursuitBehaviour VehiclePursuitBehaviour;
@@ -75,10 +82,15 @@ public class PoliceOfficer : NPC
     private float timeSinceOutOfSight;
     private float chatterCountDown;
     private Investigation currentBodySearchInvestigation;
-    private bool generalCrimeResponseActive;
+    public SyncVar<bool> syncVar____003CIgnorePlayers_003Ek__BackingField;
     private bool NetworkInitialize___EarlyScheduleOne_002EPolice_002EPoliceOfficerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EPolice_002EPoliceOfficerAssembly_002DCSharp_002Edll_Excuted;
+    public bool IgnorePlayers {[CompilerGenerated]
+        get; [CompilerGenerated]
+        private set; }
     public NetworkObject PursuitTarget => PursuitBehaviour.Target?.NetworkObject;
+    public LandVehicle AssignedVehicle { get; set; }
+    public bool SyncAccessor__003CIgnorePlayers_003Ek__BackingField { get; set; }
 
     public override void Awake();
     protected override void Start();
@@ -95,7 +107,6 @@ public class PoliceOfficer : NPC
     public virtual void BeginVehiclePursuit_Networked(string playerCode, NetworkObject vehicle, bool beginAsSighted);
     [ObserversRpc(RunLocally = true)]
     private void BeginVehiclePursuit(string playerCode, NetworkObject vehicle, bool beginAsSighted);
-    public void BeginBodySearch_LocalPlayer();
     [ServerRpc(RunLocally = true, RequireOwnership = false)]
     public virtual void BeginBodySearch_Networked(string playerCode);
     [ObserversRpc(RunLocally = true)]
@@ -115,13 +126,16 @@ public class PoliceOfficer : NPC
     private void UpdateChatter();
     private void ProcessVisionEvent(VisionEventReceipt visionEventReceipt);
     public static PoliceOfficer GetNearestOfficer(Vector3 position, out float distanceToTarget, bool onlyConscious = true);
-    private new void OnDie();
+    [ServerRpc(RequireOwnership = false)]
+    public void SetIgnorePlayers(bool ignore);
+    public void SetRandomAvoidancePriority();
+    public void SetAvoidancePriority(int priority);
     public virtual void UpdateBodySearch();
     private bool CanInvestigate();
     private void UpdateExistingInvestigation();
     private void CheckNewInvestigation();
-    private void StartBodySearchInvestigation(Player player);
     private void StopBodySearchInvestigation();
+    public void BodySearchLocalPlayer();
     public void ConductBodySearch(Player player);
     private bool CanInvestigatePlayer(Player player);
     public override void NetworkInitialize___Early();
@@ -148,5 +162,9 @@ public class PoliceOfficer : NPC
     private void RpcWriter___Observers_AssignToCheckpoint_4087078542(CheckpointManager.ECheckpointLocation location);
     public virtual void RpcLogic___AssignToCheckpoint_4087078542(CheckpointManager.ECheckpointLocation location);
     private void RpcReader___Observers_AssignToCheckpoint_4087078542(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Server_SetIgnorePlayers_1140765316(bool ignore);
+    public void RpcLogic___SetIgnorePlayers_1140765316(bool ignore);
+    private void RpcReader___Server_SetIgnorePlayers_1140765316(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    public override bool ReadSyncVar___ScheduleOne_002EPolice_002EPoliceOfficer(PooledReader PooledReader0, uint UInt321, bool Boolean2);
     protected override void Awake_UserLogic_ScheduleOne_002EPolice_002EPoliceOfficer_Assembly_002DCSharp_002Edll();
 }

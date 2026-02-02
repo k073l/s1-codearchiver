@@ -35,6 +35,7 @@ public class OvenCookOperation
     public OvenCookOperation();
     public void UpdateCookProgress(int change);
     public int GetCookDuration();
+    public bool IsComplete();
     public ItemInstance GetProductItem(int quantity);
     public bool IsReady();
 }

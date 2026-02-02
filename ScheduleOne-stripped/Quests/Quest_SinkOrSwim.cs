@@ -19,7 +19,6 @@ public class Quest_SinkOrSwim : Quest
     public GameObject LoanSharkGraves;
     protected override void Awake();
     protected override void Start();
-    protected override void MinPass();
     private void HourPass();
     private void SleepStart();
     private void SpawnLoanSharkVehicle();

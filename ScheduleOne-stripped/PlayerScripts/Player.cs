@@ -171,7 +171,7 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public bool IsInVehicle => (Object)(object)SyncAccessor__003CCurrentVehicle_003Ek__BackingField != (Object)null;
     public VehicleSeat CurrentVehicleSeat { get; private set; }
     public LandVehicle LastDrivenVehicle { get; private set; }
-    public float TimeSinceVehicleExit { get; protected set; }
+    public float TimeSinceVehicleExit { get; protected set; } = 1000f;
     public bool Crouched { get; private set; }
     public NetworkObject CurrentBed {[CompilerGenerated]
         get; [CompilerGenerated]
@@ -224,7 +224,6 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public bool avatarVisibleToLocalPlayer { get; private set; }
     public bool playerDataRetrieveReturned { get; private set; }
     public bool playerSaveRequestReturned { get; private set; }
-    public bool PlayerInitializedOverNetwork { get; private set; }
     public bool Paranoid { get; set; }
     public bool Sneaky { get; set; }
     public bool Disoriented { get; set; }
@@ -249,7 +248,6 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public static Player GetPlayer(string playerCode);
     public override void Awake();
     public virtual void InitializeSaveable();
-    protected virtual void Start();
     protected virtual void OnDestroy();
     public override void OnStartClient();
     private void PlayerLoaded();
@@ -266,8 +264,6 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public void SendPlayerNameData(string playerName, ulong id);
     [ServerRpc(RequireOwnership = false)]
     public void RequestPlayerData(string playerCode);
-    [ServerRpc(RunLocally = true)]
-    public void MarkPlayerInitialized();
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
     public void ReceivePlayerData(NetworkConnection conn, PlayerData data, string inventoryString, string appearanceString, string clothigString, VariableData[] vars);
@@ -275,16 +271,14 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
     private void ReceivePlayerNameData(NetworkConnection conn, string playerName, string id);
-    public void SendFlashlightOn(bool on);
     [ServerRpc(RunLocally = true, RequireOwnership = false)]
-    private void SendFlashlightOnNetworked(bool on);
+    public void SetFlashlightOn_Server(bool on);
     [ObserversRpc(RunLocally = true)]
-    private void SetFlashlightOn(bool on);
+    private void SetFlashlightOn_Client(bool on);
     public override void OnStopClient();
     public override void OnStartServer();
     protected virtual void Update();
-    protected virtual void MinPass();
-    protected virtual void Tick();
+    protected virtual void OnUncappedMinutePass();
     protected virtual void LateUpdate();
     private void RecalculateCurrentProperty();
     private void RecalculateCurrentRegion();
@@ -480,9 +474,6 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     private void RpcWriter___Server_RequestPlayerData_3615296227(string playerCode);
     public void RpcLogic___RequestPlayerData_3615296227(string playerCode);
     private void RpcReader___Server_RequestPlayerData_3615296227(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Server_MarkPlayerInitialized_2166136261();
-    public void RpcLogic___MarkPlayerInitialized_2166136261();
-    private void RpcReader___Server_MarkPlayerInitialized_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
     private void RpcWriter___Observers_ReceivePlayerData_3244732873(NetworkConnection conn, PlayerData data, string inventoryString, string appearanceString, string clothigString, VariableData[] vars);
     public void RpcLogic___ReceivePlayerData_3244732873(NetworkConnection conn, PlayerData data, string inventoryString, string appearanceString, string clothigString, VariableData[] vars);
     private void RpcReader___Observers_ReceivePlayerData_3244732873(PooledReader PooledReader0, Channel channel);
@@ -493,12 +484,12 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     private void RpcReader___Observers_ReceivePlayerNameData_3895153758(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Target_ReceivePlayerNameData_3895153758(NetworkConnection conn, string playerName, string id);
     private void RpcReader___Target_ReceivePlayerNameData_3895153758(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Server_SendFlashlightOnNetworked_1140765316(bool on);
-    private void RpcLogic___SendFlashlightOnNetworked_1140765316(bool on);
-    private void RpcReader___Server_SendFlashlightOnNetworked_1140765316(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Observers_SetFlashlightOn_1140765316(bool on);
-    private void RpcLogic___SetFlashlightOn_1140765316(bool on);
-    private void RpcReader___Observers_SetFlashlightOn_1140765316(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Server_SetFlashlightOn_Server_1140765316(bool on);
+    public void RpcLogic___SetFlashlightOn_Server_1140765316(bool on);
+    private void RpcReader___Server_SetFlashlightOn_Server_1140765316(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Observers_SetFlashlightOn_Client_1140765316(bool on);
+    private void RpcLogic___SetFlashlightOn_Client_1140765316(bool on);
+    private void RpcReader___Observers_SetFlashlightOn_Client_1140765316(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Observers_PlayJumpAnimation_2166136261();
     public void RpcLogic___PlayJumpAnimation_2166136261();
     private void RpcReader___Observers_PlayJumpAnimation_2166136261(PooledReader PooledReader0, Channel channel);

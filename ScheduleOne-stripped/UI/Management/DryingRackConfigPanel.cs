@@ -9,5 +9,6 @@ public class DryingRackConfigPanel : ConfigPanel
     [Header("References")]
     public QualityFieldUI QualityUI;
     public ObjectFieldUI DestinationUI;
+    public NumberFieldUI StartThresholdUI;
     public override void Bind(List<EntityConfiguration> configs);
 }

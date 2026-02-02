@@ -5,6 +5,7 @@ using System.Linq;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Economy;
 using ScheduleOne.ItemFramework;
+using ScheduleOne.Money;
 using ScheduleOne.NPCs;
 using ScheduleOne.NPCs.Relation;
 using ScheduleOne.Persistence;
@@ -75,6 +76,7 @@ public class MSGConversation : ISaveable
     public void SetIsKnown(bool known);
     public void EntryClicked();
     public void SetOpen(bool open);
+    public void DisplayRelationshipInfo();
     protected virtual void RenderMessage(Message m);
     public void SetEntryVisibility(bool v);
     public void SetRead(bool r);

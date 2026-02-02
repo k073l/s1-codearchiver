@@ -12,6 +12,7 @@ public class DryingRackConfiguration : EntityConfiguration
 {
     public NPCField AssignedBotanist;
     public QualityField TargetQuality;
+    public NumberField StartThreshold;
     public ObjectField Destination;
     public DryingRack Rack { get; protected set; }
     public TransitRoute DestinationRoute { get; protected set; }

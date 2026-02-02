@@ -137,6 +137,7 @@ public class Property : NetworkBehaviour, ISaveable
     public List<Bed> GetUnassignedBeds();
     public List<T> GetBuildablesOfType<T>()
         where T : BuildableItem;
+    public virtual bool CanDeliverToProperty();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

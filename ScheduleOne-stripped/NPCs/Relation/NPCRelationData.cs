@@ -33,7 +33,7 @@ public class NPCRelationData
     public void SetNPC(NPC npc);
     public void Init(NPC npc);
     public virtual void ChangeRelationship(float deltaChange, bool network = true);
-    public virtual void SetRelationship(float newDelta);
+    public virtual void SetRelationship(float newDelta, bool network = true);
     public virtual void Unlock(EUnlockType type, bool notify = true);
     public virtual void UnlockConnections();
     public RelationshipData GetSaveData();

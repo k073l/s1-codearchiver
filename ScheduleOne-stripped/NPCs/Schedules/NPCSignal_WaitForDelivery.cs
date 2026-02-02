@@ -1,12 +1,15 @@
 using FishNet;
+using ScheduleOne.DevUtilities;
 using ScheduleOne.Economy;
+using ScheduleOne.GameTime;
 using ScheduleOne.Quests;
 using UnityEngine;
 
 namespace ScheduleOne.NPCs.Schedules;
 public class NPCSignal_WaitForDelivery : NPCSignal
 {
-    public const float DESTINATION_THRESHOLD;
+    public const float DestinationThreshold;
+    public const float WalkSpeedMultiplier;
     private Contract contract;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002ESchedules_002ENPCSignal_WaitForDeliveryAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002ESchedules_002ENPCSignal_WaitForDeliveryAssembly_002DCSharp_002Edll_Excuted;
@@ -22,6 +25,7 @@ public class NPCSignal_WaitForDelivery : NPCSignal
     public override void JumpTo();
     private void EnsureNPCHasEnoughCash();
     public override void OnActiveTick();
+    private void CheckWarp();
     public override void Interrupt();
     public override void Resume();
     public override void End();

@@ -17,6 +17,7 @@ using ScheduleOne.NPCs;
 using ScheduleOne.NPCs.Relation;
 using ScheduleOne.Persistence;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.Police;
 using ScheduleOne.Product;
 using ScheduleOne.Product.Packaging;
 using ScheduleOne.Property;
@@ -319,6 +320,15 @@ public class Console : Singleton<Console>
         public override void Execute(List<string> args);
     }
 
+    public class SetQuantity : ConsoleCommand
+    {
+        public override string CommandWord => "setquantity";
+        public override string CommandDescription => "Sets the quantity of the currently equipped item.";
+        public override string ExampleUsage => "setquantity 5";
+
+        public override void Execute(List<string> args);
+    }
+
     public class Bind : ConsoleCommand
     {
         public override string CommandWord => "bind";
@@ -468,6 +478,24 @@ public class Console : Singleton<Console>
         public override string CommandWord => "destroynpcs";
         public override string CommandDescription => "Destroys all NPCs in the scene, including employees and dealers.";
         public override string ExampleUsage => "destroynpcs";
+
+        public override void Execute(List<string> args);
+    }
+
+    public class SetDayDuration : ConsoleCommand
+    {
+        public override string CommandWord => "setdayduration";
+        public override string CommandDescription => "Sets the (real life) duration of an in-game 24-hour cycle. Measured in real minutes.";
+        public override string ExampleUsage => "setdayduration 24";
+
+        public override void Execute(List<string> args);
+    }
+
+    public class SetPoliceIgnorePlayers : ConsoleCommand
+    {
+        public override string CommandWord => "setpoliceignoreplayers";
+        public override string CommandDescription => "Sets whether police ignore players.";
+        public override string ExampleUsage => "setpoliceignoreplayers true, setpoliceignoreplayers false";
 
         public override void Execute(List<string> args);
     }

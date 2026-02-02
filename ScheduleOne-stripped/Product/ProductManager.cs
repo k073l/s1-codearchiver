@@ -15,6 +15,7 @@ using ScheduleOne.Effects;
 using ScheduleOne.Effects.MixMaps;
 using ScheduleOne.GameTime;
 using ScheduleOne.ItemFramework;
+using ScheduleOne.Levelling;
 using ScheduleOne.Map;
 using ScheduleOne.Networking;
 using ScheduleOne.NPCs;
@@ -98,14 +99,15 @@ public class ProductManager : NetworkSingleton<ProductManager>, IBaseSaveable, I
     public override void OnStartClient();
     private void Update();
     private void Clean();
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void SetMethDiscovered();
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void SetCocaineDiscovered();
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void SetShroomsDiscovered();
     [ObserversRpc(RunLocally = true)]
-    public void RecordContractReceipt(ContractReceipt receipt);
+    [TargetRpc]
+    public void RecordContractReceipt(NetworkConnection conn, ContractReceipt receipt);
     public List<ContractReceipt> GetContractReceipts(EMapRegion region, List<EContractParty> dealCompleterTypes, int maxMinsAgo);
     public virtual void InitializeSaveable();
     public MixerMap GetMixerMap(EDrugType type);
@@ -189,9 +191,11 @@ public class ProductManager : NetworkSingleton<ProductManager>, IBaseSaveable, I
     private void RpcWriter___Server_SetShroomsDiscovered_2166136261();
     public void RpcLogic___SetShroomsDiscovered_2166136261();
     private void RpcReader___Server_SetShroomsDiscovered_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Observers_RecordContractReceipt_1401448548(ContractReceipt receipt);
-    public void RpcLogic___RecordContractReceipt_1401448548(ContractReceipt receipt);
-    private void RpcReader___Observers_RecordContractReceipt_1401448548(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Observers_RecordContractReceipt_691682765(NetworkConnection conn, ContractReceipt receipt);
+    public void RpcLogic___RecordContractReceipt_691682765(NetworkConnection conn, ContractReceipt receipt);
+    private void RpcReader___Observers_RecordContractReceipt_691682765(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Target_RecordContractReceipt_691682765(NetworkConnection conn, ContractReceipt receipt);
+    private void RpcReader___Target_RecordContractReceipt_691682765(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Server_SetProductListed_310431262(string productID, bool listed);
     public void RpcLogic___SetProductListed_310431262(string productID, bool listed);
     private void RpcReader___Server_SetProductListed_310431262(PooledReader PooledReader0, Channel channel, NetworkConnection conn);

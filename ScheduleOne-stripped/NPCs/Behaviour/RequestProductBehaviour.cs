@@ -33,8 +33,8 @@ public class RequestProductBehaviour : Behaviour
 
     public const float CONVERSATION_RANGE;
     public const float FOLLOW_MAX_RANGE;
-    public const int MINS_TO_ASK_AGAIN;
-    private int minsSinceLastDialogue;
+    public const int TicksBeforeAskAgain;
+    private int ticksSinceLastRequest;
     private DialogueController.GreetingOverride requestGreeting;
     private DialogueController.DialogueChoice acceptRequestChoice;
     private DialogueController.DialogueChoice followChoice;

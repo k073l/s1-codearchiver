@@ -28,8 +28,18 @@ public struct GameDateTime
         return a.GetMinSum() > b.GetMinSum();
     }
 
+    public static bool operator >=(GameDateTime a, GameDateTime b)
+    {
+        return a.GetMinSum() >= b.GetMinSum();
+    }
+
     public static bool operator <(GameDateTime a, GameDateTime b)
     {
         return a.GetMinSum() < b.GetMinSum();
+    }
+
+    public static bool operator <=(GameDateTime a, GameDateTime b)
+    {
+        return a.GetMinSum() <= b.GetMinSum();
     }
 }

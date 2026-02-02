@@ -13,17 +13,24 @@ public class ItemSlotUI : MonoBehaviour
     public Color32 highlightColor;
     [HideInInspector]
     public bool IsBeingDragged;
+    [Header("Settings")]
+    [SerializeField]
+    private bool _playBopAnimation;
     [Header("References")]
     public RectTransform Rect;
     public Image Background;
     public GameObject LockContainer;
     public RectTransform ItemContainer;
     public ItemSlotFilterButton FilterButton;
+    public Animation BopAnimation;
+    private int _lastQuantity;
+    private bool _slotBopQueued;
     public ItemSlot assignedSlot { get; protected set; }
     public ItemUI ItemUI { get; protected set; }
 
     public virtual void AssignSlot(ItemSlot s);
     public virtual void ClearSlot();
+    protected virtual void LateUpdate();
     public void OnDestroy();
     public virtual void UpdateUI();
     public void SetHighlighted(bool h);
@@ -35,4 +42,6 @@ public class ItemSlotUI : MonoBehaviour
     public RectTransform DuplicateIcon(Transform parent, int overriddenQuantity = -1);
     public void SetVisible(bool shown);
     public void OverrideDisplayedQuantity(int quantity);
+    private void OnItemSlotDataChanged();
+    private void CheckSlotBop();
 }

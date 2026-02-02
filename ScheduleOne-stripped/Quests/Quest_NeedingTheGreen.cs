@@ -8,5 +8,5 @@ public class Quest_NeedingTheGreen : Quest
     public Quest[] PrerequisiteQuests;
     public QuestEntry EarnEntry;
     public float LifetimeEarningsRequirement;
-    protected override void MinPass();
+    protected override void OnUncappedMinPass();
 }

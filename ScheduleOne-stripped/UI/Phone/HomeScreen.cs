@@ -33,7 +33,7 @@ public class HomeScreen : PlayerSingleton<HomeScreen>
     public void SetIsOpen(bool o);
     public void SetCanvasActive(bool a);
     protected virtual void Update();
-    protected virtual void MinPass();
+    protected virtual void OnUncappedMinPass();
     public Button GenerateAppIcon<T>(App<T> prog)
         where T : PlayerSingleton<T>;
 }
