@@ -320,6 +320,15 @@ public class Console : Singleton<Console>
         public override void Execute(List<string> args);
     }
 
+    public class SetQuantity : ConsoleCommand
+    {
+        public override string CommandWord => "setquantity";
+        public override string CommandDescription => "Sets the quantity of the currently equipped item.";
+        public override string ExampleUsage => "setquantity 5";
+
+        public override void Execute(List<string> args);
+    }
+
     public class Bind : ConsoleCommand
     {
         public override string CommandWord => "bind";

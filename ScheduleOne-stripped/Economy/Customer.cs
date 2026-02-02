@@ -185,6 +185,7 @@ public class Customer : NetworkBehaviour, ISaveable
     protected virtual void OnTick();
     private void OfferContractToDealer(ContractInfo info, Dealer dealer);
     protected virtual void OnSleepStart();
+    public static void GetContractTimings(QuestWindowConfig dealWindow, out int softStartTime, out int hardStartTime, out int endTime);
     private void UpdateDealAttendance();
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]

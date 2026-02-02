@@ -134,8 +134,8 @@ public class PoliceOfficer : NPC
     private bool CanInvestigate();
     private void UpdateExistingInvestigation();
     private void CheckNewInvestigation();
-    private void StartBodySearchInvestigation(Player player);
     private void StopBodySearchInvestigation();
+    public void BodySearchLocalPlayer();
     public void ConductBodySearch(Player player);
     private bool CanInvestigatePlayer(Player player);
     public override void NetworkInitialize___Early();
