@@ -39,7 +39,10 @@ def copy_stripped_to_repo(src_dir: str, repo_dir: str):
 def git_commit_all(repo_path: str, commit_message: str):
     """Add all and commit with message."""
     subprocess.run(["git", "add", "-A"], cwd=repo_path)
-    subprocess.run(["git", "commit", "--allow-empty", "-m", commit_message], cwd=repo_path)
+    subprocess.run(
+        ["git", "commit", "--author", "TVGS <tvgs@example.com>", "--allow-empty", "-m", commit_message],
+        cwd=repo_path
+    )
     logging.info(f"Committed changes in {repo_path} with message: {commit_message}")
 
 def get_version_txt(branch_dir: str) -> str:
