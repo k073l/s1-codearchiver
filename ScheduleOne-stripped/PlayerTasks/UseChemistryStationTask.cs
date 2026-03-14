@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ScheduleOne.Combat;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.ObjectScripts;

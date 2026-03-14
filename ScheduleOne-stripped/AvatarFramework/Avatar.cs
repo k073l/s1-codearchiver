@@ -1,18 +1,17 @@
 using System;
 using System.Collections.Generic;
-using EasyButtons;
-using ScheduleOne.Audio;
 using ScheduleOne.AvatarFramework.Animation;
 using ScheduleOne.AvatarFramework.Emotions;
 using ScheduleOne.AvatarFramework.Equipping;
 using ScheduleOne.AvatarFramework.Impostors;
+using ScheduleOne.Core;
+using ScheduleOne.Core.Equipping.Framework;
 using ScheduleOne.DevUtilities;
-using ScheduleOne.PlayerScripts;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace ScheduleOne.AvatarFramework;
-public class Avatar : MonoBehaviour
+public class Avatar : MonoBehaviour, IThirdPersonReferencesProvider
 {
     public const int MAX_ACCESSORIES;
     public const bool CombinedLayersEnabled;
@@ -33,16 +32,18 @@ public class Avatar : MonoBehaviour
     public Transform RightShoulder;
     public Transform HeadBone;
     public Transform HipBone;
+    public Transform LeftFootBone;
+    public Transform RightFootBone;
     public Rigidbody[] RagdollRBs;
     public Collider[] RagdollColliders;
     public Rigidbody MiddleSpineRB;
+    public Rigidbody[] ImpactForceRBs;
     public AvatarEmotionManager EmotionManager;
     public AvatarEffects Effects;
     public Transform MiddleSpine;
     public Transform LowerSpine;
     public Transform LowestSpine;
     public AvatarImpostor Impostor;
-    public FootstepSounds FootstepSounds;
     public ParticleSystem BloodParticles;
     [Header("Settings")]
     public AvatarSettings InitialAvatarSettings;
@@ -70,6 +71,10 @@ public class Avatar : MonoBehaviour
     private Vector3 originalHipPos;
     private bool usingCombinedLayer;
     private bool blockEyeFaceLayers;
+    public Transform RightHandContainer => Animation.RightHandContainer;
+    public Transform LeftHandContainer => Animation.LeftHandContainer;
+    public Transform RightHandAlignmentPoint => Animation.RightHandAlignmentPoint;
+    public Transform LeftHandAlignmentPoint => Animation.LeftHandAlignmentPoint;
     public bool Ragdolled { get; protected set; }
     public AvatarEquippable CurrentEquippable { get; protected set; }
     public AvatarSettings CurrentSettings { get; protected set; }
@@ -82,7 +87,6 @@ public class Avatar : MonoBehaviour
     public void LoadNaked();
     protected virtual void Awake();
     protected virtual void Update();
-    protected virtual void LateUpdate();
     public void SetVisible(bool vis);
     public void GetMugshot(Action<Texture2D> callback);
     public void SetEmission(Color color);
@@ -91,6 +95,8 @@ public class Avatar : MonoBehaviour
     public string GetFormalAddress(bool capitalized = true);
     public string GetThirdPersonAddress(bool capitalized = true);
     public string GetThirdPersonPronoun(bool capitalized = true);
+    public void SetAnimationBool(string name, bool value);
+    public void SetAnimationTrigger(string name);
     private void ApplyShapeKeys(float gender, float weight, bool bodyOnly = false);
     private void SetFeetShrunk(bool shrink, float reduction);
     private void SetWearingHairBlockingAccessory(bool blocked);

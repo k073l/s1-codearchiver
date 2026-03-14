@@ -7,6 +7,7 @@ using ScheduleOne.NPCs;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Tools;
 using ScheduleOne.VoiceOver;
+using ScheduleOne.Weather;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -39,7 +40,9 @@ public class DialogueController : MonoBehaviour
         public EVOLineType VOType;
     }
 
-    public static float GREETING_COOLDOWN;
+    private const float GreetingCooldown;
+    private const float RainyGreetingThreshold;
+    private const float RainyGreetingChance;
     [Header("References")]
     public InteractableObject IntObj;
     public DialogueContainer GenericDialogue;

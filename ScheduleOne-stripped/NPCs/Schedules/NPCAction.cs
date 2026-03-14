@@ -3,6 +3,7 @@ using FishNet;
 using FishNet.Object;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
+using ScheduleOne.NPCs.Behaviour;
 using UnityEngine;
 
 namespace ScheduleOne.NPCs.Schedules;
@@ -14,6 +15,9 @@ public abstract class NPCAction : NetworkBehaviour
     protected int priority;
     [Header("Timing Settings")]
     public int StartTime;
+    [Header("Umbrella Use")]
+    [SerializeField]
+    private bool _canUseUmbrella;
     protected NPC npc;
     protected NPCScheduleManager schedule;
     public Action onEnded;
@@ -53,6 +57,8 @@ public abstract class NPCAction : NetworkBehaviour
     protected unsafe void SetDestination(Vector3 position, bool teleportIfFail = true);
     protected virtual void WalkCallback(NPCMovement.WalkResult result);
     public virtual void SetStartTime(int startTime);
+    protected void SetCanUseUmbrella(bool canUse);
+    protected virtual void OnStart();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

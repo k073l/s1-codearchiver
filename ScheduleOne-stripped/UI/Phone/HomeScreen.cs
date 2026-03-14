@@ -20,9 +20,16 @@ public class HomeScreen : PlayerSingleton<HomeScreen>
     [Header("Prefabs")]
     [SerializeField]
     protected GameObject appIconPrefab;
+    [Header("Custom UI")]
+    [SerializeField]
+    protected UIScreen uiScreen;
+    [SerializeField]
+    protected UIPanel uiPanel;
     protected List<Button> appIcons;
     private Coroutine delayedSetOpenRoutine;
+    private UISelectable lastSelectedSelectable;
     public bool isOpen { get; protected set; } = true;
+    public UISelectable LastSelectedSelectable { get; set; }
 
     protected override void Start();
     public override void OnStartClient(bool IsOwner);
@@ -32,6 +39,7 @@ public class HomeScreen : PlayerSingleton<HomeScreen>
     private IEnumerator DelayedSetCanvasActive(bool active, float delay);
     public void SetIsOpen(bool o);
     public void SetCanvasActive(bool a);
+    private IEnumerator SelectUIPanel();
     protected virtual void Update();
     protected virtual void OnUncappedMinPass();
     public Button GenerateAppIcon<T>(App<T> prog)

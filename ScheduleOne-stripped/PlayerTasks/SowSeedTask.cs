@@ -1,5 +1,6 @@
 using System;
 using FishNet.Object;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Growing;
 using ScheduleOne.ObjectScripts;

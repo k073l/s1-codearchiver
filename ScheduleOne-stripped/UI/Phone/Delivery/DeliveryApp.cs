@@ -8,7 +8,6 @@ using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.UI.Shop;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace ScheduleOne.UI.Phone.Delivery;
@@ -27,7 +26,6 @@ public class DeliveryApp : App<DeliveryApp>
     private bool started;
     protected override void Awake();
     protected override void Start();
-    protected override void Update();
     public override void SetOpen(bool open);
     private void OnMinPass();
     public void RefreshContent(bool keepScrollPosition = true);

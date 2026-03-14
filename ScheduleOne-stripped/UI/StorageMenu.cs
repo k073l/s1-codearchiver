@@ -15,6 +15,7 @@ public class StorageMenu : Singleton<StorageMenu>
     [Header("References")]
     public Canvas Canvas;
     public RectTransform Container;
+    public UIScreen UIScreen;
     public TextMeshProUGUI TitleLabel;
     public TextMeshProUGUI SubtitleLabel;
     public RectTransform SlotContainer;

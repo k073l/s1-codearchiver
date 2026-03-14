@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.ObjectScripts;
@@ -18,6 +19,7 @@ public class LabOvenCanvas : Singleton<LabOvenCanvas>
     [Header("References")]
     public Canvas Canvas;
     public GameObject Container;
+    public UIScreen UIScreen;
     public ItemSlotUI IngredientSlotUI;
     public ItemSlotUI OutputSlotUI;
     public TextMeshProUGUI InstructionLabel;

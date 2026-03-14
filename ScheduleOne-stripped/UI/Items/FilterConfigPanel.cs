@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.UI.Tooltips;
@@ -85,7 +87,7 @@ public class FilterConfigPanel : MonoBehaviour
     private bool IsMouseOverPanel();
     private bool IsMouseOverSearch();
     private bool IsMouseOverDropdown();
-    private SearchCategory GetSearchCategory(EItemCategory category);
+    private unsafe SearchCategory GetSearchCategory(EItemCategory category);
     private void OpenSearch();
     private void CloseSearch();
     private void SearchChanged(string search);

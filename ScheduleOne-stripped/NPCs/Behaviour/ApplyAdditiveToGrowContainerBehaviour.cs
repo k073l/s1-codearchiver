@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using ScheduleOne.AvatarFramework.Equipping;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.Equipping;
 using ScheduleOne.Growing;
 using ScheduleOne.ItemFramework;

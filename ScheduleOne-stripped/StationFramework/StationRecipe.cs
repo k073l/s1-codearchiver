@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Storage;
 using UnityEngine;
@@ -47,7 +48,7 @@ public class StationRecipe : ScriptableObject
     public EQualityCalculationMethod QualityCalculationMethod;
     public float CookTemperatureLowerBound => CookTemperature - CookTemperatureTolerance;
     public float CookTemperatureUpperBound => CookTemperature + CookTemperatureTolerance;
-    public string RecipeID => Product.Quantity + "x" + Product.Item.ID;
+    public string RecipeID => Product.Quantity + "x" + ((BaseItemDefinition)Product.Item).ID;
 
     public StorableItemInstance GetProductInstance(List<ItemInstance> ingredients);
     public StorableItemInstance GetProductInstance(EQuality quality);

@@ -1,19 +1,14 @@
-using ScheduleOne.DevUtilities;
-using ScheduleOne.Materials;
-using ScheduleOne.Persistence;
+using ScheduleOne.Tools;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace ScheduleOne.PlayerScripts;
-public class LocalPlayerFootstepGenerator : MonoBehaviour
+[RequireComponent(typeof(PlayerMovement))]
+public class LocalPlayerFootstepGenerator : GenericFootstepDetector
 {
-    public float DistancePerStep;
-    public Transform ReferencePoint;
-    public LayerMask GroundDetectionMask;
-    public UnityEvent<EMaterialType, float> onStep;
-    private float currentDistance;
-    private Vector3 lastFramePosition;
-    private void LateUpdate();
-    public void TriggerStep();
-    public bool IsGrounded(out EMaterialType surfaceType);
+    private const float DistancePerStep;
+    private PlayerMovement _movement;
+    private float _currentDistance;
+    private Vector3 _lastFramePosition;
+    private void Awake();
+    protected void LateUpdate();
 }

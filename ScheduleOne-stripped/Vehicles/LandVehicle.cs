@@ -33,6 +33,7 @@ using ScheduleOne.Tools;
 using ScheduleOne.UI;
 using ScheduleOne.Vehicles.AI;
 using ScheduleOne.Vehicles.Modification;
+using ScheduleOne.Weather;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -41,7 +42,7 @@ namespace ScheduleOne.Vehicles;
 [RequireComponent(typeof(NetworkTransform))]
 [RequireComponent(typeof(PredictedOwner))]
 [RequireComponent(typeof(PhysicsDamageable))]
-public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
+public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable, IWeatherEntity
 {
     public const float KINEMATIC_THRESHOLD_DISTANCE;
     public const float MAX_TURNOVER_SPEED;
@@ -214,6 +215,11 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     public List<string> LocalExtraFiles { get; set; } = new List<string>();
     public List<string> LocalExtraFolders { get; set; } = new List<string>();
     public bool HasChanged { get; set; } = true;
+
+    Transform IWeatherEntity.Transform => ((Component)this).transform;
+
+    string IWeatherEntity.WeatherVolume { get; set; }
+    public bool IsUnderCover { get; set; }
     public float SyncAccessor__003CCurrentSteerAngle_003Ek__BackingField { get; set; }
     public bool SyncAccessor__003CBrakesApplied_003Ek__BackingField { get; set; }
     public bool SyncAccessor__003CIsReversing_003Ek__BackingField { get; set; }
@@ -313,6 +319,7 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable
     public string GetSaveString();
     private ItemSet GetContentsSet();
     public virtual void Load(VehicleData data, string containerPath);
+    public void OnWeatherChange(WeatherConditions newConditions);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

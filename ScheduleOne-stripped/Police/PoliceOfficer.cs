@@ -12,7 +12,7 @@ using FishNet.Object.Synchronizing.Internal;
 using FishNet.Serializing;
 using FishNet.Serializing.Generated;
 using FishNet.Transporting;
-using ScheduleOne.AvatarFramework.Customization;
+using ScheduleOne.AvatarFramework;
 using ScheduleOne.AvatarFramework.Equipping;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Dialogue;

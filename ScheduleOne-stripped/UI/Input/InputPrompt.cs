@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace ScheduleOne.UI.Input;
-[ExecuteInEditMode]
 public class InputPrompt : MonoBehaviour
 {
     public enum EInputPromptAlignment
@@ -37,7 +36,6 @@ public class InputPrompt : MonoBehaviour
 
     private void OnEnable();
     private void OnDisable();
-    private void Update();
     private void RefreshPromptImages();
     public void SetLabel(string label);
     private void UpdateShade();

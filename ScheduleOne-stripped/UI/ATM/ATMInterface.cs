@@ -67,6 +67,15 @@ public class ATMInterface : MonoBehaviour
     protected Text successScreenSubtitle;
     [SerializeField]
     protected Button doneButton;
+    [Header("Custom UI")]
+    [SerializeField]
+    protected UIScreen UIScreen;
+    [SerializeField]
+    protected UIContentPanel MenuPanel;
+    [SerializeField]
+    protected UIContentPanel AmountSelectorPanel;
+    [SerializeField]
+    protected UIContentPanel SuccessPanel;
     private RectTransform activeScreen;
     public static int[] amounts;
     private bool depositing;

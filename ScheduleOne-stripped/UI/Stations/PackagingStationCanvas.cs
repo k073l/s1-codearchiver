@@ -22,6 +22,7 @@ public class PackagingStationCanvas : Singleton<PackagingStationCanvas>
     [Header("References")]
     public Canvas Canvas;
     public GameObject Container;
+    public UIScreen UIScreen;
     public ItemSlotUI PackagingSlotUI;
     public ItemSlotUI ProductSlotUI;
     public ItemSlotUI OutputSlotUI;

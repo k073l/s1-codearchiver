@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using EasyButtons;
 using FishNet;
 using FishNet.Connection;
 using FishNet.Managing;
@@ -10,6 +9,7 @@ using FishNet.Serializing;
 using FishNet.Serializing.Generated;
 using FishNet.Transporting;
 using ScheduleOne.Audio;
+using ScheduleOne.Core;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Interaction;
 using ScheduleOne.Money;

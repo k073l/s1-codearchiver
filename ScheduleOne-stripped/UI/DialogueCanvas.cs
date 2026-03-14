@@ -23,6 +23,11 @@ public class DialogueCanvas : Singleton<DialogueCanvas>
     protected GameObject continuePopup;
     [SerializeField]
     protected List<DialogueChoiceEntry> dialogueChoices;
+    [Header("Custom UI")]
+    [SerializeField]
+    protected UIScreen uiScreen;
+    [SerializeField]
+    protected UIPanel uiPanel;
     private DialogueHandler currentHandler;
     private DialogueNodeData currentNode;
     private bool spaceDownThisFrame;
@@ -40,9 +45,11 @@ public class DialogueCanvas : Singleton<DialogueCanvas>
     private void Update();
     private void Exit(ExitAction action);
     protected IEnumerator RolloutDialogue(string text, List<DialogueChoiceData> choices);
+    private IEnumerator SelectPanel(UISelectable selectable);
     private IEnumerator ChoiceSelectionResidual(DialogueChoiceEntry choice, float fadeTime);
     private void StartDialogue(DialogueHandler handler);
     public void EndDialogue();
+    private IEnumerator UnlockPlayer();
     public void ChoiceSelected(int choiceIndex);
     private bool IsChoiceValid(int choiceIndex, out string reason);
 }

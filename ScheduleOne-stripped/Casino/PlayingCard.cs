@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using EasyButtons;
 using ScheduleOne.Audio;
+using ScheduleOne.Core;
 using UnityEngine;
 
 namespace ScheduleOne.Casino;

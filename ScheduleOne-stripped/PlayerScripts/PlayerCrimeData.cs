@@ -69,13 +69,8 @@ public class PlayerCrimeData : NetworkBehaviour
     public float TimeSinceSighted;
     public Dictionary<Crime, int> Crimes;
     public bool BodySearchPending;
+    public Action<EPursuitLevel, EPursuitLevel> onPursuitLevelChange;
     protected List<VehicleCollisionInstance> Collisions;
-    private MusicTrack _lightCombatTrack;
-    private MusicTrack _heavyCombatTrack;
-    private float outOfSightTimeToDipMusic;
-    private float minMusicVolume;
-    private float musicChangeRate_Down;
-    private float musicChangeRate_Up;
     public SyncVar<EPursuitLevel> syncVar____003CCurrentPursuitLevel_003Ek__BackingField;
     public SyncVar<Vector3> syncVar____003CLastKnownPosition_003Ek__BackingField;
     private bool NetworkInitialize___EarlyScheduleOne_002EPlayerScripts_002EPlayerCrimeDataAssembly_002DCSharp_002Edll_Excuted;
@@ -118,7 +113,6 @@ public class PlayerCrimeData : NetworkBehaviour
     private void OnSleepStart();
     private void UpdateEscalation();
     private void UpdateTimeout();
-    private void UpdateMusic();
     private void TimeoutPursuit();
     public float GetSearchTime();
     public float GetShotAccuracyMultiplier();

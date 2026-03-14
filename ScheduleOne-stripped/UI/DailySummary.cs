@@ -8,6 +8,7 @@ using FishNet.Object;
 using FishNet.Object.Delegating;
 using FishNet.Serializing;
 using FishNet.Transporting;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.ItemFramework;
@@ -24,6 +25,7 @@ public class DailySummary : NetworkSingleton<DailySummary>
     [Header("References")]
     public Canvas Canvas;
     public RectTransform Container;
+    public UIScreen UIScreen;
     public Animation Anim;
     public TextMeshProUGUI TitleLabel;
     public RectTransform[] ProductEntries;

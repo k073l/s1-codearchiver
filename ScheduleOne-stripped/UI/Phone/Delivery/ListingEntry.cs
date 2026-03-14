@@ -1,3 +1,4 @@
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.Money;
 using ScheduleOne.UI.Shop;
 using UnityEngine;

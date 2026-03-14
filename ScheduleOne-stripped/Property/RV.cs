@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Linq;
-using EasyButtons;
 using FishNet;
 using FishNet.Connection;
 using FishNet.Managing;
@@ -10,6 +9,8 @@ using FishNet.Object.Delegating;
 using FishNet.Serializing;
 using FishNet.Transporting;
 using ScheduleOne.Combat;
+using ScheduleOne.Core;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.EntityFramework;
 using ScheduleOne.GameTime;
@@ -43,6 +44,7 @@ public class RV : Property
     public void SetDestroyed();
     private void OnSleep();
     public override bool CanDeliverToProperty();
+    public override bool CanRespawnInsideProperty();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

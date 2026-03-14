@@ -1,3 +1,4 @@
+using ScheduleOne.Core;
 using UnityEngine;
 
 namespace ScheduleOne.Materials;

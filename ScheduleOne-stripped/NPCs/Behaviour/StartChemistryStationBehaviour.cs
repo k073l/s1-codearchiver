@@ -6,6 +6,7 @@ using FishNet.Object;
 using FishNet.Object.Delegating;
 using FishNet.Serializing;
 using FishNet.Transporting;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.Employees;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Management;

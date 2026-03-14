@@ -1,3 +1,4 @@
+using ScheduleOne.Core.Items.Framework;
 using UnityEngine;
 
 namespace ScheduleOne.Storage;

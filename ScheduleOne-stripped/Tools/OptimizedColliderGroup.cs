@@ -1,5 +1,5 @@
 using System;
-using EasyButtons;
+using ScheduleOne.Core;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.PlayerScripts;
 using UnityEngine;

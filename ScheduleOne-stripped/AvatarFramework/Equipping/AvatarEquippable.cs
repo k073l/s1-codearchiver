@@ -1,5 +1,5 @@
-using EasyButtons;
 using FishNet.Object;
+using ScheduleOne.Core;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.NPCs;
 using ScheduleOne.PlayerScripts;

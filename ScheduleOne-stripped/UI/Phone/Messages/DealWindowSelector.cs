@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Economy;
 using ScheduleOne.GameTime;
@@ -22,6 +23,9 @@ public class DealWindowSelector : MonoBehaviour
     public WindowSelectorButton LateNightButton;
     public RectTransform CurrentTimeArm;
     public Text CurrentTimeLabel;
+    [Header("Custom UI")]
+    public UIScreen uiScreen;
+    public UIPanel uiPanel;
     private Action<EDealWindow> callback;
     private WindowSelectorButton[] buttons;
     private bool hintShown;
@@ -31,6 +35,7 @@ public class DealWindowSelector : MonoBehaviour
     public void Exit(ExitAction action);
     public void SetIsOpen(bool open);
     public void SetIsOpen(bool open, MSGConversation conversation, Action<EDealWindow> callback = null);
+    private IEnumerator DelaySelectPanel();
     public void Update();
     private void UpdateTime();
     private void UpdateWindowValidity();

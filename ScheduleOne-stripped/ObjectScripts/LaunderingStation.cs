@@ -1,3 +1,4 @@
+using System;
 using ScheduleOne.EntityFramework;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Property;
@@ -15,7 +16,10 @@ public class LaunderingStation : GridItem
     private bool NetworkInitialize___EarlyScheduleOne_002EObjectScripts_002ELaunderingStationAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EObjectScripts_002ELaunderingStationAssembly_002DCSharp_002Edll_Excuted;
     public override void InitializeGridItem(ItemInstance instance, Grid grid, Vector2 originCoordinate, int rotation, string GUID);
-    private void Update();
+    private void OnDestroy();
+    private void OnStartOperation(LaunderingOperation operation);
+    private void OnFinishOperation(LaunderingOperation operation);
+    private void UpdateCashCounter();
     public override bool CanBeDestroyed(out string reason);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();

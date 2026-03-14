@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using EasyButtons;
 using FishNet;
 using FishNet.Connection;
 using FishNet.Managing;
@@ -22,9 +21,16 @@ using ScheduleOne.AvatarFramework;
 using ScheduleOne.AvatarFramework.Animation;
 using ScheduleOne.AvatarFramework.Customization;
 using ScheduleOne.Combat;
+using ScheduleOne.Core;
+using ScheduleOne.Core.Audio;
+using ScheduleOne.Core.Equipping.Framework;
+using ScheduleOne.Core.Items.Framework;
+using ScheduleOne.Cutscenes;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Effects;
+using ScheduleOne.Equipping.Framework;
+using ScheduleOne.FX;
 using ScheduleOne.GameTime;
-using ScheduleOne.Intro;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Law;
 using ScheduleOne.Map;
@@ -49,12 +55,13 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 namespace ScheduleOne.PlayerScripts;
-public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageable, ISightable
+public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageable, ISightable, INetworkedEquippableUser, IEquippableUser, IEquippablePlayerUser
 {
     public delegate void VehicleEvent(LandVehicle vehicle);
     public delegate void VehicleTransformEvent(LandVehicle vehicle, Transform exitPoint);
     public const string OWNER_PLAYER_CODE;
     public const float CapColDefaultHeight;
+    private const int LightningStrikeBoostDuration;
     public List<NetworkObject> objectsTemporarilyOwnedByPlayer;
     public static Action onLocalPlayerSpawned;
     public static Action<Player> onPlayerSpawned;
@@ -75,7 +82,6 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public PlayerEnergy Energy;
     public Transform MimicCamera;
     public AvatarFootstepDetector FootstepDetector;
-    public LocalPlayerFootstepGenerator LocalFootstepDetector;
     public CharacterController CharacterController;
     public AudioSourceController PunchSound;
     public OptimizedLight ThirdPersonFlashlight;
@@ -86,6 +92,9 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public LayerMask GroundDetectionMask;
     public float AvatarOffset_Standing;
     public float AvatarOffset_Crouched;
+    [ColorUsage(true, true)]
+    [SerializeField]
+    private Color _lightningColorTint;
     [Header("Movement mapping")]
     public AnimationCurve WalkingMapCurve;
     public AnimationCurve CrouchWalkMapCurve;
@@ -130,6 +139,7 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public UnityEvent onTasedEnd;
     public UnityEvent onPassedOut;
     public UnityEvent onPassOutRecovery;
+    public UnityEvent onStruckByLightning;
     public List<BaseVariable> PlayerVariables;
     public Dictionary<string, BaseVariable> VariableDict;
     private float standingScale;
@@ -139,6 +149,7 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     private List<int> impactHistory;
     private List<Quaternion> seizureRotations;
     private List<int> equippableMessageIDHistory;
+    private NetworkedEquipper _networkedEquipper;
     private Coroutine lerpScaleRoutine;
     public SyncVar<string> syncVar____003CPlayerName_003Ek__BackingField;
     public SyncVar<string> syncVar____003CPlayerCode_003Ek__BackingField;
@@ -150,6 +161,8 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     private bool NetworkInitialize___EarlyScheduleOne_002EPlayerScripts_002EPlayerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EPlayerScripts_002EPlayerAssembly_002DCSharp_002Edll_Excuted;
     public bool IsLocalPlayer => ((NetworkBehaviour)this).IsOwner;
+    public IThirdPersonReferencesProvider ThirdPersonReferences => (IThirdPersonReferencesProvider)(object)Avatar;
+    public IFirstPersonReferencesProvider FirstPersonReferences => (IFirstPersonReferencesProvider)(object)PlayerSingleton<PlayerInventory>.Instance;
     public Transform CenterPointTransform => Avatar.CenterPointTransform;
     public Vector3 LookAtPoint => ((Component)Avatar.Eyes).transform.position;
     public bool IsCurrentlyTargetable { get; }
@@ -168,6 +181,8 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
         get; [CompilerGenerated]
         [ServerRpc(RunLocally = true)]
         set; }
+    public NetworkBehaviour NetworkBehaviour => (NetworkBehaviour)(object)this;
+    public bool ThirdPersonMeshesVisibleToLocalPlayer { get; private set; } = true;
     public bool IsInVehicle => (Object)(object)SyncAccessor__003CCurrentVehicle_003Ek__BackingField != (Object)null;
     public VehicleSeat CurrentVehicleSeat { get; private set; }
     public LandVehicle LastDrivenVehicle { get; private set; }
@@ -230,6 +245,7 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public bool Seizure { get; set; }
     public bool Slippery { get; set; }
     public bool Schizophrenic { get; set; }
+    public bool StruckByLightning { get; set; }
     public string SyncAccessor__003CPlayerName_003Ek__BackingField { get; set; }
     public string SyncAccessor__003CPlayerCode_003Ek__BackingField { get; set; }
     public NetworkObject SyncAccessor__003CCurrentVehicle_003Ek__BackingField { get; set; }
@@ -238,6 +254,7 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public Vector3 SyncAccessor__003CCameraPosition_003Ek__BackingField { get; set; }
     public Quaternion SyncAccessor__003CCameraRotation_003Ek__BackingField { get; set; }
 
+    public event Action<bool> OnThirdPersonMeshesVisibilityChanged;
     public void RecordLastKnownPosition(bool resetTimeSinceLastSeen);
     public float GetSearchTime();
     public bool IsCurrentlySightable();
@@ -246,6 +263,7 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public static Player GetPlayer(NetworkConnection conn);
     public static Player GetRandomPlayer(bool excludeArrestedOrDead = true, bool excludeSleeping = true);
     public static Player GetPlayer(string playerCode);
+    public static Player GetPlayerByName(string playerName);
     public override void Awake();
     public virtual void InitializeSaveable();
     protected virtual void OnDestroy();
@@ -345,6 +363,8 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     [ObserversRpc(RunLocally = true)]
     public virtual void ReceiveImpact(Impact impact);
     public virtual void ProcessImpactForce(Vector3 forcePoint, Vector3 forceDirection, float force);
+    private void HitByLightning();
+    private void ResetHitByLightning();
     public virtual void OnDied();
     public virtual void OnRevived();
     [ServerRpc(RunLocally = true)]
@@ -375,6 +395,13 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public void SendEquippableMessage_Networked_Vector(string message, int receipt, Vector3 data);
     [ObserversRpc(RunLocally = true)]
     private void ReceiveEquippableMessage_Networked_Vector(string message, int receipt, Vector3 data);
+    public IEquippedItemHandler Equip(EquippableData equippable);
+    public IEquippedItemHandler Equip(BaseItemInstance item);
+    public IEquippedItemHandler EquipLocal(EquippableData equippable);
+    public IEquippedItemHandler EquipLocal(BaseItemInstance item);
+    public void Unequip(IEquippedItemHandler equippedItem);
+    public void UnequipAll();
+    public void SetThirdPersonMeshesVisibility(bool visible);
     [ServerRpc(RunLocally = true)]
     public void SendAnimationTrigger(string trigger);
     [ObserversRpc(RunLocally = true)]

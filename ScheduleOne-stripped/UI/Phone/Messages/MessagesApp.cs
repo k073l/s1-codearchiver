@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using ScheduleOne.Audio;
@@ -58,6 +59,10 @@ public class MessagesApp : App<MessagesApp>
     protected GameObject conversationContainerPrefab;
     public GameObject messageBubblePrefab;
     public List<MSGConversation> unreadConversations;
+    [Header("Custom UI")]
+    public UIScreen mainMessagesUIScreen;
+    public UIPanel mainMessagesUIPanel;
+    public UIScreen dialogueMainUIScreen;
     public MSGConversation currentConversation { get; private set; }
 
     protected override void Start();
@@ -73,4 +78,11 @@ public class MessagesApp : App<MessagesApp>
     public CategoryInfo GetCategoryInfo(EConversationCategory category);
     public void FilterByCategory(int category);
     public void ClearFilter();
+    public override void SetOpen(bool open);
+    protected override void OnPhoneOpened();
+    private void SelectMessageSelectable();
+    private IEnumerator DelaySelectCurrentSelectedSelectable();
+    private IEnumerator DelaySelect();
+    public void SelectDialogueUIPanel(UIPanel uIPanel);
+    private IEnumerator DelaySelectDialogueUIPanel(UIPanel uIPanel);
 }

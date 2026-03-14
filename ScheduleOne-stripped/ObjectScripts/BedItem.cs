@@ -1,5 +1,4 @@
 using ScheduleOne.EntityFramework;
-using ScheduleOne.ItemFramework;
 using ScheduleOne.Money;
 using ScheduleOne.Storage;
 using UnityEngine;
@@ -16,8 +15,6 @@ public class BedItem : PlaceableStorageEntity
     protected override void Start();
     public static bool IsBedValid(BuildableItem obj, out string reason);
     private void UpdateBriefcase();
-    public float GetCashSum();
-    public void RemoveCash(float amount);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using FishNet;
 using FishNet.Connection;
@@ -7,8 +8,10 @@ using FishNet.Object.Delegating;
 using FishNet.Serializing;
 using FishNet.Transporting;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.GameTime;
 using ScheduleOne.Law;
 using ScheduleOne.NPCs.Behaviour;
+using ScheduleOne.NPCs.Other;
 using ScheduleOne.PlayerScripts;
 using UnityEngine;
 
@@ -16,16 +19,23 @@ namespace ScheduleOne.NPCs.Actions;
 public class NPCActions : NetworkBehaviour
 {
     private NPC npc;
+    private bool _canUseUmbrella;
+    private UseUmbrella _umbrellaAction;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002EActions_002ENPCActionsAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002EActions_002ENPCActionsAssembly_002DCSharp_002Edll_Excuted;
     protected NPCBehaviour behaviour => npc.Behaviour;
 
     public override void Awake();
+    private void Start();
+    private void OnDestroy();
     public void Cower();
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void CallPolice_Networked(NetworkObject playerObj);
     public void SetCallPoliceBehaviourCrime(Crime crime);
     public void FacePlayer(Player player);
+    public void SetCanUseUmbrella(bool canUseUmbrella);
+    private void UpdateUmbrellaUse();
+    private float GetRainAmount();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

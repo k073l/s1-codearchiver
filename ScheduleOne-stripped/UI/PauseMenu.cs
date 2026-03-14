@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using ScheduleOne.AvatarFramework.Customization;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.PlayerScripts;
@@ -12,7 +13,9 @@ public class PauseMenu : Singleton<PauseMenu>
     public RectTransform Container;
     public MainMenuScreen Screen;
     public FeedbackForm FeedbackForm;
-    private bool noActiveUIElements;
+    [Header("Custom UI")]
+    public UIScreen uiScreen;
+    public UIPanel uiPanel;
     private bool justPaused;
     private bool justResumed;
     private bool couldLook;
@@ -29,6 +32,7 @@ public class PauseMenu : Singleton<PauseMenu>
     private void Update();
     private void LateUpdate();
     public void Pause();
+    private IEnumerator DelayPanelSelect();
     public void Resume();
     public void StuckButtonClicked();
 }

@@ -1,3 +1,4 @@
+using ScheduleOne.Core.Items.Framework;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

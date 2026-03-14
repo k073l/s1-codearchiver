@@ -3,6 +3,7 @@ using ScheduleOne.AvatarFramework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.NPCs;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.Tools;
 using UnityEngine;
 
 namespace ScheduleOne.Effects;

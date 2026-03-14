@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using EasyButtons;
+using ScheduleOne.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;

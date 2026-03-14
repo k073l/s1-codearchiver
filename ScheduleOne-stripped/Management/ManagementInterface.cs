@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Management.UI;
+using ScheduleOne.PlayerScripts;
 using ScheduleOne.Tools;
 using ScheduleOne.UI;
 using ScheduleOne.UI.Management;
-using ScheduleOne.UI.Tooltips;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,6 +35,8 @@ public class ManagementInterface : Singleton<ManagementInterface>
     public TransitEntitySelector TransitEntitySelector;
     public StringSetter StringSetterScreen;
     public Button RenameButton;
+    [Header("Screen")]
+    public UIScreen UIScreen;
     [SerializeField]
     protected ConfigurableTypePanel[] ConfigPanelPrefabs;
     public List<IConfigurable> Configurables;
@@ -42,7 +44,7 @@ public class ManagementInterface : Singleton<ManagementInterface>
     private ConfigPanel loadedPanel;
     public ManagementClipboard_Equippable EquippedClipboard { get; protected set; }
 
-    protected override void Start();
+    protected override void Awake();
     public void Open(List<IConfigurable> configurables, ManagementClipboard_Equippable _equippedClipboard);
     public void Close(bool preserveState = false);
     private void UpdateMainLabels();

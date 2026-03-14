@@ -12,5 +12,5 @@ public class MushroomBedConfigPanel : ConfigPanel
     public ItemFieldUI Additive2UI;
     public ItemFieldUI Additive3UI;
     public ObjectFieldUI DestinationUI;
-    public override void Bind(List<EntityConfiguration> configs);
+    protected override void BindInternal(List<EntityConfiguration> configs);
 }

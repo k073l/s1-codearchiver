@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using ScheduleOne.DevUtilities;
-using ScheduleOne.UI.Tooltips;
 using UnityEngine;
 
 namespace ScheduleOne.UI.Phone;
@@ -19,5 +18,4 @@ public class AppsCanvas : PlayerSingleton<AppsCanvas>
     private IEnumerator DelayedSetCanvasActive(bool active, float delay);
     public void SetIsOpen(bool o);
     private void SetCanvasActive(bool a);
-    protected override void Start();
 }

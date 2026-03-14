@@ -17,7 +17,6 @@ using UnityEngine.UI;
 namespace ScheduleOne.UI;
 public class FeedbackForm : FeedbackForm
 {
-    private Coroutine ssCoroutine;
     public CanvasGroup CanvasGroup;
     public Toggle ScreenshotToggle;
     public Toggle SaveFileToggle;

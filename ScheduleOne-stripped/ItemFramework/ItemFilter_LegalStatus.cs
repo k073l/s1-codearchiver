@@ -1,3 +1,5 @@
+using ScheduleOne.Core.Items.Framework;
+
 namespace ScheduleOne.ItemFramework;
 public class ItemFilter_LegalStatus : ItemFilter
 {

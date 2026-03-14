@@ -12,6 +12,7 @@ using FishNet.Object.Delegating;
 using FishNet.Serializing;
 using FishNet.Transporting;
 using ScheduleOne.Building;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Persistence;
@@ -66,7 +67,7 @@ public abstract class BuildableItem : NetworkBehaviour, IGUIDRegisterable, ISave
     public bool IsCulled { get; protected set; }
     public GameObject BuildHandler => buildHandler;
     protected bool _locallyBuilt { get; set; }
-    public string SaveFolderName => ItemInstance.ID + "_" + GUID.ToString().Substring(0, 6);
+    public string SaveFolderName => ((BaseItemInstance)ItemInstance).ID + "_" + GUID.ToString().Substring(0, 6);
     public string SaveFileName => "Data";
     public Loader Loader => null;
     public bool ShouldSaveUnderFolder => true;

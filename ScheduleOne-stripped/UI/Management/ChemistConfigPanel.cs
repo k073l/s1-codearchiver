@@ -9,5 +9,5 @@ public class ChemistConfigPanel : ConfigPanel
     [Header("References")]
     public ObjectFieldUI BedUI;
     public ObjectListFieldUI StationsUI;
-    public override void Bind(List<EntityConfiguration> configs);
+    protected override void BindInternal(List<EntityConfiguration> configs);
 }

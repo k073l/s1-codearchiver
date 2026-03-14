@@ -41,6 +41,8 @@ public class MSGConversation : ISaveable
     protected Image sliderFill;
     protected RectTransform responseContainer;
     protected MessageSenderInterface senderInterface;
+    protected UISelectable uiSelectable;
+    protected UIPanel dialogueScreenUIPanel;
     private bool uiCreated;
     public Action onMessageRendered;
     public Action onLoaded;
@@ -54,6 +56,7 @@ public class MSGConversation : ISaveable
     public bool isOpen { get; protected set; }
     public bool rollingOut { get; protected set; }
     public bool EntryVisible { get; protected set; } = true;
+    public UISelectable UISelectable => uiSelectable;
     public bool AreResponsesActive => currentResponses.Count > 0;
     public string SaveFolderName => "MessageConversation";
     public string SaveFileName => "MessageConversation";
@@ -90,7 +93,6 @@ public class MSGConversation : ISaveable
     public Response GetResponse(string label);
     public void ShowResponses(List<Response> _responses, float showResponseDelay = 0f, bool network = true);
     protected void CreateResponseUI(Response r);
-    private void RefreshResponseContainer();
     protected void ClearResponseUI();
     public void SetResponseContainerVisible(bool v);
     public void ResponseChosen(Response r, bool network);

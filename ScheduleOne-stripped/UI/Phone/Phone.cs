@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using ScheduleOne.Audio;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.PlayerScripts;
-using ScheduleOne.ScriptableObjects;
 using ScheduleOne.Vision;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -14,8 +13,6 @@ namespace ScheduleOne.UI.Phone;
 public class Phone : PlayerSingleton<Phone>
 {
     public static GameObject ActiveApp;
-    public PhoneCallData testData;
-    public CallerID testCalller;
     [Header("References")]
     [SerializeField]
     protected GameObject phoneModel;

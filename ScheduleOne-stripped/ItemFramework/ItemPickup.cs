@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Interaction;
 using ScheduleOne.PlayerScripts;

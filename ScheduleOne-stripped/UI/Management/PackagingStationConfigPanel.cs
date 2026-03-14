@@ -8,5 +8,5 @@ public class PackagingStationConfigPanel : ConfigPanel
 {
     [Header("References")]
     public ObjectFieldUI DestinationUI;
-    public override void Bind(List<EntityConfiguration> configs);
+    protected override void BindInternal(List<EntityConfiguration> configs);
 }

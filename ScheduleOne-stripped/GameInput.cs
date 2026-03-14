@@ -45,7 +45,8 @@ public class GameInput : PersistentSingleton<GameInput>
         Holster,
         VehicleResetCamera,
         SkateboardDismount,
-        SkateboardMount
+        SkateboardMount,
+        TogglePauseMenu
     }
 
     public enum InputDeviceType
@@ -66,8 +67,8 @@ public class GameInput : PersistentSingleton<GameInput>
     private sealed class _003C_003Ec
     {
         public static readonly _003C_003Ec _003C_003E9;
-        public static UnityAction _003C_003E9__31_0;
-        internal void _003CStart_003Eb__31_0();
+        public static UnityAction _003C_003E9__72_0;
+        internal void _003CStart_003Eb__72_0();
     }
 
     public static Action<InputDeviceType> OnInputDeviceChanged;
@@ -76,6 +77,7 @@ public class GameInput : PersistentSingleton<GameInput>
     public static bool IsTyping;
     public static Vector2 MotionAxis;
     public static Vector2 CameraAxis;
+    private static Mouse systemMouse;
     public static float MouseWheelAxis;
     public static bool ControllerComboActive;
     private float vehicleDriveAxis;
@@ -84,9 +86,19 @@ public class GameInput : PersistentSingleton<GameInput>
     private List<ButtonCode> buttonsUpThisFrame;
     public static InputDeviceType CurrentInputDevice { get; private set; }
     public static Vector2 MouseDelta => CameraAxis;
-    public static Vector3 MousePosition => Input.mousePosition;
+    public unsafe static Vector3 MousePosition { get; }
     public static float MouseScrollDelta => MouseWheelAxis;
     public static float VehicleDriveAxis { get; private set; }
+    public static Vector2 UINavigationDirection { get; private set; }
+    public static Vector2 UICyclePanelDirection { get; private set; }
+    public static float UITabNavigationPrimaryAxis { get; private set; }
+    public static float UITabNavigationSecondaryAxis { get; private set; }
+    public static float UIScrollbarAxis { get; private set; }
+    public static Vector2 UIMapNavigationDirection { get; private set; }
+    public static float UIMapZoomAxis { get; private set; }
+    public static float UIModifyAmountIncrementTierOneAxis { get; private set; }
+    public static float UIModifyAmountIncrementTierTwoAxis { get; private set; }
+    public static float UIModifyAmountIncrementTierThreeAxis { get; private set; }
 
     protected override void Awake();
     protected override void OnDestroy();
@@ -95,6 +107,8 @@ public class GameInput : PersistentSingleton<GameInput>
     public static bool GetButton(ButtonCode buttonCode);
     public static bool GetButtonDown(ButtonCode buttonCode);
     public static bool GetButtonUp(ButtonCode buttonCode);
+    public static bool GetCurrentInputDeviceIsKeyboardMouse();
+    public static bool GetCurrentInputDeviceIsGamepad();
     protected virtual void Update();
     private void Exit(ExitType type);
     private void LateUpdate();
@@ -134,6 +148,17 @@ public class GameInput : PersistentSingleton<GameInput>
     private void OnVehicleDrive(InputValue value);
     private void OnSkateboardDismount();
     private void OnSkateboardMount();
+    private void OnTogglePauseMenu();
+    private void OnUINavigationDirection(InputValue value);
+    private void OnUICyclePanelDirection(InputValue value);
+    private void OnUITabNavigationPrimary(InputValue value);
+    private void OnUITabNavigationSecondary(InputValue value);
+    private void OnUIScrollbar(InputValue value);
+    private void OnUIMapNavigationDirection(InputValue value);
+    private void OnUIMapZoom(InputValue value);
+    private void OnUIModifyAmountIncrementTierOne(InputValue value);
+    private void OnUIModifyAmountIncrementTierTwo(InputValue value);
+    private void OnUIModifyAmountIncrementTierThree(InputValue value);
     public static void RegisterExitListener(ExitDelegate listener, int priority = 0);
     public static void DeregisterExitListener(ExitDelegate listener);
     public InputAction GetAction(ButtonCode code);

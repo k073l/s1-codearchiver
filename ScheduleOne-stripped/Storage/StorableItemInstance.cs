@@ -1,5 +1,6 @@
 using System;
 using FishNet.Serializing.Helping;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.ItemFramework;
 using UnityEngine;
 
@@ -10,7 +11,6 @@ public class StorableItemInstance : ItemInstance
     [CodegenExclude]
     public virtual StoredItem StoredItem { get; }
 
-    public StorableItemInstance();
     public StorableItemInstance(ItemDefinition definition, int quantity);
     public override ItemInstance GetCopy(int overrideQuantity = -1);
     public override float GetMonetaryValue();

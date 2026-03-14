@@ -26,7 +26,7 @@ public class MapRegionData
     public Sprite RegionSprite;
     public DeliveryLocation[] RegionDeliveryLocations;
     public RegionContainer[] AdjacentRegions;
-    public Zone RegionBounds;
+    public PolygonalZone RegionBounds;
     public bool IsUnlocked { get; private set; }
 
     public DeliveryLocation GetRandomUnscheduledDeliveryLocation();

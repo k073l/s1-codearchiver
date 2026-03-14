@@ -70,6 +70,7 @@ public class PlayerCamera : PlayerSingleton<PlayerCamera>
     private Vector2 seizureJitter;
     private float schizoFoV;
     private float timeUntilNextSchizoVoice;
+    private static bool isCursorShowing;
     private List<Vector3> gizmos;
     private Vector3 cameralocalPos_PriorOverride;
     private Quaternion cameraLocalRot_PriorOverride;
@@ -77,7 +78,7 @@ public class PlayerCamera : PlayerSingleton<PlayerCamera>
     private Coroutine lookRoutine;
     private Coroutine DoFCoroutine;
     private Coroutine ILerpCameraFOV_Coroutine;
-    public static GraphicsSettings.EAntiAliasingMode AntiAliasingMode { get; private set; }
+    public static GraphicsSettings.EAntiAliasingMode AntiAliasingMode { get; private set; } = GraphicsSettings.EAntiAliasingMode.Off;
     public bool canLook { get; protected set; } = true;
     public int activeUIElementCount => activeUIElements.Count;
     public bool transformOverriden { get; protected set; }
@@ -89,6 +90,7 @@ public class PlayerCamera : PlayerSingleton<PlayerCamera>
     public bool CocaineVisuals { get; set; }
     public float FovJitter { get; private set; }
     public List<string> activeUIElements { get; protected set; } = new List<string>();
+    public static bool IsCursorShowing => isCursorShowing;
 
     protected override void Awake();
     public override void OnStartClient(bool IsOwner);

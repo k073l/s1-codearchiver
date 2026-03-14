@@ -6,9 +6,13 @@ using FishNet.Connection;
 using FishNet.Managing;
 using FishNet.Object;
 using FishNet.Object.Delegating;
+using FishNet.Object.Synchronizing;
+using FishNet.Object.Synchronizing.Internal;
 using FishNet.Serializing;
 using FishNet.Serializing.Generated;
 using FishNet.Transporting;
+using ScheduleOne.Configuration;
+using ScheduleOne.Core.Settings.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.Networking;
@@ -19,17 +23,16 @@ using ScheduleOne.Property;
 using ScheduleOne.UI.Phone.Delivery;
 using ScheduleOne.UI.Shop;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace ScheduleOne.Delivery;
 public class DeliveryManager : NetworkSingleton<DeliveryManager>, IBaseSaveable, ISaveable
 {
     public List<DeliveryInstance> Deliveries;
-    public UnityEvent<DeliveryInstance> onDeliveryCreated;
-    public UnityEvent<DeliveryInstance> onDeliveryCompleted;
     private DeliveriesLoader loader;
     private List<string> writtenVehicles;
-    private Dictionary<DeliveryInstance, int> minsSinceVehicleEmpty;
+    [SyncObject]
+    private readonly SyncList<DeliveryReceipt> _deliveryHistory;
+    private Dictionary<DeliveryInstance, int> _minsSinceVehicleEmpty;
     private bool NetworkInitialize___EarlyScheduleOne_002EDelivery_002EDeliveryManagerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EDelivery_002EDeliveryManagerAssembly_002DCSharp_002Edll_Excuted;
     public string SaveFolderName => "Deliveries";
@@ -41,6 +44,8 @@ public class DeliveryManager : NetworkSingleton<DeliveryManager>, IBaseSaveable,
     public bool HasChanged { get; set; }
     public int LoadOrder { get; }
 
+    public event Action<DeliveryInstance> onDeliveryCreated;
+    public event Action<DeliveryInstance> onDeliveryCompleted;
     public override void Awake();
     protected override void Start();
     public virtual void InitializeSaveable();
@@ -49,6 +54,8 @@ public class DeliveryManager : NetworkSingleton<DeliveryManager>, IBaseSaveable,
     public bool IsLoadingBayFree(ScheduleOne.Property.Property destination, int loadingDockIndex);
     [ServerRpc(RequireOwnership = false)]
     public void SendDelivery(DeliveryInstance delivery);
+    [ServerRpc(RequireOwnership = false)]
+    public void RecordDeliveryReceipt_Server(DeliveryReceipt receipt);
     [ObserversRpc]
     [TargetRpc]
     private void ReceiveDelivery(NetworkConnection conn, DeliveryInstance delivery);
@@ -65,6 +72,9 @@ public class DeliveryManager : NetworkSingleton<DeliveryManager>, IBaseSaveable,
     private void RpcWriter___Server_SendDelivery_2813439055(DeliveryInstance delivery);
     public void RpcLogic___SendDelivery_2813439055(DeliveryInstance delivery);
     private void RpcReader___Server_SendDelivery_2813439055(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Server_RecordDeliveryReceipt_Server_4268613646(DeliveryReceipt receipt);
+    public void RpcLogic___RecordDeliveryReceipt_Server_4268613646(DeliveryReceipt receipt);
+    private void RpcReader___Server_RecordDeliveryReceipt_Server_4268613646(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
     private void RpcWriter___Observers_ReceiveDelivery_2795369214(NetworkConnection conn, DeliveryInstance delivery);
     private void RpcLogic___ReceiveDelivery_2795369214(NetworkConnection conn, DeliveryInstance delivery);
     private void RpcReader___Observers_ReceiveDelivery_2795369214(PooledReader PooledReader0, Channel channel);

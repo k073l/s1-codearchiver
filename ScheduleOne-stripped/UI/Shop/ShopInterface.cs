@@ -2,9 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using EasyButtons;
 using FishNet;
 using ScheduleOne.Audio;
+using ScheduleOne.Core;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.Delivery;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
@@ -61,6 +62,27 @@ public class ShopInterface : MonoBehaviour, ISaveable
     [Header("Prefabs")]
     public ListingUI ListingUIPrefab;
     public UnityEvent onOrderCompleted;
+    [Header("Custom UI")]
+    [SerializeField]
+    private UIScreen shopScreen;
+    [SerializeField]
+    private UIPanel listingPanel;
+    [Header("Add To Cart Popup Values")]
+    [SerializeField]
+    private int defaultAddToCartAmount;
+    [SerializeField]
+    private int minAddToCartAmount;
+    [SerializeField]
+    private int addToCartTier1Amount;
+    [SerializeField]
+    private int addToCartTier2Amount;
+    [SerializeField]
+    private int addToCartTier3Amount;
+    [Header("Modify Cart Popup Values")]
+    public int minModifyAmount;
+    public int modifyTier1Amount;
+    public int modifyTier2Amount;
+    public int modifyTier3Amount;
     [SerializeField]
     private List<CategoryButton> categoryButtons;
     private EShopCategory categoryFilter;
@@ -89,16 +111,17 @@ public class ShopInterface : MonoBehaviour, ISaveable
     [Button]
     public void Open();
     public virtual void SetIsOpen(bool isOpen);
+    private void Exit();
     private void Hint();
     protected virtual void Exit(ExitAction action);
     private void CreateListingUI(ShopListing listing);
     public void SelectCategory(EShopCategory category);
     public virtual void ListingClicked(ListingUI listingUI);
-    private void ShowCartAnimation(ListingUI listing);
     public void CategorySelected(EShopCategory category);
     private void PullStockVariables();
     private void DeselectCurrentCategory();
     private void RefreshShownItems();
+    private IEnumerator RefreshShownItemsNextFrame();
     private void RefreshUnlockStatus();
     private void RestockAllListings();
     public bool CanCartFitItem(ShopListing listing);
@@ -111,6 +134,7 @@ public class ShopInterface : MonoBehaviour, ISaveable
     public void QuantitySelected(int amount);
     public void OpenAmountSelector(ListingUI listing);
     private void DropdownClicked(ListingUI listing);
+    private void QuantitySelectedNew(int amount);
     private void EntryHovered(ListingUI listing);
     private void EntryUnhovered();
     public void Load(ShopData data);

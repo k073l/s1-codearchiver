@@ -2,13 +2,13 @@ using FishNet;
 using ScheduleOne.DevUtilities;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 namespace ScheduleOne.UI.Settings;
 public class GameSettingsWindow : MonoBehaviour
 {
-    public Toggle ConsoleToggle;
+    public UIToggle ConsoleToggle;
     public GameObject Blocker;
+    public UIPanel uiPanel;
     private void Awake();
     public void Start();
     public void ApplySettings(GameSettings settings);

@@ -11,7 +11,7 @@ public class SettingsScreen : MainMenuScreen
     [Serializable]
     public class SettingsCategory
     {
-        public Button Button;
+        public Toggle Toggle;
         public GameObject Panel;
     }
 

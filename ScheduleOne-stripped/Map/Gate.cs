@@ -1,4 +1,3 @@
-using EasyButtons;
 using FishNet;
 using FishNet.Managing;
 using FishNet.Object;
@@ -6,6 +5,7 @@ using FishNet.Object.Delegating;
 using FishNet.Serializing;
 using FishNet.Transporting;
 using ScheduleOne.Audio;
+using ScheduleOne.Core;
 using UnityEngine;
 
 namespace ScheduleOne.Map;

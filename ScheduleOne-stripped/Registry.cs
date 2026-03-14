@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
-using EasyButtons;
-using FishNet.Object;
+using System.Runtime.CompilerServices;
+using ScheduleOne.Core;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Levelling;
@@ -13,20 +14,11 @@ namespace ScheduleOne;
 public class Registry : PersistentSingleton<Registry>
 {
     [Serializable]
-    public class ObjectRegister
-    {
-        public string ID;
-        public string AssetPath;
-        public NetworkObject Prefab;
-    }
-
-    [Serializable]
     public class ItemRegister
     {
         [HideInInspector]
         public string name;
         public string ID;
-        public string AssetPath;
         public ItemDefinition Definition;
     }
 

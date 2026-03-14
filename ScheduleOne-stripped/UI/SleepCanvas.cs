@@ -20,6 +20,7 @@ public class SleepCanvas : Singleton<SleepCanvas>
     [Header("References")]
     public Canvas Canvas;
     public RectTransform Container;
+    public UIScreen UIScreen;
     public RectTransform MenuContainer;
     public TextMeshProUGUI CurrentTimeLabel;
     public Button IncreaseButton;

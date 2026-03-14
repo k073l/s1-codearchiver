@@ -11,13 +11,15 @@ using FishNet.Object.Synchronizing.Internal;
 using FishNet.Serializing;
 using FishNet.Transporting;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Experimental;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Tools;
+using ScheduleOne.Weather;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace ScheduleOne.Skating;
-public class Skateboard : NetworkBehaviour
+public class Skateboard : NetworkBehaviour, IWeatherEntity
 {
     public const float JumpCooldown;
     public const float JumpForceMin;
@@ -44,6 +46,11 @@ public class Skateboard : NetworkBehaviour
     [HideInInspector]
     public Skateboard_Equippable Equippable;
     public Transform IKAlignmentsContainer;
+    [Header("Skateboard Settings")]
+    [SerializeField]
+    private SkateboardData _defaultData;
+    [SerializeField]
+    private SkateboardOverrideData _rainOverrideData;
     [Header("Turn Settings")]
     public float TurnForce;
     public float TurnChangeRate;
@@ -110,6 +117,7 @@ public class Skateboard : NetworkBehaviour
     private float thisFramePushForce;
     private float timeSincePushStart;
     private bool braking;
+    private SkateboardSettings _settings;
     public SyncVar<float> syncVar____003CJumpBuildAmount_003Ek__BackingField;
     private bool NetworkInitialize___EarlyScheduleOne_002ESkating_002ESkateboardAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ESkating_002ESkateboardAssembly_002DCSharp_002Edll_Excuted;
@@ -124,9 +132,17 @@ public class Skateboard : NetworkBehaviour
         set; }
     public Player Rider { get; private set; }
     public float TopSpeed_Ms => TopSpeed_Kmh / 3.6f;
+
+    string IWeatherEntity.WeatherVolume { get; set; }
+
+    Transform IWeatherEntity.Transform => ((Component)this).transform;
+    public bool IsUnderCover { get; set; }
+    public SkateboardSettings CurentSettings => _settings;
+    public SkateboardSettings DefaultSettings => _defaultData.Settings;
     public float SyncAccessor__003CJumpBuildAmount_003Ek__BackingField { get; set; }
 
     public override void Awake();
+    private void Start();
     public override void OnStartClient();
     public void Update();
     private void GetInput();
@@ -151,6 +167,8 @@ public class Skateboard : NetworkBehaviour
     public void ApplyPlayerScale();
     public float GetSurfaceSmoothness();
     public bool IsOnTerrain();
+    public void OnWeatherChange(WeatherConditions newConditions);
+    private void OnDestroy();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

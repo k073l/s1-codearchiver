@@ -28,6 +28,9 @@ public class MessageSenderInterface : MonoBehaviour
     public Button[] CancelButtons;
     private List<MessageBubble> sendableBubbles;
     private Dictionary<MessageBubble, SendableMessage> sendableMap;
+    private List<UISelectable> bubbleUISelectables;
+    public UIPanel dialogueScreenUIPanel { get; set; }
+
     public void Awake();
     public void Start();
     private void Exit(ExitAction exit);

@@ -2,12 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using EPOOutline;
 using FishNet;
 using FishNet.Connection;
 using FishNet.Managing;
 using FishNet.Object;
 using FishNet.Object.Delegating;
+using FishNet.Object.Synchronizing;
+using FishNet.Object.Synchronizing.Internal;
 using FishNet.Serializing;
 using FishNet.Serializing.Generated;
 using FishNet.Transporting;
@@ -16,10 +19,14 @@ using ScheduleOne.AvatarFramework;
 using ScheduleOne.AvatarFramework.Animation;
 using ScheduleOne.AvatarFramework.Equipping;
 using ScheduleOne.Combat;
+using ScheduleOne.Core.Equipping.Framework;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Dialogue;
 using ScheduleOne.Doors;
 using ScheduleOne.Economy;
+using ScheduleOne.Effects;
+using ScheduleOne.Equipping.Framework;
 using ScheduleOne.GameTime;
 using ScheduleOne.Interaction;
 using ScheduleOne.ItemFramework;
@@ -38,15 +45,16 @@ using ScheduleOne.Vehicles;
 using ScheduleOne.Vehicles.AI;
 using ScheduleOne.Vision;
 using ScheduleOne.VoiceOver;
+using ScheduleOne.Weather;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
 namespace ScheduleOne.NPCs;
 [RequireComponent(typeof(NPCHealth))]
-public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTargetable, IDamageable, ISightable
+public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTargetable, IDamageable, ISightable, INetworkedEquippableUser, IEquippableUser, IWeatherEntity
 {
-    public const float PANIC_DURATION;
+    private const int PanicDuration;
     public const bool RequiresRegionUnlocked;
     [Header("Info Settings")]
     public string FirstName;
@@ -94,6 +102,15 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     public bool OverrideParent;
     public Transform OverriddenParent;
     public bool IgnoreImpacts;
+    [Range(0f, 1f)]
+    [SerializeField]
+    private float _useUmbrellaChance;
+    [Range(0f, 1f)]
+    [SerializeField]
+    private float _rainTolerance;
+    [Range(1f, 10f)]
+    [SerializeField]
+    private float _walkInRainMaxSpeedMultiplier;
     [SerializeField]
     protected List<GameObject> OutlineRenderers;
     protected Outlinable OutlineEffect;
@@ -101,13 +118,24 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     public string BakedGUID;
     public Action<bool> onVisibilityChanged;
     private Coroutine resetUnsettledCoroutine;
+    [CompilerGenerated]
+    [SyncVar]
+    [HideInInspector]
+    public bool _003CHasUmbrella_003Ek__BackingField;
     private List<int> impactHistory;
     private int headlightStartTime;
     private int heaedLightsEndTime;
     protected float defaultAggression;
+    private WeatherConditions _weatherTolerence;
+    protected WeatherConditions _currentWeatherConditionsForEntity;
+    protected NetworkedEquipper _networkedEquipper;
     private Coroutine lerpScaleRoutine;
+    public SyncVar<bool> syncVar____003CHasUmbrella_003Ek__BackingField;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002ENPCAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002ENPCAssembly_002DCSharp_002Edll_Excuted;
+    public bool IsLocalPlayer => false;
+    public NetworkBehaviour NetworkBehaviour => (NetworkBehaviour)(object)this;
+    public IThirdPersonReferencesProvider ThirdPersonReferences => (IThirdPersonReferencesProvider)(object)Avatar;
     public string fullName { get; }
     public float Scale { get; private set; } = 1f;
     public bool IsConscious { get; }
@@ -117,6 +145,7 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     public NPCEnterableBuilding CurrentBuilding { get; protected set; }
     public StaticDoor LastEnteredDoor { get; set; }
     public MSGConversation MSGConversation { get; protected set; }
+    public float WalkInRainMaxSpeedMultiplier => _walkInRainMaxSpeedMultiplier;
     public string SaveFolderName => fullName;
     public string SaveFileName => "NPC";
     public Loader Loader => null;
@@ -139,8 +168,17 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     public Guid GUID { get; protected set; }
     public bool isVisible { get; protected set; } = true;
     public bool isUnsettled { get; protected set; }
-    public bool IsPanicked => TimeSincePanicked < 20f;
+    public bool IsPanicked { get; private set; }
     public float TimeSincePanicked { get; protected set; } = 1000f;
+    public bool HasUmbrella {[CompilerGenerated]
+        get; [CompilerGenerated]
+        private set; }
+
+    Transform IWeatherEntity.Transform => CenterPointTransform;
+
+    string IWeatherEntity.WeatherVolume { get; set; }
+    public bool IsUnderCover { get; set; }
+    public bool SyncAccessor__003CHasUmbrella_003Ek__BackingField { get; set; }
 
     public void RecordLastKnownPosition(bool resetTimeSinceLastSeen);
     public float GetSearchTime();
@@ -157,6 +195,7 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     protected virtual void Start();
     protected virtual void OnDestroy();
     public override void OnSpawnServer(NetworkConnection connection);
+    public override void OnStartServer();
     [ObserversRpc]
     private void SetTransform(NetworkConnection conn, Vector3 position, Quaternion rotation);
     protected virtual void MinPass();
@@ -178,6 +217,7 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     public virtual void SendImpact(Impact impact);
     [ObserversRpc(RunLocally = true)]
     public virtual void ReceiveImpact(Impact impact);
+    protected virtual void HitByLightning();
     public virtual void ProcessImpactForce(Vector3 forcePoint, Vector3 forceDirection, float force);
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
@@ -216,6 +256,12 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
     public void SendEquippableMessage_Networked_Vector(NetworkConnection conn, string message, Vector3 data);
+    public IEquippedItemHandler Equip(EquippableData equippable);
+    public IEquippedItemHandler Equip(BaseItemInstance item);
+    public IEquippedItemHandler EquipLocal(EquippableData equippable);
+    public IEquippedItemHandler EquipLocal(BaseItemInstance item);
+    public void Unequip(IEquippedItemHandler equippedItem);
+    public void UnequipAll();
     [ServerRpc(RequireOwnership = false)]
     public void SendAnimationTrigger(string trigger);
     [ObserversRpc(RunLocally = true)]
@@ -235,10 +281,10 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     protected virtual void SetUnsettled_30s(Player player);
     protected void SetUnsettled(float duration);
     [ServerRpc(RequireOwnership = false)]
-    public void SetPanicked();
+    public void SetPanicked_Server();
     [ObserversRpc]
-    private void ReceivePanicked();
-    [ObserversRpc]
+    private void SetPanicked_Client();
+    [ObserversRpc(RunLocally = true)]
     private void RemovePanicked();
     public virtual string GetNameAddress();
     public void PlayVO(EVOLineType lineType, bool network = false);
@@ -254,8 +300,12 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     public void SendRelationship(float relationship);
     [ObserversRpc]
     private void SetRelationship(float relationship);
+    private void RandomizeUseUmbrella();
     public void ShowOutline(Color color);
     public void HideOutline();
+    public void OnWeatherChange(WeatherConditions newConditions);
+    public WeatherConditions GetWeatherTolerence();
+    public WeatherConditions GetCurrentWeatherConditionsForEnitty();
     public virtual bool ShouldSave();
     protected virtual bool ShouldSaveRelationshipData();
     protected bool ShouldSaveMessages();
@@ -355,12 +405,12 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     private void RpcReader___Observers_SetAnimationBool_Networked_619441887(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Target_SetAnimationBool_Networked_619441887(NetworkConnection conn, string id, bool value);
     private void RpcReader___Target_SetAnimationBool_Networked_619441887(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Server_SetPanicked_2166136261();
-    public void RpcLogic___SetPanicked_2166136261();
-    private void RpcReader___Server_SetPanicked_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Observers_ReceivePanicked_2166136261();
-    private void RpcLogic___ReceivePanicked_2166136261();
-    private void RpcReader___Observers_ReceivePanicked_2166136261(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Server_SetPanicked_Server_2166136261();
+    public void RpcLogic___SetPanicked_Server_2166136261();
+    private void RpcReader___Server_SetPanicked_Server_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Observers_SetPanicked_Client_2166136261();
+    private void RpcLogic___SetPanicked_Client_2166136261();
+    private void RpcReader___Observers_SetPanicked_Client_2166136261(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Observers_RemovePanicked_2166136261();
     private void RpcLogic___RemovePanicked_2166136261();
     private void RpcReader___Observers_RemovePanicked_2166136261(PooledReader PooledReader0, Channel channel);
@@ -382,5 +432,6 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     private void RpcWriter___Observers_SetRelationship_431000436(float relationship);
     private void RpcLogic___SetRelationship_431000436(float relationship);
     private void RpcReader___Observers_SetRelationship_431000436(PooledReader PooledReader0, Channel channel);
+    public override bool ReadSyncVar___ScheduleOne_002ENPCs_002ENPC(PooledReader PooledReader0, uint UInt321, bool Boolean2);
     protected virtual void Awake_UserLogic_ScheduleOne_002ENPCs_002ENPC_Assembly_002DCSharp_002Edll();
 }

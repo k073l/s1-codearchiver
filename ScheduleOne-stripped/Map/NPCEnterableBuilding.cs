@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using EasyButtons;
 using ScheduleOne.Audio;
+using ScheduleOne.Core;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Doors;
 using ScheduleOne.NPCs;
@@ -28,8 +28,8 @@ public class NPCEnterableBuilding : MonoBehaviour, IGUIDRegisterable
 
     protected virtual void Awake();
     public void SetGUID(Guid guid);
-    public virtual void NPCEnteredBuilding(NPC npc);
-    public virtual void NPCExitedBuilding(NPC npc);
+    public virtual void NPCEnteredBuilding(NPC npc, StaticDoor door);
+    public virtual void NPCExitedBuilding(NPC npc, StaticDoor door);
     [Button]
     public void GetDoors();
     public List<NPC> GetSummonableNPCs();

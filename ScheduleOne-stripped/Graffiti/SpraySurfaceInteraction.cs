@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using FishNet.Object;
 using ScheduleOne.Audio;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Interaction;
 using ScheduleOne.PlayerScripts;

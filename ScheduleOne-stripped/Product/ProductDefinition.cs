@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Effects;
 using ScheduleOne.ItemFramework;
@@ -31,8 +32,8 @@ public class ProductDefinition : PropertyItemDefinition, ISaveable
     public EDrugType DrugType => DrugTypes[0].DrugType;
     public float Price => NetworkSingleton<ProductManager>.Instance.GetPrice(this);
     public List<StationRecipe> Recipes { get; private set; } = new List<StationRecipe>();
-    public string SaveFolderName => SaveManager.SanitizeFileName(ID);
-    public string SaveFileName => SaveManager.SanitizeFileName(ID);
+    public string SaveFolderName => SaveManager.SanitizeFileName(((BaseItemDefinition)this).ID);
+    public string SaveFileName => SaveManager.SanitizeFileName(((BaseItemDefinition)this).ID);
     public Loader Loader => null;
     public bool ShouldSaveUnderFolder => false;
     public List<string> LocalExtraFolders { get; set; } = new List<string>();

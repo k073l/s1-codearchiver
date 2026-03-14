@@ -1,3 +1,5 @@
+using ScheduleOne.Core.Equipping.Framework;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Equipping;
 using ScheduleOne.ItemFramework;
@@ -7,13 +9,16 @@ namespace ScheduleOne.PlayerScripts;
 public class HotbarSlot : ItemSlot
 {
     public delegate void EquipEvent(bool equipped);
-    public Equippable Equippable;
     public EquipEvent onEquipChanged;
-    public bool IsEquipped { get; protected set; }
+    private Equippable _equippable;
+    private IEquippedItemHandler _equippedItem;
+    public bool IsSelected { get; protected set; }
 
     public override void SetStoredItem(ItemInstance instance, bool _internal = false);
     public override void ClearStoredInstance(bool _internal = false);
-    public virtual void Equip();
-    public virtual void Unequip();
+    public virtual void Select();
+    private void Equip();
+    private void Unequip();
+    public virtual void Deselect();
     public override bool CanSlotAcceptCash();
 }

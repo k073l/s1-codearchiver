@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using FishNet;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.NPCs.CharacterClasses;
 using ScheduleOne.PlayerScripts;

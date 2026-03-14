@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
-using EasyButtons;
+using ScheduleOne.Core;
 using ScheduleOne.DevUtilities;
-using ScheduleOne.PlayerScripts;
 using UnityEngine;
 
 namespace ScheduleOne.Misc;
@@ -22,12 +20,6 @@ public class UtilityPole : MonoBehaviour
     public List<Transform> cable2Segments;
     public Transform Cable1Container;
     public Transform Cable2Container;
-    private Vector3 cableStart;
-    private Vector3 cableEnd;
-    private Vector3 cableMid;
-    private void Awake();
-    private void Start();
-    private void UpdateCulling();
     [Button]
     public void Orient();
     [Button]

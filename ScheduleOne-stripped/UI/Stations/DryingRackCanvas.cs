@@ -18,6 +18,8 @@ public class DryingRackCanvas : Singleton<DryingRackCanvas>
     [Header("References")]
     public Canvas Canvas;
     public RectTransform Container;
+    public UIScreen UIScreen;
+    public UIPanel ProgressContainerPanel;
     public ItemSlotUI InputSlotUI;
     public ItemSlotUI OutputSlotUI;
     public TextMeshProUGUI InstructionLabel;

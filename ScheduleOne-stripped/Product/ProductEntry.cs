@@ -1,4 +1,5 @@
 using System;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.UI.Phone.ProductManagerApp;
 using UnityEngine;

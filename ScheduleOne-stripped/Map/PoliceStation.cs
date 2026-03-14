@@ -4,6 +4,7 @@ using System.Linq;
 using FishNet;
 using FishNet.Object;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Doors;
 using ScheduleOne.Law;
 using ScheduleOne.NPCs;
 using ScheduleOne.PlayerScripts;
@@ -42,7 +43,7 @@ public class PoliceStation : NPCEnterableBuilding
     public void Dispatch(int requestedOfficerCount, Player targetPlayer, EDispatchType type = EDispatchType.Auto, bool beginAsSighted = false);
     public PoliceOfficer PullOfficer();
     public LandVehicle CreateVehicle();
-    public override void NPCEnteredBuilding(NPC npc);
-    public override void NPCExitedBuilding(NPC npc);
+    public override void NPCEnteredBuilding(NPC npc, StaticDoor door);
+    public override void NPCExitedBuilding(NPC npc, StaticDoor door);
     public static PoliceStation GetClosestPoliceStation(Vector3 point);
 }

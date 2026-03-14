@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using EasyButtons;
 using FishNet;
 using ScheduleOne.AvatarFramework.Equipping;
+using ScheduleOne.Core;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Dialogue;
 using ScheduleOne.Economy;

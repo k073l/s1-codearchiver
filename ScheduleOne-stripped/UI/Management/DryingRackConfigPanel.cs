@@ -10,5 +10,5 @@ public class DryingRackConfigPanel : ConfigPanel
     public QualityFieldUI QualityUI;
     public ObjectFieldUI DestinationUI;
     public NumberFieldUI StartThresholdUI;
-    public override void Bind(List<EntityConfiguration> configs);
+    protected override void BindInternal(List<EntityConfiguration> configs);
 }

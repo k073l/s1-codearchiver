@@ -16,6 +16,9 @@ public class Behaviour : NetworkBehaviour
     public string Name;
     [Tooltip("Behaviour priority; higher = takes priority over lower number behaviour")]
     public int Priority;
+    [Header("Umbrella")]
+    [SerializeField]
+    private bool _canUseUmbrellaDuringBehaviour;
     [HideInInspector]
     public int BehaviourIndex;
     public UnityEvent onEnable;
@@ -55,6 +58,7 @@ public class Behaviour : NetworkBehaviour
     protected unsafe virtual void SetDestination(Vector3 position, bool teleportIfFail = true, float successThreshold = 1f);
     protected virtual void WalkCallback(NPCMovement.WalkResult result);
     private void UpdateGameObjectName();
+    public void SetCanUseUmbrellaDuringBehaviour(bool canUse);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

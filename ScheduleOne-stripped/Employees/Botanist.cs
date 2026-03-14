@@ -12,6 +12,7 @@ using FishNet.Object.Synchronizing;
 using FishNet.Object.Synchronizing.Internal;
 using FishNet.Serializing;
 using FishNet.Transporting;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Dialogue;
 using ScheduleOne.EntityFramework;

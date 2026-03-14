@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Levelling;
@@ -43,6 +45,9 @@ public class PhoneShopInterface : MonoBehaviour
     public Button ConfirmButton;
     public GameObject ItemLimitContainer;
     public Text ItemLimitLabel;
+    [Header("Custom UI")]
+    public UIScreen uiScreen;
+    public UIPanel uiPanel;
     private List<RectTransform> _entries;
     private List<Listing> _items;
     private List<CartEntry> _cart;
@@ -53,6 +58,7 @@ public class PhoneShopInterface : MonoBehaviour
 
     private void Start();
     public void Open(string title, string subtitle, MSGConversation _conversation, List<Listing> listings, float _orderLimit, float debt, Action<List<CartEntry>, float> _orderConfirmedCallback);
+    private IEnumerator DelaySelectPanel();
     public void Close();
     public void Exit(ExitAction action);
     private void ChangeListingQuantity(Listing listing, int change);

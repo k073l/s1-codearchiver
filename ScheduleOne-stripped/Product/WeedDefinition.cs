@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.Effects;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Persistence.Datas;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.EntityFramework;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.UI.Management;

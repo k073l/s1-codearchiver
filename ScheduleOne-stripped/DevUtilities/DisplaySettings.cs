@@ -22,4 +22,5 @@ public struct DisplaySettings
     public int ActiveDisplayIndex;
     public Settings.EUnitType UnitType;
     public static List<Resolution> GetResolutions();
+    private static uint GetDenominatorSafe(RefreshRate refreshRate);
 }

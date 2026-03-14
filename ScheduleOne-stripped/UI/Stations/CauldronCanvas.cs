@@ -17,6 +17,7 @@ public class CauldronCanvas : Singleton<CauldronCanvas>
     [Header("References")]
     public Canvas Canvas;
     public GameObject Container;
+    public UIScreen UIScreen;
     public List<ItemSlotUI> IngredientSlotUIs;
     public ItemSlotUI LiquidSlotUI;
     public ItemSlotUI OutputSlotUI;

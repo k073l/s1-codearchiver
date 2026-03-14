@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using FishNet.Object;
 using ScheduleOne.Audio;
 using ScheduleOne.Combat;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.FX;
 using ScheduleOne.ItemFramework;

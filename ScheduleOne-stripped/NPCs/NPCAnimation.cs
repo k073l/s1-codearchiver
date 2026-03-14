@@ -1,3 +1,4 @@
+using System;
 using FishNet.Object;
 using UnityEngine;
 
@@ -16,6 +17,7 @@ public class NPCAnimation : NetworkBehaviour
     public virtual void SetRagdollActive(bool active);
     public void StandupStart();
     public void StandupDone();
+    private void OnNPCVisibilityChanged(bool visible);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

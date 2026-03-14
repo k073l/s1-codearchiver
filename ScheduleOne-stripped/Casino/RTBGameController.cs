@@ -61,7 +61,6 @@ public class RTBGameController : CasinoGameController
     protected override void Open();
     protected override void Close();
     protected override void Exit(ExitAction action);
-    protected override void FixedUpdate();
     [ObserversRpc(RunLocally = true)]
     private void SetStage(EStage stage);
     private void RunRound(EStage stage);
@@ -91,6 +90,8 @@ public class RTBGameController : CasinoGameController
     public void SetLocalPlayerAnswer(float answer);
     public int GetAnsweredPlayersCount();
     public void ToggleLocalPlayerReady();
+    [ObserversRpc(RunLocally = true)]
+    private void TryNextStage();
     private int GetCardNumberValue(PlayingCard.CardData card);
     public static float GetNetBetMultiplier(EStage stage);
     public override void NetworkInitialize___Early();
@@ -120,5 +121,8 @@ public class RTBGameController : CasinoGameController
     private void RpcWriter___Observers_RemovePlayerFromCurrentRound_3323014238(NetworkObject player);
     private void RpcLogic___RemovePlayerFromCurrentRound_3323014238(NetworkObject player);
     private void RpcReader___Observers_RemovePlayerFromCurrentRound_3323014238(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Observers_TryNextStage_2166136261();
+    private void RpcLogic___TryNextStage_2166136261();
+    private void RpcReader___Observers_TryNextStage_2166136261(PooledReader PooledReader0, Channel channel);
     protected override void Awake_UserLogic_ScheduleOne_002ECasino_002ERTBGameController_Assembly_002DCSharp_002Edll();
 }

@@ -202,7 +202,7 @@ public class NPCMovement : NetworkBehaviour
     public unsafe void RpcLogic___ActivateRagdoll_2690242654(Vector3 forcePoint, Vector3 forceDir, float forceMagnitude);
     private void RpcReader___Observers_ActivateRagdoll_2690242654(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Observers_ApplyRagdollForce_2690242654(Vector3 forcePoint, Vector3 forceDir, float forceMagnitude);
-    public void RpcLogic___ApplyRagdollForce_2690242654(Vector3 forcePoint, Vector3 forceDir, float forceMagnitude);
+    public unsafe void RpcLogic___ApplyRagdollForce_2690242654(Vector3 forcePoint, Vector3 forceDir, float forceMagnitude);
     private void RpcReader___Observers_ApplyRagdollForce_2690242654(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Observers_DeactivateRagdoll_2166136261();
     public void RpcLogic___DeactivateRagdoll_2166136261();

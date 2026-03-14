@@ -1,5 +1,6 @@
 using System;
 using FishNet.Serializing.Helping;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Property;
@@ -35,5 +36,6 @@ public class DeliveryInstance
     public int GetTimeStatus();
     public void SetStatus(EDeliveryStatus status);
     public void AddItemsToDeliveryVehicle();
+    public DeliveryReceipt GetReceipt();
     public void OnTimePass(int minutes);
 }

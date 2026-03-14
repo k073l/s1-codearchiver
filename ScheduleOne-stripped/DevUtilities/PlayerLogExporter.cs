@@ -6,7 +6,7 @@ using SFB;
 using UnityEngine;
 
 namespace ScheduleOne.DevUtilities;
-public class PlayerLogExporter : MonoBehaviour
+public static class PlayerLogExporter
 {
     private static Action _onSuccess;
     private static Regex[] ExcludedRegexes;

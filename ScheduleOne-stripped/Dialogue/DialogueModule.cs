@@ -10,4 +10,5 @@ public class DialogueModule : MonoBehaviour
     public DialogueChain GetChain(string key);
     public bool HasChain(string key);
     public string GetLine(string key);
+    public bool HasLine(string key);
 }

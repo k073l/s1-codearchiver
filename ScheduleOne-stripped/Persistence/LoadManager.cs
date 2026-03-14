@@ -60,11 +60,13 @@ public class LoadManager : PersistentSingleton<LoadManager>
     public List<LegacyNPCLoader> LegacyNPCLoaders;
     public List<NPCLoader> NPCLoaders;
     public UnityEvent onPreSceneChange;
+    public Action<string> OnLocalSaveLoadStart;
     public UnityEvent onPreLoad;
     public UnityEvent onLoadComplete;
     public UnityEvent onSaveInfoLoaded;
     private List<IStaggeredReplicator> staggeredReplicators;
     public string DefaultTutorialSaveFolder => Path.Combine(Application.streamingAssetsPath, "DefaultTutorialSave");
+    public bool IsInGameScene { get; }
     public bool IsGameLoaded { get; protected set; }
     public bool IsLoading { get; protected set; }
     public float TimeSinceGameLoaded { get; protected set; }
@@ -74,6 +76,7 @@ public class LoadManager : PersistentSingleton<LoadManager>
     public SaveInfo ActiveSaveInfo { get; private set; }
     public SaveInfo StoredSaveInfo { get; private set; }
 
+    public static event Action onLoadConfigurations;
     protected override void Awake();
     protected override void Start();
     private void Bananas();

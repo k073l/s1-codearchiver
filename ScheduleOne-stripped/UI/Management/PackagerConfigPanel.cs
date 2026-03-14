@@ -10,5 +10,5 @@ public class PackagerConfigPanel : ConfigPanel
     public ObjectFieldUI BedUI;
     public ObjectListFieldUI StationsUI;
     public RouteListFieldUI RoutesUI;
-    public override void Bind(List<EntityConfiguration> configs);
+    protected override void BindInternal(List<EntityConfiguration> configs);
 }

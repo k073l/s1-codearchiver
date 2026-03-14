@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using EasyButtons;
 using FishNet;
 using FishNet.Connection;
 using FishNet.Managing;
@@ -11,6 +10,7 @@ using FishNet.Serializing;
 using FishNet.Serializing.Generated;
 using FishNet.Transporting;
 using ScheduleOne.Cartel;
+using ScheduleOne.Core;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Levelling;
 using ScheduleOne.Map;

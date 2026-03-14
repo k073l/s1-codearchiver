@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Messaging;
 using ScheduleOne.Money;
@@ -27,6 +29,9 @@ public class CounterofferInterface : MonoBehaviour
     public InputField PriceInput;
     public Text FairPriceLabel;
     public CounterOfferProductSelector ProductSelector;
+    [Header("Custom UI")]
+    public UIScreen uiScreen;
+    public UIPanel uiPanel;
     private Action<ProductDefinition, int, float> orderConfirmedCallback;
     private ProductDefinition selectedProduct;
     private int quantity;
@@ -40,6 +45,7 @@ public class CounterofferInterface : MonoBehaviour
     private void Start();
     private void Update();
     public void Open(ProductDefinition product, int quantity, float price, MSGConversation _conversation, Action<ProductDefinition, int, float> _orderConfirmedCallback);
+    private IEnumerator DelaySelectPanel();
     public void Close();
     public void Exit(ExitAction action);
     public void Send();

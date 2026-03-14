@@ -4,5 +4,7 @@ using UnityEngine;
 namespace ScheduleOne.Management.UI;
 public class ConfigPanel : MonoBehaviour
 {
-    public virtual void Bind(List<EntityConfiguration> configs);
+    public void Bind(List<EntityConfiguration> configs, UIScreen screen = null);
+    protected virtual void BindInternal(List<EntityConfiguration> configs);
+    private void ConfigureScreen(UIScreen screen);
 }

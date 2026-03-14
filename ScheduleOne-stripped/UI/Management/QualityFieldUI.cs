@@ -18,4 +18,5 @@ public class QualityFieldUI : MonoBehaviour
     private void Refresh(EQuality value);
     private bool AreFieldsUniform();
     public void ValueChanged(EQuality value);
+    public void ChangeTargetQuality(int amt);
 }

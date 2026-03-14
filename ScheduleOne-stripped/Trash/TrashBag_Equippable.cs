@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using ScheduleOne.Audio;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Equipping;
 using ScheduleOne.Interaction;

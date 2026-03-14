@@ -1,5 +1,5 @@
-using EasyButtons;
 using ScheduleOne.Audio;
+using ScheduleOne.Core;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.PlayerScripts;
 using UnityEngine;

@@ -25,7 +25,7 @@ public class FootPatrolBehaviour : Behaviour
     private void SetFlashlightEquipped(bool equipped);
     public void SetGroup(PatrolGroup group);
     public bool IsReadyToAdvance();
-    private bool IsAtDestination();
+    private bool IsAtDestination(float threshold = 2f);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

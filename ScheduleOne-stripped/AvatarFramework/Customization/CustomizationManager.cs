@@ -8,8 +8,6 @@ public class CustomizationManager : Singleton<CustomizationManager>
 {
     public delegate void AvatarSettingsChanged(AvatarSettings settings);
     public const string AppearancesFolderPath;
-    [SerializeField]
-    private AvatarSettings ActiveSettings;
     public Avatar TemplateAvatar;
     public TMP_InputField SaveInputField;
     public TMP_InputField LoadInputField;
@@ -18,6 +16,7 @@ public class CustomizationManager : Singleton<CustomizationManager>
     public AvatarSettings DefaultSettings;
     private bool isEditingOriginal;
     private string loadedSettingsAssetPath;
+    private AvatarSettings ActiveSettings;
     protected override void Start();
     public void CreateSettings(string assetName, string assetPath);
     public void CreateSettings();

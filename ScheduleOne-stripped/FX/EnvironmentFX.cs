@@ -2,6 +2,7 @@ using Funly.SkyStudio;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.Tools;
+using ScheduleOne.Weather;
 using UnityEngine;
 using VolumetricFogAndMist2;
 

@@ -7,6 +7,6 @@ public class AudioSlider : SettingsSlider
     public const float MULTIPLIER;
     public bool Master;
     public EAudioType AudioType;
-    protected virtual void Start();
+    protected virtual void OnEnable();
     protected override void OnValueChanged(float value);
 }

@@ -23,6 +23,7 @@ public class RecipeSelector : ClipboardScreen
     private StationRecipe selectedOption;
     private List<RectTransform> optionButtons;
     private Action<StationRecipe> optionCallback;
+    private UIContentPanel panel;
     public void Initialize(string selectionTitle, List<StationRecipe> _options, StationRecipe _selectedOption = null, Action<StationRecipe> _optionCallback = null);
     public override void Open();
     public override void Close();

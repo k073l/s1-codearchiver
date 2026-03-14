@@ -54,6 +54,16 @@ public class LaunderingInterface : MonoBehaviour
     [Header("UI references")]
     [SerializeField]
     protected Canvas canvas;
+    [SerializeField]
+    protected ScrollRect scrollRect;
+    [SerializeField]
+    protected UIScreen UIScreen;
+    [SerializeField]
+    protected UIPanel mainPanel;
+    [SerializeField]
+    protected UIScreen selectorScreen;
+    [SerializeField]
+    protected UIPanel selectorPanel;
     private int selectedAmountToLaunder;
     private Dictionary<LaunderingOperation, RectTransform> operationToNotch;
     private List<RectTransform> notches;
@@ -79,6 +89,7 @@ public class LaunderingInterface : MonoBehaviour
     public void ConfirmAmount();
     public void SliderValueChanged();
     public void InputValueChanged();
+    public void ChangeSelectorValue(int amount);
     public void Hovered();
     public void Interacted();
     public virtual void Open();

@@ -35,6 +35,7 @@ public class TimeManager : NetworkSingleton<TimeManager>, IBaseSaveable, ISaveab
     public ActionList onMinutePass;
     public ActionList onUncappedMinutePass;
     public ActionList onTick;
+    public Action onTimeChanged;
     public Action<int> onTimeSkip;
     public Action onTimeSet;
     public Action onHourPass;
@@ -76,6 +77,7 @@ public class TimeManager : NetworkSingleton<TimeManager>, IBaseSaveable, ISaveab
     public int LoadOrder { get; }
 
     public override void Awake();
+    protected override void Start();
     public virtual void InitializeSaveable();
     public override void OnSpawnServer(NetworkConnection connection);
     public override void OnStartServer();

@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Product;
@@ -20,6 +22,10 @@ public class CounterOfferProductSelector : MonoBehaviour
     public GameObject ProductEntryPrefab;
     public Action<ProductDefinition> onProductPreviewed;
     public Action<ProductDefinition> onProductSelected;
+    [Header("Custom UI")]
+    public UIScreen uiSelectionScreen;
+    public UIPanel uiSearchPanel;
+    public UIPanel uiWindowPanel;
     private List<RectTransform> productEntries;
     private Dictionary<ProductDefinition, RectTransform> productEntriesDict;
     private string searchTerm;
@@ -31,6 +37,7 @@ public class CounterOfferProductSelector : MonoBehaviour
 
     public void Awake();
     public void Open();
+    private IEnumerator DelaySelectSearchPanel();
     public void Close();
     private void Update();
     public void SetSearchTerm(string search);

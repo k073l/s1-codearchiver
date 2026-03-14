@@ -5,5 +5,6 @@ public class DeliveriesData : SaveData
 {
     public DeliveryInstance[] ActiveDeliveries;
     public VehicleData[] DeliveryVehicles;
-    public DeliveriesData(DeliveryInstance[] deliveries, VehicleData[] deliveryVehicles);
+    public DeliveryReceipt[] DeliveryHistory;
+    public DeliveriesData(DeliveryInstance[] deliveries, VehicleData[] deliveryVehicles, DeliveryReceipt[] deliveryHistory);
 }

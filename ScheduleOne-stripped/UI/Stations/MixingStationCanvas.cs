@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Effects;
 using ScheduleOne.ItemFramework;
@@ -24,6 +25,7 @@ public class MixingStationCanvas : Singleton<MixingStationCanvas>
     [Header("References")]
     public Canvas Canvas;
     public RectTransform Container;
+    public UIScreen UIScreen;
     public ItemSlotUI ProductSlotUI;
     public TextMeshProUGUI ProductPropertiesLabel;
     public ItemSlotUI IngredientSlotUI;

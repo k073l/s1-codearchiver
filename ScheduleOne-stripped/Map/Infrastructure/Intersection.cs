@@ -6,6 +6,7 @@ using UnityEngine;
 namespace ScheduleOne.Map.Infrastructure;
 public class Intersection : MonoBehaviour
 {
+    private const float AmberTime;
     [Header("References")]
     [SerializeField]
     protected List<TrafficLight> path1Lights;

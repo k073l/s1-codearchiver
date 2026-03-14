@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using EasyButtons;
 using EPOOutline;
 using FluffyUnderware.DevTools.Extensions;
+using ScheduleOne.Core;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Management;

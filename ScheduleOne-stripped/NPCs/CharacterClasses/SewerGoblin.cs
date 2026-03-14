@@ -5,6 +5,7 @@ using FishNet;
 using FishNet.Object;
 using ScheduleOne.Audio;
 using ScheduleOne.Combat;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Doors;
 using ScheduleOne.GameTime;

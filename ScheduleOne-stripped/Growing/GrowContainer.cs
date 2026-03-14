@@ -11,6 +11,7 @@ using FishNet.Object.Synchronizing.Internal;
 using FishNet.Serializing;
 using FishNet.Transporting;
 using ScheduleOne.Audio;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.EntityFramework;
 using ScheduleOne.GameTime;
@@ -112,7 +113,7 @@ public abstract class GrowContainer : GridItem, IUsable, ITransitEntity
     public NetworkObject PlayerUserObject {[CompilerGenerated]
         get; [CompilerGenerated]
         set; }
-    public string Name => base.ItemInstance.Name;
+    public string Name => ((BaseItemInstance)base.ItemInstance).Name;
     public List<ItemSlot> InputSlots { get; set; } = new List<ItemSlot>();
     public List<ItemSlot> OutputSlots { get; set; } = new List<ItemSlot>();
     public Transform LinkOrigin => _uiPoint;

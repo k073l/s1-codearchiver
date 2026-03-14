@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using ScheduleOne.Configuration;
+using ScheduleOne.Core.Items.Framework;
+using ScheduleOne.Core.Settings.Framework;
 using ScheduleOne.Delivery;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Money;
@@ -13,10 +16,6 @@ using UnityEngine.UI;
 namespace ScheduleOne.UI.Phone.Delivery;
 public class DeliveryShop : MonoBehaviour
 {
-    public const int DELIVERY_VEHICLE_SLOT_CAPACITY;
-    public const int DELIVERY_TIME_MIN;
-    public const int DELIVERY_TIME_MAX;
-    public const int DELIVERY_TIME_ITEM_COUNT_DIVISOR;
     [Header("References")]
     public Image HeaderImage;
     public Button HeaderButton;
@@ -31,7 +30,6 @@ public class DeliveryShop : MonoBehaviour
     public Dropdown LoadingDockDropdown;
     [Header("Settings")]
     public string MatchingShopInterfaceName;
-    public float DeliveryFee;
     public bool AvailableByDefault;
     public ListingEntry ListingEntryPrefab;
     public Sprite HeaderImage_Hidden;

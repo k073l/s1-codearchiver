@@ -17,6 +17,7 @@ public class BrickPressCanvas : Singleton<BrickPressCanvas>
     [Header("References")]
     public Canvas Canvas;
     public RectTransform Container;
+    public UIScreen UIScreen;
     public ItemSlotUI[] ProductSlotUIs;
     public ItemSlotUI OutputSlotUI;
     public TextMeshProUGUI InstructionLabel;

@@ -1,4 +1,4 @@
-using EasyButtons;
+using ScheduleOne.Core;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.PlayerScripts;
 using UnityEngine;
@@ -31,6 +31,6 @@ public class GrowContainerCameraHandler : MonoBehaviour
     private ECameraPosition _debugCameraPosition;
     public void PositionCameraContainer();
     public Transform GetCameraPosition(ECameraPosition pos, bool autoPosition = true);
-    [Button("Set Camera Position")]
+    [Button]
     private void SetCameraPosition();
 }

@@ -1,4 +1,4 @@
-using EasyButtons;
+using ScheduleOne.Core;
 using UnityEngine;
 
 namespace ScheduleOne.Tools;

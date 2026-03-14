@@ -2,6 +2,7 @@ using FishNet.Object;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.NPCs;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.Tools;
 using ScheduleOne.UI;
 using ScheduleOne.Vision;
 using UnityEngine;
