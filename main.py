@@ -38,6 +38,7 @@ if __name__ == "__main__":
             branch,
             [
                 "Schedule I_Data/Managed/Assembly-CSharp.dll",
+                "Schedule I_Data/Managed/ScheduleOne.Core.dll",
                 "Schedule I_Data/globalgamemanagers",
             ],
             DOWNLOAD_DIR_PATH,

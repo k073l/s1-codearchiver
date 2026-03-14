@@ -58,44 +58,54 @@ def decompile_game_assembly(
     stripped_code_path: str,
 ) -> bool:
     """Decompile game assembly for a branch. Returns True if successful."""
-    args = [
-        "-a",
+    status = []
+    for file_to_decomp in [
         os.path.join(
             download_dir_path,
             branch,
             "Schedule I_Data",
             "Managed",
             "Assembly-CSharp.dll",
-        ),
-        "-m",
-        os.path.join(
-            download_dir_path, branch, "Schedule I_Data", "globalgamemanagers"
-        ),
-        "-f",
-        os.path.join(full_code_path, branch),
-        "-o",
-        os.path.join(stripped_code_path, branch),
-    ]
-    try:
-        p = subprocess.Popen(
-            [
-                "dotnet",
-                os.path.join(assembly_decompiler_path, "AssemblyDecompiler.dll"),
-                *args,
-            ],
-            stderr=subprocess.STDOUT,
-        )
-        exit_code = p.wait()
-        if exit_code == 0:
-            logging.info(
-                f"Decompiled game code to {full_code_path}, stripped code saved in {stripped_code_path}"
+        ), os.path.join(
+            download_dir_path,
+            branch,
+            "Schedule I_Data",
+            "Managed",
+            "ScheduleOne.Core.dll",
+        )]:
+        args = [
+            "-a",
+            file_to_decomp,
+            "-m",
+            os.path.join(
+                download_dir_path, branch, "Schedule I_Data", "globalgamemanagers"
+            ),
+            "-f",
+            os.path.join(full_code_path, branch),
+            "-o",
+            os.path.join(stripped_code_path, branch),
+        ]
+        try:
+            p = subprocess.Popen(
+                [
+                    "dotnet",
+                    os.path.join(assembly_decompiler_path, "AssemblyDecompiler.dll"),
+                    *args,
+                ],
+                stderr=subprocess.STDOUT,
             )
-            return True
-        else:
-            logging.error(
-                f"Decompilation failed for branch {branch} with exit code {exit_code}"
-            )
-            return False
-    except Exception as e:
-        logging.error(f"Exception during decompilation for branch {branch}: {e}")
-        return False
+            exit_code = p.wait()
+            if exit_code == 0:
+                logging.info(
+                    f"Decompiled game code to {full_code_path}, stripped code saved in {stripped_code_path}"
+                )
+                status.append(True)
+            else:
+                logging.error(
+                    f"Decompilation failed for branch {branch} with exit code {exit_code}"
+                )
+                status.append(False)
+        except Exception as e:
+            logging.error(f"Exception during decompilation for branch {branch}: {e}")
+            status.append(False)
+    return all(status)
