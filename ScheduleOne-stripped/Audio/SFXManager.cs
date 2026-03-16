@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using ScheduleOne.Configuration;
 using ScheduleOne.Core;
 using ScheduleOne.Core.Audio;
-using ScheduleOne.Core.Settings.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.PlayerScripts;
 using UnityEngine;
@@ -17,8 +16,8 @@ public class SFXManager : Singleton<SFXManager>
     protected override void Awake();
     protected override void OnDestroy();
     private void Update();
-    public unsafe void PlayImpactSound(EImpactSound material, Vector3 position, float momentum);
-    public unsafe void PlayFootstepSound(EMaterialType materialType, float volume, Vector3 position);
+    public void PlayImpactSound(EImpactSound material, Vector3 position, float momentum);
+    public void PlayFootstepSound(EMaterialType materialType, float volume, Vector3 position);
     public void SetConfiguration(BaseConfiguration baseConfiguration);
     private void SetupSoundPool();
     private bool TryPullAudioSource(out AudioSourceController source);

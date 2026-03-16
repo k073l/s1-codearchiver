@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.Equipping;
 using ScheduleOne.ItemFramework;
 using UnityEngine;

@@ -113,7 +113,7 @@ public class PlayerMovement : PlayerSingleton<PlayerMovement>
     private bool GetIsGrounded();
     public unsafe void Teleport(Vector3 position, bool alignFeetToPosition = false);
     public void SetResidualVelocity(Vector3 dir, float force, float time);
-    public void WarpToNavMesh();
+    public void WarpToNavMesh(bool clearVelocity = false);
     private void UpdateHorizontalAxis();
     private void UpdateVerticalAxis();
     public void Jump();

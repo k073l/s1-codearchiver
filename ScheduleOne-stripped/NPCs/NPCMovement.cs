@@ -110,6 +110,7 @@ public class NPCMovement : NetworkBehaviour
     private float agentCurrentSpeed;
     private Vector3[] agentCurrentPathCorners;
     private Coroutine ladderClimbRoutine;
+    private float _defaultAngularSpeed;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002ENPCMovementAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002ENPCMovementAssembly_002DCSharp_002Edll_Excuted;
     public bool HasDestination { get; protected set; }
@@ -157,6 +158,7 @@ public class NPCMovement : NetworkBehaviour
     public void SetSeat(AvatarSeat seat);
     public void SetStance(EStance stance);
     public void SetGravityMultiplier(float multiplier);
+    public void SetAngularSpeedMultiplier(float multiplier);
     public void SetRagdollDraggable(bool draggable);
     [ServerRpc(RunLocally = true, RequireOwnership = false)]
     public void ActivateRagdoll_Server();

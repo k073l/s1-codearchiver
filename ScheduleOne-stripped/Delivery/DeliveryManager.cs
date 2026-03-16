@@ -12,7 +12,6 @@ using FishNet.Serializing;
 using FishNet.Serializing.Generated;
 using FishNet.Transporting;
 using ScheduleOne.Configuration;
-using ScheduleOne.Core.Settings.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.Networking;

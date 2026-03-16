@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using FishNet.Serializing;
 using FishNet.Serializing.Helping;
-using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Effects;
 using ScheduleOne.Equipping;
@@ -27,7 +26,7 @@ public class ProductItemInstance : QualityItemInstance
 
     [CodegenExclude]
     public int Amount { get; }
-    public override string Name => ((BaseItemInstance)this).Name + (((Object)(object)packaging != (Object)null) ? (" (" + packaging.Quantity + ")") : " (Unpackaged)");
+    public override string Name => base.Name + (((Object)(object)packaging != (Object)null) ? (" (" + packaging.Quantity + ")") : " (Unpackaged)");
 
     [CodegenExclude]
     public override Equippable Equippable => GetEquippable();

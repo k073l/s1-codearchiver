@@ -135,7 +135,7 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002ENPCAssembly_002DCSharp_002Edll_Excuted;
     public bool IsLocalPlayer => false;
     public NetworkBehaviour NetworkBehaviour => (NetworkBehaviour)(object)this;
-    public IThirdPersonReferencesProvider ThirdPersonReferences => (IThirdPersonReferencesProvider)(object)Avatar;
+    public IThirdPersonReferencesProvider ThirdPersonReferences => Avatar;
     public string fullName { get; }
     public float Scale { get; private set; } = 1f;
     public bool IsConscious { get; }

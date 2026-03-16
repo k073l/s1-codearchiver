@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FishNet.Object;
-using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.NPCs;
 using UnityEngine;

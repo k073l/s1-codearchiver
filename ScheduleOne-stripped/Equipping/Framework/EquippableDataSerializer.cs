@@ -1,6 +1,5 @@
 using System;
 using FishNet.Serializing;
-using ScheduleOne.Core;
 using ScheduleOne.Core.Equipping.Framework;
 using ScheduleOne.DevUtilities;
 using UnityEngine;

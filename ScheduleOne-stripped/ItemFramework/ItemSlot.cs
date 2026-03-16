@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using FishNet.Object;
-using ScheduleOne.Core.Items.Framework;
 using UnityEngine;
 
 namespace ScheduleOne.ItemFramework;

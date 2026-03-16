@@ -1,5 +1,4 @@
 using System;
-using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.ItemFramework;
 using TMPro;

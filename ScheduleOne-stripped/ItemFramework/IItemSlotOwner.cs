@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using FishNet.Connection;
 using FishNet.Object;
-using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Product;
 using UnityEngine;

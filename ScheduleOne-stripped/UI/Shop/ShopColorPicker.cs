@@ -1,6 +1,5 @@
 using System;
 using ScheduleOne.Clothing;
-using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.ItemFramework;
 using TMPro;
 using UnityEngine;

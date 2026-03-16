@@ -51,6 +51,8 @@ public class VisionCone : NetworkBehaviour
     public delegate void EventStateChange(VisionEventReceipt _event);
     public const float VISION_UPDATE_INTERVAL;
     public const float MinVisionDelta;
+    private const float ExclamationSoundCooldown;
+    private static float TimeOnLastExclamationSound;
     public static float UniversalAttentivenessScale;
     public static float UniversalMemoryScale;
     public const float HorizontalFOV;

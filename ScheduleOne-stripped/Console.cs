@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using FishNet;
 using FishNet.Object;
-using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.Cutscenes;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Employees;

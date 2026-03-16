@@ -9,7 +9,6 @@ using FishNet.Serializing;
 using FishNet.Transporting;
 using ScheduleOne.Audio;
 using ScheduleOne.Core;
-using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Networking;
 using ScheduleOne.PlayerScripts;

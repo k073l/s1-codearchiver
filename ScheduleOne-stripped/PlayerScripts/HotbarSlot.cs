@@ -1,5 +1,4 @@
 using ScheduleOne.Core.Equipping.Framework;
-using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Equipping;
 using ScheduleOne.ItemFramework;

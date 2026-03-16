@@ -24,7 +24,7 @@ public class EquippedItemHandler : NetworkBehaviour, IEquippedItemHandler
     public SyncVar<EquippableData> syncVar____equippableData;
     private bool NetworkInitialize___EarlyScheduleOne_002EEquipping_002EEquippedItemHandlerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EEquipping_002EEquippedItemHandlerAssembly_002DCSharp_002Edll_Excuted;
-    public IEquippableUser User => (IEquippableUser)SyncAccessor__user;
+    public IEquippableUser User => SyncAccessor__user;
     public EquippableData EquippableData => SyncAccessor__equippableData;
     public bool IsEquipped { get; private set; }
     public INetworkedEquippableUser SyncAccessor__user { get; set; }

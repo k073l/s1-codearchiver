@@ -11,4 +11,5 @@ public class AudioSettings
     public float UIVolume;
     public float DialogueVolume;
     public float FootstepsVolume;
+    public float WeatherVolume;
 }

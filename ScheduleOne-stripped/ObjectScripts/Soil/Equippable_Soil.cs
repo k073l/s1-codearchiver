@@ -1,4 +1,3 @@
-using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.Equipping;
 using ScheduleOne.Growing;
 using ScheduleOne.ItemFramework;

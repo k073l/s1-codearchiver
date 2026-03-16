@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using ScheduleOne.Audio;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.EntityFramework;
@@ -64,6 +63,7 @@ public class PlayerCamera : PlayerSingleton<PlayerCamera>
     private float focusMouseX;
     private float focusMouseY;
     private Dictionary<int, MotionEvent> movementEvents;
+    private List<int> movementEventKeys;
     private float freeCamSpeed;
     private float mouseX;
     private float mouseY;

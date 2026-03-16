@@ -1,5 +1,4 @@
 using FluffyUnderware.DevTools.Extensions;
-using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.ObjectScripts;

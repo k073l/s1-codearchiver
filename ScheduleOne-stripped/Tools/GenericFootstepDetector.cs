@@ -17,9 +17,11 @@ public abstract class GenericFootstepDetector : MonoBehaviour
     [SerializeField]
     protected Transform _referencePoint;
     private float _timeOnLastStep;
+    private static LayerMask _groundDetectionLayerMask;
     public float VolumeMultiplier { get; set; } = 1f;
 
     private void Awake();
+    protected virtual void Start();
     protected void TriggerStep(EMaterialType materialType, Vector3 stepPosition);
     protected bool IsCooldown();
     protected bool IsGrounded(out EMaterialType surfaceType);

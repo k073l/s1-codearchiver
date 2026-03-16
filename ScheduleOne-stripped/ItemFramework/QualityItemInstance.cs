@@ -1,6 +1,5 @@
 using System;
 using FishNet.Serializing;
-using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.Storage;
 

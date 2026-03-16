@@ -49,6 +49,8 @@ public class HUD : Singleton<HUD>
     public TextMeshProUGUI SleepPrompt;
     public TextMeshProUGUI CurfewPrompt;
     public CanvasGroup NotificationsCanvasGroup;
+    public Animation CashSlotHintAnim;
+    public CanvasGroup CashSlotHintAnimCanvasGroup;
     [Header("Settings")]
     public Gradient RedGreenGradient;
     private int SampleSize;

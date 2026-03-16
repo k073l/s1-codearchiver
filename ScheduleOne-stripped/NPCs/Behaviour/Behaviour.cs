@@ -54,6 +54,7 @@ public class Behaviour : NetworkBehaviour
     public virtual void BehaviourUpdate();
     public virtual void BehaviourLateUpdate();
     public virtual void OnActiveTick();
+    public virtual void OnActiveUncappedMinutePass();
     protected void SetDestination(ITransitEntity transitEntity, bool teleportIfFail = true);
     protected unsafe virtual void SetDestination(Vector3 position, bool teleportIfFail = true, float successThreshold = 1f);
     protected virtual void WalkCallback(NPCMovement.WalkResult result);

@@ -161,8 +161,8 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     private bool NetworkInitialize___EarlyScheduleOne_002EPlayerScripts_002EPlayerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EPlayerScripts_002EPlayerAssembly_002DCSharp_002Edll_Excuted;
     public bool IsLocalPlayer => ((NetworkBehaviour)this).IsOwner;
-    public IThirdPersonReferencesProvider ThirdPersonReferences => (IThirdPersonReferencesProvider)(object)Avatar;
-    public IFirstPersonReferencesProvider FirstPersonReferences => (IFirstPersonReferencesProvider)(object)PlayerSingleton<PlayerInventory>.Instance;
+    public IThirdPersonReferencesProvider ThirdPersonReferences => Avatar;
+    public IFirstPersonReferencesProvider FirstPersonReferences => PlayerSingleton<PlayerInventory>.Instance;
     public Transform CenterPointTransform => Avatar.CenterPointTransform;
     public Vector3 LookAtPoint => ((Component)Avatar.Eyes).transform.position;
     public bool IsCurrentlyTargetable { get; }

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Money;
@@ -23,8 +22,6 @@ public class ItemUIManager : Singleton<ItemUIManager>
     public RectTransform InputsContainer;
     public ItemInfoPanel InfoPanel;
     public RectTransform ItemQuantityPrompt;
-    public Animation CashSlotHintAnim;
-    public CanvasGroup CashSlotHintAnimCanvasGroup;
     public FilterConfigPanel FilterConfigPanel;
     [Header("Prefabs")]
     public ItemSlotUI ItemSlotUIPrefab;

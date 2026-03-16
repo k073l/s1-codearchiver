@@ -69,6 +69,7 @@ public class NPCBehaviour : NetworkBehaviour
     public virtual void Update();
     public virtual void LateUpdate();
     protected virtual void OnTick();
+    protected virtual void OnUncappedMinutePass();
     public void SortBehaviourStack();
     private Behaviour GetEnabledBehaviour();
     private void AddEnabledBehaviour(Behaviour b);

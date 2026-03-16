@@ -12,6 +12,7 @@ public class WeatherProfile : ScriptableObject
     private WeatherVolume _weatherVolumePrefab;
     [SerializeField]
     private WeatherConditions _conditions;
+    public string Id => _id;
     public WeatherVolume WeatherVolumePrefab => _weatherVolumePrefab;
     public SkySettings SkySettings => _skySettings;
     public WeatherConditions Conditions => _conditions;

@@ -1,4 +1,3 @@
-using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.ObjectScripts;
 using ScheduleOne.UI.Tooltips;

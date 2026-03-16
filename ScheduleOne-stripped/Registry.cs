@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using ScheduleOne.Core;
-using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Levelling;

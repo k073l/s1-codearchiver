@@ -1,5 +1,4 @@
 using ScheduleOne.Cartel;
-using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.ItemFramework;

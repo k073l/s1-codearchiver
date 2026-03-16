@@ -23,6 +23,7 @@ public class AudioManager : PersistentSingleton<AudioManager>
     private float _uiVolume;
     private float _musicVolume;
     private float _voiceVolume;
+    private float _weatherVolume;
     private float _currentMainMixerVolume;
     public float MasterVolume => _masterVolume;
 

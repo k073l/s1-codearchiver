@@ -15,7 +15,6 @@ using FishNet.Serializing.Generated;
 using FishNet.Transporting;
 using ScheduleOne.Cartel;
 using ScheduleOne.Core;
-using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Dialogue;
 using ScheduleOne.Effects;

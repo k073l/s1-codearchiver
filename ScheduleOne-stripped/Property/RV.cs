@@ -10,7 +10,6 @@ using FishNet.Serializing;
 using FishNet.Transporting;
 using ScheduleOne.Combat;
 using ScheduleOne.Core;
-using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.EntityFramework;
 using ScheduleOne.GameTime;

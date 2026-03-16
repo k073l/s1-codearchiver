@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using FluffyUnderware.DevTools.Extensions;
 using GameKit.Utilities;
-using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Economy;
 using ScheduleOne.ItemFramework;

@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using ScheduleOne.Audio;
 using ScheduleOne.AvatarFramework;
-using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.FX;
 using ScheduleOne.ItemFramework;
