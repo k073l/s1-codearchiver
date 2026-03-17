@@ -13,6 +13,7 @@ namespace ScheduleOne.Persistence.Loaders;
 public class ProceduralGridItemLoader : BuildableItemLoader
 {
     public override string ItemType => typeof(ProceduralGridItemData).Name;
+    public override int LoadOrder => 100;
 
     public override void Load(string mainPath);
     public override void Load(DynamicSaveData data);

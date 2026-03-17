@@ -25,6 +25,9 @@ public class WeatherSequence : ScriptableObject
     [SerializeField]
     private string _id;
     [SerializeField]
+    [Range(0f, 1f)]
+    private float _chanceToOccur;
+    [SerializeField]
     private int _startTime;
     [SerializeField]
     private TimeReference _timeReference;

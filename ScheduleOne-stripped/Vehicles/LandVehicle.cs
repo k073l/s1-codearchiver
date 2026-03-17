@@ -320,6 +320,7 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable, IWeat
     private ItemSet GetContentsSet();
     public virtual void Load(VehicleData data, string containerPath);
     public void OnWeatherChange(WeatherConditions newConditions);
+    public void OnUpdateWeatherEntity();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

@@ -39,6 +39,7 @@ public class UISelectable : UITrigger, IPointerEnterHandler, IEventSystemHandler
     protected virtual void OnEnable();
     public virtual void OnPointerEnter(PointerEventData eventData);
     public override void OnPointerExit(PointerEventData eventData);
+    protected virtual bool DeselectOnPointerExit();
     public override void OnPointerClick(PointerEventData eventData);
     public void OnSelect(BaseEventData eventData);
     public void OnDeselect(BaseEventData eventData);

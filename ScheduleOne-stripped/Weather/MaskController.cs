@@ -26,6 +26,8 @@ public class MaskController : MonoBehaviour
     private float _wetDecayRate;
     [SerializeField]
     private float _sunEvapMultiplier;
+    [SerializeField]
+    private AnimationCurve _wetnessGrowthCurve;
     [Header("Height Settings")]
     [SerializeField]
     private Texture2D _heightMask;

@@ -1,3 +1,4 @@
+using System.Collections;
 using FishNet.Object;
 using ScheduleOne.Core;
 using ScheduleOne.DevUtilities;
@@ -27,6 +28,7 @@ public class AvatarEquippable : MonoBehaviour
     public EHand Hand;
     public ETriggerType TriggerType;
     public string AnimationTrigger;
+    private bool _equipped;
     public string AssetPath;
     protected Avatar avatar;
     [Button]

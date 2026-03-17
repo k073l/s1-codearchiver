@@ -11,8 +11,10 @@ using ScheduleOne.Core;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.NPCs;
+using ScheduleOne.Persistence;
 using ScheduleOne.PlayerScripts;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
@@ -37,7 +39,7 @@ public class EnvironmentManager : NetworkSingleton<EnvironmentManager>
     [SerializeField]
     private List<WeatherSequence> _weatherSequences;
     [SerializeField]
-    private List<WeatherSequence> _dailyWeatherSequences;
+    private List<WeightedWeatherSequence> _dailyWeatherSequences;
     [Header("Weather Settings")]
     [SerializeField]
     private float _defaultWeatherVolumeMoveSpeed;

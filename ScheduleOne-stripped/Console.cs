@@ -134,7 +134,7 @@ public class Console : Singleton<Console>
 
     public class PackageProduct : ConsoleCommand
     {
-        public override string CommandWord => "packageprodcut";
+        public override string CommandWord => "packageproduct";
         public override string CommandDescription => "Packages the equipped product with the specified packaging";
         public override string ExampleUsage => "packageproduct jar, packageproduct baggie";
 

@@ -10,4 +10,5 @@ public interface IWeatherEntity
     bool IsUnderCover { get; set; }
 
     void OnWeatherChange(WeatherConditions newConditions);
+    void OnUpdateWeatherEntity();
 }

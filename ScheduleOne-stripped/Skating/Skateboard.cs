@@ -168,6 +168,7 @@ public class Skateboard : NetworkBehaviour, IWeatherEntity
     public float GetSurfaceSmoothness();
     public bool IsOnTerrain();
     public void OnWeatherChange(WeatherConditions newConditions);
+    public void OnUpdateWeatherEntity();
     private void OnDestroy();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();

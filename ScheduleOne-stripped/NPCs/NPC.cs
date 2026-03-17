@@ -128,6 +128,9 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     protected float defaultAggression;
     private WeatherConditions _weatherTolerence;
     protected WeatherConditions _currentWeatherConditionsForEntity;
+    private float _wetness;
+    private const float NPC_WET_RATE;
+    private const float NPC_DRY_RATE;
     protected NetworkedEquipper _networkedEquipper;
     private Coroutine lerpScaleRoutine;
     public SyncVar<bool> syncVar____003CHasUmbrella_003Ek__BackingField;
@@ -306,6 +309,8 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     public void OnWeatherChange(WeatherConditions newConditions);
     public WeatherConditions GetWeatherTolerence();
     public WeatherConditions GetCurrentWeatherConditionsForEnitty();
+    public void OnUpdateWeatherEntity();
+    public void UpdateWetness();
     public virtual bool ShouldSave();
     protected virtual bool ShouldSaveRelationshipData();
     protected bool ShouldSaveMessages();
