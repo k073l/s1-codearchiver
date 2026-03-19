@@ -3,6 +3,7 @@ using ScheduleOne.DevUtilities;
 using ScheduleOne.Economy;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace ScheduleOne.UI.Phone.Messages;
@@ -16,6 +17,9 @@ public class WindowSelectorButton : MonoBehaviour
     public Button Button;
     public GameObject InactiveOverlay;
     public RectTransform HoverIndicator;
+    [Header("Custom UI")]
+    public UISelectable uiSelectable;
+    public EventTrigger trigger;
     private Coroutine hoverRoutine;
     private void Awake();
     public void SetInteractable(bool interactable);

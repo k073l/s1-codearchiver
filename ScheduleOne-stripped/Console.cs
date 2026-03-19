@@ -26,6 +26,7 @@ using ScheduleOne.Trash;
 using ScheduleOne.UI;
 using ScheduleOne.Variables;
 using ScheduleOne.Vehicles;
+using ScheduleOne.Weather;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -133,7 +134,7 @@ public class Console : Singleton<Console>
 
     public class PackageProduct : ConsoleCommand
     {
-        public override string CommandWord => "packageprodcut";
+        public override string CommandWord => "packageproduct";
         public override string CommandDescription => "Packages the equipped product with the specified packaging";
         public override string ExampleUsage => "packageproduct jar, packageproduct baggie";
 
@@ -145,6 +146,42 @@ public class Console : Singleton<Console>
         public override string CommandWord => "setstaminareserve";
         public override string CommandDescription => "Sets the player's stamina reserve (default 100) to the specified amount.";
         public override string ExampleUsage => "setstaminareserve 200";
+
+        public override void Execute(List<string> args);
+    }
+
+    public class SetWeather : ConsoleCommand
+    {
+        public override string CommandWord => "setweather";
+        public override string CommandDescription => "Sets the weather to the specified type";
+        public override string ExampleUsage => "setweather clear, setweather lightrain, setweather heavyrain";
+
+        public override void Execute(List<string> args);
+    }
+
+    public class SetWeatherSpeed : ConsoleCommand
+    {
+        public override string CommandWord => "setweatherspeed";
+        public override string CommandDescription => "Sets the speed at which weather volumes move. Default is 1.";
+        public override string ExampleUsage => "setweatherspeed 2";
+
+        public override void Execute(List<string> args);
+    }
+
+    public class TriggerLightning : ConsoleCommand
+    {
+        public override string CommandWord => "triggerlightning";
+        public override string CommandDescription => "Triggers a lightning event. You can specify a target (player or npc) or leave it empty for a random location.";
+        public override string ExampleUsage => "triggerlightning, triggerlightning cranky_frank, triggerlightning playername";
+
+        public override void Execute(List<string> args);
+    }
+
+    public class TriggerDistantThunder : ConsoleCommand
+    {
+        public override string CommandWord => "triggerdistantthunder";
+        public override string CommandDescription => "Triggers distant thunder.";
+        public override string ExampleUsage => "triggerdistantthunder";
 
         public override void Execute(List<string> args);
     }
@@ -519,6 +556,7 @@ public class Console : Singleton<Console>
     private static void LogCommandError(string error);
     private static void LogUnrecognizedFormat(string[] correctExamples);
     protected override void Awake();
+    private void AddCommand(ConsoleCommand command);
     private void RunStartupCommands();
     [HideInCallstack]
     public static void Log(object message, Object context = null);

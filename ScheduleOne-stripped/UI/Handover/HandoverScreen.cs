@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using EasyButtons;
+using ScheduleOne.Core;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Economy;
 using ScheduleOne.GameTime;
@@ -48,6 +48,8 @@ public class HandoverScreen : Singleton<HandoverScreen>
     [Header("References")]
     public Canvas Canvas;
     public GameObject Container;
+    public UIScreen UIScreen;
+    public UIScreen AltScreen;
     public CanvasGroup CanvasGroup;
     public TextMeshProUGUI DescriptionLabel;
     public TextMeshProUGUI CustomerSubtitle;
@@ -78,6 +80,7 @@ public class HandoverScreen : Singleton<HandoverScreen>
     private Dictionary<ItemInstance, EItemSource> OriginalItemLocations;
     private bool ignoreCustomerChangedEvents;
     private bool requireFullChanceOfSuccess;
+    private bool activeScreenChangedThisFrame;
     public Contract CurrentContract { get; protected set; }
     public bool IsOpen { get; protected set; }
     public bool TutorialOpen { get; private set; }
@@ -91,6 +94,7 @@ public class HandoverScreen : Singleton<HandoverScreen>
     [Button]
     public void TestOpen();
     public virtual void Open(Contract contract, Customer customer, EMode mode, Action<EHandoverOutcome, List<ItemInstance>, float> callback, Func<List<ItemInstance>, float, float> successChanceMethod, bool _requireFullChanceOfSuccess = false);
+    public void SwapActiveScreen();
     public virtual void Close(EHandoverOutcome outcome);
     public void DonePressed();
     private void RecordOriginalLocations();

@@ -1,10 +1,10 @@
+using ScheduleOne.GamePhysics;
 using UnityEngine;
 
 namespace ScheduleOne.DevUtilities;
-public class MapHeightSampler
+public static class MapHeightSampler
 {
-    private static float SampleHeight;
-    private static float SampleDistance;
-    public static Vector3 ResetPosition;
-    public static bool Sample(float x, out float y, float z);
+    private const float SampleHeight;
+    private const float SampleDistance;
+    public static bool TrySample(float x, float z, out Vector3 hitPoint);
 }

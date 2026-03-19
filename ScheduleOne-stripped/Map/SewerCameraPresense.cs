@@ -1,6 +1,7 @@
 using Funly.SkyStudio;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.Tools;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -12,7 +13,7 @@ public class SewerCameraPresense : Singleton<SewerCameraPresense>
     public SkyProfileOverride SewerSkyProfileOverride;
     public Volume SewerPPVolume;
     private BoxCollider[] fullPresenceVolumes;
-    private SewerCameraFadeVolume[] fadeVolumes;
+    private FadeVolume[] fadeVolumes;
     public float CameraPresenceInSewerArea { get; private set; }
     public float SmoothedCameraPresenceInSewerArea { get; private set; }
 

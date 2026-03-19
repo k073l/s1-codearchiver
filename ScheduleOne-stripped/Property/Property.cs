@@ -55,7 +55,6 @@ public class Property : NetworkBehaviour, ISaveable
     public float MinimumCullingDistance;
     public GameObject[] ObjectsToCull;
     [Header("References")]
-    public PropertyContentsContainer Container;
     public Transform EmployeeContainer;
     public Transform SpawnPoint;
     public Transform InteriorSpawnPoint;
@@ -70,10 +69,10 @@ public class Property : NetworkBehaviour, ISaveable
     public PropertyDisposalArea DisposalArea;
     public LoadingDock[] LoadingDocks;
     [HideInInspector]
-    public List<BuildableItem> BuildableItems;
+    protected List<BuildableItem> BuildableItems;
     public List<IConfigurable> Configurables;
     public readonly List<Grid> Grids;
-    private BoxCollider[] propertyBoundsColliders;
+    protected BoxCollider[] propertyBoundsColliders;
     private PropertyLoader loader;
     private List<string> savedObjectPaths;
     private List<string> savedEmployeePaths;
@@ -89,6 +88,7 @@ public class Property : NetworkBehaviour, ISaveable
     [field: SerializeField]
     public float AmbientTemperature { get; private set; } = 20f;
     public int LoadingDockCount => LoadingDocks.Length;
+    public PropertyContentsContainer Container { get; private set; }
     public string SaveFolderName => propertyName;
     public string SaveFileName => SaveManager.MakeFileSafe(propertyName);
     public Loader Loader => loader;
@@ -126,6 +126,8 @@ public class Property : NetworkBehaviour, ISaveable
     [ObserversRpc]
     [TargetRpc]
     public void SetToggleableState(NetworkConnection conn, int index, bool state);
+    public void AddBuildableItem(BuildableItem item);
+    public void RemoveBuildableItem(BuildableItem item);
     public virtual string GetSaveString();
     protected List<DynamicSaveData> GetEmployeeSaveDatas();
     protected List<DynamicSaveData> GetObjectSaveDatas();
@@ -138,6 +140,7 @@ public class Property : NetworkBehaviour, ISaveable
     public List<T> GetBuildablesOfType<T>()
         where T : BuildableItem;
     public virtual bool CanDeliverToProperty();
+    public virtual bool CanRespawnInsideProperty();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

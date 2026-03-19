@@ -83,7 +83,6 @@ public class BlackjackGameController : CasinoGameController
     protected override void Open();
     protected override void Close();
     protected override void Exit(ExitAction action);
-    protected override void FixedUpdate();
     private List<Player> GetClockwisePlayers();
     [ObserversRpc(RunLocally = true)]
     private void StartGame();
@@ -117,6 +116,8 @@ public class BlackjackGameController : CasinoGameController
     public bool AreAllPlayersReady();
     public int GetPlayersReadyCount();
     public void ToggleLocalPlayerReady();
+    [ObserversRpc(RunLocally = true)]
+    private void TryStartGame();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();
@@ -147,5 +148,8 @@ public class BlackjackGameController : CasinoGameController
     private void RpcWriter___Observers_RemovePlayerFromCurrentRound_3323014238(NetworkObject player);
     private void RpcLogic___RemovePlayerFromCurrentRound_3323014238(NetworkObject player);
     private void RpcReader___Observers_RemovePlayerFromCurrentRound_3323014238(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Observers_TryStartGame_2166136261();
+    private void RpcLogic___TryStartGame_2166136261();
+    private void RpcReader___Observers_TryStartGame_2166136261(PooledReader PooledReader0, Channel channel);
     protected override void Awake_UserLogic_ScheduleOne_002ECasino_002EBlackjackGameController_Assembly_002DCSharp_002Edll();
 }

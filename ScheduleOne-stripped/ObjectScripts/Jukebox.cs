@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using EasyButtons;
 using FishNet;
 using FishNet.Connection;
 using FishNet.Managing;
@@ -12,7 +11,7 @@ using FishNet.Serializing.Generated;
 using FishNet.Transporting;
 using GameKit.Utilities;
 using ScheduleOne.Audio;
-using ScheduleOne.DevUtilities;
+using ScheduleOne.Core;
 using ScheduleOne.EntityFramework;
 using ScheduleOne.Persistence.Datas;
 using UnityEngine;
@@ -75,7 +74,6 @@ public class Jukebox : GridItem
     public override void OnSpawnServer(NetworkConnection connection);
     public void ChangeVolume(int change);
     public void SetVolume(int volume, bool replicate);
-    private void ApplyVolume();
     [Button]
     public void TogglePlay();
     [Button]

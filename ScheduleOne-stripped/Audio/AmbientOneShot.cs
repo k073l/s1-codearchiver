@@ -4,31 +4,47 @@ using ScheduleOne.GameTime;
 using ScheduleOne.Map;
 using ScheduleOne.PlayerScripts;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ScheduleOne.Audio;
+[RequireComponent(typeof(AudioSourceController))]
 public class AmbientOneShot : MonoBehaviour
 {
-    public enum EPlayTime
+    private enum EPlayTime
     {
         All,
         Day,
         Night
     }
 
-    public AudioSourceController Audio;
     [Header("Settings")]
+    [SerializeField]
+    [FormerlySerializedAs("Volume")]
     [Range(0f, 1f)]
-    public float Volume;
+    private float _volume;
+    [SerializeField]
+    [FormerlySerializedAs("ChancePerHour")]
     [Range(0f, 1f)]
-    public float ChancePerHour;
-    public int CooldownTime;
-    public EPlayTime PlayTime;
-    public float MinDistance;
-    public float MaxDistance;
-    public bool PlayWhileInSewer;
-    private int timeSinceLastPlay;
+    private float _playChancePerHour;
+    [SerializeField]
+    [FormerlySerializedAs("CooldownTime")]
+    private int _cooldownTime;
+    [SerializeField]
+    [FormerlySerializedAs("PlayTime")]
+    private EPlayTime _playTime;
+    [SerializeField]
+    [FormerlySerializedAs("MinDistance")]
+    private float _minDistanceFromCameraToPlay;
+    [SerializeField]
+    [FormerlySerializedAs("MaxDistance")]
+    private float _maxDistanceFromCameraToPlay;
+    [SerializeField]
+    [FormerlySerializedAs("PlayWhileInSewer")]
+    private bool _canPlayWhilePlayerInSewer;
+    private int _timeSinceLastPlay;
+    private AudioSourceController _audioSource;
+    private void Awake();
     private void Start();
-    private void OnDrawGizmosSelected();
-    private void MinPass();
+    private void OnUncappedMinPass();
     private void Play();
 }

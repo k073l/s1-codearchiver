@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using EasyButtons;
 using FishNet;
 using FishNet.Connection;
 using FishNet.Managing;
@@ -7,6 +6,7 @@ using FishNet.Object;
 using FishNet.Object.Delegating;
 using FishNet.Serializing;
 using FishNet.Transporting;
+using ScheduleOne.Core;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Persistence;

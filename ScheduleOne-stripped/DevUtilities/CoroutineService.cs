@@ -1,4 +1,4 @@
 namespace ScheduleOne.DevUtilities;
-public class CoroutineService : Singleton<CoroutineService>
+public class CoroutineService : PersistentSingleton<CoroutineService>
 {
 }

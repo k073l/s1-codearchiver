@@ -1,24 +1,22 @@
 using ScheduleOne.DevUtilities;
-using ScheduleOne.Materials;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.Tools;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace ScheduleOne.AvatarFramework.Animation;
-public class AvatarFootstepDetector : MonoBehaviour
+[RequireComponent(typeof(Avatar))]
+public class AvatarFootstepDetector : GenericFootstepDetector
 {
-    public const float GROUND_DETECTION_RANGE;
-    public Avatar Avatar;
-    public Transform ReferencePoint;
-    public Transform LeftBone;
-    public Transform RightBone;
-    public float StepThreshold;
-    public LayerMask GroundDetectionMask;
-    public float MaxDetectionRange;
-    private bool leftDown;
-    private bool rightDown;
-    public UnityEvent<EMaterialType, float> onStep;
-    private void LateUpdate();
-    public void TriggerStep();
-    public bool IsGrounded(out EMaterialType surfaceType);
+    private const float StepThreshold;
+    [SerializeField]
+    private float _detectionRange;
+    private Avatar _avatar;
+    private bool _leftDown;
+    private bool _rightDown;
+    private float _detectionRangeSqr;
+    private Transform _leftBone => _avatar.LeftFootBone;
+    private Transform _rightBone => _avatar.RightFootBone;
+
+    private void Awake();
+    protected virtual void LateUpdate();
 }

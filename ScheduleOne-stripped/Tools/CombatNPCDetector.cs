@@ -1,3 +1,4 @@
+using System.Collections;
 using ScheduleOne.NPCs;
 using ScheduleOne.Police;
 using UnityEngine;
@@ -10,11 +11,11 @@ public class CombatNPCDetector : MonoBehaviour
     public bool DetectOnlyInCombat;
     public UnityEvent onDetected;
     public float ContactTimeForDetection;
-    private bool inContact;
     private NPC npcInContact;
     private float contactTime;
+    private Coroutine detectionRoutine;
     private void Awake();
-    private void FixedUpdate();
+    private IEnumerator UpdateWhileDetected();
     private void OnTriggerEnter(Collider other);
     private void OnTriggerExit(Collider other);
 }

@@ -18,6 +18,7 @@ public class LabOvenCanvas : Singleton<LabOvenCanvas>
     [Header("References")]
     public Canvas Canvas;
     public GameObject Container;
+    public UIScreen UIScreen;
     public ItemSlotUI IngredientSlotUI;
     public ItemSlotUI OutputSlotUI;
     public TextMeshProUGUI InstructionLabel;

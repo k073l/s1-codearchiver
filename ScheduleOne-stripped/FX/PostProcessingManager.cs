@@ -1,6 +1,7 @@
 using Beautify.Universal;
 using CorgiGodRays;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.GameTime;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Tools;
 using UnityEngine;
@@ -19,6 +20,11 @@ public class PostProcessingManager : Singleton<PostProcessingManager>
     [Header("Blur")]
     public float MinBlur;
     public float MaxBlur;
+    [Header("Post exposre")]
+    public AnimationCurve PostExposureCurve;
+    public float PostExposureMultiplier;
+    [Header("Bloom")]
+    public AnimationCurve BloomIntensityCurve;
     [Header("Smoothers")]
     public FloatSmoother ChromaticAberrationController;
     public FloatSmoother SaturationController;

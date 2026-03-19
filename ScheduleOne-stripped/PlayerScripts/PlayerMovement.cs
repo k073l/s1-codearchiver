@@ -57,6 +57,7 @@ public class PlayerMovement : PlayerSingleton<PlayerMovement>
     [Header("Jump/fall settings")]
     [FormerlySerializedAs("groundDetectionMask")]
     public LayerMask GroundDetectionMask;
+    public readonly FloatStack MoveSpeedMultiplierStack;
     public Action<float> onStaminaReserveChanged;
     public Action onJump;
     public Action onLand;
@@ -84,7 +85,6 @@ public class PlayerMovement : PlayerSingleton<PlayerMovement>
     private Coroutine playerRotCoroutine;
     public bool CanMove { get; set; } = true;
     public bool CanJump { get; set; } = true;
-    public float MoveSpeedMultiplier { get; set; } = 1f;
     public Vector3 Movement => movement;
     public bool IsJumping { get; private set; }
     public float TimeAirborne { get; private set; }
@@ -100,6 +100,7 @@ public class PlayerMovement : PlayerSingleton<PlayerMovement>
     public LandVehicle CurrentVehicle { get; protected set; }
     public Ladder CurrentLadder { get; set; }
     public bool IsOnLadder => (Object)(object)CurrentLadder != (Object)null;
+    public float MoveSpeedMultiplier => MoveSpeedMultiplierStack.Value;
 
     protected override void Awake();
     protected override void Start();
@@ -112,10 +113,10 @@ public class PlayerMovement : PlayerSingleton<PlayerMovement>
     private bool GetIsGrounded();
     public unsafe void Teleport(Vector3 position, bool alignFeetToPosition = false);
     public void SetResidualVelocity(Vector3 dir, float force, float time);
-    public void WarpToNavMesh();
+    public void WarpToNavMesh(bool clearVelocity = false);
     private void UpdateHorizontalAxis();
     private void UpdateVerticalAxis();
-    private IEnumerator Jump();
+    public void Jump();
     public void SetCrouched(bool c);
     private void TryToggleCrouch();
     private bool CanStand();

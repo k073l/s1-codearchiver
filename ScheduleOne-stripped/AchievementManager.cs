@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using ScheduleOne.DevUtilities;
 using Steamworks;
 using UnityEngine;
 
 namespace ScheduleOne;
-public class AchievementManager : PersistentSingleton<AchievementManager>
+public static class AchievementManager
 {
     public enum EAchievement
     {
@@ -24,10 +25,10 @@ public class AchievementManager : PersistentSingleton<AchievementManager>
         FINISHING_THE_JOB
     }
 
-    private EAchievement[] achievements;
-    private Dictionary<EAchievement, bool> achievementUnlocked;
-    protected override void Awake();
-    protected override void Start();
-    private void PullAchievements();
-    public void UnlockAchievement(EAchievement achievement);
+    private static EAchievement[] achievements;
+    private static Dictionary<EAchievement, bool> achievementUnlocked;
+    [RuntimeInitializeOnLoadMethod( /*Could not decode attribute arguments.*/)]
+    private static void Init();
+    private static void PullAchievements();
+    public static void UnlockAchievement(EAchievement achievement);
 }

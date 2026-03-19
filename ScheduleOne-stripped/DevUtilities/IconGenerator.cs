@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using EasyButtons;
+using ScheduleOne.Core;
 using ScheduleOne.FX;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Product;

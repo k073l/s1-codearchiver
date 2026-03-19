@@ -1,5 +1,4 @@
 using ScheduleOne.VoiceOver;
-using UnityEngine;
 
 namespace ScheduleOne.NPCs.Behaviour;
 public class CoweringBehaviour : Behaviour
@@ -12,7 +11,6 @@ public class CoweringBehaviour : Behaviour
     public override void Resume();
     public override void Pause();
     public override void Disable();
-    public override void BehaviourUpdate();
     private void SetCowering(bool cowering);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();

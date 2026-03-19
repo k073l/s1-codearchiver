@@ -19,7 +19,6 @@ public class ShroomInstance : ProductItemInstance
     public override string Name { get; }
     private ShroomDefinition _shroomDefinition => base.Definition as ShroomDefinition;
 
-    public ShroomInstance();
     public ShroomInstance(ItemDefinition definition, int quantity, EQuality quality, PackagingDefinition packaging = null);
     public override ItemInstance GetCopy(int overrideQuantity = -1);
     public override ItemData GetItemData();

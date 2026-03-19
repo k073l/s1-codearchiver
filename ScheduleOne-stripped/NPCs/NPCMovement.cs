@@ -50,8 +50,12 @@ public class NPCMovement : NetworkBehaviour
         Success
     }
 
-    public const float VEHICLE_RUNOVER_THRESHOLD;
-    public const float SKATEBOARD_RUNOVER_THRESHOLD;
+    private const float VehicleRunoverSpeed;
+    private const float VehicleRunoverRelativeVelocityThreshold_Sqr;
+    private const float VehicleImpactCooldown;
+    private const float VehicleImpactForceMultiplier;
+    private const float SkateboardRunoverSpeed;
+    private const float SkateboardImpactForceMultiplier;
     public const float LIGHT_FLINCH_THRESHOLD;
     public const float HEAVY_FLINCH_THRESHOLD;
     public const float RAGDOLL_THRESHOLD;
@@ -110,6 +114,7 @@ public class NPCMovement : NetworkBehaviour
     private float agentCurrentSpeed;
     private Vector3[] agentCurrentPathCorners;
     private Coroutine ladderClimbRoutine;
+    private float _defaultAngularSpeed;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002ENPCMovementAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002ENPCMovementAssembly_002DCSharp_002Edll_Excuted;
     public bool HasDestination { get; protected set; }
@@ -146,7 +151,7 @@ public class NPCMovement : NetworkBehaviour
     private void UpdateAvoidance();
     public void OnTriggerEnter(Collider other);
     public void OnCollisionEnter(Collision collision);
-    private void CheckHit(Collider other, Collider thisCollider, bool isCollision, Vector3 hitPoint);
+    private void CheckHit(Collider other, Collider thisCollider, bool isCollision, Vector3 hitPoint, Collision collision = null);
     public void Warp(Transform target);
     public unsafe void Warp(Vector3 position);
     [ObserversRpc(ExcludeServer = true)]
@@ -157,9 +162,11 @@ public class NPCMovement : NetworkBehaviour
     public void SetSeat(AvatarSeat seat);
     public void SetStance(EStance stance);
     public void SetGravityMultiplier(float multiplier);
+    public void SetAngularSpeedMultiplier(float multiplier);
     public void SetRagdollDraggable(bool draggable);
-    [ServerRpc(RunLocally = true, RequireOwnership = false)]
     public void ActivateRagdoll_Server();
+    [ServerRpc(RunLocally = true, RequireOwnership = false)]
+    public void ActivateRagdoll_Server(Vector3 forcePoint, Vector3 forceDir, float forceMagnitude);
     [ObserversRpc(RunLocally = true)]
     public void ActivateRagdoll(Vector3 forcePoint, Vector3 forceDir, float forceMagnitude);
     [ObserversRpc(RunLocally = true)]
@@ -195,9 +202,9 @@ public class NPCMovement : NetworkBehaviour
     private void RpcWriter___Observers_ReceiveWarp_4276783012(Vector3 position);
     private unsafe void RpcLogic___ReceiveWarp_4276783012(Vector3 position);
     private void RpcReader___Observers_ReceiveWarp_4276783012(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Server_ActivateRagdoll_Server_2166136261();
-    public void RpcLogic___ActivateRagdoll_Server_2166136261();
-    private void RpcReader___Server_ActivateRagdoll_Server_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Server_ActivateRagdoll_Server_2690242654(Vector3 forcePoint, Vector3 forceDir, float forceMagnitude);
+    public void RpcLogic___ActivateRagdoll_Server_2690242654(Vector3 forcePoint, Vector3 forceDir, float forceMagnitude);
+    private void RpcReader___Server_ActivateRagdoll_Server_2690242654(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
     private void RpcWriter___Observers_ActivateRagdoll_2690242654(Vector3 forcePoint, Vector3 forceDir, float forceMagnitude);
     public unsafe void RpcLogic___ActivateRagdoll_2690242654(Vector3 forcePoint, Vector3 forceDir, float forceMagnitude);
     private void RpcReader___Observers_ActivateRagdoll_2690242654(PooledReader PooledReader0, Channel channel);

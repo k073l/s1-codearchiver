@@ -10,5 +10,5 @@ public class BotanistConfigPanel : ConfigPanel
     public ObjectFieldUI BedUI;
     public ObjectFieldUI SuppliesUI;
     public ObjectListFieldUI PotsUI;
-    public override void Bind(List<EntityConfiguration> configs);
+    protected override void BindInternal(List<EntityConfiguration> configs);
 }

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using ScheduleOne.Map;
 using ScheduleOne.Quests;
 using UnityEngine;
 
@@ -11,7 +10,6 @@ public class DeliveryLocation : MonoBehaviour, IGUIDRegisterable
     public string LocationDescription;
     public Transform CustomerStandPoint;
     public Transform TeleportPoint;
-    public POI PoI;
     public string StaticGUID;
     public List<Contract> ScheduledContracts;
     public Guid GUID { get; protected set; }

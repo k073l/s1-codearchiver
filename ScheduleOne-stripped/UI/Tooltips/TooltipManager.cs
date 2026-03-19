@@ -15,8 +15,7 @@ public class TooltipManager : Singleton<TooltipManager>
     private RectTransform anchor;
     [SerializeField]
     private TextMeshProUGUI tooltipLabel;
-    [Header("Canvas")]
-    public List<Canvas> canvases;
+    private List<Canvas> canvases;
     private List<Canvas> sortedCanvases;
     private List<GraphicRaycaster> raycasters;
     private EventSystem eventSystem;

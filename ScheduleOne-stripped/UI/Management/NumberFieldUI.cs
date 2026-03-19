@@ -17,6 +17,7 @@ public class NumberFieldUI : MonoBehaviour
     public List<NumberField> Fields { get; protected set; } = new List<NumberField>();
 
     public void Bind(List<NumberField> field);
+    public void IncrementValue(int amt);
     private void Refresh(float newVal);
     private bool AreFieldsUniform();
     public void ValueChanged(float value);

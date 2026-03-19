@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.ItemFramework;
@@ -32,6 +33,7 @@ public class ItemSelector : ClipboardScreen
     private Option selectedOption;
     private List<RectTransform> optionButtons;
     private Action<Option> optionCallback;
+    private UIContentPanel panel;
     public void Initialize(string selectionTitle, List<Option> _options, Option _selectedOption = null, Action<Option> _optionCallback = null);
     public override void Open();
     public override void Close();
@@ -40,4 +42,5 @@ public class ItemSelector : ClipboardScreen
     private void ButtonHoverEnd(Option option);
     private void CreateOptions(List<Option> options);
     private void DeleteOptions();
+    private void InitializeAfterUIReady();
 }

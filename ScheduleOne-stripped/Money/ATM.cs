@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using EasyButtons;
 using FishNet;
 using FishNet.Connection;
 using FishNet.Managing;
@@ -9,6 +8,7 @@ using FishNet.Object.Delegating;
 using FishNet.Serializing;
 using FishNet.Transporting;
 using ScheduleOne.Combat;
+using ScheduleOne.Core;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.Interaction;

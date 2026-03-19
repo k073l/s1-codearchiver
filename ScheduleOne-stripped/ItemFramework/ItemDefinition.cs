@@ -1,4 +1,5 @@
 using System;
+using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.Equipping;
 using ScheduleOne.UI.Items;
 using UnityEngine;
@@ -6,25 +7,20 @@ using UnityEngine;
 namespace ScheduleOne.ItemFramework;
 [Serializable]
 [CreateAssetMenu(fileName = "ItemDefinition", menuName = "ScriptableObjects/ItemDefinition", order = 1)]
-public class ItemDefinition : ScriptableObject
+public abstract class ItemDefinition : BaseItemDefinition
 {
-    public const int DEFAULT_STACK_LIMIT;
-    public string Name;
-    [TextArea(3, 10)]
-    public string Description;
-    public string ID;
-    public Sprite Icon;
-    public EItemCategory Category;
-    public string[] Keywords;
+    public enum EEquipMode
+    {
+        Legacy,
+        New
+    }
+
     public bool AvailableInDemo;
-    public bool UsableInFilters;
-    public Color LabelDisplayColor;
-    public int StackLimit;
+    [Header("Legacy Equipping Settings")]
+    public EEquipMode EquipMode;
     public Equippable Equippable;
+    [Header("UI Settings")]
     public ItemUI CustomItemUI;
     public ItemInfoContent CustomInfoContent;
-    [Header("Legal Status")]
-    public ELegalStatus legalStatus;
-    public virtual ItemInstance GetDefaultInstance(int quantity = 1);
-    public virtual void ValidateDefinition();
+    public abstract ItemInstance GetDefaultInstance(int quantity = 1);
 }

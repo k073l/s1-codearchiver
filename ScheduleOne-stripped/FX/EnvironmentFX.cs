@@ -2,6 +2,7 @@ using Funly.SkyStudio;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.Tools;
+using ScheduleOne.Weather;
 using UnityEngine;
 using VolumetricFogAndMist2;
 
@@ -25,11 +26,11 @@ public class EnvironmentFX : Singleton<EnvironmentFX>
     protected AnimationCurve HeightFogDirectionalIntensityCurve;
     [Header("Volumetric Fog")]
     [SerializeField]
-    protected Gradient VolumetricFogColor;
-    [SerializeField]
     protected AnimationCurve VolumetricFogIntensityCurve;
     [SerializeField]
     protected float VolumetricFogIntensityMultiplier;
+    [SerializeField]
+    protected float VolumetricFogSaturationMultiplier;
     [Header("Fog")]
     [SerializeField]
     private float fogEndDistanceMultiplier;

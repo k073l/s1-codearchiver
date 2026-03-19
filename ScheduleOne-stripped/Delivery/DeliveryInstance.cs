@@ -35,5 +35,6 @@ public class DeliveryInstance
     public int GetTimeStatus();
     public void SetStatus(EDeliveryStatus status);
     public void AddItemsToDeliveryVehicle();
+    public DeliveryReceipt GetReceipt();
     public void OnTimePass(int minutes);
 }

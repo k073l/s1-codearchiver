@@ -7,6 +7,7 @@ namespace ScheduleOne.Persistence.Loaders;
 public class BuildableItemLoader : Loader
 {
     public virtual string ItemType => typeof(BuildableItemData).Name;
+    public virtual int LoadOrder => 0;
 
     public BuildableItemLoader();
     public override void Load(string mainPath);

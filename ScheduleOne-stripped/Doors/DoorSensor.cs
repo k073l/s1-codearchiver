@@ -21,6 +21,5 @@ public class DoorSensor : MonoBehaviour
     private void UpdateCollider();
     private void OnTriggerEnter(Collider other);
     private void OnTriggerExit(Collider other);
-    private void FixedUpdate();
     private void RemoveInvalidContacts();
 }

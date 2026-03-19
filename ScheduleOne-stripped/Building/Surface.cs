@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using EasyButtons;
+using ScheduleOne.Core;
 using ScheduleOne.Property;
 using UnityEngine;
 
@@ -36,7 +36,6 @@ public class Surface : MonoBehaviour, IGUIDRegisterable
 
     [Button]
     public void RegenerateGUID();
-    private void OnValidate();
     private void OnDrawGizmos();
     protected virtual void Awake();
     public void SetGUID(Guid guid);

@@ -35,6 +35,7 @@ public class TimeManager : NetworkSingleton<TimeManager>, IBaseSaveable, ISaveab
     public ActionList onMinutePass;
     public ActionList onUncappedMinutePass;
     public ActionList onTick;
+    public Action onTimeChanged;
     public Action<int> onTimeSkip;
     public Action onTimeSet;
     public Action onHourPass;
@@ -48,7 +49,6 @@ public class TimeManager : NetworkSingleton<TimeManager>, IBaseSaveable, ISaveab
     private bool NetworkInitialize___EarlyScheduleOne_002EGameTime_002ETimeManagerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EGameTime_002ETimeManagerAssembly_002DCSharp_002Edll_Excuted;
     public static float MinuteDuration => CycleDuration / 24f;
-    public static float TicksPerMinute => MinuteDuration / 0.5f;
 
     [field: SerializeField]
     public int DefaultTime { get; private set; } = 900;
@@ -65,7 +65,7 @@ public class TimeManager : NetworkSingleton<TimeManager>, IBaseSaveable, ISaveab
     public float TimeSpeedMultiplier { get; private set; } = 1f;
     public int DailyMinSum { get; private set; }
     private float _minuteStaggerTime => MinuteDuration / (Time.timeScale * 0.9f);
-    private float _tickStaggerTime => MinuteDuration / (Time.timeScale * 0.9f);
+    private float _tickStaggerTime => 0.45f;
     public string SaveFolderName => "Time";
     public string SaveFileName => "Time";
     public Loader Loader => loader;
@@ -76,6 +76,7 @@ public class TimeManager : NetworkSingleton<TimeManager>, IBaseSaveable, ISaveab
     public int LoadOrder { get; }
 
     public override void Awake();
+    protected override void Start();
     public virtual void InitializeSaveable();
     public override void OnSpawnServer(NetworkConnection connection);
     public override void OnStartServer();

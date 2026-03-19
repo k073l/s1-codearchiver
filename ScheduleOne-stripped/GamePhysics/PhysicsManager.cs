@@ -11,10 +11,13 @@ using UnityEngine;
 namespace ScheduleOne.GamePhysics;
 public class PhysicsManager : NetworkSingleton<PhysicsManager>
 {
-    public const bool AUTO_SYNC_TRANSFORMS;
+    public const bool AutoSyncTransforms;
     private bool NetworkInitialize___EarlyScheduleOne_002EGamePhysics_002EPhysicsManagerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EGamePhysics_002EPhysicsManagerAssembly_002DCSharp_002Edll_Excuted;
     public float GravityMultiplier { get; private set; } = 1f;
+
+    [field: SerializeField]
+    public LayerMask GroundDetectionLayerMask { get; private set; }
 
     public override void Awake();
     public override void OnSpawnServer(NetworkConnection connection);

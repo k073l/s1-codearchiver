@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using EasyButtons;
+using ScheduleOne.Core;
 using ScheduleOne.EntityFramework;
 using ScheduleOne.Property;
 using ScheduleOne.Temperature;

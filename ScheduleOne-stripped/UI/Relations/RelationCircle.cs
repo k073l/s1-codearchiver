@@ -1,5 +1,5 @@
 using System;
-using EasyButtons;
+using ScheduleOne.Core;
 using ScheduleOne.Economy;
 using ScheduleOne.NPCs;
 using ScheduleOne.NPCs.Relation;
@@ -29,6 +29,8 @@ public class RelationCircle : MonoBehaviour
     public RectTransform Locked;
     public Button Button;
     public EventTrigger Trigger;
+    [Header("Custom UI")]
+    public UIMapItem uiMapItem;
     private void Awake();
     private void OnValidate();
     public void AssignNPC(NPC npc);

@@ -15,6 +15,7 @@ public class RegionUnlockedCanvas : Singleton<RegionUnlockedCanvas>, IPostSleepE
     public TextMeshProUGUI RegionLabel;
     public TextMeshProUGUI RegionDescription;
     public Image RegionImage;
+    public UIScreen UIScreen;
     private EMapRegion region;
     public bool IsRunning { get; private set; }
     public int Order { get; private set; } = 5;

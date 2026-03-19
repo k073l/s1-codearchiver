@@ -7,6 +7,7 @@ public class StartLoopMusicTrack : MusicTrack
 {
     public AudioSourceController LoopSound;
     protected override void Awake();
-    public override void Update();
+    private void Start();
+    protected override void Update();
     public override void Play();
 }

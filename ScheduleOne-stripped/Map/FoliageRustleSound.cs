@@ -13,6 +13,7 @@ public class FoliageRustleSound : MonoBehaviour
     public GameObject Container;
     private float timeOnLastHit;
     private void Awake();
+    private void OnDrawGizmos();
     public void OnTriggerEnter(Collider other);
     private void UpdateActive();
 }

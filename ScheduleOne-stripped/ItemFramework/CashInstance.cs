@@ -1,4 +1,5 @@
 using System;
+using FishNet.Serializing;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.Storage;
 using UnityEngine;
@@ -10,11 +11,12 @@ public class CashInstance : StorableItemInstance
     public const float MAX_BALANCE;
     public float Balance { get; protected set; }
 
-    public CashInstance();
     public CashInstance(ItemDefinition definition, int quantity);
     public override ItemInstance GetCopy(int overrideQuantity = -1);
     public void ChangeBalance(float amount);
     public void SetBalance(float newBalance, bool blockClear = false);
     public override ItemData GetItemData();
     public override float GetMonetaryValue();
+    public override void Write(Writer writer);
+    public override void Read(Reader reader);
 }

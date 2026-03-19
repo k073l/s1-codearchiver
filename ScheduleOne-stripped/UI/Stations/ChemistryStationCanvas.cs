@@ -21,6 +21,7 @@ public class ChemistryStationCanvas : Singleton<ChemistryStationCanvas>
     public StationRecipeEntry RecipeEntryPrefab;
     [Header("References")]
     public Canvas Canvas;
+    public UIScreen UIScreen;
     public RectTransform Container;
     public RectTransform InputSlotsContainer;
     public ItemSlotUI[] InputSlotUIs;

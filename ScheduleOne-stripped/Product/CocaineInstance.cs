@@ -13,7 +13,6 @@ namespace ScheduleOne.Product;
 [Serializable]
 public class CocaineInstance : ProductItemInstance
 {
-    public CocaineInstance();
     public CocaineInstance(ItemDefinition definition, int quantity, EQuality quality, PackagingDefinition packaging = null);
     public override ItemInstance GetCopy(int overrideQuantity = -1);
     public override ItemData GetItemData();

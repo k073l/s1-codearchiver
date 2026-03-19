@@ -13,7 +13,7 @@ using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 namespace ScheduleOne.Building;
-public class BuildManager : Singleton<BuildManager>
+public class BuildManager : NetworkSingleton<BuildManager>
 {
     [Serializable]
     public class BuildSound
@@ -23,23 +23,14 @@ public class BuildManager : Singleton<BuildManager>
     }
 
     public List<BuildSound> PlaceSounds;
-    [Header("References")]
-    [SerializeField]
-    protected Transform tempContainer;
-    public NetworkObject networkObject;
-    [Header("Prefabs")]
-    [SerializeField]
-    protected GameObject storedItemBuildHandler;
-    [SerializeField]
-    protected GameObject cashBuildHandler;
     [Header("Materials")]
     public Material ghostMaterial_White;
     public Material ghostMaterial_Red;
-    public Transform _tempContainer => tempContainer;
+    private bool NetworkInitialize___EarlyScheduleOne_002EBuilding_002EBuildManagerAssembly_002DCSharp_002Edll_Excuted;
+    private bool NetworkInitialize__LateScheduleOne_002EBuilding_002EBuildManagerAssembly_002DCSharp_002Edll_Excuted;
     public bool isBuilding { get; protected set; }
     public GameObject currentBuildHandler { get; protected set; }
 
-    protected override void Awake();
     public void StartBuilding(ItemInstance item);
     public void StopBuilding();
     public void PlayBuildSound(BuildableItemDefinition.EBuildSoundType type, Vector3 point);
@@ -53,4 +44,8 @@ public class BuildManager : Singleton<BuildManager>
     public GridItem CreateGridItem(ItemInstance item, Grid grid, Vector2 originCoordinate, int rotation, string guid = "", Action<GridItem> onBeforeSpawn = null);
     public ProceduralGridItem CreateProceduralGridItem(ItemInstance item, int rotationAngle, List<CoordinateProceduralTilePair> matches, string guid = "");
     public SurfaceItem CreateSurfaceItem(ItemInstance item, Surface parentSurface, Vector3 relativePosition, Quaternion relativeRotation, string guid = "");
+    public override void NetworkInitialize___Early();
+    public override void NetworkInitialize__Late();
+    public override void NetworkInitializeIfDisabled();
+    public override void Awake();
 }

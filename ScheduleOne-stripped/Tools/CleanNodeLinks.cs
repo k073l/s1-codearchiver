@@ -1,5 +1,5 @@
-using EasyButtons;
 using Pathfinding;
+using ScheduleOne.Core;
 using UnityEngine;
 
 namespace ScheduleOne.Tools;

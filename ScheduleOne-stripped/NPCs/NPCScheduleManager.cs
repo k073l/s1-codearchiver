@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using EasyButtons;
 using FishNet;
 using FishNet.Object;
+using ScheduleOne.Core;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.Law;
 using ScheduleOne.Networking;
+using ScheduleOne.NPCs.Other;
 using ScheduleOne.NPCs.Schedules;
 using ScheduleOne.Persistence;
 using ScheduleOne.PlayerScripts;
@@ -24,12 +25,16 @@ public class NPCScheduleManager : MonoBehaviour
     public GameObject[] EnabledDuringCurfew;
     public GameObject[] EnabledDuringNoCurfew;
     public List<NPCAction> ActionList;
+    [Header("Discrete Actions")]
+    [SerializeField]
+    private List<NPCDiscreteAction> discreteActions;
     protected int lastProcessedTime;
     public bool ScheduleEnabled { get; protected set; }
     public bool CurfewModeEnabled { get; protected set; }
     public NPCAction ActiveAction { get; set; }
     public List<NPCAction> PendingActions { get; set; } = new List<NPCAction>();
     public NPC Npc { get; protected set; }
+    public List<NPCDiscreteAction> DiscreteActions => discreteActions;
     protected List<NPCAction> ActionsAwaitingStart { get; set; } = new List<NPCAction>();
     protected TimeManager Time => NetworkSingleton<TimeManager>.Instance;
 

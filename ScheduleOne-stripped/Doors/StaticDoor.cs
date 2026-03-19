@@ -19,6 +19,8 @@ public class StaticDoor : MonoBehaviour
     public Transform AccessPoint;
     public InteractableObject IntObj;
     public AudioSourceController KnockSound;
+    public AudioSourceController EnterSound;
+    public AudioSourceController ExitSound;
     public NPCEnterableBuilding Building;
     [Header("Settings")]
     public bool Usable;

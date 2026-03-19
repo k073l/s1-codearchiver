@@ -18,4 +18,5 @@ public class DialogueDatabase : ScriptableObject
     public DialogueChain GetChain(EDialogueModule moduleType, string key);
     public bool HasChain(EDialogueModule moduleType, string key);
     public string GetLine(EDialogueModule moduleType, string key);
+    public bool HasLine(EDialogueModule moduleType, string key);
 }

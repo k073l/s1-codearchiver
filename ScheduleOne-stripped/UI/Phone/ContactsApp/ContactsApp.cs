@@ -52,6 +52,11 @@ public class ContactsApp : App<ContactsApp>
     public RectTransform RegionLocked_Unavailable;
     [Header("Prefabs")]
     public GameObject ConnectionPrefab;
+    [Header("Custom UI")]
+    [SerializeField]
+    protected UIScreen uiScreen;
+    [SerializeField]
+    protected UIMapPanel uiPanel;
     private List<RelationCircle> RelationCircles;
     private Coroutine contentMoveRoutine;
     private List<Tuple<NPC, NPC>> connections;

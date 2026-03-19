@@ -9,5 +9,5 @@ public class ChemistryStationConfigPanel : ConfigPanel
     [Header("References")]
     public StationRecipeFieldUI RecipeUI;
     public ObjectFieldUI DestinationUI;
-    public override void Bind(List<EntityConfiguration> configs);
+    protected override void BindInternal(List<EntityConfiguration> configs);
 }

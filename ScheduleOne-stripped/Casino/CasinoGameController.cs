@@ -23,7 +23,6 @@ public class CasinoGameController : NetworkBehaviour
     public override void Awake();
     protected virtual void OnLocalPlayerRequestJoin(Player player);
     protected virtual void Exit(ExitAction action);
-    protected virtual void FixedUpdate();
     protected virtual void Open();
     protected virtual void Close();
     public override void NetworkInitialize___Early();

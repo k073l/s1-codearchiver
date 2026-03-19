@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using EasyButtons;
 using FishNet;
 using FishNet.Connection;
 using FishNet.Managing;
@@ -10,6 +9,7 @@ using FishNet.Serializing;
 using FishNet.Serializing.Generated;
 using FishNet.Transporting;
 using ScheduleOne.Audio;
+using ScheduleOne.Core;
 using ScheduleOne.NPCs;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.UI.WorldspacePopup;
@@ -51,6 +51,8 @@ public class VisionCone : NetworkBehaviour
     public delegate void EventStateChange(VisionEventReceipt _event);
     public const float VISION_UPDATE_INTERVAL;
     public const float MinVisionDelta;
+    private const float ExclamationSoundCooldown;
+    private static float TimeOnLastExclamationSound;
     public static float UniversalAttentivenessScale;
     public static float UniversalMemoryScale;
     public const float HorizontalFOV;

@@ -17,6 +17,8 @@ public class RankUpCanvas : MonoBehaviour, IPostSleepEvent
     public TextMeshProUGUI OldRankLabel;
     public TextMeshProUGUI NewRankLabel;
     public Canvas Canvas;
+    public UIScreen UIScreen;
+    public UIPanel LevelUpPanel;
     public GameObject UnlockedItemsContainer;
     public CanvasGroup UnlockedItemsCanvasGroup;
     public RectTransform[] UnlockedItems;

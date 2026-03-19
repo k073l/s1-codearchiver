@@ -1,6 +1,6 @@
-using EasyButtons;
 using ScheduleOne.AvatarFramework;
 using ScheduleOne.AvatarFramework.Equipping;
+using ScheduleOne.Core;
 using UnityEngine;
 
 namespace ScheduleOne.Tools;

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using EasyButtons;
 using FishNet;
+using ScheduleOne.Core;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.Persistence;

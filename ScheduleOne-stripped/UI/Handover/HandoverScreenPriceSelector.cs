@@ -15,4 +15,7 @@ public class HandoverScreenPriceSelector : MonoBehaviour
     public void RefreshPrice();
     public void OnPriceInputChanged(string value);
     public void ChangeAmount(float change);
+    public void ShowOSK();
+    private void KBSubmit(string newPrice);
+    private void KBCancel();
 }

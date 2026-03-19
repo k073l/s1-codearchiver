@@ -7,6 +7,8 @@ namespace ScheduleOne.UI.WorldspacePopup;
 public class WorldspacePopupCanvas : MonoBehaviour
 {
     public const float WORLDSPACE_ICON_SCALE_MULTIPLIER;
+    private const float HUDIconMaxOpacityAngle;
+    private const float HUDIconMinOpacityAngle;
     [Header("References")]
     public RectTransform WorldspaceContainer;
     public RectTransform HudContainer;

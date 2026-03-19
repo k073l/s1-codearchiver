@@ -6,5 +6,6 @@ public enum EAudioType
     FX,
     UI,
     Music,
-    Voice
+    Voice,
+    Weather
 }

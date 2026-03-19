@@ -62,6 +62,7 @@ public class RebindActionUI : MonoBehaviour
     public RebindingOperation ongoingRebind => m_RebindOperation;
 
     public bool ResolveActionAndBinding(out InputAction action, out int bindingIndex);
+    public bool IsRebinding();
     public void UpdateBindingDisplay();
     public void ResetToDefault();
     public void StartInteractiveRebind();

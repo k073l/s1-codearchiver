@@ -1,6 +1,7 @@
 using System;
 using ScheduleOne.PlayerScripts;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Serialization;
 
 namespace ScheduleOne.DevUtilities;
@@ -18,6 +19,8 @@ public class OptimizedLight : MonoBehaviour
     [Range(10f, 500f)]
     public float MaxDistance;
     public Light _Light;
+    [SerializeField]
+    private LensFlareComponentSRP _lensFlare;
     private bool culled;
     private float maxDistanceSquared;
     public bool Enabled { get; set; }

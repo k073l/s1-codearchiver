@@ -1,3 +1,4 @@
+using ScheduleOne.Misc;
 using UnityEngine;
 
 namespace ScheduleOne.Map.Infrastructure;
@@ -10,31 +11,14 @@ public class TrafficLight : MonoBehaviour
         Green
     }
 
-    public static float amberTime;
-    [Header("References")]
     [SerializeField]
-    protected MeshRenderer redMesh;
+    private ToggleableLight _redLight;
     [SerializeField]
-    protected MeshRenderer orangeMesh;
+    private ToggleableLight _orangeLight;
     [SerializeField]
-    protected MeshRenderer greenMesh;
-    [Header("Materials")]
-    [SerializeField]
-    protected Material redOn_Mat;
-    [SerializeField]
-    protected Material redOff_Mat;
-    [SerializeField]
-    protected Material orangeOn_Mat;
-    [SerializeField]
-    protected Material orangeOff_Mat;
-    [SerializeField]
-    protected Material greenOn_Mat;
-    [SerializeField]
-    protected Material greenOff_Mat;
-    [Header("Settings")]
-    public State state;
-    private State appliedState;
-    protected virtual void Start();
-    protected virtual void Update();
+    private ToggleableLight _greenLight;
+    private State _state;
+    public State CurrentState { get; set; }
+
     protected virtual void ApplyState();
 }

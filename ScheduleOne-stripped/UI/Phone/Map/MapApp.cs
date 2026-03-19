@@ -20,6 +20,11 @@ public class MapApp : App<MapApp>
     public Sprite TutorialMapSprite;
     public float LabelScrollMin;
     public float LabelScrollMax;
+    [Header("Custom UI")]
+    [SerializeField]
+    protected UIScreen uiScreen;
+    [SerializeField]
+    protected UIMapPanel uiPanel;
     [HideInInspector]
     public bool SkipFocusPlayer;
     private Coroutine contentMoveRoutine;
@@ -28,4 +33,6 @@ public class MapApp : App<MapApp>
     public override void SetOpen(bool open);
     protected override void Update();
     public void FocusPosition(Vector2 anchoredPosition);
+    public void SetupMapItem(GameObject gameObject);
+    public void TeardownMapItem(GameObject gameObject);
 }

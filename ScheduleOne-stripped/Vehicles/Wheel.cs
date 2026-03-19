@@ -1,6 +1,8 @@
 using System;
-using EasyButtons;
 using ScheduleOne.Audio;
+using ScheduleOne.Core;
+using ScheduleOne.Experimental;
+using ScheduleOne.Weather;
 using UnityEngine;
 
 namespace ScheduleOne.Vehicles;
@@ -23,6 +25,11 @@ public class Wheel : MonoBehaviour
     public Transform axleConnectionPoint;
     public Collider staticCollider;
     public ParticleSystem DriftParticles;
+    [Header("Data")]
+    [SerializeField]
+    private WheelData _defaultData;
+    [SerializeField]
+    private WheelOverrideData _rainOverrideData;
     [Header("Settings")]
     public bool DriftParticlesEnabled;
     [Header("Drift Audio")]
@@ -35,6 +42,7 @@ public class Wheel : MonoBehaviour
     private WheelHit wheelData;
     private WheelFrictionCurve forwardCurve;
     private WheelFrictionCurve sidewaysCurve;
+    private VehicleSettings _settings;
     public bool IsDrifting { get; protected set; }
     public bool IsDrifting_Smoothed => DriftTime > 0.2f;
     public float DriftTime { get; protected set; }
@@ -51,6 +59,7 @@ public class Wheel : MonoBehaviour
     private void ApplyFriction();
     public virtual void SetPhysicsEnabled(bool enabled);
     public bool IsWheelGrounded();
+    public void OnWeatherChange(WeatherConditions newConditions);
     [Button]
     private void ApplyDefaultWheelModelPosition();
 }

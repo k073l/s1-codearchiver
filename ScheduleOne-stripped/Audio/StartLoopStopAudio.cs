@@ -1,21 +1,32 @@
-using EasyButtons;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ScheduleOne.Audio;
 public class StartLoopStopAudio : MonoBehaviour
 {
-    public AudioSourceController StartSound;
-    public AudioSourceController LoopSound;
-    public AudioSourceController StopSound;
-    public bool FadeLoopIn;
-    public bool FadeLoopOut;
-    private float timeSinceStart;
-    private float timeSinceStop;
-    public bool Runnning { get; private set; }
-
-    private void Update();
-    [Button]
+    [FormerlySerializedAs("FadeLoopIn")]
+    [SerializeField]
+    private bool _fadeLoopIn;
+    [FormerlySerializedAs("FadeLoopOut")]
+    [SerializeField]
+    private bool _fadeLoopOut;
+    [FormerlySerializedAs("StartSound")]
+    [SerializeField]
+    private AudioSourceController _startSound;
+    [FormerlySerializedAs("LoopSound")]
+    [SerializeField]
+    private AudioSourceController _loopSound;
+    [FormerlySerializedAs("StopSound")]
+    [SerializeField]
+    private AudioSourceController _stopSound;
+    private Coroutine _audioRoutine;
+    private bool _isRunning;
+    private void Awake();
     public void StartAudio();
-    [Button]
     public void StopAudio();
+    private IEnumerator StartAudioRoutine();
+    private IEnumerator StopAudioRoutine();
+    private void TryStartAudio();
+    private void TryStopAudio();
 }

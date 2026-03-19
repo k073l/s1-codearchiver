@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FishNet.Serializing;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
@@ -12,7 +13,6 @@ public class TrashGrabberInstance : StorableItemInstance
 {
     public const int TRASH_CAPACITY;
     private TrashContent Content;
-    public TrashGrabberInstance();
     public TrashGrabberInstance(ItemDefinition definition, int quantity);
     public override ItemInstance GetCopy(int overrideQuantity = -1);
     public void LoadContentData(TrashContentData content);
@@ -24,4 +24,6 @@ public class TrashGrabberInstance : StorableItemInstance
     public List<string> GetTrashIDs();
     public List<int> GetTrashQuantities();
     public List<ushort> GetTrashUshortQuantities();
+    public override void Write(Writer writer);
+    public override void Read(Reader reader);
 }

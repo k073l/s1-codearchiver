@@ -1,6 +1,6 @@
 using System;
-using EasyButtons;
 using ScheduleOne.Audio;
+using ScheduleOne.Core;
 using UnityEngine;
 
 namespace ScheduleOne.Storage;

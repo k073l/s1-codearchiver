@@ -24,6 +24,7 @@ public class MixingStationCanvas : Singleton<MixingStationCanvas>
     [Header("References")]
     public Canvas Canvas;
     public RectTransform Container;
+    public UIScreen UIScreen;
     public ItemSlotUI ProductSlotUI;
     public TextMeshProUGUI ProductPropertiesLabel;
     public ItemSlotUI IngredientSlotUI;

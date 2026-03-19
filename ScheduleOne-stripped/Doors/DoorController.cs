@@ -54,8 +54,10 @@ public class DoorController : NetworkBehaviour
     private bool NetworkInitialize__LateScheduleOne_002EDoors_002EDoorControllerAssembly_002DCSharp_002Edll_Excuted;
     public bool IsOpen { get; protected set; }
     public bool openedByNPC { get; protected set; }
+    public int detectedNPCCount { get; protected set; }
     public float timeSinceNPCSensed { get; protected set; } = float.MaxValue;
     public bool playerDetectedSinceOpened { get; protected set; }
+    public int detectedPlayerCount { get; protected set; }
     public float timeSincePlayerSensed { get; protected set; } = float.MaxValue;
     public float timeInCurrentState { get; protected set; }
 
@@ -69,8 +71,10 @@ public class DoorController : NetworkBehaviour
     public virtual void ExteriorHandleInteracted();
     public bool CanPlayerAccess(EDoorSide side);
     protected virtual bool CanPlayerAccess(EDoorSide side, out string reason);
-    public virtual void NPCVicinityDetected(EDoorSide side);
-    public virtual void PlayerVicinityDetected(EDoorSide side);
+    public virtual void NPCVicinityEnter(EDoorSide side);
+    public virtual void NPCVicinityExit(EDoorSide side);
+    public virtual void PlayerVicinityEnter(EDoorSide side);
+    public virtual void PlayerVicinityExit(EDoorSide side);
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void SetIsOpen_Server(bool open, EDoorSide accessSide, bool openedForPlayer);
     [ObserversRpc(RunLocally = true)]

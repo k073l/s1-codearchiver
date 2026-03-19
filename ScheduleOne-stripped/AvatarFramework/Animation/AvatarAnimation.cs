@@ -46,6 +46,7 @@ public class AvatarAnimation : MonoBehaviour
     public Transform RightHandAlignmentPoint;
     public Transform LeftHandAlignmentPoint;
     public AvatarIKController IKController;
+    public AvatarFootstepDetector FootstepDetector;
     [Header("Settings")]
     public LayerMask GroundingMask;
     public bool AllowCulling;
@@ -77,6 +78,7 @@ public class AvatarAnimation : MonoBehaviour
     public void SetGrounded(bool grounded);
     public void Jump();
     public void SetAnimationEnabled(bool enabled);
+    public void ResetAnimatorState();
     public void Flinch(Vector3 forceDirection, EFlinchType flinchType);
     public void PlayStandUpAnimation();
     protected void RagdollChange(bool wasRagdolled, bool ragdoll, bool playStandUpAnim);

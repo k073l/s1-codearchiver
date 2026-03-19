@@ -1,3 +1,5 @@
+using System;
+using ScheduleOne.DevUtilities;
 using ScheduleOne.Money;
 using TMPro;
 using UnityEngine;
@@ -13,6 +15,7 @@ public class CartEntry : MonoBehaviour
     public Button IncrementButton;
     public Button DecrementButton;
     public Button RemoveButton;
+    public UITrigger ModifyButton;
     public int Quantity { get; protected set; }
     public Cart Cart { get; protected set; }
     public ShopListing Listing { get; protected set; }
@@ -22,4 +25,6 @@ public class CartEntry : MonoBehaviour
     protected virtual void UpdateTitle();
     private void UpdatePrice();
     private void ChangeAmount(int change);
+    private void SetAmount(int amount);
+    private void SetItemQuantity(int amount);
 }

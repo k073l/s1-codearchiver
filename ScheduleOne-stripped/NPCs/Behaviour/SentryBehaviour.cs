@@ -8,28 +8,36 @@ using UnityEngine;
 namespace ScheduleOne.NPCs.Behaviour;
 public class SentryBehaviour : Behaviour
 {
-    public const float BODY_SEARCH_CHANCE;
-    public const int FLASHLIGHT_MIN_TIME;
-    public int FLASHLIGHT_MAX_TIME;
-    public const string FLASHLIGHT_ASSET_PATH;
+    private const float BodySearchChance;
+    private const int FlashlightMinTime;
+    private int FlashlightMaxTime;
+    private const string FlashlightAssetPath;
+    private const float AngularSpeedMultiplier;
+    private const float WalkSpeed;
     public bool UseFlashlight;
     private bool flashlightEquipped;
     private PoliceOfficer officer;
+    private int _currentRoutePointIndex;
+    private int _minutesAtCurrentPoint;
+    private bool _movementModifiersApplied;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002EBehaviour_002ESentryBehaviourAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002EBehaviour_002ESentryBehaviourAssembly_002DCSharp_002Edll_Excuted;
     public SentryLocation AssignedLocation { get; private set; }
-    private Transform standPoint => AssignedLocation.StandPoints[AssignedLocation.AssignedOfficers.IndexOf(officer)];
+    private SentryLocation.SentryRoute _currentRoute { get; }
+    private Transform _standPoint { get; }
 
     public override void Awake();
-    public override void Activate();
-    public override void Resume();
     public override void Deactivate();
     public override void Pause();
     public override void Disable();
     public void AssignLocation(SentryLocation loc);
     public void UnassignLocation();
     public override void OnActiveTick();
+    public override void OnActiveUncappedMinutePass();
+    private bool IsAtStandPoint();
     private void SetFlashlightEquipped(bool equipped);
+    private void ApplyMovementModifiers();
+    private void RemoveMovementModifiers();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

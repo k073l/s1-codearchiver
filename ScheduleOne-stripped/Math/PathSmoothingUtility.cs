@@ -4,7 +4,7 @@ using FluffyUnderware.Curvy;
 using UnityEngine;
 
 namespace ScheduleOne.Math;
-public class PathSmoothingUtility : MonoBehaviour
+public static class PathSmoothingUtility
 {
     public class SmoothedPath
     {
@@ -14,10 +14,10 @@ public class PathSmoothingUtility : MonoBehaviour
         public void InitializePath();
     }
 
-    public const float MinControlPointDistance;
-    private static CurvySpline spline;
-    private void Awake();
+    private const float MinControlPointDistance;
+    private static CurvySpline _spline;
+    public static void EnsureSplineInitialized();
     public static SmoothedPath CalculateSmoothedPath(List<Vector3> controlPoints, float maxCPDistance = 5f);
-    public static void DrawPath(SmoothedPath path, Color col, float duration);
+    private static void DrawPath(SmoothedPath path, Color col, float duration);
     private static List<Vector3> InsertIntermediatePoints(List<Vector3> points, float maxDistance);
 }

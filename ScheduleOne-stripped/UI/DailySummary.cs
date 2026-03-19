@@ -24,6 +24,7 @@ public class DailySummary : NetworkSingleton<DailySummary>
     [Header("References")]
     public Canvas Canvas;
     public RectTransform Container;
+    public UIScreen UIScreen;
     public Animation Anim;
     public TextMeshProUGUI TitleLabel;
     public RectTransform[] ProductEntries;

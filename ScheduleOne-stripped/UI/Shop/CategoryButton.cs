@@ -11,7 +11,6 @@ public class CategoryButton : MonoBehaviour
     public bool isSelected { get; protected set; }
 
     private void Awake();
-    private void OnValidate();
     private void Clicked();
     public void Deselect();
     public void Select();
