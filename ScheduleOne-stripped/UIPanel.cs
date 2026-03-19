@@ -89,6 +89,7 @@ public abstract class UIPanel : MonoBehaviour
     public void SelectSelectable(bool returnFirstFound, bool scrollToSelectable = false);
     public bool AddSelectable(UISelectable selectable);
     public void RemoveSelectable(UISelectable selectable, bool autoFallback = true);
+    public void DeselectSelectable();
     public void ClearAllSelectables();
     private UISelectable GetFallbackSelectable(bool returnFirstFound = false);
     internal UISelectable Select(UISelectable overrideSelectable = null, bool scrollToChild = true);

@@ -49,6 +49,8 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable, IWeat
     public const float TURNOVER_FORCE;
     public const bool USE_WHEEL;
     public const float SPEED_DISPLAY_MULTIPLIER;
+    public const float MaxImpactDamage;
+    public const float MaxImpactDamageSpeed;
     public bool DEBUG;
     [Header("Settings")]
     [SerializeField]

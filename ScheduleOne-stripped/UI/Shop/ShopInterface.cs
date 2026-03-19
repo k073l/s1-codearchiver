@@ -88,7 +88,7 @@ public class ShopInterface : MonoBehaviour, ISaveable
     private string searchTerm;
     private List<ListingUI> listingUI;
     private ListingUI selectedListing;
-    private bool dropdownMouseUp;
+    private bool amountSelectorMouseUp;
     private ShopLoader loader;
     public bool IsOpen { get; protected set; }
     public string SaveFolderName => SaveManager.MakeFileSafe(ShopCode);

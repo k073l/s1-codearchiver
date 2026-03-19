@@ -40,6 +40,7 @@ using ScheduleOne.UI.Handover;
 using ScheduleOne.UI.Phone.Messages;
 using ScheduleOne.Variables;
 using ScheduleOne.VoiceOver;
+using ScheduleOne.Weather;
 using UnityEngine;
 using UnityEngine.Events;
 

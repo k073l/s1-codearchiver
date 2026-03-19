@@ -24,6 +24,8 @@ public class PauseMenu : Singleton<PauseMenu>
     private bool hudVisible;
     public Action onPause;
     public Action onResume;
+    private bool _togglePausePressed;
+    private bool _backWasTriggeredThisFrame;
     public bool IsPaused { get; protected set; }
 
     protected override void Awake();
@@ -31,6 +33,7 @@ public class PauseMenu : Singleton<PauseMenu>
     private void Exit(ExitAction action);
     private void Update();
     private void LateUpdate();
+    private void CheckTogglePause();
     public void Pause();
     private IEnumerator DelayPanelSelect();
     public void Resume();

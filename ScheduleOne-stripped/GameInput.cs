@@ -67,8 +67,8 @@ public class GameInput : PersistentSingleton<GameInput>
     private sealed class _003C_003Ec
     {
         public static readonly _003C_003Ec _003C_003E9;
-        public static UnityAction _003C_003E9__72_0;
-        internal void _003CStart_003Eb__72_0();
+        public static UnityAction _003C_003E9__73_0;
+        internal void _003CStart_003Eb__73_0();
     }
 
     public static Action<InputDeviceType> OnInputDeviceChanged;
@@ -77,6 +77,7 @@ public class GameInput : PersistentSingleton<GameInput>
     public static bool IsTyping;
     public static Vector2 MotionAxis;
     public static Vector2 CameraAxis;
+    public static bool TogglePauseInputUsed;
     private static Mouse systemMouse;
     public static float MouseWheelAxis;
     public static bool ControllerComboActive;

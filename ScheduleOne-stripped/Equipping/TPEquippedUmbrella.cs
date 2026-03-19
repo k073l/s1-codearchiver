@@ -8,5 +8,5 @@ public class TPEquippedUmbrella : TPEquippedItem
     public MeshRenderer[] CanopyMeshes;
     public SkinnedMeshRenderer[] CanopySkinnedMeshes;
     private Random _random;
-    public unsafe override void Equip(IEquippedItemHandler handler);
+    public override void Equip(IEquippedItemHandler handler);
 }

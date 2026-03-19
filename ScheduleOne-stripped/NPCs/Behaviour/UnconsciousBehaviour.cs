@@ -5,9 +5,11 @@ namespace ScheduleOne.NPCs.Behaviour;
 public class UnconsciousBehaviour : Behaviour
 {
     public const float SnoreInterval;
+    private const float SnoreChance;
     public ParticleSystem Particles;
     public bool PlaySnoreSounds;
     private float timeOnLastSnore;
+    private bool _shouldPlaySnoreSounds;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002EBehaviour_002EUnconsciousBehaviourAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002EBehaviour_002EUnconsciousBehaviourAssembly_002DCSharp_002Edll_Excuted;
     public override void Activate();

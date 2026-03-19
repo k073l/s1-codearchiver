@@ -8,6 +8,7 @@ using FishNet.Object.Delegating;
 using FishNet.Serializing;
 using FishNet.Transporting;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Math;
 using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.Persistence.Loaders;
@@ -34,6 +35,7 @@ public class VehicleManager : NetworkSingleton<VehicleManager>, IBaseSaveable, I
     public int LoadOrder { get; }
 
     public override void Awake();
+    protected override void Start();
     public virtual void InitializeSaveable();
     [ServerRpc(RequireOwnership = false)]
     public void SpawnVehicle(string vehicleCode, Vector3 position, Quaternion rotation, bool playerOwned);

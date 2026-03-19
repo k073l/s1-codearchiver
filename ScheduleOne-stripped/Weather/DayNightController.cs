@@ -24,6 +24,8 @@ public class DayNightController : MonoBehaviour
     private AnimationCurve _fadeOutCurve;
     [Header("Debugging & Development")]
     [SerializeField]
+    private float _debugRotationSpeed;
+    [SerializeField]
     private float _debugTimeSpeed;
     [SerializeField]
     private bool _enableDebugTimeControl;
@@ -52,7 +54,8 @@ public class DayNightController : MonoBehaviour
     private void UpdateRotation();
     private void SnapRotation();
     public void SetRotation();
-    public void OnTick(float normalisedTime);
+    public void UpdateTime(float normalisedTime);
+    public void OnTick();
     public void OnTimeSet(float normalisedTime);
     private bool IsDay(float timeInTwentyFourHour);
 }

@@ -23,6 +23,8 @@ public class PostProcessingManager : Singleton<PostProcessingManager>
     [Header("Post exposre")]
     public AnimationCurve PostExposureCurve;
     public float PostExposureMultiplier;
+    [Header("Bloom")]
+    public AnimationCurve BloomIntensityCurve;
     [Header("Smoothers")]
     public FloatSmoother ChromaticAberrationController;
     public FloatSmoother SaturationController;

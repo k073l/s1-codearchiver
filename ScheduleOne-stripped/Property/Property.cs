@@ -69,7 +69,7 @@ public class Property : NetworkBehaviour, ISaveable
     public PropertyDisposalArea DisposalArea;
     public LoadingDock[] LoadingDocks;
     [HideInInspector]
-    public List<BuildableItem> BuildableItems;
+    protected List<BuildableItem> BuildableItems;
     public List<IConfigurable> Configurables;
     public readonly List<Grid> Grids;
     protected BoxCollider[] propertyBoundsColliders;
@@ -126,6 +126,8 @@ public class Property : NetworkBehaviour, ISaveable
     [ObserversRpc]
     [TargetRpc]
     public void SetToggleableState(NetworkConnection conn, int index, bool state);
+    public void AddBuildableItem(BuildableItem item);
+    public void RemoveBuildableItem(BuildableItem item);
     public virtual string GetSaveString();
     protected List<DynamicSaveData> GetEmployeeSaveDatas();
     protected List<DynamicSaveData> GetObjectSaveDatas();
