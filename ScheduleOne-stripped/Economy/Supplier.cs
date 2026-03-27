@@ -68,6 +68,7 @@ public class Supplier : NPC
     public UnityEvent onDeaddropReady;
     private int minsSinceMeetingStart;
     private int minsSinceLastMeetingEnd;
+    private float playerSpendSinceMeetingStart;
     private SupplierLocation currentLocation;
     private DialogueController dialogueController;
     private DialogueController.GreetingOverride meetingGreeting;
@@ -129,6 +130,7 @@ public class Supplier : NPC
     public override NPCData GetNPCData();
     public override void Load(NPCData data, string containerPath);
     public override void Load(DynamicSaveData dynamicData, NPCData npcData);
+    private void MeetupOrderCompleted(float spend);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

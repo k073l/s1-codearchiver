@@ -50,6 +50,7 @@ public class CustomerData : ScriptableObject
     [Range(0f, 1f)]
     public float BaseAddiction;
     public Action onChanged;
+    private void OnValidate();
     public static float GetQualityScalar(EQuality quality);
     public List<EDay> GetOrderDays(float dependence, float normalizedRelationship);
     public float GetAdjustedWeeklySpend(float normalizedRelationship);

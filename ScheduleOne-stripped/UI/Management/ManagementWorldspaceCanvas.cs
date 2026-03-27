@@ -25,7 +25,7 @@ public class ManagementWorldspaceCanvas : Singleton<ManagementWorldspaceCanvas>
     private IConfigurable OutlinedConfigurable;
     public List<IConfigurable> SelectedConfigurables;
     public bool IsOpen { get; protected set; }
-    public ScheduleOne.Property.Property CurrentProperty => Player.Local.CurrentProperty;
+    public ScheduleOne.Property.Property CurrentProperty => Singleton<PropertyManager>.Instance.GetNearestProperty(((Component)PlayerSingleton<PlayerCamera>.Instance).transform.position);
 
     public void Open();
     public void Close(bool preserveSelection = false);

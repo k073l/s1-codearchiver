@@ -13,7 +13,9 @@ public class AvatarWeapon : AvatarEquippable
     [Header("Equipping")]
     public AudioClip[] EquipClips;
     public AudioSourceController EquipSound;
+    public float EquipDuration;
     public UnityEvent onSuccessfulHit;
+    private float _timeOnEquip;
     public float LastUseTime { get; private set; }
 
     public override void Equip(Avatar _avatar);

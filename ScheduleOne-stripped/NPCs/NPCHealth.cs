@@ -16,7 +16,6 @@ using UnityEngine;
 using UnityEngine.Events;
 
 namespace ScheduleOne.NPCs;
-[RequireComponent(typeof(NPCHealth))]
 [DisallowMultipleComponent]
 public class NPCHealth : NetworkBehaviour
 {

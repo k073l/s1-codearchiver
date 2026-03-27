@@ -25,6 +25,7 @@ public class PursuitBehaviour : CombatBehaviour
     public const float MOVE_SPEED_INVESTIGATING;
     public const float MOVE_SPEED_ARRESTING;
     public const float MOVE_SPEED_CHASE;
+    public const float CHASE_SPEED_DISTANCE_THRESHOLD;
     public const float ARREST_MAX_DISTANCE;
     public const int LEAVE_ARREST_CIRCLE_LIMIT;
     [Header("Settings")]

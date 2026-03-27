@@ -283,9 +283,9 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     public void SetAnimationBool(string trigger, bool val);
     protected virtual void SetUnsettled_30s(Player player);
     protected void SetUnsettled(float duration);
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void SetPanicked_Server();
-    [ObserversRpc]
+    [ObserversRpc(RunLocally = true)]
     private void SetPanicked_Client();
     [ObserversRpc(RunLocally = true)]
     private void RemovePanicked();

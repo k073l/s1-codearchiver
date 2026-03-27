@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using ScheduleOne.Combat;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.Law;
@@ -51,6 +52,8 @@ public class HUD : Singleton<HUD>
     public CanvasGroup NotificationsCanvasGroup;
     public Animation CashSlotHintAnim;
     public CanvasGroup CashSlotHintAnimCanvasGroup;
+    [SerializeField]
+    private ReticleController _reticleController;
     [Header("Settings")]
     public Gradient RedGreenGradient;
     private int SampleSize;
@@ -71,4 +74,7 @@ public class HUD : Singleton<HUD>
     public void ShowRadialIndicator(float fill);
     public void ShowTopScreenText(string t);
     public void HideTopScreenText();
+    public void ShowFirearmReticle();
+    public void HideFirearmReticle();
+    public void SetFirearmReticle(float spreadAngle);
 }

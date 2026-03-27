@@ -78,7 +78,7 @@ public class Cleaner : Employee, IConfigurable
     private TrashContainerItem[] GetTrashContainersOrderedByDistance();
     public override EmployeeHome GetHome();
     private void EnsureTrashGrabberInInventory();
-    private bool AnyWorkInProgress();
+    protected override bool IsAnyWorkInProgress();
     private int GetTrashGrabberAmount();
     public WorldspaceUIElement CreateWorldspaceUI();
     public void DestroyWorldspaceUI();

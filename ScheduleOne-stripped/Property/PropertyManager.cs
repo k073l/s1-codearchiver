@@ -28,4 +28,5 @@ public class PropertyManager : Singleton<PropertyManager>, IBaseSaveable, ISavea
     public virtual void DeleteUnapprovedFiles(string parentFolderPath);
     public void LoadProperty(PropertyData propertyData, string dataString);
     public Property GetProperty(string code);
+    public Property GetNearestProperty(Vector3 point, bool includeOwned = true, bool includeUnowned = true, bool includeBusinesses = true);
 }

@@ -38,6 +38,7 @@ public class ShopInterface : MonoBehaviour, ISaveable
     [Header("Settings")]
     public string ShopName;
     public string ShopCode;
+    public string ShopDescription;
     public EPaymentType PaymentType;
     public bool ShowCurrencyHint;
     [Header("Listings")]
@@ -61,6 +62,7 @@ public class ShopInterface : MonoBehaviour, ISaveable
     [Header("Prefabs")]
     public ListingUI ListingUIPrefab;
     public UnityEvent onOrderCompleted;
+    public Action<float> onOrderCompletedWithSpend;
     [Header("Custom UI")]
     [SerializeField]
     private UIScreen shopScreen;

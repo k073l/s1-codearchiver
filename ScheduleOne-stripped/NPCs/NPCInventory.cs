@@ -76,6 +76,7 @@ public class NPCInventory : NetworkBehaviour, IItemSlotOwner
     public void InsertItem(ItemInstance item, bool network = true);
     public ItemInstance GetFirstItem(string id, ItemFilter filter = null);
     public ItemInstance GetFirstIdenticalItem(ItemInstance item, ItemFilter filter = null);
+    public List<ItemSlot> GetSlots(Func<ItemSlot, bool> predicate);
     protected virtual void InventoryContentsChanged();
     public void Hovered();
     public void Interacted();

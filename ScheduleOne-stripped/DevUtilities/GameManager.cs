@@ -50,7 +50,6 @@ public class GameManager : NetworkSingleton<GameManager>, IBaseSaveable, ISaveab
     public int LoadOrder { get; }
 
     public override void Awake();
-    protected override void Start();
     public override void OnSpawnServer(NetworkConnection connection);
     [TargetRpc]
     public void SetGameData(NetworkConnection conn, GameData data);

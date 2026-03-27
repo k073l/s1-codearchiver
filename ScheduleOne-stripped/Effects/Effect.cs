@@ -1,3 +1,4 @@
+using ScheduleOne.Employees;
 using ScheduleOne.NPCs;
 using ScheduleOne.PlayerScripts;
 using UnityEngine;
@@ -24,9 +25,11 @@ public abstract class Effect : ScriptableObject
     public float AddBaseValueMultiple;
     public Vector2 MixDirection;
     public float MixMagnitude;
-    public abstract void ApplyToNPC(NPC npc);
-    public abstract void ClearFromNPC(NPC npc);
+    public virtual void ApplyToNPC(NPC npc);
+    public virtual void ClearFromNPC(NPC npc);
     public abstract void ApplyToPlayer(Player player);
     public abstract void ClearFromPlayer(Player player);
+    protected virtual void ApplyToEmployee(Employee employee);
+    protected virtual void ClearFromEmployee(Employee employee);
     public void OnValidate();
 }

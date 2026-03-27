@@ -66,6 +66,7 @@ public class Packager : Employee, IConfigurable
     protected override void Fire();
     public override void OnSpawnServer(NetworkConnection connection);
     public void SendConfigurationToClient(NetworkConnection conn);
+    protected override bool IsAnyWorkInProgress();
     protected override void UpdateBehaviour();
     private void StartPackaging(PackagingStation station);
     private void StartPress(BrickPress press);

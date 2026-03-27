@@ -28,6 +28,7 @@ public class CombatBehaviour : Behaviour
     public const float SEARCH_SPEED;
     public const float CONSECUTIVE_MISS_ACCURACY_BOOST;
     public const float REACHED_DESTINATION_DISTANCE;
+    public const float DelayBeforeFirstAttack;
     public bool DEBUG;
     [Header("General Setttings")]
     public float GiveUpRange;
@@ -51,6 +52,7 @@ public class CombatBehaviour : Behaviour
     private float timeSinceLastReposition;
     private float timeWithinAttackRange;
     private bool visionEventReceived;
+    private float _timeOnCombatStart;
     protected AvatarWeapon currentWeapon;
     protected int successfulHits;
     protected int consecutiveMissedShots;

@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ScheduleOne.Configuration;
 using ScheduleOne.Delivery;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.GameTime;
 using ScheduleOne.Money;
 using ScheduleOne.Property;
 using ScheduleOne.UI.Shop;
@@ -15,36 +17,38 @@ namespace ScheduleOne.UI.Phone.Delivery;
 public class DeliveryShop : MonoBehaviour
 {
     [Header("References")]
-    public Image HeaderImage;
-    public Button HeaderButton;
-    public RectTransform ContentsContainer;
+    public Button BackButton;
     public RectTransform ListingContainer;
     public Text DeliveryFeeLabel;
     public Text ItemTotalLabel;
     public Text OrderTotalLabel;
+    public Text DeliveryTimeLabel;
     public Button OrderButton;
     public Text OrderButtonNote;
     public Dropdown DestinationDropdown;
     public Dropdown LoadingDockDropdown;
     [Header("Settings")]
     public string MatchingShopInterfaceName;
+    public Color ShopColor;
     public bool AvailableByDefault;
     public ListingEntry ListingEntryPrefab;
-    public Sprite HeaderImage_Hidden;
-    public Sprite HeaderImage_Expanded;
-    public RectTransform HeaderArrow;
     private List<ListingEntry> listingEntries;
     private ScheduleOne.Property.Property destinationProperty;
     private int loadingDockIndex;
+    private Action<DeliveryShop> _onSelect;
     public ShopInterface MatchingShop { get; private set; }
-    public bool IsExpanded { get; private set; }
-    public bool IsAvailable { get; private set; }
+    public bool IsOpen { get; private set; }
+    public Action<DeliveryShop> OnSelect { get; set; }
 
-    private void Start();
+    public void Initialize();
     private void FixedUpdate();
-    public void SetIsExpanded(bool expanded);
-    public void SetIsAvailable();
-    public void OrderPressed();
+    public void Open();
+    public void Close();
+    public void SubmitOrder(string originalDeliveryID);
+    private int GetDeliveryTime(int itemCount);
+    public void Reorder(DeliveryReceipt receipt);
+    public bool CanReorder(DeliveryReceipt receipt, out string reason);
+    public float GetDeliveryCost(DeliveryReceipt receipt);
     public void RefreshShop();
     public void ResetCart();
     private void RefreshCart();
@@ -58,7 +62,7 @@ public class DeliveryShop : MonoBehaviour
     public void RefreshLoadingDockUI();
     private void LoadingDockDropdownSelected(int index);
     private float GetCartCost();
-    private float GetOrderTotal();
+    private float GetDeliveryFee();
     private int GetOrderItemCount();
     private void RefreshEntryOrder();
     private void RefreshEntriesLocked();

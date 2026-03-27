@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace ScheduleOne.Tools;
@@ -24,6 +25,7 @@ public class FloatStack
     private List<StackEntry> _stack;
     public float Value { get; private set; }
 
+    public event Action<float> OnValueChanged;
     public FloatStack(float defaultValue);
     public void Add(StackEntry entry);
     public void Remove(string label);

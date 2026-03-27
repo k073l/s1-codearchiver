@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using FishNet;
 using FishNet.Connection;
@@ -13,11 +14,14 @@ using FishNet.Transporting;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Dialogue;
 using ScheduleOne.GameTime;
+using ScheduleOne.ItemFramework;
 using ScheduleOne.Management;
 using ScheduleOne.NPCs;
 using ScheduleOne.NPCs.Behaviour;
 using ScheduleOne.Persistence.Datas;
+using ScheduleOne.Product;
 using ScheduleOne.Property;
+using ScheduleOne.Tools;
 using ScheduleOne.UI;
 using ScheduleOne.Variables;
 using UnityEngine;
@@ -41,6 +45,7 @@ public class Employee : NPC
     public bool _003CPaidForToday_003Ek__BackingField;
     [SerializeField]
     protected EEmployeeType Type;
+    public FloatStack WorkSpeedController;
     [Header("Payment")]
     public float SigningFee;
     public float DailyWage;
@@ -70,6 +75,7 @@ public class Employee : NPC
     public bool IsMale { get; private set; } = true;
     protected int AppearanceIndex { get; private set; }
     public EEmployeeType EmployeeType => Type;
+    public float CurrentWorkSpeed => WorkSpeedController.Value;
     public int TicksSinceLastWork { get; private set; }
     public bool SyncAccessor__003CPaidForToday_003Ek__BackingField { get; set; }
 
@@ -97,9 +103,13 @@ public class Employee : NPC
     protected virtual void ResetConfiguration();
     protected virtual void Fire();
     protected bool CanWork();
+    protected virtual bool CanConsumeProduct();
+    protected ItemSlot GetFirstInventorySlotContainingProduct();
     protected override void OnDestroy();
     protected virtual void UpdateBehaviour();
+    private void UpdateConsumeProduct();
     protected void MarkIsWorking();
+    protected virtual bool IsAnyWorkInProgress();
     private void SetWaitOutside(bool wait);
     protected virtual bool ShouldIdle();
     protected override void OnTick();

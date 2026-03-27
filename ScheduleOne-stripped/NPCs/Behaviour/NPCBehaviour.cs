@@ -59,7 +59,7 @@ public class NPCBehaviour : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void Summon(string buildingGUID, int doorIndex, float duration);
     [ServerRpc(RequireOwnership = false)]
-    public void ConsumeProduct(ProductItemInstance product);
+    public void ConsumeProduct(ProductItemInstance product, bool removeFromInventory = false);
     private void OnKnockOut();
     private void OnRevive();
     protected virtual void OnDie();
@@ -110,9 +110,9 @@ public class NPCBehaviour : NetworkBehaviour
     private void RpcWriter___Server_Summon_900355577(string buildingGUID, int doorIndex, float duration);
     public void RpcLogic___Summon_900355577(string buildingGUID, int doorIndex, float duration);
     private void RpcReader___Server_Summon_900355577(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Server_ConsumeProduct_2622925554(ProductItemInstance product);
-    public void RpcLogic___ConsumeProduct_2622925554(ProductItemInstance product);
-    private void RpcReader___Server_ConsumeProduct_2622925554(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Server_ConsumeProduct_3964170259(ProductItemInstance product, bool removeFromInventory = false);
+    public void RpcLogic___ConsumeProduct_3964170259(ProductItemInstance product, bool removeFromInventory = false);
+    private void RpcReader___Server_ConsumeProduct_3964170259(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
     private void RpcWriter___Server_EnableBehaviour_Server_3316948804(int behaviourIndex);
     public void RpcLogic___EnableBehaviour_Server_3316948804(int behaviourIndex);
     private void RpcReader___Server_EnableBehaviour_Server_3316948804(PooledReader PooledReader0, Channel channel, NetworkConnection conn);

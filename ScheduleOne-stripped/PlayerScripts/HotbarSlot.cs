@@ -2,6 +2,7 @@ using ScheduleOne.Core.Equipping.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Equipping;
 using ScheduleOne.ItemFramework;
+using ScheduleOne.Product;
 using UnityEngine;
 
 namespace ScheduleOne.PlayerScripts;

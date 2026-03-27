@@ -55,6 +55,7 @@ public class BrickPress : GridItem, IUsable, IItemSlotOwner, ITransitEntity, ICo
     public StorageVisualizer OutputVisuals;
     public BrickPressContainer Container1;
     public BrickPressContainer Container2;
+    public Transform ItemContainer;
     public Transform ContainerSpawnPoint;
     public PackagingDefinition BrickPackaging;
     public BoxCollider MouldDetection;

@@ -90,6 +90,7 @@ public class Botanist : Employee, IConfigurable
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void SetConfigurer(NetworkObject player);
     public override void Awake();
+    protected override bool IsAnyWorkInProgress();
     protected override void UpdateBehaviour();
     private bool IsEntityAccessible(ITransitEntity entity);
     private void StartDryingRack(DryingRack rack);

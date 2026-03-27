@@ -296,6 +296,7 @@ public class Customer : NetworkBehaviour, ISaveable
     [ObserversRpc]
     private void SampleWasInsufficient();
     public float GetProductEnjoyment(ProductDefinition product, EQuality quality);
+    public float GetProductEnjoyment(ProductDefinition product);
     public List<EDrugType> GetOrderedDrugTypes();
     [ServerRpc(RequireOwnership = false)]
     public void AdjustAffinity(EDrugType drugType, float change);

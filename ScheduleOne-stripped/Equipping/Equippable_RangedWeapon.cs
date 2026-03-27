@@ -30,13 +30,15 @@ public class Equippable_RangedWeapon : Equippable_AvatarViewmodel
     public int MagazineSize;
     [Header("Aim Settings")]
     public float AimDuration;
-    public float AimFOVReduction;
+    public float MinAimFOVReduction;
+    public float MaxAimFOVReduction;
     [Header("Firing")]
     public AudioSourceController FireSound;
     public AudioSourceController EmptySound;
     public float FireCooldown;
     public string[] FireAnimTriggers;
     public float AccuracyChangeDuration;
+    public float AccuracyDropPerShot;
     [Header("Raycasting")]
     public float Range;
     public float RayRadius;
@@ -46,6 +48,7 @@ public class Equippable_RangedWeapon : Equippable_AvatarViewmodel
     [Header("Damage")]
     public float Damage;
     public float ImpactForce;
+    public float HeadshotMultiplier;
     [Header("Reloading")]
     public bool CanReload;
     public EReloadType ReloadType;
@@ -71,13 +74,14 @@ public class Equippable_RangedWeapon : Equippable_AvatarViewmodel
     public UnityEvent onReloadEnd;
     public UnityEvent onCockStart;
     protected IntegerItemInstance weaponItem;
-    private bool fovOverridden;
+    private bool aimStarted;
     private float aimVelocity;
     private Coroutine reloadRoutine;
     private bool shotQueued;
     private bool reloadQueued;
     private float timeSincePrimaryClick;
     private float timeSinceReloadStart;
+    private float timeSinceAimStart;
     private bool interruptReload;
     public float Aim { get; private set; }
     public float Accuracy { get; private set; }
@@ -86,7 +90,7 @@ public class Equippable_RangedWeapon : Equippable_AvatarViewmodel
     public bool IsCocked { get; private set; }
     public bool IsCocking { get; private set; }
     public int Ammo { get; }
-    private float aimFov => Singleton<Settings>.Instance.CameraFOV - AimFOVReduction;
+    private float fov => Singleton<Settings>.Instance.CameraFOV - (aimStarted ? Mathf.Lerp(MinAimFOVReduction, MaxAimFOVReduction, Mathf.Clamp01(timeSinceAimStart / AccuracyChangeDuration)) : 0f);
 
     public override void Equip(ItemInstance item);
     public override void Unequip();

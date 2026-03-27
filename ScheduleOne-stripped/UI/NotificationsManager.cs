@@ -17,6 +17,5 @@ public class NotificationsManager : Singleton<NotificationsManager>
     public GameObject NotificationPrefab;
     private Dictionary<RectTransform, Coroutine> coroutines;
     private List<RectTransform> entries;
-    private void Update();
     public void SendNotification(string title, string subtitle, Sprite icon, float duration = 5f, bool playSound = true);
 }

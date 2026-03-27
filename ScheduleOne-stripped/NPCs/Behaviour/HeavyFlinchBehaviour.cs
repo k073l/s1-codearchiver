@@ -9,6 +9,8 @@ public class HeavyFlinchBehaviour : Behaviour
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002EBehaviour_002EHeavyFlinchBehaviourAssembly_002DCSharp_002Edll_Excuted;
     public override void BehaviourUpdate();
     public override void Disable();
+    public override void Activate();
+    public override void Deactivate();
     public void Flinch();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
