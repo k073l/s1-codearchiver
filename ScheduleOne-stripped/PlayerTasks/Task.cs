@@ -54,4 +54,5 @@ public class Task
     private void UpdateDraggablePhysics();
     protected virtual Clickable GetClickable(out RaycastHit hit);
     protected void EnableMultiDragging(Transform projectionPlane, float radius = 0.08f);
+    protected void DisableMultiDragging();
 }

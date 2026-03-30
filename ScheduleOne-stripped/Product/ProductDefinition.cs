@@ -21,7 +21,8 @@ public class ProductDefinition : PropertyItemDefinition, ISaveable
     public float BasePrice;
     public float MarketValue;
     public FunctionalProduct FunctionalProduct;
-    public int EffectsDuration;
+    public int NPCEffectDuration;
+    public int PlayerEffectDuration;
     [Range(0f, 1f)]
     public float BaseAddictiveness;
     [Header("Packaging that can be applied to this product. MUST BE ORDERED FROm LOWEST TO HIGHEST QUANTITY")]

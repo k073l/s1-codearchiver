@@ -178,6 +178,7 @@ public class ProductManager : NetworkSingleton<ProductManager>, IBaseSaveable, I
     private void SendFinishAndNameMix(string productID, string ingredientID, string mixName, string mixID);
     public static float CalculateProductValue(ProductDefinition product, float baseValue);
     public static float CalculateProductValue(float baseValue, List<Effect> properties);
+    public static void CheckDiscovery(ItemInstance item);
     public virtual string GetSaveString();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();

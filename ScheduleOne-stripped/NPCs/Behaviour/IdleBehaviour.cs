@@ -13,6 +13,7 @@ public class IdleBehaviour : Behaviour
     public override void OnActiveTick();
     public override void Pause();
     public override void Deactivate();
+    public bool IsAtIdleLocation();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

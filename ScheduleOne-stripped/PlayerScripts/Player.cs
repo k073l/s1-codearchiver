@@ -331,8 +331,6 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public static void Deactivate(bool freeMouse);
     public void ExitAll();
     public void SetVisibleToLocalPlayer(bool vis);
-    [ObserversRpc(RunLocally = true)]
-    public void SetPlayerCode(string code);
     [ServerRpc]
     public void SendPunch();
     [ObserversRpc]
@@ -540,9 +538,6 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     private void RpcWriter___Server_SetReadyToSleep_1140765316(bool ready);
     public void RpcLogic___SetReadyToSleep_1140765316(bool ready);
     private void RpcReader___Server_SetReadyToSleep_1140765316(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Observers_SetPlayerCode_3615296227(string code);
-    public void RpcLogic___SetPlayerCode_3615296227(string code);
-    private void RpcReader___Observers_SetPlayerCode_3615296227(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Server_SendPunch_2166136261();
     public void RpcLogic___SendPunch_2166136261();
     private void RpcReader___Server_SendPunch_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);

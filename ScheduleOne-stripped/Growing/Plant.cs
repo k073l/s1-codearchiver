@@ -28,6 +28,8 @@ public abstract class Plant : MonoBehaviour
     public int GrowthTime;
     public int BaseYieldQuantity;
     public string HarvestTarget;
+    public float MinColliderScale;
+    public float ColliderScaleThreshold;
     [Header("Trash")]
     public TrashItem PlantScrapPrefab;
     [HideInInspector]
@@ -52,6 +54,7 @@ public abstract class Plant : MonoBehaviour
     private void GrowthDone();
     private List<int> GenerateUniqueIntegers(int min, int max, int count);
     public void SetVisible(bool vis);
+    private void ResizeCollider();
     public virtual ItemInstance GetHarvestedProduct(int quantity = 1);
     public PlantData GetPlantData();
 }

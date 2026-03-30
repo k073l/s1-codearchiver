@@ -3,6 +3,7 @@ using ScheduleOne.Growing;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Management;
 using ScheduleOne.ObjectScripts;
+using ScheduleOne.Product;
 using UnityEngine;
 
 namespace ScheduleOne.NPCs.Behaviour;

@@ -114,6 +114,7 @@ public class TimeManager : NetworkSingleton<TimeManager>, IBaseSaveable, ISaveab
     public static string Get12HourTime(float _time, bool appendDesignator = true);
     public static int Get24HourTimeFromMinSum(int minSum);
     public static int GetMinSumFrom24HourTime(int _time);
+    public static string GetMinutesToDisplayTime(int minutes);
     public static int AddMinutesTo24HourTime(int time, int minsToAdd);
     public virtual string GetSaveString();
     public void Load(TimeData timeData);

@@ -77,7 +77,6 @@ public class PlayerCrimeData : NetworkBehaviour
     private bool NetworkInitialize__LateScheduleOne_002EPlayerScripts_002EPlayerCrimeDataAssembly_002DCSharp_002Edll_Excuted;
     public EPursuitLevel CurrentPursuitLevel {[CompilerGenerated]
         get; [CompilerGenerated]
-        [ServerRpc(RunLocally = true)]
         protected set; }
     public Vector3 LastKnownPosition {[CompilerGenerated]
         get; [CompilerGenerated]
@@ -98,6 +97,8 @@ public class PlayerCrimeData : NetworkBehaviour
     private void MinPass();
     protected virtual void LateUpdate();
     public void SetPursuitLevel(EPursuitLevel level);
+    [ServerRpc(RunLocally = true, RequireOwnership = false)]
+    private void SetPursuitLevel_Server(EPursuitLevel level);
     public void Escalate();
     public void Deescalate();
     [ObserversRpc(RunLocally = true)]
@@ -121,14 +122,13 @@ public class PlayerCrimeData : NetworkBehaviour
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();
-    private void RpcWriter___Server_set_CurrentPursuitLevel_2979171596(EPursuitLevel value);
-    [SpecialName]
-    protected void RpcLogic___set_CurrentPursuitLevel_2979171596(EPursuitLevel value);
-    private void RpcReader___Server_set_CurrentPursuitLevel_2979171596(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
     private void RpcWriter___Server_set_LastKnownPosition_4276783012(Vector3 value);
     [SpecialName]
     protected void RpcLogic___set_LastKnownPosition_4276783012(Vector3 value);
     private void RpcReader___Server_set_LastKnownPosition_4276783012(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Server_SetPursuitLevel_Server_2979171596(EPursuitLevel level);
+    private void RpcLogic___SetPursuitLevel_Server_2979171596(EPursuitLevel level);
+    private void RpcReader___Server_SetPursuitLevel_Server_2979171596(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
     private void RpcWriter___Observers_RecordLastKnownPosition_1140765316(bool resetTimeSinceSighted);
     public void RpcLogic___RecordLastKnownPosition_1140765316(bool resetTimeSinceSighted);
     private void RpcReader___Observers_RecordLastKnownPosition_1140765316(PooledReader PooledReader0, Channel channel);

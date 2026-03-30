@@ -19,6 +19,7 @@ using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.Persistence.Loaders;
 using ScheduleOne.Property;
+using ScheduleOne.UI;
 using ScheduleOne.UI.Phone.Delivery;
 using ScheduleOne.UI.Shop;
 using UnityEngine;
@@ -31,6 +32,8 @@ public class DeliveryManager : NetworkSingleton<DeliveryManager>, IBaseSaveable,
     private List<string> writtenVehicles;
     [SyncObject]
     private readonly SyncList<DeliveryReceipt> _deliveryHistory;
+    [SyncObject]
+    private readonly SyncList<DeliveryReceipt> _displayedDeliveryHistory;
     private Dictionary<DeliveryInstance, int> _minsSinceVehicleEmpty;
     private bool NetworkInitialize___EarlyScheduleOne_002EDelivery_002EDeliveryManagerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EDelivery_002EDeliveryManagerAssembly_002DCSharp_002Edll_Excuted;
@@ -42,6 +45,7 @@ public class DeliveryManager : NetworkSingleton<DeliveryManager>, IBaseSaveable,
     public List<string> LocalExtraFolders { get; set; } = new List<string>();
     public bool HasChanged { get; set; }
     public int LoadOrder { get; }
+    public List<DeliveryReceipt> DisplayedDeliveryHistory => ((IEnumerable<DeliveryReceipt>)_displayedDeliveryHistory).ToList();
 
     public event Action<DeliveryInstance> onDeliveryCreated;
     public event Action<DeliveryInstance> onDeliveryCompleted;
@@ -54,7 +58,7 @@ public class DeliveryManager : NetworkSingleton<DeliveryManager>, IBaseSaveable,
     [ServerRpc(RequireOwnership = false)]
     public void SendDelivery(DeliveryInstance delivery);
     [ServerRpc(RequireOwnership = false)]
-    public void RecordDeliveryReceipt_Server(DeliveryReceipt receipt);
+    public void RecordDeliveryReceipt_Server(DeliveryReceipt receipt, string originalOrderID = "");
     [ObserversRpc]
     [TargetRpc]
     private void ReceiveDelivery(NetworkConnection conn, DeliveryInstance delivery);
@@ -65,15 +69,16 @@ public class DeliveryManager : NetworkSingleton<DeliveryManager>, IBaseSaveable,
     public DeliveryInstance GetActiveShopDelivery(DeliveryShop shop);
     public ShopInterface GetShopInterface(string shopName);
     public virtual string GetSaveString();
+    public void Load(DeliveriesData data);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();
     private void RpcWriter___Server_SendDelivery_2813439055(DeliveryInstance delivery);
     public void RpcLogic___SendDelivery_2813439055(DeliveryInstance delivery);
     private void RpcReader___Server_SendDelivery_2813439055(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Server_RecordDeliveryReceipt_Server_4268613646(DeliveryReceipt receipt);
-    public void RpcLogic___RecordDeliveryReceipt_Server_4268613646(DeliveryReceipt receipt);
-    private void RpcReader___Server_RecordDeliveryReceipt_Server_4268613646(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Server_RecordDeliveryReceipt_Server_2582461062(DeliveryReceipt receipt, string originalOrderID = "");
+    public void RpcLogic___RecordDeliveryReceipt_Server_2582461062(DeliveryReceipt receipt, string originalOrderID = "");
+    private void RpcReader___Server_RecordDeliveryReceipt_Server_2582461062(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
     private void RpcWriter___Observers_ReceiveDelivery_2795369214(NetworkConnection conn, DeliveryInstance delivery);
     private void RpcLogic___ReceiveDelivery_2795369214(NetworkConnection conn, DeliveryInstance delivery);
     private void RpcReader___Observers_ReceiveDelivery_2795369214(PooledReader PooledReader0, Channel channel);

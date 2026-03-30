@@ -70,7 +70,7 @@ public class Chemist : Employee, IConfigurable
     public void SendConfigurationToClient(NetworkConnection conn);
     protected override void UpdateBehaviour();
     private void TryStartNewTask();
-    private bool AnyWorkInProgress();
+    protected override bool IsAnyWorkInProgress();
     protected override bool ShouldIdle();
     private void StartChemistryStation(ChemistryStation station);
     private void StartCauldron(Cauldron cauldron);

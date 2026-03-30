@@ -7,10 +7,12 @@ namespace ScheduleOne.UI.Settings;
 public class GameSettingsWindow : MonoBehaviour
 {
     public UIToggle ConsoleToggle;
+    public UIToggle RandomMixMapsToggle;
     public GameObject Blocker;
     public UIPanel uiPanel;
     private void Awake();
     public void Start();
     public void ApplySettings(GameSettings settings);
     private void ConsoleToggled(bool value);
+    private void RandomMixMapsToggled(bool value);
 }

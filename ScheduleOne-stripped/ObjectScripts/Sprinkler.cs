@@ -25,6 +25,9 @@ public class Sprinkler : GridItem
     [Header("Settings")]
     public float ApplyWaterDelay;
     public float ParticleStopDelay;
+    public float Cooldown;
+    public List<Coordinate> TilesToWater;
+    public int MinTilesToWater;
     public UnityEvent onSprinklerStart;
     private bool NetworkInitialize___EarlyScheduleOne_002EObjectScripts_002ESprinklerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EObjectScripts_002ESprinklerAssembly_002DCSharp_002Edll_Excuted;

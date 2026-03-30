@@ -23,6 +23,7 @@ using ScheduleOne.Misc;
 using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.Product;
 using ScheduleOne.StationFramework;
 using ScheduleOne.Storage;
 using ScheduleOne.Tiles;
@@ -200,6 +201,7 @@ public class LabOven : GridItem, IUsable, IItemSlotOwner, ITransitEntity, IConfi
     public void Shatter(int shardQuantity, GameObject shardPrefab);
     public void ClearShards();
     public void ClearDecals();
+    private void OutputSlotChanged();
     [ServerRpc(RunLocally = true, RequireOwnership = false)]
     public void SetStoredInstance(NetworkConnection conn, int itemSlotIndex, ItemInstance instance);
     [ObserversRpc(RunLocally = true)]

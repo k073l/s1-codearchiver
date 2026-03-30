@@ -26,10 +26,14 @@ public class UISelectable : UITrigger, IPointerEnterHandler, IEventSystemHandler
     [SerializeField]
     [Tooltip("Set to true if you want this to be not selectable when UGUI interactable is set to false")]
     private bool blockSelectionOnInteractableFalse;
+    [Header("Components")]
+    [SerializeField]
+    private Text _label;
     public UnityEvent OnSelected;
     public UnityEvent OnDeselected;
     public RectTransform RectTransform { get; private set; }
     public UIPanel ParentPanel { get; private set; }
+    public Text Label => _label;
     public bool AllowTriggerSubmitWithInputDescriptors => allowTriggerSubmitWithInputDescriptors;
     public bool CanBeSelected { get; }
 

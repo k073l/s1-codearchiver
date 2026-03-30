@@ -60,6 +60,7 @@ public class AvatarAnimation : MonoBehaviour
     private Coroutine seatRoutine;
     private Skateboard activeSkateboard;
     private bool animationEnabled;
+    private BoneTransform[] _lastFrameBoneTransforms;
     public bool IsCrouched { get; protected set; }
     public bool IsSeated => (Object)(object)CurrentSeat != (Object)null;
     public float TimeSinceSitEnd { get; protected set; } = 1000f;
@@ -70,6 +71,7 @@ public class AvatarAnimation : MonoBehaviour
     protected virtual void Awake();
     private void Start();
     private void Update();
+    private void LateUpdate();
     private void UpdateAnimationActive();
     public void SetDirection(float dir);
     public void SetStrafe(float strafe);
@@ -86,6 +88,7 @@ public class AvatarAnimation : MonoBehaviour
     private bool ShouldGetUpFromBack();
     private void PopulateBoneTransforms(BoneTransform[] boneTransforms);
     private void PopulateAnimationStartBoneTransforms(string clipName, BoneTransform[] boneTransforms);
+    private void ApplyBoneTransforms(BoneTransform[] boneTransforms);
     public void SetTrigger(string trigger);
     public void ResetTrigger(string trigger);
     public void SetBool(string id, bool value);

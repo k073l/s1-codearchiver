@@ -2,17 +2,20 @@ using System;
 using FishNet.Object;
 using ScheduleOne.Audio;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Employees;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.NPCs;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Product.Packaging;
+using ScheduleOne.Tools;
 using UnityEngine;
 
 namespace ScheduleOne.Product;
 [Serializable]
 public class CocaineInstance : ProductItemInstance
 {
+    private const float WorkSpeedMultiplier;
     public CocaineInstance(ItemDefinition definition, int quantity, EQuality quality, PackagingDefinition packaging = null);
     public override ItemInstance GetCopy(int overrideQuantity = -1);
     public override ItemData GetItemData();

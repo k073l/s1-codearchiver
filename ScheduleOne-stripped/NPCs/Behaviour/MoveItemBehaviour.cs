@@ -3,6 +3,7 @@ using System.Collections;
 using FishNet;
 using FishNet.Object;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Employees;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Management;
 using ScheduleOne.Persistence;
