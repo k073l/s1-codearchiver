@@ -24,6 +24,12 @@ public class PollManager : MonoBehaviour
     public Action<PollData> onActivePollReceived;
     public Action<PollData> onConfirmedPollReceived;
     private bool appTicketRequested;
+    [Header("Debug")]
+    [SerializeField]
+    private bool loadDebugData;
+    [TextArea(10, 30)]
+    [SerializeField]
+    private string debugData;
     public PollData ActivePoll { get; private set; }
     public PollData ConfirmedPoll { get; private set; }
     public EPollSubmissionResult SubmissionResult { get; private set; }
