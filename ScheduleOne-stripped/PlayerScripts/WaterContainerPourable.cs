@@ -10,6 +10,6 @@ public class WaterContainerPourable : Pourable
     private WaterContainerVisualizer _visuals;
     private WaterContainerInstance _waterContainerItem;
     public void SetupWaterContainerPourable(WaterContainerInstance waterContainer);
-    private void OnDestroy();
+    protected override void OnDestroy();
     protected override void PourAmount(float amount);
 }

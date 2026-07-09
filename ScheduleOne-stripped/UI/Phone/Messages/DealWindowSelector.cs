@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Economy;
 using ScheduleOne.GameTime;
@@ -39,6 +40,7 @@ public class DealWindowSelector : MonoBehaviour
     public void Update();
     private void UpdateTime();
     private void UpdateWindowValidity();
+    private bool IsWindowValid(EDealWindow window);
     private void Close();
     private void ButtonClicked(EDealWindow window);
 }

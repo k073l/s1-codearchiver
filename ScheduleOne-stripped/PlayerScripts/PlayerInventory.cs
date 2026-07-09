@@ -9,12 +9,14 @@ using ScheduleOne.ItemFramework;
 using ScheduleOne.Money;
 using ScheduleOne.Product;
 using ScheduleOne.Product.Packaging;
+using ScheduleOne.State;
 using ScheduleOne.UI;
 using ScheduleOne.UI.Items;
 using ScheduleOne.Variables;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace ScheduleOne.PlayerScripts;
@@ -49,6 +51,9 @@ public class PlayerInventory : PlayerSingleton<PlayerInventory>, IFirstPersonRef
     private ClipboardSlot clipboardSlot;
     private List<ItemSlotUI> slotUIs;
     private ItemSlot discardSlot;
+    [Header("Input")]
+    [SerializeField]
+    private InputActionReference _holsterAction;
     [Header("Item Variables")]
     public List<ItemVariable> ItemVariables;
     private int _equippedSlotIndex;
@@ -61,7 +66,6 @@ public class PlayerInventory : PlayerSingleton<PlayerInventory>, IFirstPersonRef
     private bool ManagementSlotEnabled;
     public float currentEquipTime;
     protected float currentDiscardTime;
-    protected UIScreen attachedScreen;
     protected UIPanel uiPanel;
     protected UIPanel originalSelectedPanel;
     public int TOTAL_SLOT_COUNT => 9 + (ManagementSlotEnabled ? 1 : 0);
@@ -76,6 +80,7 @@ public class PlayerInventory : PlayerSingleton<PlayerInventory>, IFirstPersonRef
     public HotbarSlot equippedSlot { get; }
     public ItemInstance EquippedItem { get; }
     public bool isAnythingEquipped => EquippedItem != null;
+    public UIScreen AttachedScreen { get; private set; }
 
     public HotbarSlot IndexAllSlots(int index);
     protected override void Awake();
@@ -88,7 +93,7 @@ public class PlayerInventory : PlayerSingleton<PlayerInventory>, IFirstPersonRef
     public void Equip(HotbarSlot slot);
     public void SetInventoryEnabled(bool enabled);
     public void SetEquippingEnabled(bool enabled);
-    public void AttachToScreen(UIScreen screen);
+    public void AttachToScreen(UIScreen screen, bool alsoSelectInventoryPanel = true);
     public void DetachFromScreen();
     private void ClipboardAcquiredVarChange(bool newVal);
     public void SetManagementClipboardEnabled(bool enabled);

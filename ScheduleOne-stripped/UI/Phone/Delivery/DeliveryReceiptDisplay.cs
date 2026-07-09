@@ -42,16 +42,21 @@ public class DeliveryReceiptDisplay : MonoBehaviour
     private ColorFont _generalColorFont;
     [SerializeField]
     private ColorFont _shopTextColorFont;
+    [Header("UI")]
+    [SerializeField]
+    private UISelectable _selectable;
     private DeliveryReceipt _receipt;
     private ItemEntryUI[] _itemEntries;
     private Action<DeliveryReceipt> _onSelect;
     public Button ReorderButton => _ReorderButton;
     public DeliveryReceipt Receipt => _receipt;
+    public UISelectable Selectable => _selectable;
 
     public void Initialise();
     public void Set(DeliveryReceipt receipt, float deliveryCost, bool canAfford);
     public void SetTooltip(string tooltip);
     public void SetActiveTooltip(bool active);
+    public void ForceActiveTooltip(bool active);
     public void SubscribeToOnSelect(Action<DeliveryReceipt> callback);
     public void UnsubscribeFromOnSelect(Action<DeliveryReceipt> callback);
 }

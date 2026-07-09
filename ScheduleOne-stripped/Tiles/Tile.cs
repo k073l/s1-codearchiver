@@ -37,7 +37,6 @@ public class Tile : MonoBehaviour
     public virtual bool CanBeBuiltOn();
     public List<Tile> GetSurroundingTiles();
     public virtual bool IsIndoorTile();
-    public void SetVisible(bool vis);
     private void OnCosmeticTemperatureEmittersChanged(string propertyCode, TemperatureEmitterInfo[] emitters);
     private void OnTemperatureEmittersChanged(TemperatureEmitterInfo[] emitters);
 }

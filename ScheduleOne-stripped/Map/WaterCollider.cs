@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using FishNet;
-using Pathfinding;
 using ScheduleOne.Audio;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.NPCs;

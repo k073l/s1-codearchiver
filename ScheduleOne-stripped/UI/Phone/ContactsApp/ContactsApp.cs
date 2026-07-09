@@ -29,7 +29,6 @@ public class ContactsApp : App<ContactsApp>
     [Header("References")]
     public PinchableScrollRect ScrollRect;
     public RectTransform CirclesContainer;
-    public RectTransform DemoCirclesContainer;
     public RectTransform TutorialCirclesContainer;
     public RectTransform ConnectionsContainer;
     public RectTransform ContentRect;

@@ -44,7 +44,7 @@ public class VehiclePursuitBehaviour : Behaviour
     private bool isDriving => (Object)(object)vehicle.OccupantNPCs[0] == (Object)(object)base.Npc;
     private VehicleAgent Agent => vehicle.Agent;
 
-    public override void Awake();
+    private void Start();
     private void OnDestroy();
     public void BeginAsSighted();
     public override void Activate();
@@ -78,5 +78,5 @@ public class VehiclePursuitBehaviour : Behaviour
     private void RpcWriter___Server_NotifyServerTargetSeen_2166136261();
     public void RpcLogic___NotifyServerTargetSeen_2166136261();
     private void RpcReader___Server_NotifyServerTargetSeen_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    protected override void Awake_UserLogic_ScheduleOne_002ENPCs_002EBehaviour_002EVehiclePursuitBehaviour_Assembly_002DCSharp_002Edll();
+    public override void Awake();
 }

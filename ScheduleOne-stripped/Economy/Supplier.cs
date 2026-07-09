@@ -20,7 +20,9 @@ using ScheduleOne.Levelling;
 using ScheduleOne.Messaging;
 using ScheduleOne.Money;
 using ScheduleOne.NPCs;
+using ScheduleOne.NPCs.Framework;
 using ScheduleOne.NPCs.Relation;
+using ScheduleOne.NPCs.Schedules;
 using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.PlayerScripts;
@@ -45,52 +47,45 @@ public class Supplier : NPC
         Meeting
     }
 
-    public const float MEETUP_RELATIONSHIP_REQUIREMENT;
-    public const int MEETUP_DURATION_MINS;
-    public const int MEETING_COOLDOWN_MINS;
-    public const int DEADDROP_WAIT_PER_ITEM;
-    public const int DEADDROP_MAX_WAIT;
-    public const int DEADDROP_ITEM_LIMIT;
+    public const float MeetupRelationshipRequirement;
+    public const int MeetupDuration;
+    public const int MeetupCooldown;
+    public const int DeaddropWaitPerItem;
+    public const int DeaddropMaxWait;
+    public const int DeaddropItemLimit;
     public const float MeetingEndDistance;
-    public const float DELIVERY_RELATIONSHIP_REQUIREMENT;
+    public const float DeliveryRelationshipRequirement;
     public static Color32 SupplierLabelColor;
-    [Header("Supplier Settings")]
-    public float MinOrderLimit;
-    public float MaxOrderLimit;
-    public PhoneShopInterface.Listing[] OnlineShopItems;
-    [TextArea(3, 10)]
-    public string SupplierRecommendMessage;
-    [TextArea(3, 10)]
-    public string SupplierUnlockHint;
-    [Header("References")]
+    [Header("Supplier References")]
     public ShopInterface Shop;
     public SupplierStash Stash;
-    public UnityEvent onDeaddropReady;
-    private int minsSinceMeetingStart;
-    private int minsSinceLastMeetingEnd;
-    private float playerSpendSinceMeetingStart;
-    private SupplierLocation currentLocation;
-    private DialogueController dialogueController;
-    private DialogueController.GreetingOverride meetingGreeting;
-    private DialogueController.DialogueChoice meetingChoice;
     [SyncVar]
-    public float debt;
+    [HideInInspector]
+    public float _debt;
     [SyncVar]
-    public bool deadDropPreparing;
-    private StringIntPair[] deaddropItems;
-    private int minsSinceDeaddropOrder;
-    private bool repaymentReminderSent;
-    public SyncVar<float> syncVar___debt;
-    public SyncVar<bool> syncVar___deadDropPreparing;
+    [HideInInspector]
+    public bool _deadDropPreparing;
+    private StringIntPair[] _deaddropItems;
+    private int _minsSinceDeaddropOrder;
+    private bool _repaymentReminderSent;
+    private int _minsSinceMeetingStart;
+    private int _minsSinceLastMeetingEnd;
+    private float _playerSpendSinceMeetingStart;
+    private NPCEvent_LocationDialogue _meetingAction;
+    private SupplierLocation _currentLocation;
+    public SyncVar<float> syncVar____debt;
+    public SyncVar<bool> syncVar____deadDropPreparing;
     private bool NetworkInitialize___EarlyScheduleOne_002EEconomy_002ESupplierAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EEconomy_002ESupplierAssembly_002DCSharp_002Edll_Excuted;
     public ESupplierStatus Status { get; private set; }
     public bool DeliveriesEnabled { get; private set; }
-    public float Debt => SyncAccessor_debt;
-    public int minsUntilDeaddropReady { get; private set; } = -1;
-    public float SyncAccessor_debt { get; set; }
-    public bool SyncAccessor_deadDropPreparing { get; set; }
+    public float Debt => SyncAccessor__debt;
+    public int MinsUntilDeaddropReady { get; private set; } = -1;
+    public SupplierNPCData SupplierData => base.NPCData as SupplierNPCData;
+    public float SyncAccessor__debt { get; set; }
+    public bool SyncAccessor__deadDropPreparing { get; set; }
 
+    public event Action OnDeaddropReady;
     public override void Awake();
     protected override void Start();
     public override void OnSpawnServer(NetworkConnection connection);
@@ -127,9 +122,9 @@ public class Supplier : NPC
     private bool IsDeadDropValid(SendableMessage message, out string invalidReason);
     private bool IsMeetupValid(SendableMessage message, out string invalidReason);
     public virtual float GetDeadDropLimit();
-    public override NPCData GetNPCData();
-    public override void Load(NPCData data, string containerPath);
-    public override void Load(DynamicSaveData dynamicData, NPCData npcData);
+    public override ScheduleOne.Persistence.Datas.NPCData GetNPCData();
+    public override void Load(ScheduleOne.Persistence.Datas.NPCData data, string containerPath);
+    public override void Load(DynamicSaveData dynamicData, ScheduleOne.Persistence.Datas.NPCData npcData);
     private void MeetupOrderCompleted(float spend);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();

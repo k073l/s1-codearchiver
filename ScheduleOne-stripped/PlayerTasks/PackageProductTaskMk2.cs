@@ -5,7 +5,7 @@ using ScheduleOne.Packaging;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Product;
 using ScheduleOne.Product.Packaging;
-using ScheduleOne.UI;
+using ScheduleOne.UI.Input;
 using ScheduleOne.UI.Stations;
 using UnityEngine;
 

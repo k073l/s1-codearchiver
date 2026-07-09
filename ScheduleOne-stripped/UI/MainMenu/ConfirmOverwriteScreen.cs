@@ -1,5 +1,5 @@
 namespace ScheduleOne.UI.MainMenu;
-public class ConfirmOverwriteScreen : MainMenuScreen
+public class ConfirmOverwriteScreen : MenuScreen
 {
     public SetupScreen SetupScreen;
     private int slotIndex;

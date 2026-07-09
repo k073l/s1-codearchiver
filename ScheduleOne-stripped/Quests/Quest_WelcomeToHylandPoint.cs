@@ -3,9 +3,7 @@ using ScheduleOne.DevUtilities;
 using ScheduleOne.NPCs.CharacterClasses;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Property;
-using ScheduleOne.UI.Input;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace ScheduleOne.Quests;
 public class Quest_WelcomeToHylandPoint : Quest

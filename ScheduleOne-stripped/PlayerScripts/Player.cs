@@ -21,7 +21,6 @@ using ScheduleOne.AvatarFramework;
 using ScheduleOne.AvatarFramework.Animation;
 using ScheduleOne.AvatarFramework.Customization;
 using ScheduleOne.Combat;
-using ScheduleOne.Core;
 using ScheduleOne.Core.Audio;
 using ScheduleOne.Core.Equipping.Framework;
 using ScheduleOne.Core.Items.Framework;
@@ -30,6 +29,7 @@ using ScheduleOne.DevUtilities;
 using ScheduleOne.Effects;
 using ScheduleOne.Equipping.Framework;
 using ScheduleOne.FX;
+using ScheduleOne.Gamepad;
 using ScheduleOne.GameTime;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Law;
@@ -39,17 +39,19 @@ using ScheduleOne.Networking;
 using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.Persistence.Loaders;
+using ScheduleOne.Platform;
 using ScheduleOne.PlayerScripts.Health;
 using ScheduleOne.Product;
 using ScheduleOne.Property;
 using ScheduleOne.Skating;
+using ScheduleOne.State;
 using ScheduleOne.Tools;
 using ScheduleOne.UI;
+using ScheduleOne.UI.Input;
 using ScheduleOne.UI.MainMenu;
 using ScheduleOne.Variables;
 using ScheduleOne.Vehicles;
 using ScheduleOne.Vision;
-using Steamworks;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -57,21 +59,19 @@ using UnityEngine.SceneManagement;
 namespace ScheduleOne.PlayerScripts;
 public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageable, ISightable, INetworkedEquippableUser, IEquippableUser, IEquippablePlayerUser
 {
-    public delegate void VehicleEvent(LandVehicle vehicle);
-    public delegate void VehicleTransformEvent(LandVehicle vehicle, Transform exitPoint);
-    public const string OWNER_PLAYER_CODE;
-    public const float CapColDefaultHeight;
+    private const float CapColDefaultHeight;
     private const int LightningStrikeBoostDuration;
-    public List<NetworkObject> objectsTemporarilyOwnedByPlayer;
+    private const float StandingAvatarOffset;
+    private const float CrouchedAvatarOffset;
     public static Action onLocalPlayerSpawned;
     public static Action<Player> onPlayerSpawned;
     public static Action<Player> onPlayerDespawned;
     public static Player Local;
     public static List<Player> PlayerList;
     [Header("References")]
-    public GameObject LocalGameObject;
+    [SerializeField]
+    private GameObject LocalGameObject;
     public Avatar Avatar;
-    public AvatarAnimation Anim;
     public SmoothedVelocityCalculator VelocityCalculator;
     public PlayerVisibility VisualState;
     public EntityVisibility Visibility;
@@ -79,67 +79,56 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public POI PoI;
     public PlayerHealth Health;
     public PlayerCrimeData CrimeData;
-    public PlayerEnergy Energy;
     public Transform MimicCamera;
-    public AvatarFootstepDetector FootstepDetector;
-    public CharacterController CharacterController;
-    public AudioSourceController PunchSound;
-    public OptimizedLight ThirdPersonFlashlight;
+    [SerializeField]
+    private AvatarFootstepDetector FootstepDetector;
+    [SerializeField]
+    private CharacterController CharacterController;
+    [SerializeField]
+    private AudioSourceController PunchSound;
+    [SerializeField]
+    private OptimizedLight ThirdPersonFlashlight;
     public WorldspaceDialogueRenderer NameLabel;
     public PlayerClothing Clothing;
-    public WorldspaceDialogueRenderer WorldspaceDialogue;
+    [SerializeField]
+    private WorldspaceDialogueRenderer WorldspaceDialogue;
+    [SerializeField]
+    private MonoState OnFootState;
     [Header("Settings")]
-    public LayerMask GroundDetectionMask;
-    public float AvatarOffset_Standing;
-    public float AvatarOffset_Crouched;
+    [SerializeField]
+    private LayerMask GroundDetectionMask;
     [ColorUsage(true, true)]
     [SerializeField]
     private Color _lightningColorTint;
-    [Header("Movement mapping")]
-    public AnimationCurve WalkingMapCurve;
-    public AnimationCurve CrouchWalkMapCurve;
+    [SerializeField]
+    private AvatarSettings _defaultAppearance;
     [CompilerGenerated]
     [SyncVar( /*Could not decode attribute arguments.*/)]
     public string _003CPlayerName_003Ek__BackingField;
-    public NetworkConnection Connection;
     [CompilerGenerated]
     [SyncVar( /*Could not decode attribute arguments.*/)]
     public string _003CPlayerCode_003Ek__BackingField;
     [CompilerGenerated]
     [SyncVar(OnChange = "CurrentVehicleChanged")]
     public NetworkObject _003CCurrentVehicle_003Ek__BackingField;
-    public VehicleEvent onEnterVehicle;
-    public VehicleTransformEvent onExitVehicle;
     [CompilerGenerated]
     [SyncVar]
-    public NetworkObject _003CCurrentBed_003Ek__BackingField;
-    [CompilerGenerated]
-    [SyncVar]
+    [HideInInspector]
     public bool _003CIsReadyToSleep_003Ek__BackingField;
     [CompilerGenerated]
     private bool _003CIsSkating_003Ek__BackingField;
     public Action<Skateboard> onSkateboardMounted;
     public Action onSkateboardDismounted;
-    public bool HasCompletedIntro;
     [CompilerGenerated]
     [SyncVar( /*Could not decode attribute arguments.*/)]
+    [HideInInspector]
     public Vector3 _003CCameraPosition_003Ek__BackingField;
     [CompilerGenerated]
     [SyncVar( /*Could not decode attribute arguments.*/)]
+    [HideInInspector]
     public Quaternion _003CCameraRotation_003Ek__BackingField;
-    public ItemSlot[] Inventory;
-    [Header("Appearance debugging")]
-    public BasicAvatarSettings DebugAvatarSettings;
+    private ItemSlot[] _inventory;
     private PlayerLoader loader;
-    public UnityEvent onRagdoll;
-    public UnityEvent onRagdollEnd;
-    public UnityEvent onArrested;
-    public UnityEvent onFreed;
-    public UnityEvent onTased;
-    public UnityEvent onTasedEnd;
-    public UnityEvent onPassedOut;
-    public UnityEvent onPassOutRecovery;
-    public UnityEvent onStruckByLightning;
     public List<BaseVariable> PlayerVariables;
     public Dictionary<string, BaseVariable> VariableDict;
     private float standingScale;
@@ -154,12 +143,12 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public SyncVar<string> syncVar____003CPlayerName_003Ek__BackingField;
     public SyncVar<string> syncVar____003CPlayerCode_003Ek__BackingField;
     public SyncVar<NetworkObject> syncVar____003CCurrentVehicle_003Ek__BackingField;
-    public SyncVar<NetworkObject> syncVar____003CCurrentBed_003Ek__BackingField;
     public SyncVar<bool> syncVar____003CIsReadyToSleep_003Ek__BackingField;
     public SyncVar<Vector3> syncVar____003CCameraPosition_003Ek__BackingField;
     public SyncVar<Quaternion> syncVar____003CCameraRotation_003Ek__BackingField;
     private bool NetworkInitialize___EarlyScheduleOne_002EPlayerScripts_002EPlayerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EPlayerScripts_002EPlayerAssembly_002DCSharp_002Edll_Excuted;
+    public static MonoState LocalPlayerState { get; }
     public bool IsLocalPlayer => ((NetworkBehaviour)this).IsOwner;
     public IThirdPersonReferencesProvider ThirdPersonReferences => Avatar;
     public IFirstPersonReferencesProvider FirstPersonReferences => PlayerSingleton<PlayerInventory>.Instance;
@@ -171,9 +160,11 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public VisionEvent HighestProgressionEvent { get; set; }
     public EntityVisibility VisibilityComponent => Visibility;
     public Vector3 EyePosition { get; private set; } = Vector3.zero;
+    private AvatarAnimation _animation => Avatar.Animation;
     public string PlayerName {[CompilerGenerated]
         get; [CompilerGenerated]
         protected set; } = "Player";
+    public NetworkConnection Connection { get; private set; }
     public string PlayerCode {[CompilerGenerated]
         get; [CompilerGenerated]
         protected set; } = string.Empty;
@@ -188,10 +179,6 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public LandVehicle LastDrivenVehicle { get; private set; }
     public float TimeSinceVehicleExit { get; protected set; } = 1000f;
     public bool Crouched { get; private set; }
-    public NetworkObject CurrentBed {[CompilerGenerated]
-        get; [CompilerGenerated]
-        [ServerRpc]
-        set; }
     public bool IsReadyToSleep {[CompilerGenerated]
         get; [CompilerGenerated]
         private set; }
@@ -210,6 +197,7 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public ScheduleOne.Property.Property LastVisitedProperty { get; protected set; }
     public Business CurrentBusiness { get; }
     public EMapRegion CurrentRegion { get; protected set; }
+    private bool _hasCompletedIntro { get; set; }
     public Vector3 PlayerBasePosition => ((Component)this).transform.position - ((Component)this).transform.up * (CharacterController.height / 2f);
     public Vector3 CameraPosition {[CompilerGenerated]
         get; [CompilerGenerated]
@@ -222,7 +210,7 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public int EquippedItemSlotIndex { get; private set; } = -1;
     public BasicAvatarSettings CurrentAvatarSettings { get; protected set; }
     public ProductItemInstance ConsumedProduct { get; private set; }
-    public int TimeSinceProductConsumed { get; private set; }
+    private int _timeSinceProductConsumed { get; set; }
     public string SaveFolderName { get; }
     public string SaveFileName => "Player";
     public Loader Loader => loader;
@@ -249,21 +237,21 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public string SyncAccessor__003CPlayerName_003Ek__BackingField { get; set; }
     public string SyncAccessor__003CPlayerCode_003Ek__BackingField { get; set; }
     public NetworkObject SyncAccessor__003CCurrentVehicle_003Ek__BackingField { get; set; }
-    public NetworkObject SyncAccessor__003CCurrentBed_003Ek__BackingField { get; set; }
     public bool SyncAccessor__003CIsReadyToSleep_003Ek__BackingField { get; set; }
     public Vector3 SyncAccessor__003CCameraPosition_003Ek__BackingField { get; set; }
     public Quaternion SyncAccessor__003CCameraRotation_003Ek__BackingField { get; set; }
 
     public event Action<bool> OnThirdPersonMeshesVisibilityChanged;
+    public event Action<LandVehicle> onEnterVehicle;
+    public event Action<LandVehicle> onExitVehicle;
+    public event Action onArrested;
+    public event Action onFreed;
+    public event Action onTased;
+    public event Action onTasedEnd;
+    public event Action onStruckByLightning;
     public void RecordLastKnownPosition(bool resetTimeSinceLastSeen);
     public float GetSearchTime();
     public bool IsCurrentlySightable();
-    [Button]
-    public void LoadDebugAvatarSettings();
-    public static Player GetPlayer(NetworkConnection conn);
-    public static Player GetRandomPlayer(bool excludeArrestedOrDead = true, bool excludeSleeping = true);
-    public static Player GetPlayer(string playerCode);
-    public static Player GetPlayerByName(string playerName);
     public override void Awake();
     public virtual void InitializeSaveable();
     protected virtual void OnDestroy();
@@ -279,7 +267,7 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public void HostExitedGame();
     private unsafe void ClientConnectionStateChanged(ClientConnectionStateArgs args);
     [ServerRpc(RunLocally = true)]
-    public void SendPlayerNameData(string playerName, ulong id);
+    public void SendPlayerNameData(string playerName, string id);
     [ServerRpc(RequireOwnership = false)]
     public void RequestPlayerData(string playerCode);
     [ObserversRpc(RunLocally = true)]
@@ -300,7 +288,6 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     protected virtual void LateUpdate();
     private void RecalculateCurrentProperty();
     private void RecalculateCurrentRegion();
-    private void FixedUpdate();
     private void ApplyMovementVisuals();
     public void SetVisible(bool vis, bool network = false);
     [ObserversRpc]
@@ -322,14 +309,11 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public void ExitVehicle(Transform exitPoint);
     private void PreDestroyClientObjects(NetworkConnection conn);
     private void CurrentVehicleChanged(NetworkObject oldVeh, NetworkObject newVeh, bool asServer);
-    public static bool AreAllPlayersReadyToSleep();
     private void SleepStart();
     [ServerRpc(RunLocally = true, RequireOwnership = false)]
     public void SetReadyToSleep(bool ready);
     private void SleepEnd();
-    public static void Activate();
-    public static void Deactivate(bool freeMouse);
-    public void ExitAll();
+    private void ExitAll();
     public void SetVisibleToLocalPlayer(bool vis);
     [ServerRpc]
     public void SendPunch();
@@ -338,8 +322,7 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     [ServerRpc(RunLocally = true)]
     private void MarkIntroCompleted(BasicAvatarSettings appearance);
     public bool IsPointVisibleToPlayer(Vector3 point, float maxDistance_Visible = 30f, float minDistance_Invisible = 5f);
-    public static Player GetClosestPlayer(Vector3 point, out float distance, List<Player> exclude = null);
-    public void SetCapsuleColliderHeight(float normalizedHeight);
+    private void SetCapsuleColliderHeight(float normalizedHeight);
     public void SetScale(float scale);
     public void SetScale(float scale, float lerpTime);
     protected virtual void ApplyScale();
@@ -361,6 +344,7 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     [ObserversRpc(RunLocally = true)]
     public virtual void ReceiveImpact(Impact impact);
     public virtual void ProcessImpactForce(Vector3 forcePoint, Vector3 forceDirection, float force);
+    protected virtual void ProcessHapticsForImpact(Impact impact);
     private void HitByLightning();
     private void ResetHitByLightning();
     public virtual void OnDied();
@@ -373,14 +357,6 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public void Free_Server();
     [ObserversRpc(RunLocally = true)]
     private void Free_Client();
-    [ServerRpc(RunLocally = true)]
-    public void SendPassOut();
-    [ObserversRpc(RunLocally = true, ExcludeOwner = true)]
-    public void PassOut();
-    [ServerRpc(RunLocally = true)]
-    public void SendPassOutRecovery();
-    [ObserversRpc(RunLocally = true, ExcludeOwner = true)]
-    public void PassOutRecovery();
     [ServerRpc(RunLocally = true, RequireOwnership = false)]
     public void SendEquippable_Networked(string assetPath);
     [ObserversRpc(RunLocally = true)]
@@ -427,7 +403,7 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     [ServerRpc(RunLocally = true)]
     public void SendAppearance(BasicAvatarSettings settings);
     [ObserversRpc(RunLocally = true)]
-    public void SetAppearance(BasicAvatarSettings settings, bool refreshClothing);
+    private void SetAppearance(BasicAvatarSettings settings, bool refreshClothing);
     public void MountSkateboard(Skateboard board);
     [ServerRpc(RunLocally = true)]
     private void SendMountedSkateboard(NetworkObject skateboardObj);
@@ -466,10 +442,6 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     [SpecialName]
     public void RpcLogic___set_CurrentVehicle_3323014238(NetworkObject value);
     private void RpcReader___Server_set_CurrentVehicle_3323014238(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Server_set_CurrentBed_3323014238(NetworkObject value);
-    [SpecialName]
-    public void RpcLogic___set_CurrentBed_3323014238(NetworkObject value);
-    private void RpcReader___Server_set_CurrentBed_3323014238(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
     private void RpcWriter___Server_set_IsSkating_1140765316(bool value);
     [SpecialName]
     public void RpcLogic___set_IsSkating_1140765316(bool value);
@@ -493,9 +465,9 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     private void RpcWriter___Observers_HostExitedGame_2166136261();
     public void RpcLogic___HostExitedGame_2166136261();
     private void RpcReader___Observers_HostExitedGame_2166136261(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Server_SendPlayerNameData_586648380(string playerName, ulong id);
-    public void RpcLogic___SendPlayerNameData_586648380(string playerName, ulong id);
-    private void RpcReader___Server_SendPlayerNameData_586648380(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Server_SendPlayerNameData_1988918489(string playerName, string id);
+    public void RpcLogic___SendPlayerNameData_1988918489(string playerName, string id);
+    private void RpcReader___Server_SendPlayerNameData_1988918489(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
     private void RpcWriter___Server_RequestPlayerData_3615296227(string playerCode);
     public void RpcLogic___RequestPlayerData_3615296227(string playerCode);
     private void RpcReader___Server_RequestPlayerData_3615296227(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
@@ -565,18 +537,6 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     private void RpcWriter___Observers_Free_Client_2166136261();
     private void RpcLogic___Free_Client_2166136261();
     private void RpcReader___Observers_Free_Client_2166136261(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Server_SendPassOut_2166136261();
-    public void RpcLogic___SendPassOut_2166136261();
-    private void RpcReader___Server_SendPassOut_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Observers_PassOut_2166136261();
-    public void RpcLogic___PassOut_2166136261();
-    private void RpcReader___Observers_PassOut_2166136261(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Server_SendPassOutRecovery_2166136261();
-    public void RpcLogic___SendPassOutRecovery_2166136261();
-    private void RpcReader___Server_SendPassOutRecovery_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Observers_PassOutRecovery_2166136261();
-    public void RpcLogic___PassOutRecovery_2166136261();
-    private void RpcReader___Observers_PassOutRecovery_2166136261(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Server_SendEquippable_Networked_3615296227(string assetPath);
     public void RpcLogic___SendEquippable_Networked_3615296227(string assetPath);
     private void RpcReader___Server_SendEquippable_Networked_3615296227(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
@@ -630,7 +590,7 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public void RpcLogic___SendAppearance_3281254764(BasicAvatarSettings settings);
     private void RpcReader___Server_SendAppearance_3281254764(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
     private void RpcWriter___Observers_SetAppearance_2139595489(BasicAvatarSettings settings, bool refreshClothing);
-    public void RpcLogic___SetAppearance_2139595489(BasicAvatarSettings settings, bool refreshClothing);
+    private void RpcLogic___SetAppearance_2139595489(BasicAvatarSettings settings, bool refreshClothing);
     private void RpcReader___Observers_SetAppearance_2139595489(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Server_SendMountedSkateboard_3323014238(NetworkObject skateboardObj);
     private void RpcLogic___SendMountedSkateboard_3323014238(NetworkObject skateboardObj);

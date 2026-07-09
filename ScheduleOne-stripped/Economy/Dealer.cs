@@ -12,7 +12,6 @@ using FishNet.Object.Synchronizing.Internal;
 using FishNet.Serializing;
 using FishNet.Serializing.Generated;
 using FishNet.Transporting;
-using ScheduleOne.AvatarFramework;
 using ScheduleOne.Cartel;
 using ScheduleOne.Core;
 using ScheduleOne.DevUtilities;
@@ -24,6 +23,7 @@ using ScheduleOne.Messaging;
 using ScheduleOne.Money;
 using ScheduleOne.NPCs;
 using ScheduleOne.NPCs.Behaviour;
+using ScheduleOne.NPCs.Framework;
 using ScheduleOne.NPCs.Relation;
 using ScheduleOne.NPCs.Schedules;
 using ScheduleOne.Persistence;
@@ -32,7 +32,6 @@ using ScheduleOne.Product;
 using ScheduleOne.Product.Packaging;
 using ScheduleOne.Quests;
 using ScheduleOne.UI;
-using ScheduleOne.Variables;
 using ScheduleOne.VoiceOver;
 using UnityEngine;
 using UnityEngine.Events;
@@ -60,28 +59,13 @@ public class Dealer : NPC, IItemSlotOwner
     public static List<Dealer> AllPlayerDealers;
     [CompilerGenerated]
     [SyncVar(OnChange = "UpdateCollectCashChoice")]
+    [HideInInspector]
     public float _003CCash_003Ek__BackingField;
     public Action onContractAccepted;
     [Header("Dealer References")]
     public NPCEnterableBuilding Home;
     public NPCEvent_StayInBuilding HomeEvent;
     public DialogueController_Dealer DialogueController;
-    [Header("Dialogue stuff")]
-    public DialogueContainer RecruitDialogue;
-    public DialogueContainer CollectCashDialogue;
-    public DialogueContainer AssignCustomersDialogue;
-    [Header("Dealer Settings")]
-    public EDealerType DealerType;
-    public string HomeName;
-    public float SigningFee;
-    public float Cut;
-    [Header("Variables")]
-    public string CompletedDealsVariable;
-    [Header("UnityEvents")]
-    public UnityEvent onRecommended;
-    public UnityEvent onCompleteDeal;
-    [Header("Seasonal Events")]
-    public AvatarSettings ChristmasOutfit;
     private ItemSlot[] overflowSlots;
     private Contract currentContract;
     private DialogueController.DialogueChoice recruitChoice;
@@ -102,8 +86,11 @@ public class Dealer : NPC, IItemSlotOwner
     public List<Customer> AssignedCustomers { get; private set; } = new List<Customer>();
     public List<Contract> ActiveContracts { get; private set; } = new List<Contract>();
     public bool HasBeenRecommended { get; private set; }
+    public DealerNPCData DealerData => base.NPCData as DealerNPCData;
     public float SyncAccessor__003CCash_003Ek__BackingField { get; set; }
 
+    public event Action OnRecommended;
+    public event Action OnCompleteDeal;
     public override void Awake();
     protected override void OnValidate();
     protected override void OnDestroy();
@@ -192,9 +179,9 @@ public class Dealer : NPC, IItemSlotOwner
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
     private void SetSlotFilter_Internal(NetworkConnection conn, int itemSlotIndex, SlotFilter filter);
-    public override NPCData GetNPCData();
-    public override void Load(DynamicSaveData dynamicData, NPCData npcData);
-    public override void Load(NPCData data, string containerPath);
+    public override ScheduleOne.Persistence.Datas.NPCData GetNPCData();
+    public override void Load(DynamicSaveData dynamicData, ScheduleOne.Persistence.Datas.NPCData npcData);
+    public override void Load(ScheduleOne.Persistence.Datas.NPCData data, string containerPath);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

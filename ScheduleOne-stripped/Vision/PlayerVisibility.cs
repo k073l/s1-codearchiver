@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Law;
 using ScheduleOne.PlayerScripts;
@@ -9,14 +11,17 @@ public class PlayerVisibility : EntityVisibility
 {
     private Player player;
     private bool disobeyingCurfewStateApplied;
+    private List<Vector3> _cachedVisibilityPoints;
     private bool NetworkInitialize___EarlyScheduleOne_002EVision_002EPlayerVisibilityAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EVision_002EPlayerVisibilityAssembly_002DCSharp_002Edll_Excuted;
     public override float Suspiciousness { get; }
 
     public override void Awake();
     private void Update();
+    private void LateUpdate();
     private void AddFlag_DisobeyingCurfew();
     private void RemoveFlag_DisobeyingCurfew();
+    protected override List<Vector3> GetVisibilityPoints();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

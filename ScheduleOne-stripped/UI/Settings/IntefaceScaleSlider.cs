@@ -9,6 +9,6 @@ public class IntefaceScaleSlider : SettingsSlider
     public const float MinScale;
     public const float MaxScale;
     protected virtual void OnEnable();
-    protected override void OnValueChanged(float value);
+    protected override void OnDragEnd(float value);
     protected override string GetDisplayValue(float value);
 }

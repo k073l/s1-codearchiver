@@ -26,7 +26,7 @@ public class WorldspaceDialogueRenderer : MonoBehaviour
     public string ShownText { get; protected set; } = string.Empty;
 
     private void Awake();
-    private void FixedUpdate();
+    private void Update();
     private void LateUpdate();
     private void UpdatePosition();
     public void ShowText(string text, float duration = 0f);

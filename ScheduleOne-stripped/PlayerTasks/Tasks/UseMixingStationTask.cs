@@ -6,8 +6,7 @@ using ScheduleOne.PlayerScripts;
 using ScheduleOne.Product;
 using ScheduleOne.StationFramework;
 using ScheduleOne.Trash;
-using ScheduleOne.UI;
-using ScheduleOne.UI.Stations;
+using ScheduleOne.UI.Input;
 using UnityEngine;
 using UnityEngine.Events;
 

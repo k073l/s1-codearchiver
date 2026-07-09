@@ -11,7 +11,8 @@ public class UITrigger : MonoBehaviour, IPointerDownHandler, IEventSystemHandler
     public enum TriggerType
     {
         Press,
-        Hold
+        Hold,
+        PressAndRelease
     }
 
     [SerializeField]
@@ -28,12 +29,21 @@ public class UITrigger : MonoBehaviour, IPointerDownHandler, IEventSystemHandler
     [SerializeField]
     [Tooltip("Optional UGUI Selectable. If assigned, the uiTrigger interactable will also check for the UGUI Selectable interactable property.")]
     private Selectable uGUISelectable;
+    [SerializeField]
+    [Tooltip("Set to true to allow the hold action to loop while holding. The OnTrigger event will be invoked every holdDuration seconds.")]
+    private bool _loopHold;
+    [SerializeField]
+    [Tooltip("Set to true to trigger the OnTrigger event when the hold starts. The OnTrigger event will be invoked once when the hold starts.")]
+    private bool _triggerOnHoldStart;
     [Tooltip("Event triggered when the action is performed")]
     public UnityEvent OnTrigger;
+    public UnityEvent OnRelease;
+    public bool _debugMode;
     private bool isHolding;
     private float holdTime;
     private bool isHoldStarted;
     private bool interactable;
+    protected bool _isPressed;
     public bool Interactable { get; set; }
     public Image HoldImage { get; set; }
 
@@ -44,6 +54,7 @@ public class UITrigger : MonoBehaviour, IPointerDownHandler, IEventSystemHandler
     internal virtual void OnReset();
     internal virtual void DetectTriggerInput(InputActionReference inputAction);
     internal void OnInputDown();
+    internal void OnInputRelease();
     internal void OnInputUp();
     public virtual void OnPointerDown(PointerEventData eventData);
     public virtual void OnPointerUp(PointerEventData eventData);

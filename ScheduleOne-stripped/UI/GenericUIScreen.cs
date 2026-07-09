@@ -1,5 +1,6 @@
 using ScheduleOne.DevUtilities;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.State;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,18 +9,15 @@ public class GenericUIScreen : MonoBehaviour
 {
     [Header("Settings")]
     public string Name;
-    public bool UseExitActions;
-    public int ExitActionPriority;
-    public bool CanExitWithRightClick;
-    public bool ReenableControlsOnClose;
-    public bool ReenableInventoryOnClose;
-    public bool ReenableEquippingOnClose;
+    [Header("References")]
+    public MonoState State;
     public UnityEvent onOpen;
     public UnityEvent onClose;
     public bool IsOpen { get; private set; }
 
     private void Awake();
     public void Open();
+    private void OnOpen();
     public void Close();
-    private void Exit(ExitAction action);
+    private void OnClose();
 }

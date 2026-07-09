@@ -32,10 +32,14 @@ public class DeliveryStatusDisplay : MonoBehaviour
     public Color StatusColor_Transit;
     public Color StatusColor_Waiting;
     public Color StatusColor_Arrived;
+    [Header("UI")]
+    [SerializeField]
+    private UISelectable _selectable;
     [Header("Fonts")]
     [SerializeField]
     private ColorFont _shopTextColorFont;
     public DeliveryInstance DeliveryInstance { get; private set; }
+    public UISelectable Selectable => _selectable;
 
     public void AssignDelivery(DeliveryInstance instance);
     public void RefreshStatus();

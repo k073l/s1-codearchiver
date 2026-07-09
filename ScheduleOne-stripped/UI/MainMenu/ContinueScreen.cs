@@ -4,7 +4,7 @@ using ScheduleOne.Persistence;
 using UnityEngine;
 
 namespace ScheduleOne.UI.MainMenu;
-public class ContinueScreen : MainMenuScreen
+public class ContinueScreen : MenuScreen
 {
     public RectTransform NotHostWarning;
     private void Update();

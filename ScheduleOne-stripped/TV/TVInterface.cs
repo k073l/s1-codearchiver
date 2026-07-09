@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.PlayerScripts;
-using ScheduleOne.UI;
-using ScheduleOne.UI.Compass;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;

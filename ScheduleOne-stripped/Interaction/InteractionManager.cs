@@ -19,8 +19,6 @@ public class InteractionManager : Singleton<InteractionManager>
     protected LayerMask interaction_SearchMask;
     [SerializeField]
     protected float rightClickRange;
-    public EInteractionSearchType interactionSearchType;
-    public bool DEBUG;
     [Header("Settings")]
     public InputActionReference InteractInput;
     [Header("Visuals Settings")]
@@ -36,6 +34,9 @@ public class InteractionManager : Singleton<InteractionManager>
     private float timeSinceLastInteractStart;
     private BuildableItem itemBeingDestroyed;
     private float destroyTime;
+    private Ray _ray;
+    private RaycastHit[] _sphereCastHits;
+    private RaycastHit[] _rayCastHits;
     private static float timeToDestroy;
     public LayerMask Interaction_SearchMask => interaction_SearchMask;
     public bool CanDestroy { get; set; } = true;
@@ -47,8 +48,10 @@ public class InteractionManager : Singleton<InteractionManager>
     protected override void Start();
     protected override void OnDestroy();
     private void LoadInteractKey();
+    private void FixedUpdate();
     protected virtual void Update();
     protected virtual void LateUpdate();
+    private void DoCasts();
     protected virtual void CheckHover();
     public bool IsAnythingBlockingInteraction();
     protected virtual void CheckInteraction();

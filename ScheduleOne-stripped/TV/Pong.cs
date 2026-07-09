@@ -53,7 +53,7 @@ public class Pong : TVApp
     private Vector3 ballVelocity;
     private float reactionTimer;
     public EGameMode GameMode { get; set; }
-    public EState State { get; set; }
+    public new EState State { get; set; }
     public int LeftScore { get; set; }
     public int RightScore { get; set; }
 

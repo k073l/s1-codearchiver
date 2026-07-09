@@ -4,8 +4,7 @@ using ScheduleOne.DevUtilities;
 using ScheduleOne.ObjectScripts;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Product;
-using ScheduleOne.UI;
-using ScheduleOne.UI.Stations;
+using ScheduleOne.UI.Input;
 using UnityEngine;
 
 namespace ScheduleOne.PlayerTasks;

@@ -7,4 +7,5 @@ public class CameraBobSlider : SettingsSlider
 {
     protected virtual void Start();
     protected override void OnValueChanged(float value);
+    protected override void OnDragEnd(float value);
 }

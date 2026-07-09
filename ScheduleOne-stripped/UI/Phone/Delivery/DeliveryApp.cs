@@ -31,8 +31,6 @@ public class DeliveryApp : App<DeliveryApp>
     public RectTransform StatusDisplayContainer;
     public GameObject NoDeliveriesIndicator;
     public GameObject NoPastDeliveriesIndicator;
-    public ScrollRect MainScrollRect;
-    public LayoutGroup MainLayoutGroup;
     [Header("Components")]
     [SerializeField]
     private DeliveryReceiptDisplay _deliveryReceiptPrefab;
@@ -51,6 +49,15 @@ public class DeliveryApp : App<DeliveryApp>
     private float shopPanelWidth;
     [SerializeField]
     private float shopTransitionDuration;
+    [Header("UI")]
+    [SerializeField]
+    private UIScreen _deliveryScreen;
+    [SerializeField]
+    private UIPanel _listingPanel;
+    [SerializeField]
+    private UIPanel _activeOrdersPanel;
+    [SerializeField]
+    private UIPanel _pastOrdersPanel;
     private List<DeliveryStatusDisplay> statusDisplays;
     private DeliveryReceiptDisplay[] _pastDeliveries;
     private bool started;
@@ -62,7 +69,7 @@ public class DeliveryApp : App<DeliveryApp>
     public void OpenShop(DeliveryShop shop);
     public void CloseShop(DeliveryShop shop);
     private IEnumerator DoShopTransitionRoutine(float duration, int direction, List<RectTransform> panels, Action onComplete);
-    public override void Exit(ExitAction exit);
+    protected override void OnExit(ExitAction exit);
     private void SetCanvasInteraction(CanvasGroup canvas, bool interactable);
     public override void SetOpen(bool open);
     private void OnMinPass();
@@ -80,6 +87,7 @@ public class DeliveryApp : App<DeliveryApp>
     public DeliveryShop GetShop(string shopName);
     public void SetIsAvailable(ShopInterface matchingShop, bool available);
     private void OnTabChange(int index);
+    private void UpdateActiveDeliveries();
     private void UpdatePastDeliveries();
     private bool IsValidReceipt(DeliveryReceipt receipt);
     private void RefreshNotifications();

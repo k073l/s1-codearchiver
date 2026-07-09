@@ -28,7 +28,6 @@ public class ItemSelector : ClipboardScreen
     public GameObject OptionPrefab;
     [Header("Settings")]
     public Sprite EmptyOptionSprite;
-    private Coroutine lerpRoutine;
     private List<Option> options;
     private Option selectedOption;
     private List<RectTransform> optionButtons;

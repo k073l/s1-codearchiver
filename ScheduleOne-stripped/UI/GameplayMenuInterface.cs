@@ -13,6 +13,7 @@ public class GameplayMenuInterface : Singleton<GameplayMenuInterface>
     public Button CharacterButton;
     public RectTransform SelectionIndicator;
     public CharacterInterface CharacterInterface;
+    public GameObject Tab;
     private Coroutine selectionLerp;
     protected override void Awake();
     protected override void Start();

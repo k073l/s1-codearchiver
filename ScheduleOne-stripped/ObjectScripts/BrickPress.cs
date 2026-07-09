@@ -24,10 +24,10 @@ using ScheduleOne.PlayerScripts;
 using ScheduleOne.PlayerTasks;
 using ScheduleOne.Product;
 using ScheduleOne.Product.Packaging;
+using ScheduleOne.State;
 using ScheduleOne.Storage;
 using ScheduleOne.Tiles;
 using ScheduleOne.Tools;
-using ScheduleOne.UI.Compass;
 using ScheduleOne.UI.Management;
 using ScheduleOne.UI.Stations;
 using UnityEngine;
@@ -119,7 +119,6 @@ public class BrickPress : GridItem, IUsable, IItemSlotOwner, ITransitEntity, ICo
     protected virtual void LateUpdate();
     public override void OnSpawnServer(NetworkConnection connection);
     public void SendConfigurationToClient(NetworkConnection conn);
-    private void Exit(ExitAction action);
     public override bool CanBeDestroyed(out string reason);
     protected override void Destroy();
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
@@ -138,8 +137,8 @@ public class BrickPress : GridItem, IUsable, IItemSlotOwner, ITransitEntity, ICo
     public void DestroyWorldspaceUI();
     public void Hovered();
     public void Interacted();
-    public void Open();
-    public void Close();
+    public void Use();
+    private void OnEndUse();
     [ServerRpc(RunLocally = true, RequireOwnership = false)]
     public void SetStoredInstance(NetworkConnection conn, int itemSlotIndex, ItemInstance instance);
     [ObserversRpc(RunLocally = true)]

@@ -11,7 +11,6 @@ public class Quest_DealForCartel : Quest
     public QuestEntry EndTruceEntry;
     private CartelDealInfo dealInfo;
     public void Initialize(CartelDealInfo dealInfo);
-    public override void Begin(bool network = true);
     protected override void OnUncappedMinPass();
     private void UpdateTimingLabel();
     public void NotifyDealCompleted();

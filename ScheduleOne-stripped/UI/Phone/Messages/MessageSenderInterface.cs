@@ -32,7 +32,6 @@ public class MessageSenderInterface : MonoBehaviour
     public UIPanel dialogueScreenUIPanel { get; set; }
 
     public void Awake();
-    public void Start();
     private void Exit(ExitAction exit);
     public void SetVisibility(EVisibility visibility);
     public void UpdateSendables();

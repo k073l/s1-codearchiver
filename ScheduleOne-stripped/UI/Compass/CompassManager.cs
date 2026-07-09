@@ -18,11 +18,15 @@ public class CompassManager : Singleton<CompassManager>
     public class Element
     {
         public bool LastState;
-        public bool Visible;
-        public RectTransform Rect;
-        public CanvasGroup Group;
-        public TextMeshProUGUI DistanceLabel;
-        public Transform Transform;
+        private GameObject go;
+        public bool Visible { get; set; }
+        public RectTransform Rect { get; private set; }
+        public CanvasGroup Group { get; private set; }
+        public TextMeshProUGUI DistanceLabel { get; private set; }
+        public Transform TargetTransform { get; private set; }
+
+        public Element(RectTransform rect, Transform transform);
+        public void SetTarget(Transform transform);
     }
 
     public const int NOTCH_COUNT;

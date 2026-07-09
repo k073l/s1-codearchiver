@@ -10,11 +10,11 @@ using FishNet.Object.Synchronizing;
 using FishNet.Object.Synchronizing.Internal;
 using FishNet.Serializing;
 using FishNet.Transporting;
+using ScheduleOne.Core.Weather;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Experimental;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Tools;
-using ScheduleOne.Weather;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -135,7 +135,7 @@ public class Skateboard : NetworkBehaviour, IWeatherEntity
 
     string IWeatherEntity.WeatherVolume { get; set; }
 
-    Transform IWeatherEntity.Transform => ((Component)this).transform;
+    Transform IWeatherEntity.Transform { get; }
     public bool IsUnderCover { get; set; }
     public SkateboardSettings CurentSettings => _settings;
     public SkateboardSettings DefaultSettings => _defaultData.Settings;

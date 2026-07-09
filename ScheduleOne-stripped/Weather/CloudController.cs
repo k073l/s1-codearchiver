@@ -1,8 +1,11 @@
+using ScheduleOne.Core.Weather;
+
 namespace ScheduleOne.Weather;
 public class CloudController : WeatherEffectController
 {
     private bool NetworkInitialize___EarlyScheduleOne_002EWeather_002ECloudControllerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EWeather_002ECloudControllerAssembly_002DCSharp_002Edll_Excuted;
+    public void Initialise(WeatherVolume mainVolume, CloudSettings cloudSettings);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

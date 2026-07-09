@@ -15,7 +15,8 @@ public class ManagementWorldspaceCanvas : Singleton<ManagementWorldspaceCanvas>
     public Canvas Canvas;
     public AnimationCurve ScaleCurve;
     public TransitLineVisuals TransitRouteVisualsPrefab;
-    public InputPrompt CrosshairPrompt;
+    [SerializeField]
+    private InputPromptsData InteractInputPrompt;
     [Header("Settings")]
     public LayerMask ObjectSelectionLayerMask;
     public Color HoveredOutlineColor;
@@ -23,9 +24,11 @@ public class ManagementWorldspaceCanvas : Singleton<ManagementWorldspaceCanvas>
     private List<IConfigurable> ShownConfigurables;
     public IConfigurable HoveredConfigurable;
     private IConfigurable OutlinedConfigurable;
+    private bool _isPromptActive;
+    private string _currentPromptMessage;
     public List<IConfigurable> SelectedConfigurables;
     public bool IsOpen { get; protected set; }
-    public ScheduleOne.Property.Property CurrentProperty => Singleton<PropertyManager>.Instance.GetNearestProperty(((Component)PlayerSingleton<PlayerCamera>.Instance).transform.position);
+    public ScheduleOne.Property.Property CurrentProperty { get; private set; }
 
     public void Open();
     public void Close(bool preserveSelection = false);
@@ -41,5 +44,6 @@ public class ManagementWorldspaceCanvas : Singleton<ManagementWorldspaceCanvas>
     private IConfigurable GetHoveredConfigurable();
     private List<IConfigurable> GetConfigurablesToShow();
     public void ShowCrosshairPrompt(string message);
+    private void SetCrosshairPromptMessage(string message);
     public void HideCrosshairPrompt();
 }

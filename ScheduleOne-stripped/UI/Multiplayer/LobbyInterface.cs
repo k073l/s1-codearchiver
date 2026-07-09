@@ -1,32 +1,39 @@
-using System;
+using System.Collections.Generic;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Networking;
-using Steamworks;
+using ScheduleOne.Persistence;
+using ScheduleOne.Platform;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace ScheduleOne.UI.Multiplayer;
-public class LobbyInterface : PersistentSingleton<LobbyInterface>
+public class LobbyInterface : Singleton<LobbyInterface>
 {
     [Header("References")]
-    public Lobby Lobby;
-    public Canvas Canvas;
+    public RectTransform Container;
     public TextMeshProUGUI LobbyTitle;
     public RectTransform[] PlayerSlots;
     public Button InviteButton;
     public Button LeaveButton;
     public GameObject InviteHint;
-    protected override void Awake();
+    public UIPanel Panel;
+    private UIScreen AttachedScreen;
+    private Lobby Lobby => Singleton<Lobby>.Instance;
+
     protected override void Start();
+    protected override void OnDestroy();
     private void LateUpdate();
     public void SetVisible(bool visible);
     public void LeaveClicked();
     public void InviteClicked();
+    private void DisplayPlayer(int index, string playerID);
+    private void ClearPlayer(int index);
+    private void UpdateUI();
     private void UpdateButtons();
     private void UpdatePlayers();
-    public void SetPlayer(int index, CSteamID player);
-    public void ClearPlayer(int index);
-    private Texture2D GetAvatar(CSteamID user);
+    public void AttachToScreen(UIScreen screen);
+    public void DetachFromScreen();
 }

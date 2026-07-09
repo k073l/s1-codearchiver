@@ -11,6 +11,7 @@ public class CharacterCustomizationCategory : MonoBehaviour
     public TextMeshProUGUI TitleText;
     public Button BackButton;
     public ScrollRect ScrollRect;
+    public UIContentPanel ContentPanel;
     private CharacterCustomizationUI ui;
     private CharacterCustomizationOption[] options;
     public UnityEvent onOpen;

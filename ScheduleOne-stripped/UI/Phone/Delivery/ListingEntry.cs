@@ -1,3 +1,4 @@
+using ScheduleOne.GamepadInput;
 using ScheduleOne.Money;
 using ScheduleOne.UI.Shop;
 using UnityEngine;
@@ -16,6 +17,9 @@ public class ListingEntry : MonoBehaviour
     public Button DecrementButton;
     public RectTransform LockedContainer;
     public UnityEvent onQuantityChanged;
+    [Header("Input")]
+    [SerializeField]
+    private InputValueRamp _inputValueRamp;
     public ShopListing MatchingListing { get; private set; }
     public int SelectedQuantity { get; private set; }
 

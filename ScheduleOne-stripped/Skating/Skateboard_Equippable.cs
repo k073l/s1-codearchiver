@@ -3,7 +3,9 @@ using ScheduleOne.DevUtilities;
 using ScheduleOne.Equipping;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.State;
 using ScheduleOne.UI;
+using ScheduleOne.UI.Input;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -25,8 +27,10 @@ public class Skateboard_Equippable : Equippable_Viewmodel
     public Transform ModelPosition_Raised;
     public Transform ModelPosition_Lowered;
     private float mountTime;
+    private MonoState _state;
     public bool IsRiding { get; private set; }
     public Skateboard ActiveSkateboard { get; private set; }
+    public MonoState State => _state;
 
     public override void Equip(ItemInstance item);
     private void Exit(ExitAction action);
@@ -35,6 +39,8 @@ public class Skateboard_Equippable : Equippable_Viewmodel
     public override void Unequip();
     public void Mount();
     public void Dismount();
+    private void OnMount();
+    private void OnDismount();
     private bool CanMountHere();
     private Pose GetSkateboardSpawnPose();
 }

@@ -4,7 +4,6 @@ using ScheduleOne.UI.Phone.Messages;
 namespace ScheduleOne.NPCs.CharacterClasses;
 public class UncleNelson : NPC
 {
-    public string InitialMessage_Demo;
     public string InitialMessage;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002ECharacterClasses_002EUncleNelsonAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002ECharacterClasses_002EUncleNelsonAssembly_002DCSharp_002Edll_Excuted;

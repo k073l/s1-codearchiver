@@ -1,7 +1,8 @@
+using ScheduleOne.Core.Weather;
 using UnityEngine;
 
 namespace ScheduleOne.Doors;
-public class RollerDoor : MonoBehaviour
+public class RollerDoor : MonoBehaviour, IEnclosureOpening
 {
     [Header("Settings")]
     public Transform Door;

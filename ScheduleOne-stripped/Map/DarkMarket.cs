@@ -1,3 +1,4 @@
+using System;
 using FishNet;
 using FishNet.Connection;
 using FishNet.Managing;
@@ -28,6 +29,7 @@ public class DarkMarket : NetworkSingleton<DarkMarket>
     public bool IsOpen { get; protected set; } = true;
     public bool Unlocked { get; protected set; }
 
+    public event Action onUnlocked;
     protected override void Start();
     public override void OnSpawnServer(NetworkConnection connection);
     private void Update();

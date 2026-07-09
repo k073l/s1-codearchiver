@@ -2,17 +2,21 @@ using System;
 using System.Collections.Generic;
 using FishNet;
 using FishNet.Object;
+using ScheduleOne.Core.Weather;
 using ScheduleOne.Cutscenes;
+using ScheduleOne.Development.Experimental.OcclusionCulling;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Employees;
 using ScheduleOne.GamePhysics;
 using ScheduleOne.GameTime;
 using ScheduleOne.Growing;
+using ScheduleOne.Instancing;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Law;
 using ScheduleOne.Levelling;
 using ScheduleOne.Map;
 using ScheduleOne.Money;
+using ScheduleOne.Networking;
 using ScheduleOne.NPCs;
 using ScheduleOne.NPCs.Relation;
 using ScheduleOne.Persistence;
@@ -26,7 +30,6 @@ using ScheduleOne.Trash;
 using ScheduleOne.UI;
 using ScheduleOne.Variables;
 using ScheduleOne.Vehicles;
-using ScheduleOne.Weather;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -159,15 +162,6 @@ public class Console : Singleton<Console>
         public override void Execute(List<string> args);
     }
 
-    public class SetWeatherSpeed : ConsoleCommand
-    {
-        public override string CommandWord => "setweatherspeed";
-        public override string CommandDescription => "Sets the speed at which weather volumes move. Default is 1.";
-        public override string ExampleUsage => "setweatherspeed 2";
-
-        public override void Execute(List<string> args);
-    }
-
     public class TriggerLightning : ConsoleCommand
     {
         public override string CommandWord => "triggerlightning";
@@ -182,6 +176,78 @@ public class Console : Singleton<Console>
         public override string CommandWord => "triggerdistantthunder";
         public override string CommandDescription => "Triggers distant thunder.";
         public override string ExampleUsage => "triggerdistantthunder";
+
+        public override void Execute(List<string> args);
+    }
+
+    public class EnablePhysics : ConsoleCommand
+    {
+        public override string CommandWord => "enablephysics";
+        public override string CommandDescription => "Enables physics in the game";
+        public override string ExampleUsage => "enablephysics";
+
+        public override void Execute(List<string> args);
+    }
+
+    public class DisablePhysics : ConsoleCommand
+    {
+        public override string CommandWord => "disablephysics";
+        public override string CommandDescription => "Disables physics in the game";
+        public override string ExampleUsage => "disablephysics";
+
+        public override void Execute(List<string> args);
+    }
+
+    public class EnableOcclusion : ConsoleCommand
+    {
+        public override string CommandWord => "enableocclusionculling";
+        public override string CommandDescription => "Enables occlusion culling in the game";
+        public override string ExampleUsage => "enableocclusionculling";
+
+        public override void Execute(List<string> args);
+    }
+
+    public class DisableOcclusion : ConsoleCommand
+    {
+        public override string CommandWord => "disableocclusionculling";
+        public override string CommandDescription => "Disables occlusion culling in the game";
+        public override string ExampleUsage => "disableocclusionculling";
+
+        public override void Execute(List<string> args);
+    }
+
+    public class EnableTerrain : ConsoleCommand
+    {
+        public override string CommandWord => "enableterrain";
+        public override string CommandDescription => "Enables terrain in the game";
+        public override string ExampleUsage => "enableterrain";
+
+        public override void Execute(List<string> args);
+    }
+
+    public class DisableTerrain : ConsoleCommand
+    {
+        public override string CommandWord => "disableterrain";
+        public override string CommandDescription => "Disables terrain in the game";
+        public override string ExampleUsage => "disableterrain";
+
+        public override void Execute(List<string> args);
+    }
+
+    public class EnableInstancing : ConsoleCommand
+    {
+        public override string CommandWord => "enableinstancing";
+        public override string CommandDescription => "Enables instancing in the game";
+        public override string ExampleUsage => "enableinstancing";
+
+        public override void Execute(List<string> args);
+    }
+
+    public class DisableInstancing : ConsoleCommand
+    {
+        public override string CommandWord => "disableinstancing";
+        public override string CommandDescription => "Disables instancing in the game";
+        public override string ExampleUsage => "disableinstancing";
 
         public override void Execute(List<string> args);
     }
@@ -218,15 +284,6 @@ public class Console : Singleton<Console>
         public override string CommandWord => "sethealth";
         public override string CommandDescription => "Sets the player's health to the specified amount";
         public override string ExampleUsage => "sethealth 100";
-
-        public override void Execute(List<string> args);
-    }
-
-    public class SetEnergy : ConsoleCommand
-    {
-        public override string CommandWord => "setenergy";
-        public override string CommandDescription => "Sets the player's energy to the specified amount";
-        public override string ExampleUsage => "setenergy 100";
 
         public override void Execute(List<string> args);
     }
@@ -533,6 +590,33 @@ public class Console : Singleton<Console>
         public override string CommandWord => "setpoliceignoreplayers";
         public override string CommandDescription => "Sets whether police ignore players.";
         public override string ExampleUsage => "setpoliceignoreplayers true, setpoliceignoreplayers false";
+
+        public override void Execute(List<string> args);
+    }
+
+    public class DisableMeshes : ConsoleCommand
+    {
+        public override string CommandWord => "disablemeshes";
+        public override string CommandDescription => "Disables all MeshRenderers in the scene.";
+        public override string ExampleUsage => "disablemeshes";
+
+        public override void Execute(List<string> args);
+    }
+
+    public class DisableNPCs : ConsoleCommand
+    {
+        public override string CommandWord => "disablenpcs";
+        public override string CommandDescription => "Disables all NPCs in the scene (sets their GameObjects to inactive).";
+        public override string ExampleUsage => "disablenpcs";
+
+        public override void Execute(List<string> args);
+    }
+
+    public class QuitGame : ConsoleCommand
+    {
+        public override string CommandWord => "quit";
+        public override string CommandDescription => "Immediately quits the game without saving progress.";
+        public override string ExampleUsage => "quit";
 
         public override void Execute(List<string> args);
     }

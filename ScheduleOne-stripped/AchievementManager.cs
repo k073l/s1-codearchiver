@@ -27,8 +27,9 @@ public static class AchievementManager
 
     private static EAchievement[] achievements;
     private static Dictionary<EAchievement, bool> achievementUnlocked;
+    private static bool _initialized;
     [RuntimeInitializeOnLoadMethod( /*Could not decode attribute arguments.*/)]
     private static void Init();
-    private static void PullAchievements();
+    private static void TryPullAchievements();
     public static void UnlockAchievement(EAchievement achievement);
 }

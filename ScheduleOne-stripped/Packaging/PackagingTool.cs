@@ -6,6 +6,7 @@ using ScheduleOne.PlayerTasks;
 using ScheduleOne.Product;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace ScheduleOne.Packaging;
 public class PackagingTool : MonoBehaviour
@@ -52,6 +53,8 @@ public class PackagingTool : MonoBehaviour
     public AudioSourceController KickSound;
     public AudioSourceController MotorSound;
     public AudioSourceController DropSound;
+    [Header("Input")]
+    public InputActionReference _dropAction;
     private FunctionalPackaging PackagingPrefab;
     private int ConcealedPackaging;
     private ProductItemInstance ProductItem;

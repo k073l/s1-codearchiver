@@ -10,6 +10,7 @@ using ScheduleOne.DevUtilities;
 using ScheduleOne.Persistence;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Property;
+using ScheduleOne.State;
 using ScheduleOne.UI;
 using UnityEngine;
 using UnityEngine.Events;
@@ -18,7 +19,7 @@ using UnityEngine.UI;
 namespace ScheduleOne.Cutscenes;
 public class IntroManager : Singleton<IntroManager>
 {
-    public const float SKIP_TIME;
+    private const float SkipInputTime;
     public int CurrentStep;
     [Header("Settings")]
     public int TimeOfDayOverride;
@@ -37,6 +38,7 @@ public class IntroManager : Singleton<IntroManager>
     public string MusicName;
     private float currentSkipTime;
     private bool depressed;
+    private ScheduleOne.State.State _state;
     public bool IsPlaying { get; protected set; }
 
     protected override void Awake();

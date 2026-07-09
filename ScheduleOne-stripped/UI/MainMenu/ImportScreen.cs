@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace ScheduleOne.UI.MainMenu;
-public class ImportScreen : MainMenuScreen
+public class ImportScreen : MenuScreen
 {
     [Header("References")]
     public GameObject MainContainer;
@@ -19,7 +19,7 @@ public class ImportScreen : MainMenuScreen
     public TextMeshProUGUI WarningLabel;
     private int slotToOverwrite;
     private SaveInfo saveInfo;
-    public void Initialize(int _slotToOverwrite, MainMenuScreen previousScreen);
+    public void Initialize(int _slotToOverwrite, MenuScreen previousScreen);
     public void Cancel();
     public void Confirm();
     private static void CopyFilesRecursively(string sourcePath, string targetPath);

@@ -1,18 +1,19 @@
-using HSVPicker;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace ScheduleOne.UI.CharacterCustomization;
 public class BarbershopUI : CharacterCustomizationUI
 {
-    public ColorPicker ColorPicker;
+    public HSVColorPicker ColorPicker;
     public Button ApplyColorButton;
+    public CharacterCustomizationCategory ColorCategory;
     private Color appliedColor;
+    protected override void Awake();
     public override bool IsOptionCurrentlyApplied(CharacterCustomizationOption option);
     public override void OptionSelected(CharacterCustomizationOption option);
-    protected override void Update();
     public override void Open();
-    public void ColorFieldChanged(Color color);
-    public void ApplyColorChange();
-    public void RevertColorChange();
+    private void ColorFieldChanged(Color color);
+    private void ApplyColorChange();
+    private void RevertColorChange();
 }

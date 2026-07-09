@@ -14,7 +14,7 @@ public class MainMenuPopup : Singleton<MainMenuPopup>
         public Data(string title, string description, bool isBad);
     }
 
-    public MainMenuScreen Screen;
+    public MenuScreen Screen;
     public TextMeshProUGUI Title;
     public TextMeshProUGUI Description;
     public void Open(Data data);

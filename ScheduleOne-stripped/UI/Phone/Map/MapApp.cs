@@ -15,7 +15,6 @@ public class MapApp : App<MapApp>
     public Image BackgroundImage;
     public CanvasGroup LabelGroup;
     [Header("Settings")]
-    public Sprite DemoMapSprite;
     public Sprite MainMapSprite;
     public Sprite TutorialMapSprite;
     public float LabelScrollMin;
@@ -27,7 +26,6 @@ public class MapApp : App<MapApp>
     protected UIMapPanel uiPanel;
     [HideInInspector]
     public bool SkipFocusPlayer;
-    private Coroutine contentMoveRoutine;
     private bool opened;
     protected override void Start();
     public override void SetOpen(bool open);

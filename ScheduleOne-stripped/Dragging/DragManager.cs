@@ -8,11 +8,9 @@ using FishNet.Object.Delegating;
 using FishNet.Serializing;
 using FishNet.Transporting;
 using ScheduleOne.Audio;
-using ScheduleOne.Core;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Networking;
 using ScheduleOne.PlayerScripts;
-using ScheduleOne.Trash;
 using UnityEngine;
 
 namespace ScheduleOne.Dragging;
@@ -31,6 +29,7 @@ public class DragManager : NetworkSingleton<DragManager>
     private List<Draggable> CurrentlyUpdating;
     private Draggable lastThrownDraggable;
     private Draggable lastHeldDraggable;
+    private bool _dragStartedThisFrame;
     private bool NetworkInitialize___EarlyScheduleOne_002EDragging_002EDragManagerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EDragging_002EDragManagerAssembly_002DCSharp_002Edll_Excuted;
     public Draggable CurrentDraggable { get; protected set; }
@@ -38,6 +37,7 @@ public class DragManager : NetworkSingleton<DragManager>
 
     public override void OnSpawnServer(NetworkConnection connection);
     public void Update();
+    private void UpdateInput();
     public void FixedUpdate();
     public bool IsDraggingAllowed();
     public void RegisterDraggable(Draggable draggable);
@@ -54,8 +54,6 @@ public class DragManager : NetworkSingleton<DragManager>
     [TargetRpc]
     private void SetDraggableTransformData(NetworkConnection conn, string guid, Vector3 position, Quaternion rotation, Vector3 velocity);
     private Vector3 GetTargetPosition();
-    [Button]
-    public void EnsureAllDraggableGUIDsAreValid();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

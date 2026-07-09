@@ -22,11 +22,8 @@ public class NPCHealth : NetworkBehaviour
     public const int REVIVE_DAYS;
     [CompilerGenerated]
     [SyncVar( /*Could not decode attribute arguments.*/)]
+    [HideInInspector]
     public float _003CHealth_003Ek__BackingField;
-    [Header("Settings")]
-    public bool Invincible;
-    public float MaxHealth;
-    public bool CanRevive;
     private NPC npc;
     public UnityEvent onDie;
     public UnityEvent onKnockedOut;
@@ -45,6 +42,7 @@ public class NPCHealth : NetworkBehaviour
     public bool IsKnockedOut { get; private set; }
     public int DaysPassedSinceDeath { get; private set; }
     public int HoursSinceAttackedByPlayer { get; private set; } = 9999;
+    public float MaxHealth => npc.NPCData.Health.MaxHealth;
     public float SyncAccessor__003CHealth_003Ek__BackingField { get; set; }
 
     public override void Awake();

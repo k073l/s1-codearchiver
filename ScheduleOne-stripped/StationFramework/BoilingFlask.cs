@@ -29,6 +29,7 @@ public class BoilingFlask : Fillable
     public float OverheatScale { get; private set; }
     public StationRecipe Recipe { get; private set; }
 
+    private void Start();
     public void Update();
     private void FixedUpdate();
     private void UpdateCanvas();

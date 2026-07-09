@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.PlayerScripts;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,12 +27,20 @@ public class UIScreen : MonoBehaviour
     [SerializeField]
     [Tooltip("Remove this screen from UIScreenManger on OnDisable")]
     private bool removeScreenOnDisable;
+    [SerializeField]
+    private bool autoAttachToInventory;
+    [SerializeField]
+    protected bool _debugMode;
     private UIPanel currentSelectedPanel;
     private bool isSelected;
     private bool wasNavPressedLastFrame;
+    private Canvas _canvas;
+    private UIPanel _lastSelectedPanel;
+    private PanelChangeEvent _onPanelChange;
     public bool IsSelected { get; set; }
     public UIPanel CurrentSelectedPanel => currentSelectedPanel;
     public IReadOnlyList<UIPanel> Panels => panels.AsReadOnly();
+    public Canvas Canvas => _canvas;
 
     private void Awake();
     protected virtual void OnAwake();
@@ -44,12 +55,16 @@ public class UIScreen : MonoBehaviour
     public void AddPanel(UIPanel panel);
     public void RemovePanel(UIPanel panel);
     public void ClearPanels();
-    public void SetCurrentSelectedPanel(UISelectable overrideSelectable = null, bool scrollToChild = true);
-    public void SetCurrentSelectedPanel(UIPanel panel, UISelectable overrideSelectable = null, bool scrollToChild = true);
+    public void SetCurrentSelectedPanel(UISelectable overrideSelectable = null, bool scrollToChild = true, bool allowReselect = false);
+    public void SetCurrentSelectedPanel(UIPanel panel, UISelectable overrideSelectable = null, bool scrollToChild = true, bool allowReselect = false);
+    public void SetToPreviousSelectedPanel();
     private void UpdateScrollbar();
     private void DetectInput();
     private void DetectScreenInputDescriptors();
     internal bool ForceNavigate(Vector2 navDir, Vector2 fromPos);
-    private bool Navigate(Vector2 navDir, Vector2 fromPos);
+    private bool Navigate(Vector2 navDir, Vector2 fromPosScreen);
+    private bool NavigateToPanel(UIPanel panel);
     public void ChangeActiveScrollRect(ScrollRect newScrollRect);
+    public void SubscribeToPanelChange(PanelChangeEvent callback);
+    public void UnsubscribeFromPanelChange(PanelChangeEvent callback);
 }

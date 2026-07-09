@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using ScheduleOne.DevUtilities;
 using ScheduleOne.Economy;
-using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ScheduleOne.NPCs.Relation;
 [Serializable]
@@ -16,22 +15,18 @@ public class NPCRelationData
         DirectApproach
     }
 
-    public const float MinDelta;
-    public const float MaxDelta;
-    public const float DEFAULT_RELATION_DELTA;
-    [SerializeField]
-    protected List<NPC> FullGameConnections;
-    [SerializeField]
-    protected List<NPC> DemoConnections;
-    public Action<float> onRelationshipChange;
-    public Action<EUnlockType, bool> onUnlocked;
-    public float RelationDelta { get; protected set; } = 2f;
+    public const float MinRelationship;
+    public const float MaxRelationship;
+    [FormerlySerializedAs("FullGameConnections")]
+    public List<NPC> Connections;
+    public float RelationDelta { get; protected set; }
     public float NormalizedRelationDelta => RelationDelta / 5f;
     public bool Unlocked { get; protected set; }
     public EUnlockType UnlockType { get; protected set; }
     public NPC NPC { get; protected set; }
-    public List<NPC> Connections => FullGameConnections;
 
+    public event Action<float> OnRelationshipChange;
+    public event Action<EUnlockType, bool> OnUnlocked;
     public void SetNPC(NPC npc);
     public void Init(NPC npc);
     public virtual void ChangeRelationship(float deltaChange, bool network = true);

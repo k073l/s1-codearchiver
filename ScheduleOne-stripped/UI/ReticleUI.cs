@@ -1,5 +1,5 @@
 using System;
-using ScheduleOne.DevUtilities;
+using ScheduleOne.Core.Utilities;
 using UnityEngine;
 
 namespace ScheduleOne.UI;

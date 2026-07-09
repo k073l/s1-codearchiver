@@ -11,7 +11,7 @@ public class DialogueDatabase : ScriptableObject
     public List<DialogueModule> Modules;
     public List<Entry> GenericEntries;
     private DialogueHandler handler;
-    private List<DialogueModule> runtimeModules => handler.runtimeModules;
+    private List<DialogueModule> runtimeModules => handler.RuntimeModules;
 
     public void Initialize(DialogueHandler _handler);
     public DialogueModule GetModule(EDialogueModule moduleType);

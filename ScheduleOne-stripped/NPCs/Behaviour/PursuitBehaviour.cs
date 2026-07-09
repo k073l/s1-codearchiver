@@ -70,6 +70,7 @@ public class PursuitBehaviour : CombatBehaviour
     private void SetArrestCircleAlpha(float alpha);
     private void SetArrestCircleColor(Color col);
     private void OnThirdPartyVisionEvent(VisionEventReceipt receipt);
+    protected override void TargetResighted();
     protected override void TargetSpotted();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();

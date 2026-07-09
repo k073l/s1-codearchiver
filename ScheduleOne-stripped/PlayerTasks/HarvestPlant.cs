@@ -1,10 +1,12 @@
 using FishNet.Object;
 using ScheduleOne.Audio;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Gamepad;
 using ScheduleOne.Growing;
 using ScheduleOne.ObjectScripts;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.UI;
+using ScheduleOne.UI.Input;
 using UnityEngine;
 
 namespace ScheduleOne.PlayerTasks;
@@ -25,4 +27,6 @@ public class HarvestPlant : Task
     protected override void UpdateCursor();
     public override void Update();
     private PlantHarvestable GetHoveredHarvestable();
+    private void StartContinuousHaptics();
+    private void StopContinuousHaptics();
 }

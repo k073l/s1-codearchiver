@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ScheduleOne.Core.Weather;
 using UnityEngine;
 using UnityEngine.Rendering;
 

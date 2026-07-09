@@ -11,7 +11,6 @@ using ScheduleOne.Persistence.Datas;
 using ScheduleOne.Persistence.Loaders;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.UI;
-using ScheduleOne.UI.Compass;
 using ScheduleOne.UI.Phone;
 using ScheduleOne.UI.Phone.Map;
 using UnityEngine;
@@ -66,7 +65,6 @@ public class Quest : MonoBehaviour, IGUIDRegisterable, ISaveable
     protected RectTransform detailPanel;
     public Action onHudUICreated;
     private bool expiryReminderSent;
-    private CompassManager.Element compassElement;
     protected bool autoInitialize;
     public EQuestState State { get; protected set; }
     public Guid GUID { get; protected set; }
@@ -88,6 +86,7 @@ public class Quest : MonoBehaviour, IGUIDRegisterable, ISaveable
     protected virtual void Awake();
     protected virtual void Start();
     public virtual void InitializeQuest(string title, string description, QuestEntryData[] entries, string guid);
+    protected virtual bool ShouldQuestShowUI();
     public virtual void InitializeSaveable();
     public void ConfigureExpiry(bool expires, GameDateTime expiry);
     public virtual void Begin(bool network = true);

@@ -10,6 +10,8 @@ using UnityEngine.UI;
 namespace ScheduleOne.UI;
 public class GraffitiMenu : Singleton<GraffitiMenu>
 {
+    private const ESprayColor DefaultColor;
+    private const int DefaultStrokeSizeIndex;
     [Header("References")]
     public Canvas Canvas;
     public RectTransform ColorButtonContainer;
@@ -24,6 +26,9 @@ public class GraffitiMenu : Singleton<GraffitiMenu>
     public Image[] RemainingPaintImages;
     public TextMeshProUGUI RemainingPaintLabel;
     public Button[] WeightButtons;
+    public UIScreen Screen;
+    public UIPanel ColorPanel;
+    public UIPanel WeightPanel;
     [Header("Prefabs")]
     public GameObject ColorButtonPrefab;
     public Action<ESprayColor> onColorSelected;
@@ -31,21 +36,23 @@ public class GraffitiMenu : Singleton<GraffitiMenu>
     public Action onClearClicked;
     public Action onDone;
     public Action onUndoClicked;
+    public Action onConfirmClicked;
     private List<Button> colorButtons;
     private SpraySurface activeSurface;
+    private int _selectedStrokeSizeIndex;
     protected override void Awake();
     public void Open();
     public void Close();
-    private void Update();
     public void ShowConfirmPanel();
     private void SelectColor(ESprayColor color);
     private void WeightButtonClicked(int buttonIndex);
     public void UpdateRemainingPaintIndicator(float remainingPaint);
     private void ClearClicked();
     private void UndoClicked();
-    private void Done();
+    private void DoneClicked();
+    private void ConfirmClicked();
     private void CancelClicked();
     public void SetActiveSurface(SpraySurface surface);
     public void ClearActiveSurface();
-    private void UpdateUndoInteraction();
+    private void UpdateButtons();
 }

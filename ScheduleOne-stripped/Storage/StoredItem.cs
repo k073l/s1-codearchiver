@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using ScheduleOne.DevUtilities;
 using ScheduleOne.Tiles;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -32,7 +31,5 @@ public class StoredItem : MonoBehaviour
     private void RefreshTransform();
     public virtual void Destroy();
     public void ClearFootprintOccupancy();
-    public void SetFootprintTileVisiblity(bool visible);
-    public void CalculateFootprintTileIntersections();
     public FootprintTile GetTile(Coordinate coord);
 }

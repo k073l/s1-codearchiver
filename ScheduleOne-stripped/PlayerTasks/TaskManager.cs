@@ -1,13 +1,18 @@
 using System;
 using ScheduleOne.Audio;
 using ScheduleOne.DevUtilities;
+using UnityEngine;
 
 namespace ScheduleOne.PlayerTasks;
 public class TaskManager : Singleton<TaskManager>
 {
-    public Task currentTask;
-    public AudioSourceController TaskCompleteSound;
-    public Action<Task> OnTaskStarted;
+    [SerializeField]
+    private AudioSourceController TaskCompleteSound;
+    public bool IsTaskActive => CurrentTask != null;
+    public Task CurrentTask { get; private set; }
+    public float TimeOnLastTaskEnd { get; private set; } = float.MinValue;
+
+    public event Action<Task> OnTaskStarted;
     protected override void Start();
     protected virtual void Update();
     private void Exit(ExitAction action);
@@ -15,4 +20,5 @@ public class TaskManager : Singleton<TaskManager>
     protected virtual void FixedUpdate();
     public void PlayTaskCompleteSound();
     public void StartTask(Task task);
+    public void EndTask();
 }

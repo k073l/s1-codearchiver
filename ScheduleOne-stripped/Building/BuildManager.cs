@@ -10,6 +10,7 @@ using ScheduleOne.Tiles;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 namespace ScheduleOne.Building;
@@ -26,11 +27,16 @@ public class BuildManager : NetworkSingleton<BuildManager>
     [Header("Materials")]
     public Material ghostMaterial_White;
     public Material ghostMaterial_Red;
+    [Header("Input")]
+    public InputActionReference PlaceObjectAction;
+    public InputActionReference RotateLeftAction;
+    public InputActionReference RotateRightAction;
     private bool NetworkInitialize___EarlyScheduleOne_002EBuilding_002EBuildManagerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EBuilding_002EBuildManagerAssembly_002DCSharp_002Edll_Excuted;
     public bool isBuilding { get; protected set; }
     public GameObject currentBuildHandler { get; protected set; }
 
+    public override void Awake();
     public void StartBuilding(ItemInstance item);
     public void StopBuilding();
     public void PlayBuildSound(BuildableItemDefinition.EBuildSoundType type, Vector3 point);
@@ -47,5 +53,5 @@ public class BuildManager : NetworkSingleton<BuildManager>
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();
-    public override void Awake();
+    protected override void Awake_UserLogic_ScheduleOne_002EBuilding_002EBuildManager_Assembly_002DCSharp_002Edll();
 }

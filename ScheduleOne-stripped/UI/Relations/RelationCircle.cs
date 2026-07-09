@@ -2,6 +2,7 @@ using System;
 using ScheduleOne.Core;
 using ScheduleOne.Economy;
 using ScheduleOne.NPCs;
+using ScheduleOne.NPCs.Framework;
 using ScheduleOne.NPCs.Relation;
 using UnityEngine;
 using UnityEngine.Events;
@@ -15,7 +16,7 @@ public class RelationCircle : MonoBehaviour
     public const float NotchMaxRot;
     public static Color PortraitColor_ZeroDependence;
     public static Color PortraitColor_MaxDependence;
-    public string AssignedNPC_ID;
+    public BaseNPCDataObject NPC;
     public NPC AssignedNPC;
     public Action onClicked;
     public Action onHoverStart;
@@ -31,8 +32,9 @@ public class RelationCircle : MonoBehaviour
     public EventTrigger Trigger;
     [Header("Custom UI")]
     public UIMapItem uiMapItem;
+    public string NPCId { get; }
+
     private void Awake();
-    private void OnValidate();
     public void AssignNPC(NPC npc);
     private void UnassignNPC();
     private void RelationshipChange(float change);

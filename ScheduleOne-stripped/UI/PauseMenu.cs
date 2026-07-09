@@ -1,41 +1,44 @@
-using System;
-using System.Collections;
-using ScheduleOne.AvatarFramework.Customization;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Persistence;
+using ScheduleOne.Platform;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.Reporting;
+using ScheduleOne.State;
+using ScheduleOne.Tools;
 using ScheduleOne.UI.MainMenu;
+using ScheduleOne.Vehicles;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 namespace ScheduleOne.UI;
 public class PauseMenu : Singleton<PauseMenu>
 {
     public Canvas Canvas;
     public RectTransform Container;
-    public MainMenuScreen Screen;
-    public FeedbackForm FeedbackForm;
-    [Header("Custom UI")]
-    public UIScreen uiScreen;
-    public UIPanel uiPanel;
-    private bool justPaused;
-    private bool justResumed;
-    private bool couldLook;
-    private bool lockedMouse;
-    private bool crosshairVisible;
-    private bool hudVisible;
-    public Action onPause;
-    public Action onResume;
-    private bool _togglePausePressed;
-    private bool _backWasTriggeredThisFrame;
+    public MenuScreen Screen;
+    public MonoStateMachine State;
+    public InputActionReference TogglePauseAction;
+    public TextMeshProUGUI CartelNameLabel;
+    public PreallocatedAction onPause;
+    public PreallocatedAction onResume;
+    private bool _togglePausePressedThisFrame;
     public bool IsPaused { get; protected set; }
 
     protected override void Awake();
     protected override void Start();
+    private void PlatformEvents_OnGameLoseFocus();
     private void Exit(ExitAction action);
+    private bool CanTogglePause();
+    protected override void OnDestroy();
+    private void PrepForScreenshot();
+    private void UpdateCartelName();
+    private void CleanupScreenshot();
     private void Update();
-    private void LateUpdate();
     private void CheckTogglePause();
+    private void LateUpdate();
     public void Pause();
-    private IEnumerator DelayPanelSelect();
     public void Resume();
     public void StuckButtonClicked();
 }

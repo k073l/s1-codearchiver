@@ -11,6 +11,9 @@ using FishNet.Transporting;
 using ScheduleOne.Audio;
 using ScheduleOne.Combat;
 using ScheduleOne.Core;
+using ScheduleOne.Core.Audio;
+using ScheduleOne.Core.Utilities;
+using ScheduleOne.Core.Weather;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Effects;
 using ScheduleOne.Employees;
@@ -49,14 +52,14 @@ public class ThunderController : WeatherEffectController
     private bool NetworkInitialize__LateScheduleOne_002EWeather_002EThunderControllerAssembly_002DCSharp_002Edll_Excuted;
     public override void Awake();
     private void Start();
+    public void Initialise(WeatherVolume mainVolume, ThunderSettings thunderSettings);
     protected override void Update();
     [Button]
     private void TriggerThunder();
     public void TriggerRandomLightningStrike();
     public void TriggerRandomPlayerLightningStrike();
-    public void TriggerPlayerLightningStrike(Player player);
+    public void TriggerEntityLightningStrike(Vector3 position);
     public void TriggerRandomNPCLightningStrike();
-    public void TriggerNPCLightningStrike(NPC targetNPC);
     [ServerRpc(RequireOwnership = false)]
     private void TriggerLightningStrike_Server(Vector3 position);
     [ObserversRpc]
@@ -65,10 +68,10 @@ public class ThunderController : WeatherEffectController
     [ObserversRpc]
     private void TriggerDistantThunder_Client(Vector3 location);
     private void RandomiseThunderTimer();
-    public override void UpdateAudio();
+    public override bool UpdateAudio();
     private Vector3 GetRandomPointInVolume();
-    private void UpdateAudio(AudioSourceController audioSource, bool useEffectDistance);
-    public override void UpdateProperties(Vector3 anchorPosition, Vector3 playerPosition, float sqrDistanceToPlayer, float enclosureBlend);
+    private bool UpdateAudio(AudioSourceController audioSource, bool useEffectDistance);
+    public override void UpdateProperties(Vector3 anchorPosition, Vector3 playerPosition, float sqrDistanceToPlayer, float enclosureBlend, float enclosurePan);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

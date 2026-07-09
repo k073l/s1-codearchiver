@@ -65,14 +65,7 @@ public class PoliceOfficer : NPC
     [Header("Settings")]
     public bool AutoDeactivate;
     public bool ChatterEnabled;
-    [Header("Behaviour Settings")]
-    [Range(0f, 1f)]
-    public float Suspicion;
-    [Range(0f, 1f)]
-    public float Leniency;
     [Header("Body Search Settings")]
-    [Range(0f, 1f)]
-    public float BodySearchChance;
     [Range(1f, 10f)]
     public float BodySearchDuration;
     [HideInInspector]
@@ -89,6 +82,7 @@ public class PoliceOfficer : NPC
         private set; }
     public NetworkObject PursuitTarget => PursuitBehaviour.Target?.NetworkObject;
     public LandVehicle AssignedVehicle { get; set; }
+    public float BodySearchChance { get; set; } = 0.1f;
     public bool SyncAccessor__003CIgnorePlayers_003Ek__BackingField { get; set; }
 
     public override void Awake();

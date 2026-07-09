@@ -2,11 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Gamepad;
 using ScheduleOne.Persistence;
-using ScheduleOne.PlayerScripts;
+using ScheduleOne.Platform;
+using ScheduleOne.UI.Input;
+using ScheduleOne.UI.Items;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.DualShock;
+using UnityEngine.InputSystem.Switch;
+using UnityEngine.InputSystem.XInput;
 
 namespace ScheduleOne;
 public class GameInput : PersistentSingleton<GameInput>
@@ -23,30 +29,16 @@ public class GameInput : PersistentSingleton<GameInput>
         Jump,
         Crouch,
         Sprint,
-        Escape,
-        Back,
         Interact,
         Submit,
-        TogglePhone,
         VehicleToggleLights,
         VehicleHandbrake,
-        RotateLeft,
-        RotateRight,
-        ManagementMode,
-        OpenMap,
-        OpenJournal,
-        OpenTexts,
-        QuickMove,
-        ToggleFlashlight,
-        ViewAvatar,
         Reload,
         InventoryLeft,
         InventoryRight,
-        Holster,
         VehicleResetCamera,
         SkateboardDismount,
-        SkateboardMount,
-        TogglePauseMenu
+        SkateboardMount
     }
 
     public enum InputDeviceType
@@ -67,33 +59,38 @@ public class GameInput : PersistentSingleton<GameInput>
     private sealed class _003C_003Ec
     {
         public static readonly _003C_003Ec _003C_003E9;
-        public static UnityAction _003C_003E9__73_0;
-        internal void _003CStart_003Eb__73_0();
+        public static UnityAction _003C_003E9__86_0;
+        internal void _003CStart_003Eb__86_0();
     }
 
     public static Action<InputDeviceType> OnInputDeviceChanged;
     public static List<ExitListener> exitListeners;
     public PlayerInput PlayerInput;
-    public static bool IsTyping;
+    public InputActionReference PrimaryExitAction;
+    public InputActionReference SecondaryExitAction;
+    private static bool _isTyping;
     public static Vector2 MotionAxis;
     public static Vector2 CameraAxis;
-    public static bool TogglePauseInputUsed;
     private static Mouse systemMouse;
-    public static float MouseWheelAxis;
+    private static Vector2 MouseWheelAxis;
     public static bool ControllerComboActive;
     private float vehicleDriveAxis;
     private List<ButtonCode> buttonsDownThisFrame;
     private List<ButtonCode> buttonsDown;
     private List<ButtonCode> buttonsUpThisFrame;
+    private float _timeOnLastRebind;
     public static InputDeviceType CurrentInputDevice { get; private set; }
+    public static EPlatformType CurrentPlatformType { get; private set; }
+    public static bool IsTyping { get; set; }
     public static Vector2 MouseDelta => CameraAxis;
     public unsafe static Vector3 MousePosition { get; }
-    public static float MouseScrollDelta => MouseWheelAxis;
+    public static float MouseScrollDelta => MouseWheelAxis.y;
     public static float VehicleDriveAxis { get; private set; }
     public static Vector2 UINavigationDirection { get; private set; }
     public static Vector2 UICyclePanelDirection { get; private set; }
     public static float UITabNavigationPrimaryAxis { get; private set; }
     public static float UITabNavigationSecondaryAxis { get; private set; }
+    public static float UITabNavigationTertiaryAxis { get; private set; }
     public static float UIScrollbarAxis { get; private set; }
     public static Vector2 UIMapNavigationDirection { get; private set; }
     public static float UIMapZoomAxis { get; private set; }
@@ -101,8 +98,8 @@ public class GameInput : PersistentSingleton<GameInput>
     public static float UIModifyAmountIncrementTierTwoAxis { get; private set; }
     public static float UIModifyAmountIncrementTierThreeAxis { get; private set; }
 
-    protected override void Awake();
     protected override void OnDestroy();
+    protected override void Awake();
     protected override void Start();
     private void OnApplicationFocus(bool focus);
     public static bool GetButton(ButtonCode buttonCode);
@@ -110,11 +107,15 @@ public class GameInput : PersistentSingleton<GameInput>
     public static bool GetButtonUp(ButtonCode buttonCode);
     public static bool GetCurrentInputDeviceIsKeyboardMouse();
     public static bool GetCurrentInputDeviceIsGamepad();
-    protected virtual void Update();
-    private void Exit(ExitType type);
+    public static InputDeviceType GetCurrentInputDevice();
+    private void Update();
     private void LateUpdate();
+    private void HandleExitInputs();
+    private void Exit(ExitType type);
     public void ExitAll();
+    public static Vector3 GetPointerPosition();
     private void OnControlsChanged(PlayerInput input);
+    private void SetCurrentPlatformType();
     private void OnMotion(InputValue value);
     private void OnPrimaryClick();
     private void OnSecondaryClick();
@@ -122,38 +123,25 @@ public class GameInput : PersistentSingleton<GameInput>
     private void OnJump();
     private void OnCrouch();
     private void OnSprint();
-    private void OnEscape();
-    private void OnBack();
     private void OnInteract();
     private void OnSubmit();
-    private void OnTogglePhone();
     private void OnVehicleToggleLights();
     private void OnVehicleHandbrake();
-    private void OnRotateLeft();
-    private void OnRotateRight();
-    private void OnManagementMode();
-    private void OnOpenMap();
-    private void OnOpenJournal();
-    private void OnOpenTexts();
-    private void OnQuickMove();
-    private void OnToggleFlashlight();
-    private void OnViewAvatar();
     private void OnReload();
     private void OnCamera(InputValue value);
     private void OnScrollWheel(InputValue value);
     private void OnInventoryLeft();
     private void OnInventoryRight();
-    private void OnHolster();
     private void OnControllerCombo(InputValue value);
     private void OnVehicleResetCamera();
     private void OnVehicleDrive(InputValue value);
     private void OnSkateboardDismount();
     private void OnSkateboardMount();
-    private void OnTogglePauseMenu();
     private void OnUINavigationDirection(InputValue value);
     private void OnUICyclePanelDirection(InputValue value);
     private void OnUITabNavigationPrimary(InputValue value);
     private void OnUITabNavigationSecondary(InputValue value);
+    private void OnUITabNavigationTertiary(InputValue value);
     private void OnUIScrollbar(InputValue value);
     private void OnUIMapNavigationDirection(InputValue value);
     private void OnUIMapZoom(InputValue value);
@@ -162,5 +150,6 @@ public class GameInput : PersistentSingleton<GameInput>
     private void OnUIModifyAmountIncrementTierThree(InputValue value);
     public static void RegisterExitListener(ExitDelegate listener, int priority = 0);
     public static void DeregisterExitListener(ExitDelegate listener);
+    public static void RegisterExitListener(Action exitMethod, Func<bool> condition, int priority = 0, bool primaryExitOnly = false);
     public InputAction GetAction(ButtonCode code);
 }

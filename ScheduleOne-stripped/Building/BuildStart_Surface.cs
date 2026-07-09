@@ -2,6 +2,7 @@ using ScheduleOne.DevUtilities;
 using ScheduleOne.EntityFramework;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.UI;
+using ScheduleOne.UI.Input;
 using UnityEngine;
 
 namespace ScheduleOne.Building;

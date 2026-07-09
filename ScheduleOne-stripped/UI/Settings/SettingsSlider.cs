@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace ScheduleOne.UI.Settings;
@@ -18,4 +19,5 @@ public class SettingsSlider : MonoBehaviour
     protected void SetDisplayValue(float value);
     protected void SetValueWithoutNotify(float value);
     protected virtual string GetDisplayValue(float value);
+    protected virtual void OnDragEnd(float value);
 }

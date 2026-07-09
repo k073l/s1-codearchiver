@@ -20,6 +20,8 @@ public class ConfirmationPopup : MonoBehaviour
     public Text MessageLabel;
     public Button ConfirmButton;
     public Button CancelButton;
+    [Header("Custom UI")]
+    public UIScreen uiScreen;
     private MSGConversation conversation;
     private Action<EResponse> responseCallback;
     public bool IsOpen { get; private set; }

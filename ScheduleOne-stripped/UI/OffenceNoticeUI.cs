@@ -15,6 +15,7 @@ public class OffenceNoticeUI : Singleton<OffenceNoticeUI>
     protected List<Text> charges;
     [SerializeField]
     protected List<Text> penalties;
+    protected override void Start();
     public void ShowOffenceNotice(Offense offence);
-    protected void Update();
+    private void Close();
 }

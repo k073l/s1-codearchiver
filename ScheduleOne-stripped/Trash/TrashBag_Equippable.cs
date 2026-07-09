@@ -7,6 +7,7 @@ using ScheduleOne.ItemFramework;
 using ScheduleOne.Persistence;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.UI;
+using ScheduleOne.UI.Input;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -25,7 +26,6 @@ public class TrashBag_Equippable : Equippable_Viewmodel
     private float _bagTrashTime;
     private TrashContainer _baggedContainer;
     private float _pickupTrashTime;
-    public static bool IsHoveringTrash => ((Component)Singleton<TrashBagCanvas>.Instance.InputPrompt).gameObject.activeSelf;
     public bool IsBaggingTrash { get; private set; }
     public bool IsPickingUpTrash { get; private set; }
 
@@ -40,4 +40,6 @@ public class TrashBag_Equippable : Equippable_Viewmodel
     private void StopBagTrash(bool complete);
     private void StartPickup();
     private void StopPickup(bool complete);
+    private void ShowPrompt();
+    private void HidePrompt();
 }

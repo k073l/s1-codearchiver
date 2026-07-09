@@ -1,8 +1,7 @@
-using Funly.SkyStudio;
+using ScheduleOne.Core.Weather;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.Tools;
-using ScheduleOne.Weather;
 using UnityEngine;
 using VolumetricFogAndMist2;
 
@@ -10,8 +9,6 @@ namespace ScheduleOne.FX;
 public class EnvironmentFX : Singleton<EnvironmentFX>
 {
     [Header("References")]
-    [SerializeField]
-    protected TimeOfDayController timeOfDayController;
     public VolumetricFog VolumetricFog;
     public Light SunLight;
     public Light MoonLight;

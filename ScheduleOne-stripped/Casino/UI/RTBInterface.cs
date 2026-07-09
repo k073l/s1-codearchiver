@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Money;
-using ScheduleOne.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,17 +12,14 @@ public class RTBInterface : Singleton<RTBInterface>
 {
     [Header("References")]
     public Canvas Canvas;
+    public GameObject Container;
     public CasinoGamePlayerDisplay PlayerDisplay;
+    public CasinoGameBetPanel BetPanel;
     public TextMeshProUGUI StatusLabel;
-    public RectTransform BetContainer;
-    public TextMeshProUGUI BetTitleLabel;
-    public Slider BetSlider;
-    public TextMeshProUGUI BetAmount;
-    public Button ReadyButton;
-    public TextMeshProUGUI ReadyLabel;
     public TextMeshProUGUI WinningsMultiplierLabel;
+    public UIScreen UIScreen;
+    public UIPanel AnswerPanel;
     [Header("Question and answers")]
-    public RectTransform QuestionContainer;
     public TextMeshProUGUI QuestionLabel;
     public Slider TimerSlider;
     public Button[] AnswerButtons;
@@ -41,14 +37,10 @@ public class RTBInterface : Singleton<RTBInterface>
     public RTBGameController CurrentGame { get; private set; }
 
     protected override void Awake();
-    private void FixedUpdate();
+    private void Update();
     private string GetStatusText();
     public void Open(RTBGameController game);
     public void Close();
-    private void BetSliderChanged(float newValue);
-    private float GetBetFromSliderValue(float sliderVal);
-    private void RefreshDisplayedBet();
-    private void RefreshReadyButton();
     private void QuestionReady(string question, string[] answers);
     private void AnswerButtonClicked(int index);
     private void ForfeitClicked();

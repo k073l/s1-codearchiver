@@ -16,6 +16,7 @@ using ScheduleOne.Interaction;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Money;
 using ScheduleOne.Networking;
+using ScheduleOne.NPCs.Framework;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.UI;
 using UnityEngine;
@@ -24,42 +25,24 @@ using UnityEngine.Events;
 namespace ScheduleOne.NPCs;
 public class NPCInventory : NetworkBehaviour, IItemSlotOwner
 {
-    [Serializable]
-    public class RandomInventoryItem
-    {
-        public StorableItemDefinition ItemDefinition;
-        [Range(0f, 10f)]
-        public float Weight;
-    }
-
     public delegate bool ItemFilter(ItemInstance item);
-    public InteractableObject PickpocketIntObj;
-    public const float COOLDOWN;
-    [Header("Settings")]
-    public int SlotCount;
-    public bool CanBePickpocketed;
-    public float PickpocketDifficultyMultiplier;
-    public bool ClearInventoryEachNight;
-    public ItemDefinition[] TestItems;
-    public ItemDefinition[] StartupItems;
-    [Header("Random cash")]
-    public bool RandomCash;
-    public int RandomCashMin;
-    public int RandomCashMax;
-    [Header("Random items")]
-    public bool RandomItems;
-    public bool AllowDuplicateRandomItems;
-    public RandomInventoryItem[] RandomInventoryItems;
-    public int RandomItemMin;
-    public int RandomItemMax;
-    private NPC npc;
-    public UnityEvent onContentsChanged;
-    private float timeOnLastExpire;
+    public const float PickpocketCooldown;
+    private const int MinimumRandomItems;
+    private const int MaximumRandomItems;
+    [Header("References")]
+    [SerializeField]
+    private InteractableObject _interactable;
+    [Header("Testing")]
+    [SerializeField]
+    private ItemDefinition[] DebugItems;
+    private NPC _npc;
+    private float _timeOnLastExpire;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002ENPCInventoryAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002ENPCInventoryAssembly_002DCSharp_002Edll_Excuted;
     public List<ItemSlot> ItemSlots { get; set; } = new List<ItemSlot>();
 
     public override void Awake();
+    public void Initialize(NPCData data);
     protected virtual void Start();
     public override void OnSpawnServer(NetworkConnection connection);
     private void OnDestroy();
@@ -77,7 +60,6 @@ public class NPCInventory : NetworkBehaviour, IItemSlotOwner
     public ItemInstance GetFirstItem(string id, ItemFilter filter = null);
     public ItemInstance GetFirstIdenticalItem(ItemInstance item, ItemFilter filter = null);
     public List<ItemSlot> GetSlots(Func<ItemSlot, bool> predicate);
-    protected virtual void InventoryContentsChanged();
     public void Hovered();
     public void Interacted();
     private void StartPickpocket();
@@ -89,6 +71,7 @@ public class NPCInventory : NetworkBehaviour, IItemSlotOwner
     public float GetCashInInventory();
     public void RemoveCash(float amountToRemove);
     public void AddCash(float amountToAdd);
+    private bool IsInventoryEmpty();
     [ServerRpc(RunLocally = true, RequireOwnership = false)]
     public void SetStoredInstance(NetworkConnection conn, int itemSlotIndex, ItemInstance instance);
     [ObserversRpc(RunLocally = true)]

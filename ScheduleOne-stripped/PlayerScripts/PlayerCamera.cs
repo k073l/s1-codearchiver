@@ -5,12 +5,12 @@ using System.IO;
 using ScheduleOne.Audio;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.EntityFramework;
+using ScheduleOne.Input;
+using ScheduleOne.Reporting;
 using ScheduleOne.Tools;
 using ScheduleOne.UI;
-using ScheduleOne.UI.Compass;
-using ScheduleOne.UI.Items;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
@@ -24,7 +24,8 @@ public class PlayerCamera : PlayerSingleton<PlayerCamera>
         Skateboard
     }
 
-    public const float CAMERA_SHAKE_MULTIPLIER;
+    private const float CameraShakeMultiplier;
+    private const float MinFov;
     [Header("Settings")]
     public float cameraOffsetFromTop;
     public float SprintFoVBoost;
@@ -52,8 +53,9 @@ public class PlayerCamera : PlayerSingleton<PlayerCamera>
     public ParticleSystem Flies;
     public AudioSourceController MethRumble;
     public RandomizedAudioSourceController SchizoVoices;
-    [HideInInspector]
-    public bool blockNextStopTransformOverride;
+    [Header("Input")]
+    [SerializeField]
+    private InputActionReference _viewAvatarAction;
     private Volume globalVolume;
     private DepthOfField DoF;
     private Coroutine cameraShakeCoroutine;
@@ -67,35 +69,39 @@ public class PlayerCamera : PlayerSingleton<PlayerCamera>
     private float freeCamSpeed;
     private float mouseX;
     private float mouseY;
+    private Vector3 cameralocalPos_PriorOverride;
+    private Quaternion cameraLocalRot_PriorOverride;
+    private Coroutine lerpCameraRoutine;
     private Vector2 seizureJitter;
     private float schizoFoV;
     private float timeUntilNextSchizoVoice;
-    private static bool isCursorShowing;
+    private bool _dofWasActiveBeforeScreenshot;
     private List<Vector3> gizmos;
-    private Vector3 cameralocalPos_PriorOverride;
-    private Quaternion cameraLocalRot_PriorOverride;
-    public Coroutine ILerpCamera_Coroutine;
     private Coroutine lookRoutine;
     private Coroutine DoFCoroutine;
     private Coroutine ILerpCameraFOV_Coroutine;
-    public static GraphicsSettings.EAntiAliasingMode AntiAliasingMode { get; private set; } = GraphicsSettings.EAntiAliasingMode.Off;
-    public bool canLook { get; protected set; } = true;
-    public int activeUIElementCount => activeUIElements.Count;
-    public bool transformOverriden { get; protected set; }
-    public bool fovOverriden { get; protected set; }
+    public static GraphicsSettings.EAntiAliasingMode AntiAliasingMode { get; private set; }
+    public bool CanLook { get; protected set; } = true;
+    public int ActiveUIElementCount => activeUIElements.Count;
+    public List<string> ActiveUIElements => activeUIElements;
     public bool FreeCamEnabled { get; private set; }
     public bool ViewingAvatar { get; private set; }
     public ECameraMode CameraMode { get; protected set; }
     public bool MethVisuals { get; set; }
     public bool CocaineVisuals { get; set; }
     public float FovJitter { get; private set; }
-    public List<string> activeUIElements { get; protected set; } = new List<string>();
-    public static bool IsCursorShowing => isCursorShowing;
+    public Vector3 Position { get; private set; } = Vector3.zero;
+    private List<string> activeUIElements { get; set; } = new List<string>();
+    private bool transformOverriden { get; set; }
+    private bool fovOverriden { get; set; }
 
     protected override void Awake();
     public override void OnStartClient(bool IsOwner);
     protected override void Start();
+    protected override void OnDestroy();
     private void PlayerSpawned();
+    private void PrepForScreenshot();
+    private void CleanupScreenshot();
     public static void SetAntialiasingMode(GraphicsSettings.EAntiAliasingMode mode);
     public void ApplyAASettings();
     protected virtual void Update();
@@ -105,21 +111,20 @@ public class PlayerCamera : PlayerSingleton<PlayerCamera>
     public float GetTargetLocalY();
     public void SetCameraMode(ECameraMode mode);
     private void RotateCamera();
-    public void LockMouse();
-    public void FreeMouse();
+    public void LockMouse(bool showCrosshair = true);
+    public void FreeMouse(bool hideCrosshair = true);
     public bool LookRaycast(float range, out RaycastHit hit, LayerMask layerMask, bool includeTriggers = true, float radius = 0f);
     public bool LookRaycast_ExcludeBuildables(float range, out RaycastHit hit, LayerMask layerMask, bool includeTriggers = true);
     private void OnDrawGizmosSelected();
     public bool Raycast_ExcludeBuildables(Vector3 origin, Vector3 direction, float range, out RaycastHit hit, LayerMask layerMask, bool includeTriggers = false, float radius = 0f, float maxAngleDifference = 0f);
-    public Ray GetMouseRay();
+    public Ray GetPointerRay();
     public bool MouseRaycast(float range, out RaycastHit hit, LayerMask layerMask, bool includeTriggers = true, float radius = 0f);
     public bool LookSpherecast(float range, float radius, out RaycastHit hit, LayerMask layerMask);
     public void OverrideTransform(Vector3 worldPos, Quaternion rot, float lerpTime, bool keepParented = false);
-    protected IEnumerator ILerpCamera(Vector3 endPos, Quaternion endRot, float lerpTime, bool worldSpace, bool returnToRestingPosition = false, bool reenableLook = false);
+    private IEnumerator LerpCameraTransform(Vector3 endPos, Quaternion endRot, float lerpTime, bool worldSpace, bool returnToRestingPosition, bool enableLookWhenDone);
     public void StopTransformOverride(float lerpTime, bool reenableCameraLook = true, bool returnToOriginalRotation = true);
     public void LookAt(Vector3 point, float duration = 0.25f);
-    private void SetCanLook_True();
-    public void SetCanLook(bool c);
+    public void SetCanLook(bool canLook);
     public void SetDoFActive(bool active, float lerpTime);
     private IEnumerator LerpDoF(bool active, float lerpTime);
     public void OverrideFOV(float fov, float lerpTime);
@@ -138,8 +143,6 @@ public class PlayerCamera : PlayerSingleton<PlayerCamera>
     public void ResetRotation();
     public void FocusCameraOnTarget(Transform target);
     public void StopFocus();
-    public void OpenInterface(bool keepInventoryVisible = false, bool keepCompassVisible = false);
-    public void CloseInterface(float cameraLerpTime = 0.2f, bool reenableCameraInput = true);
     public void StartCameraShake(float intensity, float duration = -1f, bool decreaseOverTime = true);
     public void StopCameraShake();
     public void UpdateCameraBob();

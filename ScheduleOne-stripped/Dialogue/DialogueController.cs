@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ScheduleOne.Core.Weather;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.Interaction;
@@ -7,7 +8,6 @@ using ScheduleOne.NPCs;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Tools;
 using ScheduleOne.VoiceOver;
-using ScheduleOne.Weather;
 using UnityEngine;
 using UnityEngine.Events;
 

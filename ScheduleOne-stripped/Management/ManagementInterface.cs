@@ -5,7 +5,6 @@ using ScheduleOne.DevUtilities;
 using ScheduleOne.Management.UI;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Tools;
-using ScheduleOne.UI;
 using ScheduleOne.UI.Management;
 using TMPro;
 using UnityEngine;
@@ -29,7 +28,6 @@ public class ManagementInterface : Singleton<ManagementInterface>
     public RectTransform PanelContainer;
     public ClipboardScreen MainScreen;
     public ItemSelector ItemSelectorScreen;
-    public NPCSelector NPCSelector;
     public ObjectSelector ObjectSelector;
     public RecipeSelector RecipeSelectorScreen;
     public TransitEntitySelector TransitEntitySelector;
@@ -42,6 +40,7 @@ public class ManagementInterface : Singleton<ManagementInterface>
     public List<IConfigurable> Configurables;
     private bool areConfigurablesUniform;
     private ConfigPanel loadedPanel;
+    private int _lastSelectableIndex;
     public ManagementClipboard_Equippable EquippedClipboard { get; protected set; }
 
     protected override void Awake();

@@ -12,7 +12,7 @@ public class OnScreenMouse : Singleton<OnScreenMouse>
     [Tooltip("Unity new input system virtual mouse")]
     public VirtualMouseInput ptrComponent;
     private Mouse systemMouse;
-    private new void Awake();
+    protected override void Awake();
     private void OnInputDeviceChanged(GameInput.InputDeviceType type);
     private void OnEnable();
     private void OnDisable();

@@ -1,3 +1,4 @@
+using ScheduleOne.Gamepad;
 using ScheduleOne.PlayerScripts;
 using UnityEngine;
 using UnityEngine.Events;
@@ -34,6 +35,9 @@ public class Draggable : Clickable
     public float NormalRBDrag;
     public float HeldRBDrag;
     public bool CanBeMultiDragged;
+    [Header("Draggable: Gamepad")]
+    [SerializeField]
+    private GamepadPointerData _gamepadPointerData;
     [Header("Additional force")]
     public float idleUpForce;
     [HideInInspector]
@@ -46,6 +50,7 @@ public class Draggable : Clickable
     protected DraggableConstraint constraint;
     public Rigidbody Rb { get; protected set; }
     public override CursorManager.ECursorType HoveredCursor { get; protected set; } = CursorManager.ECursorType.OpenHand;
+    public GamepadPointerData GamepadPointerData => _gamepadPointerData;
 
     protected virtual void Awake();
     protected virtual void FixedUpdate();

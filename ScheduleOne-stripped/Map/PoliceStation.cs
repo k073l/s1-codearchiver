@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using FishNet;
 using FishNet.Object;
-using ScheduleOne.DevUtilities;
 using ScheduleOne.Doors;
 using ScheduleOne.Law;
 using ScheduleOne.NPCs;
@@ -23,26 +21,26 @@ public class PoliceStation : NPCEnterableBuilding
     }
 
     public static List<PoliceStation> PoliceStations;
-    public int VehicleLimit;
     [Header("References")]
     public Transform SpawnPoint;
     public Transform[] VehicleSpawnPoints;
     public Transform[] PossessedVehicleSpawnPoints;
-    [Header("Prefabs")]
-    public LandVehicle[] PoliceVehiclePrefabs;
-    public List<PoliceOfficer> OfficerPool;
-    [SerializeField]
+    public ParkingLot PoliceVehicleParkingLot;
+    public LandVehicle[] PoliceVehicles;
     private List<LandVehicle> deployedVehicles;
+    public List<PoliceOfficer> OfficerPool { get; private set; } = new List<PoliceOfficer>();
     public float TimeSinceLastDispatch { get; private set; }
+    public int AvailableVehicleCount => PoliceVehicles.Length - deployedVehicleCount;
     private int deployedVehicleCount => deployedVehicles.Where(default).Count();
 
     protected override void Awake();
     private void OnDestroy();
     private void Update();
-    private void CleanVehicleList();
     public void Dispatch(int requestedOfficerCount, Player targetPlayer, EDispatchType type = EDispatchType.Auto, bool beginAsSighted = false);
     public PoliceOfficer PullOfficer();
-    public LandVehicle CreateVehicle();
+    public LandVehicle DeployVehicle();
+    public bool TryDeployVehicle(out LandVehicle vehicle, Transform spawnPoint);
+    public void ReturnVehicle(LandVehicle vehicle);
     public override void NPCEnteredBuilding(NPC npc, StaticDoor door);
     public override void NPCExitedBuilding(NPC npc, StaticDoor door);
     public static PoliceStation GetClosestPoliceStation(Vector3 point);

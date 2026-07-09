@@ -10,6 +10,7 @@ using ScheduleOne.ItemFramework;
 using ScheduleOne.Money;
 using ScheduleOne.NPCs;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.State;
 using ScheduleOne.UI.Items;
 using ScheduleOne.Variables;
 using ScheduleOne.VoiceOver;
@@ -69,9 +70,10 @@ public class PawnShopInterface : Singleton<PawnShopInterface>
     public CanvasGroup Step2CanvasGroup;
     public AnimationClip FadeInAnim;
     public AnimationClip FadeOutAnim;
-    public TMP_InputField OfferInputField;
     public Slider AngerSlider;
     public TextMeshProUGUI AcceptCounterButtonLabel;
+    public MonoState State;
+    public AmountSelector AmountSelector;
     [Header("Settings")]
     public string[] OfferLines;
     public string[] ThinkLines;
@@ -84,14 +86,14 @@ public class PawnShopInterface : Singleton<PawnShopInterface>
     private ItemSlot[] PawnSlots;
     private Coroutine routine;
     public bool IsOpen { get; private set; }
-    public float SelectedPayment { get; private set; }
     public float NPCAnger { get; private set; }
 
     protected override void Awake();
     protected override void Start();
     protected override void OnDestroy();
     public void Open();
-    public void Close(bool returnItemsToPlayer);
+    public void Close();
+    private void OnClose();
     private void Exit(ExitAction action);
     private void OnMinPass();
     private void OnDayPass();
@@ -104,13 +106,11 @@ public class PawnShopInterface : Singleton<PawnShopInterface>
     private void PlayShopResponse(EShopResponse response, float counter);
     private EShopResponse EvaluateCounter(float lastShopOffer, float playerOffer, out float counterAmount, out float angerChange);
     private void EndNegotiation();
-    public void PaymentSubmitted(string value);
-    public void ChangePayment(float change);
-    public void SetSelectedPayment(float amount);
     public void SetPlayerResponse(EPlayerResponse response);
     public void AcceptOrCounter();
     public void Cancel();
     private void ChangeAnger(float change);
+    private void ClearPawnshopSlots();
     private void SetAngeredToday(bool angered);
     private void Think();
     private void SetOffer(float amount);

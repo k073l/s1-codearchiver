@@ -1,10 +1,8 @@
-using System;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Interaction;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Map;
 using ScheduleOne.Money;
-using ScheduleOne.NPCs.Relation;
 using ScheduleOne.Storage;
 using UnityEngine;
 using UnityEngine.Events;
@@ -21,7 +19,6 @@ public class SupplierStash : MonoBehaviour
     public POI StashPoI;
     public float CashAmount { get; private set; }
 
-    protected virtual void Awake();
     protected virtual void Start();
     private void SupplierUnlocked();
     private void RecalculateCash();

@@ -1,7 +1,8 @@
 using ScheduleOne.DevUtilities;
 using ScheduleOne.ItemFramework;
+using ScheduleOne.PlayerScripts;
 using ScheduleOne.StationFramework;
-using ScheduleOne.UI;
+using ScheduleOne.UI.Input;
 using ScheduleOne.Variables;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,6 +17,8 @@ public class InocculateGrainBagTask : Task
         PushPlunger
     }
 
+    private const float FoV;
+    private const float CameraLerpTime;
     private MushroomSpawnStation _station;
     private MushroomSpawnStationItem _spawn;
     private SporeSyringeStationItem _syringe;

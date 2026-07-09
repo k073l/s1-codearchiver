@@ -51,7 +51,7 @@ public class ShroomColony : NetworkBehaviour
     public int BaseShroomYield { get; private set; } = 12;
     public float GrowthProgress { get; private set; }
     public bool IsFullyGrown => GrowthProgress >= 1f;
-    public bool IsTooHotToGrow { get; }
+    public bool IsTooHotToGrow { get; private set; } = true;
     public int GrownMushroomCount => _growingShrooms.Count;
     public AudioSourceController SnipSound => _snipSound;
     public float NormalizedQuality { get; private set; } = 0.5f;
@@ -60,6 +60,8 @@ public class ShroomColony : NetworkBehaviour
     public override void OnStartClient();
     private void OnDestroy();
     private void OnMinPass();
+    private void OnTick();
+    private void CheckTemperature();
     private void OnTimeSkipped(int mins);
     public void SetColonyVisible(bool visible);
     private float GetCurrentGrowthRate();

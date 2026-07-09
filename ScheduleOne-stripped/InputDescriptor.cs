@@ -9,6 +9,7 @@ public class InputDescriptor : MonoBehaviour
     [SerializeField]
     [Tooltip("Assign the UITrigger component that suppose to detect and receive input when the input action from the InputDescriptorData is fired")]
     private UITrigger uiTrigger;
+    private void Awake();
     public void DetectTriggerInput();
     public void OnReset();
     public bool GetInputTriggered();

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Economy;
 using ScheduleOne.ItemFramework;
@@ -13,6 +14,7 @@ public class CustomerSelector : MonoBehaviour
     public GameObject ButtonPrefab;
     [Header("References")]
     public RectTransform EntriesContainer;
+    public UIPanel CustomersPanel;
     public UnityEvent<Customer> onCustomerSelected;
     private List<RectTransform> customerEntries;
     private Dictionary<RectTransform, Customer> entryToCustomer;

@@ -73,7 +73,7 @@ public class MessagesApp : App<MessagesApp>
     public void RepositionEntries();
     public void ReturnButtonClicked();
     public void RefreshNotifications();
-    public override void Exit(ExitAction exit);
+    protected override void OnExit(ExitAction exit);
     public void SetCurrentConversation(MSGConversation conversation);
     public CategoryInfo GetCategoryInfo(EConversationCategory category);
     public void FilterByCategory(int category);

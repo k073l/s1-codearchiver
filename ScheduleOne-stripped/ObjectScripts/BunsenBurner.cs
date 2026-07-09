@@ -1,5 +1,8 @@
 using ScheduleOne.Audio;
+using ScheduleOne.DevUtilities;
+using ScheduleOne.Gamepad;
 using ScheduleOne.PlayerTasks;
+using ScheduleOne.UI.Input;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -22,6 +25,11 @@ public class BunsenBurner : MonoBehaviour
     public Transform Highlight;
     public Animation Anim;
     public AudioSourceController FlameSound;
+    [Header("Prompt Data")]
+    [SerializeField]
+    private InputPromptsData _handlePromptData;
+    [SerializeField]
+    private Transform _handlePromptAnchor;
     public bool Interactable { get; private set; }
     public bool IsDialHeld { get; private set; }
     public float CurrentDialValue { get; private set; }
@@ -32,6 +40,7 @@ public class BunsenBurner : MonoBehaviour
     private void UpdateEffects();
     public void SetDialPosition(float pos);
     public void SetInteractable(bool e);
+    private float GetDialValue();
     public void ClickStart(RaycastHit hit);
     public void ClickEnd();
 }

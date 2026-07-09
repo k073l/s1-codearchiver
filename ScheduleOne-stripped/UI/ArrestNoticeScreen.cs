@@ -11,10 +11,10 @@ using ScheduleOne.Map;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Product;
 using ScheduleOne.Product.Packaging;
+using ScheduleOne.State;
 using ScheduleOne.Vehicles;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace ScheduleOne.UI;
 public class ArrestNoticeScreen : Singleton<ArrestNoticeScreen>
@@ -25,6 +25,7 @@ public class ArrestNoticeScreen : Singleton<ArrestNoticeScreen>
     public CanvasGroup CanvasGroup;
     public RectTransform CrimeEntryContainer;
     public RectTransform PenaltyEntryContainer;
+    public MonoState State;
     [Header("Prefabs")]
     public RectTransform CrimeEntryPrefab;
     public RectTransform PenaltyEntryPrefab;
@@ -34,9 +35,9 @@ public class ArrestNoticeScreen : Singleton<ArrestNoticeScreen>
 
     protected override void Awake();
     private void PlayerSpawned();
-    private void Exit(ExitAction action);
+    public void Exit();
     public void Open();
-    public void Close();
+    private void OnClose();
     public void RecordCrimes();
     private void RecordPossession(EStealthLevel maxStealthLevel);
     private void ConfiscateItems(EStealthLevel maxStealthLevel);

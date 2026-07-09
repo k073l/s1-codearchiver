@@ -21,7 +21,8 @@ public class CharacterCustomizationOption : MonoBehaviour
     public RectTransform LockDisplay;
     public Button MainButton;
     public Button BuyButton;
-    public RectTransform SelectionIndicator;
+    public RectTransform OwnedIndicator;
+    public UISelectable Selectable;
     [Header("Events")]
     public UnityEvent onSelect;
     public UnityEvent onDeselect;
@@ -32,9 +33,10 @@ public class CharacterCustomizationOption : MonoBehaviour
 
     private void Awake();
     private void OnValidate();
-    private void FixedUpdate();
+    private void Update();
     private void Start();
     private void Selected();
+    private void Deselected();
     private void Purchased();
     private void UpdatePriceColor();
     public void SetSelected(bool _selected);

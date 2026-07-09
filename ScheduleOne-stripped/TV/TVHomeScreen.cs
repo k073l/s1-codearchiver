@@ -20,7 +20,7 @@ public class TVHomeScreen : TVApp
     private bool skipExit;
     protected override void Awake();
     public override void Open();
-    public override void Close();
+    protected override void OnClose();
     protected override void ActiveMinPass();
     private void UpdateTimeLabel();
     private void AppSelected(TVApp app);

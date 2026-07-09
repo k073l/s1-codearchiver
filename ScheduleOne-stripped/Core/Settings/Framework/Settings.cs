@@ -25,4 +25,6 @@ public abstract class Settings : ScriptableObject
     public abstract SettingsObject[] GetSettingsObjects();
     public string Serialize();
     public void Deserialize(string json);
+    protected virtual void OnValidate();
+    private void CheckForDuplicateSettingsNames();
 }

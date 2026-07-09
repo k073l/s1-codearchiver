@@ -44,6 +44,7 @@ public class SporeSyringeStationItem : StationItem
     public float PlungerPosition { get; private set; }
 
     protected override void Awake();
+    public void Initialize(MushroomSpawnStation station, MushroomSpawnStationItem spawn);
     private void LateUpdate();
     public void SetCapInteractable(bool interactable);
     public void SetInjectionPortCollider(Collider collider);

@@ -17,6 +17,8 @@ public class ItemSlotUI : MonoBehaviour
     [Header("Settings")]
     [SerializeField]
     private bool _playBopAnimation;
+    [SerializeField]
+    private bool _showItemInfoPanelOnHover;
     [Header("References")]
     public RectTransform Rect;
     public Image Background;
@@ -26,11 +28,11 @@ public class ItemSlotUI : MonoBehaviour
     public Animation BopAnimation;
     [Header("Controller Support")]
     public UITrigger CmdQuickMove;
+    public UITrigger CmdQuickMoveSingle;
     public UITrigger CmdGrabAll;
     public UITrigger CmdQtyAdd;
     public UITrigger CmdQtySubtract;
     public UITrigger CmdToggleTooltip;
-    public UITrigger CmdDiscardItem;
     private int _lastQuantity;
     private bool _slotBopQueued;
     public ItemSlot assignedSlot { get; protected set; }
@@ -48,17 +50,18 @@ public class ItemSlotUI : MonoBehaviour
     private void Lock();
     private void Unlock();
     public void SetLockVisible(bool vis);
+    public bool ShowItemInfoPanelWhenHovered();
     public RectTransform DuplicateIcon(Transform parent, int overriddenQuantity = -1);
     public void SetVisible(bool shown);
     public void OverrideDisplayedQuantity(int quantity);
     private void AssignControllerCommands();
     private void UnassignControllerCommands();
     private void WrapCmdQuickMove();
+    private void WrapCmdQuickMoveSingle();
     private void WrapCmdGrabAll();
     private void WrapCmdQtyAdd();
     private void WrapCmdQtySubtract();
     private void WrapCmdToggleTooltip();
-    private void WrapCmdDiscardItem();
     public void ControllerSelect(bool isSelected);
     private void OnItemSlotDataChanged();
     private void CheckSlotBop();

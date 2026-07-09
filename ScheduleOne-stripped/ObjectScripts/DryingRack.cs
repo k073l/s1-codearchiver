@@ -21,10 +21,10 @@ using ScheduleOne.ItemFramework;
 using ScheduleOne.Management;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.State;
 using ScheduleOne.Storage;
 using ScheduleOne.Tiles;
 using ScheduleOne.Tools;
-using ScheduleOne.UI.Compass;
 using ScheduleOne.UI.Management;
 using ScheduleOne.UI.Stations;
 using UnityEngine;
@@ -119,7 +119,6 @@ public class DryingRack : GridItem, IUsable, IItemSlotOwner, ITransitEntity, ICo
     public override string GetManagementName();
     public override void OnSpawnServer(NetworkConnection connection);
     public void SendConfigurationToClient(NetworkConnection conn);
-    private void Exit(ExitAction action);
     public override bool CanBeDestroyed(out string reason);
     protected override void Destroy();
     private void OnMinPass();
@@ -143,6 +142,7 @@ public class DryingRack : GridItem, IUsable, IItemSlotOwner, ITransitEntity, ICo
     public void RefreshHangingVisuals();
     private void RefreshDryingEffects();
     public float GetDryMultiplier();
+    public Transform GetClosestCameraPosition();
     private void SetQualityEffect(int index, bool isActive, EQuality quality = EQuality.Standard);
     public WorldspaceUIElement CreateWorldspaceUI();
     public void DestroyWorldspaceUI();
@@ -152,8 +152,8 @@ public class DryingRack : GridItem, IUsable, IItemSlotOwner, ITransitEntity, ICo
     public void SetNPCUser(NetworkObject npcObject);
     public void Hovered();
     public void Interacted();
-    public void Open();
-    public void Close();
+    public void Use();
+    private void OnEndUse();
     [ServerRpc(RunLocally = true, RequireOwnership = false)]
     public void SetStoredInstance(NetworkConnection conn, int itemSlotIndex, ItemInstance instance);
     [ObserversRpc(RunLocally = true)]

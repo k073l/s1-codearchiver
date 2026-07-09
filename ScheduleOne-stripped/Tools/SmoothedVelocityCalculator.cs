@@ -4,23 +4,31 @@ using UnityEngine;
 namespace ScheduleOne.Tools;
 public class SmoothedVelocityCalculator : MonoBehaviour
 {
-    private const int sampleCount;
     public bool DEBUG;
     [Header("Settings")]
-    public float SampleLength;
-    public float MaxReasonableVelocity;
+    [SerializeField]
+    private float SampleLength;
+    [SerializeField]
+    private float MaxReasonableVelocity;
+    [SerializeField]
+    private int sampleCount;
     private RollingAverage<Vector3> velocityHistory;
     private Vector3 lastSamplePosition;
     private float timeOnLastSample;
     private float timeSinceLastSample;
     private bool zeroOut;
     private bool isTargetValid;
+    private float sampleIntervalCached;
+    private float maxReasonableVelocitySqrCached;
     public Transform Target { get; private set; }
     public virtual Vector3 Velocity { get; }
 
+    private void Awake();
     private void Start();
-    protected virtual void FixedUpdate();
+    protected void LateUpdate();
     public void FlushBuffer();
     public void ZeroOut(float duration);
     public void SetTarget(Transform target);
+    public void SetSampleLength(float length);
+    public void SetMaxReasonableVelocity(float maxVelocity);
 }

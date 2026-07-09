@@ -38,7 +38,6 @@ public class CombatBehaviour : Behaviour
     [Range(0f, 1f)]
     public float DefaultMovementSpeed;
     [Header("Weapon settings")]
-    public AvatarWeapon DefaultWeapon;
     public AvatarMeleeWeapon VirtualPunchWeapon;
     [Header("Search settings")]
     public float DefaultSearchTime;
@@ -62,6 +61,7 @@ public class CombatBehaviour : Behaviour
     protected bool hasSearchDestination;
     private float nextAngryVO;
     public Action onSuccessfulHit;
+    private AvatarWeapon _defaultWeapon;
     private bool NetworkInitialize___EarlyScheduleOne_002ECombat_002ECombatBehaviourAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ECombat_002ECombatBehaviourAssembly_002DCSharp_002Edll_Excuted;
     public ICombatTargetable Target { get; protected set; }
@@ -70,6 +70,7 @@ public class CombatBehaviour : Behaviour
     public bool IsTargetRecentlyVisible { get; private set; }
     public bool IsTargetImmediatelyVisible { get; private set; }
 
+    public void SetDefaultWeapon(AvatarWeapon weapon);
     public override void Awake();
     private void Start();
     public override void OnSpawnServer(NetworkConnection connection);
@@ -109,6 +110,7 @@ public class CombatBehaviour : Behaviour
     private bool Shoot();
     private void SetWeaponRaised(bool raised);
     protected void CheckTargetVisibility();
+    protected virtual void TargetResighted();
     public void MarkPlayerVisible();
     protected bool IsTargetVisibleThisFrame();
     protected void ProcessVisionEvent(VisionEventReceipt visionEventReceipt);

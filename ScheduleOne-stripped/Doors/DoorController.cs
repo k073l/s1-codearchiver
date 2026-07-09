@@ -7,6 +7,7 @@ using FishNet.Object.Delegating;
 using FishNet.Serializing;
 using FishNet.Serializing.Generated;
 using FishNet.Transporting;
+using ScheduleOne.Core.Weather;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.Interaction;
@@ -15,7 +16,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 namespace ScheduleOne.Doors;
-public class DoorController : NetworkBehaviour
+public class DoorController : NetworkBehaviour, IEnclosureOpening
 {
     public const float DISTANT_PLAYER_THRESHOLD;
     public EDoorAccess PlayerAccess;

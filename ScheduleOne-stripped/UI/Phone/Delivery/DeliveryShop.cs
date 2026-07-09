@@ -32,6 +32,9 @@ public class DeliveryShop : MonoBehaviour
     public Color ShopColor;
     public bool AvailableByDefault;
     public ListingEntry ListingEntryPrefab;
+    [Header("Screens")]
+    [SerializeField]
+    private List<UIPanel> _panels;
     private List<ListingEntry> listingEntries;
     private ScheduleOne.Property.Property destinationProperty;
     private int loadingDockIndex;
@@ -39,6 +42,7 @@ public class DeliveryShop : MonoBehaviour
     public ShopInterface MatchingShop { get; private set; }
     public bool IsOpen { get; private set; }
     public Action<DeliveryShop> OnSelect { get; set; }
+    public List<UIPanel> Panels => _panels;
 
     public void Initialize();
     private void FixedUpdate();

@@ -1,8 +1,8 @@
 using System;
 using ScheduleOne.Audio;
 using ScheduleOne.Core;
+using ScheduleOne.Core.Weather;
 using ScheduleOne.Experimental;
-using ScheduleOne.Weather;
 using UnityEngine;
 
 namespace ScheduleOne.Vehicles;

@@ -11,6 +11,7 @@ public class PolygonalZone : MonoBehaviour
     [Header("Debug")]
     public Color ZoneColor;
     protected Vector3[] points;
+    protected Tuple<Vector3, Vector3> bounds;
     protected virtual void Awake();
     private void OnDrawGizmos();
     public bool IsPointInsidePolygon(Vector3 point);

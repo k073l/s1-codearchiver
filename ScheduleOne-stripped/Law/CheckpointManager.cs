@@ -24,7 +24,7 @@ public class CheckpointManager : NetworkSingleton<CheckpointManager>
     private bool NetworkInitialize___EarlyScheduleOne_002ELaw_002ECheckpointManagerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ELaw_002ECheckpointManagerAssembly_002DCSharp_002Edll_Excuted;
     public override void OnSpawnServer(NetworkConnection connection);
-    public void SetCheckpointEnabled(ECheckpointLocation checkpoint, bool enabled, int requestedOfficers);
+    public void SetCheckpointEnabled(ECheckpointLocation checkpoint, bool enabled, int requestedOfficers = 1);
     public RoadCheckpoint GetCheckpoint(ECheckpointLocation loc);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();

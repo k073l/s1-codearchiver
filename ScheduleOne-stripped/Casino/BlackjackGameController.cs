@@ -35,10 +35,10 @@ public class BlackjackGameController : CasinoGameController
         Push
     }
 
-    public const int BET_MINIMUM;
-    public const int BET_MAXIMUM;
-    public const float PAYOUT_RATIO;
-    public const float BLACKJACK_PAYOUT_RATIO;
+    private const int MinimumBet;
+    private const int MaximumBet;
+    private const float PayoutRatio;
+    private const float BlackjackPayoutRatio;
     [Header("References")]
     public PlayingCard[] Cards;
     public Transform[] DefaultCardPositions;
@@ -60,7 +60,6 @@ public class BlackjackGameController : CasinoGameController
     private List<PlayingCard.CardData> drawnCardsValues;
     protected Transform localFocusCameraTransform;
     protected Transform localFinalCameraTransform;
-    public Action onLocalPlayerBetChange;
     public Action onLocalPlayerExitRound;
     public Action onInitialCardsDealt;
     public Action onLocalPlayerReadyForInput;
@@ -72,7 +71,6 @@ public class BlackjackGameController : CasinoGameController
     private bool NetworkInitialize__LateScheduleOne_002ECasino_002EBlackjackGameControllerAssembly_002DCSharp_002Edll_Excuted;
     public EStage CurrentStage { get; private set; }
     public Player PlayerTurn { get; private set; }
-    public float LocalPlayerBet { get; private set; } = 10f;
     public int DealerScore { get; private set; }
     public int LocalPlayerScore { get; private set; }
     public bool IsLocalPlayerBlackjack { get; private set; }
@@ -81,7 +79,7 @@ public class BlackjackGameController : CasinoGameController
 
     public override void Awake();
     protected override void Open();
-    protected override void Close();
+    protected override void OnClose();
     protected override void Exit(ExitAction action);
     private List<Player> GetClockwisePlayers();
     [ObserversRpc(RunLocally = true)]
@@ -98,6 +96,8 @@ public class BlackjackGameController : CasinoGameController
     private void AddCardToDealerHand(string cardID);
     private List<PlayingCard> GetPlayerCards(int playerIndex);
     private int GetHandScore(List<PlayingCard> cards, bool countFaceDown = true);
+    public override bool IsWaitingForPlayers();
+    public override void GetBetLimits(out float minimum, out float maximum);
     private int GetCardValue(PlayingCard card, bool aceAsEleven = true);
     private PlayingCard DrawCard();
     private void ResetCards();
@@ -112,12 +112,11 @@ public class BlackjackGameController : CasinoGameController
     private void RequestRemovePlayerFromCurrentRound(NetworkObject player);
     [ObserversRpc(RunLocally = true)]
     private void RemovePlayerFromCurrentRound(NetworkObject player);
-    public void SetLocalPlayerBet(float bet);
     public bool AreAllPlayersReady();
     public int GetPlayersReadyCount();
-    public void ToggleLocalPlayerReady();
     [ObserversRpc(RunLocally = true)]
     private void TryStartGame();
+    public override void ToggleLocalPlayerReady();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

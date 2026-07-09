@@ -5,7 +5,7 @@ using ScheduleOne.ItemFramework;
 using ScheduleOne.ObjectScripts.WateringCan;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Trash;
-using ScheduleOne.UI;
+using ScheduleOne.UI.Input;
 using UnityEngine;
 using UnityEngine.Events;
 

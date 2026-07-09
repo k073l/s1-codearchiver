@@ -1,5 +1,6 @@
 using System;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Events;
 using ScheduleOne.UI.Phone.ProductManagerApp;
 using UnityEngine;
 using UnityEngine.Events;
@@ -21,19 +22,30 @@ public class ProductEntry : MonoBehaviour
     public RectTransform Cross;
     public EventTrigger Trigger;
     public Button FavouriteButton;
+    public Button ListingButton;
+    public Button MoveToDetailsButton;
     public Image FavouriteIcon;
+    public GameObject Outline;
     public UnityEvent onHovered;
     private bool destroyed;
+    private Action<ProductDefinition> onListed;
+    private BasicEvent _onMovedToDetails;
     public ProductDefinition Definition { get; private set; }
 
     public void Initialize(ProductDefinition definition);
     public void Destroy();
     private void OnDestroy();
-    private void Clicked();
-    private void FavouriteClicked();
+    public void Clicked();
+    public void FavouriteClicked();
     private void ProductListedOrDelisted(ProductDefinition def);
     public void UpdateListed();
     private void ProductFavouritedOrUnFavourited(ProductDefinition def);
     public void UpdateFavourited();
     public void UpdateDiscovered(ProductDefinition def);
+    public void SetSelection(bool value);
+    private void ListProductEvent();
+    public void SubscribeToListed(Action<ProductDefinition> callback);
+    public void UnsubscribeFromListed(Action<ProductDefinition> callback);
+    public void SubscribeToMoveToDetails(BasicEvent callback);
+    public void UnsubscribeFromMoveToDetails(BasicEvent callback);
 }

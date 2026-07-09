@@ -22,7 +22,7 @@ public class VolumetricLightTracker : MonoBehaviour
     public bool Override { get; set; }
     public bool Enabled { get; set; }
 
+    private void Awake();
     private void AssignReferences();
     private void UpdateEffectsState();
-    private void Awake();
 }

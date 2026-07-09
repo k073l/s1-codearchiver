@@ -43,8 +43,6 @@ public class PlaceableStorageEntity : GridItem, ITransitEntity, IUsable, IConfig
     private TextMeshPro[] _nameLabels;
     [Header("Settings")]
     [SerializeField]
-    private bool _showNameLabels;
-    [SerializeField]
     private ENameLabelVisibility _nameLabelVisibility;
     [CompilerGenerated]
     [HideInInspector]

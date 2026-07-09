@@ -1,5 +1,4 @@
 using System;
-using ScheduleOne.Core;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Interaction;
 using ScheduleOne.PlayerScripts;
@@ -23,7 +22,6 @@ public class Draggable : MonoBehaviour, IGUIDRegisterable
     public const float MAX_TARGET_OFFSET;
     private bool isBeingDragged;
     private Player currentDragger;
-    public string BakedGUID;
     [Header("References")]
     public Rigidbody Rigidbody;
     public InteractableObject IntObj;
@@ -35,18 +33,16 @@ public class Draggable : MonoBehaviour, IGUIDRegisterable
     [Range(0f, 5f)]
     public float DragForceMultiplier;
     public EInitialReplicationMode InitialReplicationMode;
-    private float timeSinceLastDrag;
     public UnityEvent onDragStart;
     public UnityEvent onDragEnd;
     public UnityEvent onHovered;
     public UnityEvent onInteracted;
+    private float timeSinceLastDrag;
     public bool IsBeingDragged => isBeingDragged;
     public Player CurrentDragger { get; protected set; }
     public Guid GUID { get; protected set; }
     public Vector3 initialPosition { get; private set; }
 
-    [Button]
-    public void RegenerateGUID();
     protected virtual void Awake();
     protected virtual void Start();
     public void SetGUID(Guid guid);

@@ -26,7 +26,12 @@ public class AvatarAnimation : MonoBehaviour
     }
 
     public const bool ImpostorsEnabled;
-    public const float AnimationRangeSqr;
+    private const float MaxDirectionSpeed;
+    private const float MaxStrafeSpeed;
+    private const float MaxCrouchDirectionSpeed;
+    private const float MaxCrouchStrafeSpeed;
+    private const float BlendIncreaseMultiplier;
+    private const float BlendReduceMultiplier;
     public const float FrustrumCullMinDist;
     public const float RunningAnimationSpeed;
     public const float MaxBoneOffset;
@@ -50,6 +55,12 @@ public class AvatarAnimation : MonoBehaviour
     [Header("Settings")]
     public LayerMask GroundingMask;
     public bool AllowCulling;
+    [Range(10f, 100f)]
+    public float VisibilityRange;
+    public AnimationCurve DirectionAnimationValueCurve;
+    public AnimationCurve StrafeAnimationValueCurve;
+    public AnimationCurve CrouchMovementAnimationValue;
+    public AnimationCurve StrafeBlendMultiplierCurve;
     public UnityEvent onStandupStart;
     public UnityEvent onStandupDone;
     public UnityEvent onHeavyFlinch;
@@ -61,6 +72,19 @@ public class AvatarAnimation : MonoBehaviour
     private Skateboard activeSkateboard;
     private bool animationEnabled;
     private BoneTransform[] _lastFrameBoneTransforms;
+    private bool _lastFrameBoneTransformsValid;
+    private bool _activateRagdollNextFrame;
+    private float visibilityRangeSqr;
+    [SerializeField]
+    [Range(0f, 1f)]
+    private float _currentStrafeBlend;
+    private float _lastTargetStrafe;
+    [SerializeField]
+    [Range(0f, 1f)]
+    private float _currentDirectionBlend;
+    private float _lastTargetDirection;
+    private float _lastMotionTime;
+    private Vector3 _smoothedMotion;
     public bool IsCrouched { get; protected set; }
     public bool IsSeated => (Object)(object)CurrentSeat != (Object)null;
     public float TimeSinceSitEnd { get; protected set; } = 1000f;
@@ -69,12 +93,15 @@ public class AvatarAnimation : MonoBehaviour
     public bool IsAvatarCulled { get; private set; }
 
     protected virtual void Awake();
+    private void RecalculateVisibilityRangeSqr(int a, int b);
     private void Start();
     private void Update();
     private void LateUpdate();
     private void UpdateAnimationActive();
-    public void SetDirection(float dir);
-    public void SetStrafe(float strafe);
+    public void SetMotion(Vector3 relativeMotion, bool isCrouched);
+    private float UpdateBlend(ref float blend, float relativeMotion, float maxSpeed, ref float lastTargetInput, AnimationCurve curve, float tick, float blendMultiplier = 1f);
+    private void SetDirection(float dir);
+    private void SetStrafe(float strafe);
     public void SetTimeAirborne(float airbone);
     public void SetCrouched(bool crouched);
     public void SetGrounded(bool grounded);

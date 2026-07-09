@@ -33,7 +33,6 @@ public class NPCResponses_Civilian : NPCResponses
     }
 
     [Header("Response Settings")]
-    public bool CanCallPolice;
     public bool OverrideThreatResponses;
     public EAttackResponse ThreatResponseOverride;
     private EAttackResponse currentThreatResponse;

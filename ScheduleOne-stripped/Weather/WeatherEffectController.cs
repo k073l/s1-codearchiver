@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using ScheduleOne.Audio;
-using ScheduleOne.DevUtilities;
+using ScheduleOne.Core.Audio;
+using ScheduleOne.Core.Effects;
+using ScheduleOne.Core.Utilities;
+using ScheduleOne.Core.Weather;
 using ScheduleOne.Effects;
 using UnityEngine;
 
@@ -19,42 +22,25 @@ public class WeatherEffectController : EffectController
     [Header("Parameters: general")]
     [SerializeField]
     protected string _controllerId;
-    [Header("Parameters: Audio")]
-    [Tooltip("Min and max distance for audio effects. Max being the distance at which audio is inaudible, and min being the distance at which audio is at full volume")]
-    [SerializeField]
-    protected Vector2 _minMaxDistanceToPlayer;
-    [Tooltip("Uses the blend value of weather volume to determine audio volume rather than distance to player")]
-    [SerializeField]
-    protected bool _useWeatherBlendForAudio;
-    [Tooltip("Used to evaluate audio blending of audio volume (when using distance to player)")]
-    [SerializeField]
-    protected AnimationCurve _distanceCurve;
-    [Tooltip("Used to evaluate audio blending from inside to outside")]
-    [SerializeField]
-    protected AnimationCurve _enclosureCurve;
-    [Header("Parameters: Effects")]
-    [Header("Settings: Player Following")]
-    [SerializeField]
-    protected List<EffectHandler> _effectsToFollowPlayer;
-    [Header("Settings: Effects")]
-    [SerializeField]
-    protected List<EffectSettings> _effectSettings;
-    [Header("Settings: Audio")]
-    [SerializeField]
-    protected List<ScheduleOne.Audio.AudioSettings> _audioSettings;
     [Header("Debugging & Development")]
     [SerializeField]
     protected bool _showGizmos;
+    protected Vector2 _minMaxDistanceToPlayer;
+    protected AnimationCurve _distanceCurve;
+    protected AnimationCurve _enclosureCurve;
+    protected List<EffectSettings> _effectSettings;
+    protected List<AudioSettings> _audioSettings;
     protected float _weatherBlend;
     protected WeatherVolume _mainVolume;
     protected WeatherVolume _neighbourVolume;
+    protected bool _audioRequiresUpdate;
     private bool NetworkInitialize___EarlyScheduleOne_002EWeather_002EWeatherEffectControllerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EWeather_002EWeatherEffectControllerAssembly_002DCSharp_002Edll_Excuted;
     public string ControllerId => _controllerId;
 
     public override void Awake();
     protected virtual void Update();
-    public void Initialise(WeatherVolume mainVolume);
+    public virtual void Initialise(WeatherVolume mainVolume, WeatherSettings weatherSettings);
     public void SetNeighbourVolume(WeatherVolume neighbourVolume);
     public override void Activate();
     public override void Deactivate();
@@ -63,10 +49,12 @@ public class WeatherEffectController : EffectController
     public void SetShaderNumericParameter(string paramater, float value);
     public void SetVisualEffectNumericParameter(string paramater, float value);
     public void SetShaderColorParameter(string paramater, Color value);
+    public void SetVisualEffectColorParameter(string paramater, Color value);
     public EffectSettings FindEffectSettings(string handlerId);
     protected virtual EffectSettings GetFromEffectSettings(string handlerId);
-    public virtual void UpdateAudio();
-    public override void UpdateProperties(Vector3 anchoredPosition, Vector3 playerPosition, float sqrDistanceToPlayer, float enclosureBlend);
+    protected void SetAudio(AudioSourceController controller, AudioSettingsWrapper settings);
+    public virtual bool UpdateAudio();
+    public override void UpdateProperties(Vector3 anchoredPosition, Vector3 playerPosition, float sqrDistanceToPlayer, float enclosureBlend, float enclosurePan);
     private void OnDrawGizmos();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();

@@ -22,7 +22,7 @@ public abstract class GenericFootstepDetector : MonoBehaviour
 
     private void Awake();
     protected virtual void Start();
-    protected void TriggerStep(EMaterialType materialType, Vector3 stepPosition);
+    protected void TriggerStep(EMaterialType materialType, Vector3 stepPosition, bool spatialAudio = true);
     protected bool IsCooldown();
     protected bool IsGrounded(out EMaterialType surfaceType);
 }

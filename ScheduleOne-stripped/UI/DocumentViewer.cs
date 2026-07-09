@@ -1,5 +1,6 @@
 using ScheduleOne.DevUtilities;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.State;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,12 +9,13 @@ public class DocumentViewer : Singleton<DocumentViewer>
 {
     [Header("References")]
     public Canvas Canvas;
-    public RectTransform[] Documents;
+    public DocumentViewerPage[] Documents;
+    public MonoState State;
     public UnityEvent onOpen;
     public bool IsOpen { get; protected set; }
 
     protected override void Start();
-    private void Exit(ExitAction action);
     public void Open(string documentName);
     public void Close();
+    private void OnClose();
 }

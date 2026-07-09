@@ -29,6 +29,13 @@ public class FilterConfigPanel : MonoBehaviour
         public Item GetItem(string itemID);
     }
 
+    [Serializable]
+    private class PanelData
+    {
+        public UIScreen Screen;
+        public UIPanel DefaultPanel;
+    }
+
     public GameObject ItemEntryPrefab;
     public GameObject CategoryPrefab;
     public GameObject SearchItemPrefab;
@@ -53,6 +60,9 @@ public class FilterConfigPanel : MonoBehaviour
     public RectTransform SearchContainer;
     public TMP_InputField SearchInput;
     public RectTransform CategoryContainer;
+    [Header("Gamepad Support")]
+    [SerializeField]
+    private List<PanelData> _uiScreenData;
     private bool mouseUp;
     private List<SearchCategory> searchCategories;
     private List<RectTransform> itemEntries;
