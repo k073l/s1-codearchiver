@@ -10,5 +10,4 @@ public class BuildStart_AirConditioner : BuildStart_Grid
 {
     private AirConditioner ac;
     public override void StartBuilding(ItemInstance itemInstance);
-    public override string GetInputPromptsModuleName();
 }

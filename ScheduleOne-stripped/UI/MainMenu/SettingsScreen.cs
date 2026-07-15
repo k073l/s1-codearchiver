@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using FishNet;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.UI.Settings;
 using UnityEngine;
@@ -20,8 +21,12 @@ public class SettingsScreen : MenuScreen
     public Button ApplyDisplayButton;
     public ConfirmDisplaySettings ConfirmDisplaySettings;
     public GameObject ActiveDisplaySelection;
+    public GameObject[] HostOnlyGameObjects;
+    public UITab Tab;
+    private bool _initialized;
+    private void OnEnable();
     protected override void Awake();
-    protected void Start();
+    protected override void OnOpen();
     public void ShowCategory(int index);
     public void ApplyDisplaySettings(bool showRevertMenu);
 }

@@ -7,6 +7,7 @@ using ScheduleOne.DevUtilities;
 using ScheduleOne.EntityFramework;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Tiles;
+using ScheduleOne.UI.Input;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
@@ -31,6 +32,7 @@ public class BuildManager : NetworkSingleton<BuildManager>
     public InputActionReference PlaceObjectAction;
     public InputActionReference RotateLeftAction;
     public InputActionReference RotateRightAction;
+    public InputPromptsData ToggleHeatmapInputModule;
     private bool NetworkInitialize___EarlyScheduleOne_002EBuilding_002EBuildManagerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EBuilding_002EBuildManagerAssembly_002DCSharp_002Edll_Excuted;
     public bool isBuilding { get; protected set; }

@@ -114,7 +114,7 @@ public class BlackjackGameController : CasinoGameController
     private void RemovePlayerFromCurrentRound(NetworkObject player);
     public bool AreAllPlayersReady();
     public int GetPlayersReadyCount();
-    [ObserversRpc(RunLocally = true)]
+    [ServerRpc(RequireOwnership = false, RunLocally = true)]
     private void TryStartGame();
     public override void ToggleLocalPlayerReady();
     public override void NetworkInitialize___Early();
@@ -147,8 +147,8 @@ public class BlackjackGameController : CasinoGameController
     private void RpcWriter___Observers_RemovePlayerFromCurrentRound_3323014238(NetworkObject player);
     private void RpcLogic___RemovePlayerFromCurrentRound_3323014238(NetworkObject player);
     private void RpcReader___Observers_RemovePlayerFromCurrentRound_3323014238(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Observers_TryStartGame_2166136261();
+    private void RpcWriter___Server_TryStartGame_2166136261();
     private void RpcLogic___TryStartGame_2166136261();
-    private void RpcReader___Observers_TryStartGame_2166136261(PooledReader PooledReader0, Channel channel);
+    private void RpcReader___Server_TryStartGame_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
     protected override void Awake_UserLogic_ScheduleOne_002ECasino_002EBlackjackGameController_Assembly_002DCSharp_002Edll();
 }

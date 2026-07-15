@@ -41,6 +41,7 @@ public class Task : ScheduleOne.State.State
     public bool TaskActive { get; private set; }
     public EOutcome Outcome { get; protected set; }
     protected virtual string TaskPointerData => "Default";
+    protected virtual string InputWord { get; }
 
     public Task();
     public virtual void CancelTask();

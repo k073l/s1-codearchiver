@@ -5,7 +5,8 @@ public interface IState
     {
         CanToggleClipboard,
         AllowPlayerMovement,
-        CanDismissHint
+        CanDismissHint,
+        HideWorldspaceDialogue
     }
 
     string name { get; }

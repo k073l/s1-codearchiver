@@ -102,6 +102,8 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     private Color _lightningColorTint;
     [SerializeField]
     private AvatarSettings _defaultAppearance;
+    [SerializeField]
+    private BasicAvatarSettings _defaultBasicAppearance;
     [CompilerGenerated]
     [SyncVar( /*Could not decode attribute arguments.*/)]
     public string _003CPlayerName_003Ek__BackingField;
@@ -201,14 +203,14 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public Vector3 PlayerBasePosition => ((Component)this).transform.position - ((Component)this).transform.up * (CharacterController.height / 2f);
     public Vector3 CameraPosition {[CompilerGenerated]
         get; [CompilerGenerated]
-        [ServerRpc]
+        [ServerRpc(RequireOwnership = false)]
         set; } = Vector3.zero;
     public Quaternion CameraRotation {[CompilerGenerated]
         get; [CompilerGenerated]
-        [ServerRpc]
+        [ServerRpc(RequireOwnership = false)]
         set; } = Quaternion.identity;
     public int EquippedItemSlotIndex { get; private set; } = -1;
-    public BasicAvatarSettings CurrentAvatarSettings { get; protected set; }
+    public BasicAvatarSettings CurrentBasicAppearance { get; protected set; }
     public ProductItemInstance ConsumedProduct { get; private set; }
     private int _timeSinceProductConsumed { get; set; }
     public string SaveFolderName { get; }
@@ -401,7 +403,7 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public void RemoveEquippedItemFromInventory(string id, int amount);
     private void GetNetworth(MoneyManager.FloatContainer container);
     [ServerRpc(RunLocally = true)]
-    public void SendAppearance(BasicAvatarSettings settings);
+    public void SetAppearance_Server(BasicAvatarSettings settings);
     [ObserversRpc(RunLocally = true)]
     private void SetAppearance(BasicAvatarSettings settings, bool refreshClothing);
     public void MountSkateboard(Skateboard board);
@@ -586,9 +588,9 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     private void RpcWriter___Observers_RemoveEquippedItemFromInventory_3643459082(string id, int amount);
     public void RpcLogic___RemoveEquippedItemFromInventory_3643459082(string id, int amount);
     private void RpcReader___Observers_RemoveEquippedItemFromInventory_3643459082(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Server_SendAppearance_3281254764(BasicAvatarSettings settings);
-    public void RpcLogic___SendAppearance_3281254764(BasicAvatarSettings settings);
-    private void RpcReader___Server_SendAppearance_3281254764(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Server_SetAppearance_Server_3281254764(BasicAvatarSettings settings);
+    public void RpcLogic___SetAppearance_Server_3281254764(BasicAvatarSettings settings);
+    private void RpcReader___Server_SetAppearance_Server_3281254764(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
     private void RpcWriter___Observers_SetAppearance_2139595489(BasicAvatarSettings settings, bool refreshClothing);
     private void RpcLogic___SetAppearance_2139595489(BasicAvatarSettings settings, bool refreshClothing);
     private void RpcReader___Observers_SetAppearance_2139595489(PooledReader PooledReader0, Channel channel);

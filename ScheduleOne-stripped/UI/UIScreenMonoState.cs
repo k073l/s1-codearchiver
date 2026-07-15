@@ -11,7 +11,9 @@ public class UIScreenMonoState : MonoState
     private UIScreen _screen;
     [SerializeField]
     private bool _attachToPlayerInventory;
+    private bool _hasBeenActivatedSinceAddedToStack;
     protected override void Awake();
     public override void OnActivate();
     public override void OnDeactivate();
+    public override void NotifyRemovedFromStack();
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.ItemFramework;
+using ScheduleOne.State;
 using ScheduleOne.UI.Tooltips;
 using TMPro;
 using UnityEngine;
@@ -56,6 +57,7 @@ public class FilterConfigPanel : MonoBehaviour
     public Button PasteButton;
     public Button ApplyToSiblingsButton;
     public Button ClearButton;
+    public MonoState State;
     [Header("Search")]
     public RectTransform SearchContainer;
     public TMP_InputField SearchInput;
@@ -76,6 +78,7 @@ public class FilterConfigPanel : MonoBehaviour
     private void Update();
     public void Open(ItemSlotUI ui);
     public void Close();
+    private void OnClose();
     private void UpdateSearch();
     public void FilterModeSelected(int filterType);
     public void FilterModeSelected(SlotFilter.EType filterType);
@@ -100,5 +103,6 @@ public class FilterConfigPanel : MonoBehaviour
     private void OpenSearch();
     private void CloseSearch();
     private void SearchChanged(string search);
+    private void SearchSubmitted(string search);
     private void RefreshSearchResults();
 }

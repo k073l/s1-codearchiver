@@ -21,6 +21,7 @@ public struct DisplaySettings
     public float CameraBobbing;
     public int ActiveDisplayIndex;
     public Settings.EUnitType UnitType;
+    public bool PauseOnFocusLost;
     public static List<Resolution> GetResolutions();
     private static uint GetDenominatorSafe(RefreshRate refreshRate);
 }

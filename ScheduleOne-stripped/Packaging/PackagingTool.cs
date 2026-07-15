@@ -66,12 +66,12 @@ public class PackagingTool : MonoBehaviour
     private float conveyorVelocity;
     private int directionInput;
     private Task task;
-    private PackagingInstance finalizeInstance;
     private Coroutine finalizeCoroutine;
     private bool leftDown;
     private bool rightDown;
     private bool dropDown;
     private float timeSinceLastDrop;
+    private bool gamepadDropButtonReleasedSinceTaskBegin;
     public bool ReceiveInput { get; private set; }
 
     public void Initialize(Task _task, FunctionalPackaging packaging, int packagingQuantity, ProductItemInstance product, int productQuantity);

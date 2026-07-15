@@ -6,7 +6,6 @@ using ScheduleOne.Growing;
 using ScheduleOne.ObjectScripts;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.UI;
-using ScheduleOne.UI.Input;
 using UnityEngine;
 
 namespace ScheduleOne.PlayerTasks;
@@ -16,7 +15,6 @@ public class HarvestPlant : Task
     private int HarvestCount;
     private int HarvestTotal;
     private float rotation;
-    private static bool hintShown;
     private static bool CanDrag;
     private AudioSourceController SoundLoop;
     public override string TaskName { get; protected set; } = "Harvest plant";

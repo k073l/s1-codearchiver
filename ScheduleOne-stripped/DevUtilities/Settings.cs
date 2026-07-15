@@ -57,6 +57,7 @@ public class Settings : PersistentSingleton<Settings>
     private PlatformDefaultSettings _thisPlatformDefaultSettings;
     private float mouseCameraSensitivity;
     private float gamepadCameraSensitivity;
+    private string _defaultBindingOverrides;
     public static bool ChristmasEventActive { get; private set; }
     public bool PausingFreezesTime { get; }
     public EUnitType UnitType { get; private set; }
@@ -80,6 +81,8 @@ public class Settings : PersistentSingleton<Settings>
     public void ApplyOtherSettings(OtherSettings settings);
     public void ReloadGamepadSettings();
     public void ApplyGamepadSettings(GamepadSettings settings);
+    public void RestoreDefaultKeyboardBindings();
+    public void RestoreDefaultGamepadBindings();
     public void WriteDisplaySettings(DisplaySettings settings);
     public DisplaySettings ReadDisplaySettings();
     public void WriteGraphicsSettings(GraphicsSettings settings);

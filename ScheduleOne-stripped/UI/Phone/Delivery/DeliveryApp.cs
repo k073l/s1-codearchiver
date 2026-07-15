@@ -73,7 +73,6 @@ public class DeliveryApp : App<DeliveryApp>
     private void SetCanvasInteraction(CanvasGroup canvas, bool interactable);
     public override void SetOpen(bool open);
     private void OnMinPass();
-    public void RefreshContent(bool keepScrollPosition = true);
     public void OnSubmitOrder(DeliveryShop shop);
     public void PlayOrderSubmittedAnim();
     public void Reorder(DeliveryReceipt receipt);
@@ -86,7 +85,6 @@ public class DeliveryApp : App<DeliveryApp>
     public static void RefreshLayoutGroupsImmediateAndRecursive(GameObject root);
     public DeliveryShop GetShop(string shopName);
     public void SetIsAvailable(ShopInterface matchingShop, bool available);
-    private void OnTabChange(int index);
     private void UpdateActiveDeliveries();
     private void UpdatePastDeliveries();
     private bool IsValidReceipt(DeliveryReceipt receipt);

@@ -37,6 +37,7 @@ public class UIScreen : MonoBehaviour
     private Canvas _canvas;
     private UIPanel _lastSelectedPanel;
     private PanelChangeEvent _onPanelChange;
+    private bool _screenSelectedThisFrame;
     public bool IsSelected { get; set; }
     public UIPanel CurrentSelectedPanel => currentSelectedPanel;
     public IReadOnlyList<UIPanel> Panels => panels.AsReadOnly();

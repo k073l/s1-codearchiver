@@ -9,4 +9,5 @@ public class MainMenuController : MonoBehaviour
     public MonoState State;
     private void Awake();
     private void Start();
+    private void OnDestroy();
 }

@@ -5,10 +5,13 @@ using UnityEngine.UI;
 namespace ScheduleOne;
 public class UIMapPanel : UIPanel, INonNavigablePanel
 {
+    private const float rightStickDeadzone;
     [SerializeField]
     private PinchableScrollRect mapScrollRect;
     [SerializeField]
     private float scrollSensitivity;
+    [SerializeField]
+    private float rightStickSensitivity;
     [SerializeField]
     private float minZoomScrollSpeedMult;
     [SerializeField]
@@ -19,8 +22,6 @@ public class UIMapPanel : UIPanel, INonNavigablePanel
     private RectTransform centerPoint;
     private const float initialHoldThreshold;
     private const float repeatInterval;
-    private float zoomTimer;
-    private bool wasZoomPressedLastFrame;
     private List<UIMapItem> mapItems;
     private UIMapItem snappedItem;
     private bool lockMapInput;

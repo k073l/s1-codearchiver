@@ -7,6 +7,7 @@ using ScheduleOne.PlayerScripts;
 using ScheduleOne.State;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -22,9 +23,9 @@ public class DialogueCanvas : Singleton<DialogueCanvas>
     [SerializeField]
     protected TextMeshProUGUI dialogueText;
     [SerializeField]
-    protected GameObject continuePopup;
-    [SerializeField]
     protected List<DialogueChoiceEntry> dialogueChoices;
+    [SerializeField]
+    protected DialogueChoiceEntry continueChoice;
     [SerializeField]
     protected MonoState state;
     [SerializeField]
@@ -44,8 +45,10 @@ public class DialogueCanvas : Singleton<DialogueCanvas>
     public bool SkipNextRollout { get; set; }
 
     protected override void Awake();
+    protected override void OnDestroy();
     public void DisplayDialogueNode(DialogueHandler diag, DialogueNodeData node, string dialogueText, List<DialogueChoiceData> choices);
     private void Update();
+    private void OnInputDeviceChanged(GameInput.InputDeviceType newDeviceType);
     private void Exit(ExitAction action);
     protected IEnumerator RolloutDialogue(string text, List<DialogueChoiceData> choices);
     private IEnumerator SelectPanel(UISelectable selectable);

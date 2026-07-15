@@ -7,7 +7,6 @@ namespace ScheduleOne.UI;
 public class CanvasScaler : MonoBehaviour
 {
     public static Action OnCanvasScaleFactorChanged;
-    private static Vector2 referenceResolution;
     [Range(0f, 2f)]
     [SerializeField]
     [FormerlySerializedAs("ScaleMultiplier")]
@@ -16,6 +15,7 @@ public class CanvasScaler : MonoBehaviour
     [SerializeField]
     private float _globalScaleInfluence;
     private CanvasScaler _canvasScaler;
+    private Vector2 _defaultReferenceResolution;
     public static float GlobalScaleFactor { get; private set; } = 1f;
     public static float NormalizedCanvasScaleFactor => Mathf.InverseLerp(0.7f, 1.5f, GlobalScaleFactor);
 

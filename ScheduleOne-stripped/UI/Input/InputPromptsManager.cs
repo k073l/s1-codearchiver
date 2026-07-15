@@ -66,7 +66,8 @@ public class InputPromptsManager : Singleton<InputPromptsManager>
     public void UpdateDisplayTextOverride(string panelId, string displayTextOverride);
     public void ShowHideActivePrompt(string panelId, bool show);
     public bool HasActivePrompt(string id);
-    public bool GetInlinePromptLabel(string inlineId, out string label);
+    public bool TryGetActionBindingDisplayString(string actionName, out string displayString);
+    public bool TryGetActionBindingDisplayString(InputAction action, out string displayString);
     private bool AddInputPrompt(string panelId, InputPromptsDescriptorData descriptor, bool isPulsing, string displayTextOverride = null);
     private void RefreshInputPrompts();
     private List<InputPromptsBindingData> GetPromptBindingsForCurrentControlScheme(InputPromptsDescriptorData descriptor, out List<string> bindingDisplayStrings);

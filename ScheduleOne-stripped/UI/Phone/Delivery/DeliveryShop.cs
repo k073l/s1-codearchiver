@@ -35,6 +35,8 @@ public class DeliveryShop : MonoBehaviour
     [Header("Screens")]
     [SerializeField]
     private List<UIPanel> _panels;
+    [SerializeField]
+    private UIPanel _entriesPanel;
     private List<ListingEntry> listingEntries;
     private ScheduleOne.Property.Property destinationProperty;
     private int loadingDockIndex;

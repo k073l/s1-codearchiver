@@ -26,7 +26,8 @@ public class AvatarLookController : MonoBehaviour
     public float LookLerpSpeed;
     public float AimIKWeight;
     public float BodyRotationSpeed;
-    protected NPC _npc;
+    protected NPC _parentNPC;
+    protected Player _parentPlayer;
     private Avatar avatar;
     private Vector3 lookAtPos;
     private Transform lookAtTarget;

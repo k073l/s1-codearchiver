@@ -20,9 +20,10 @@ public class CharacterCustomizationOption : MonoBehaviour
     public TextMeshProUGUI LevelLabel;
     public RectTransform LockDisplay;
     public Button MainButton;
+    public UISelectable MainSelectable;
     public Button BuyButton;
+    public UITrigger BuyTrigger;
     public RectTransform OwnedIndicator;
-    public UISelectable Selectable;
     [Header("Events")]
     public UnityEvent onSelect;
     public UnityEvent onDeselect;

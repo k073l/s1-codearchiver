@@ -18,6 +18,7 @@ public class VolumetricLightTracker : MonoBehaviour
     public Light light;
     public OptimizedLight optimizedLight;
     public VolumetricLightBeamSD beam;
+    public VolumetricLightBeamHD beamHD;
     public VolumetricDustParticles dust;
     public bool Override { get; set; }
     public bool Enabled { get; set; }

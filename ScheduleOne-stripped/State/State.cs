@@ -48,6 +48,8 @@ public class State : IState
     public void NotifyBecomeTopSibling();
     public void NotifyNoLongerTopSibling();
     private void OnExit(ExitAction action);
-    public void LoadModule(InputPromptsData module);
+    public void LoadModule(InputPromptsData module, string displayTextOverride = null);
+    public void LoadModule(string moduleId, EInputPromptPosition position = EInputPromptPosition.BottomLeftInGame, string displayTextOverride = null);
     public void UnloadModule(InputPromptsData module);
+    public void UnloadModule(string moduleId);
 }

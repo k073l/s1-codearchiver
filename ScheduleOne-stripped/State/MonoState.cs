@@ -60,15 +60,17 @@ public class MonoState : MonoBehaviour, IState
     public void PushToDefaultParent();
     public void PopFromDefaultParent();
     public void RemoveFromDefaultParent();
-    public void NotifyRemovedFromStack();
-    public void NotifyAddedToStack();
-    public void NotifyBecomeTopSibling();
-    public void NotifyNoLongerTopSibling();
+    public virtual void NotifyRemovedFromStack();
+    public virtual void NotifyAddedToStack();
+    public virtual void NotifyBecomeTopSibling();
+    public virtual void NotifyNoLongerTopSibling();
     public void SetQuickMoveSecondarySlots(List<ItemSlot> slots);
     private void OnExit(ExitAction action);
     private void CreateInputHandler();
     public void AddFlag(IState.EFlag flag);
     public void LoadModule(InputPromptsData module, string displayTextOverride = null);
+    public void LoadModule(string moduleId, EInputPromptPosition position = EInputPromptPosition.BottomLeftInGame, string displayTextOverride = null);
     public void UnloadModule(InputPromptsData module);
+    public void UnloadModule(string moduleId);
     string IState.get_name();
 }

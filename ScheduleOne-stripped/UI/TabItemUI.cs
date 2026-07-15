@@ -22,7 +22,6 @@ public class TabItemUI : MonoBehaviour
     public ButtonUI Button => _button;
     public Text Label => _label;
     public GameObject Content => _content;
-    public UIPanel ContentPanel => _contentPanel;
 
     public void SetIndicator(string text);
     public void HideIndicator();

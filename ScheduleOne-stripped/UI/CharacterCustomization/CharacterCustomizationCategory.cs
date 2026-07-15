@@ -16,6 +16,8 @@ public class CharacterCustomizationCategory : MonoBehaviour
     private CharacterCustomizationOption[] options;
     public UnityEvent onOpen;
     public UnityEvent onClose;
+    public bool IsOpen { get; private set; }
+
     private void Awake();
     public void Open();
     public void Back();

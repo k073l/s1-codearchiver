@@ -31,7 +31,7 @@ using UnityEngine.Events;
 namespace ScheduleOne.Police;
 public class PoliceOfficer : NPC
 {
-    public const float DEACTIVATION_TIME;
+    public const float OutOfSightTimeToDeactivate;
     public const float INVESTIGATION_COOLDOWN;
     public const float INVESTIGATION_MAX_DISTANCE;
     public const float INVESTIGATION_MIN_VISIBILITY;

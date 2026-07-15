@@ -11,7 +11,8 @@ using UnityEngine.UI;
 namespace ScheduleOne.UI;
 public class InteractionCanvas : Singleton<InteractionCanvas>
 {
-    public const float DISPLAY_SIZE_MULTIPLIER;
+    public const float DisplayScaleMultiplier;
+    private const float DisplayScale3DBlend;
     [Header("Settings")]
     public Color DefaultMessageColor;
     public Color DefaultIconColor;
@@ -41,7 +42,7 @@ public class InteractionCanvas : Singleton<InteractionCanvas>
     private bool _isActive;
     [HideInInspector]
     public List<WorldSpaceLabel> ActiveWSlabels;
-    public float displayScale { get; set; } = 1f;
+    public float DisplayScale { get; set; } = 1f;
 
     protected override void Start();
     private void Update();

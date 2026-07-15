@@ -115,6 +115,7 @@ public class GameInput : PersistentSingleton<GameInput>
     public void ExitAll();
     public static Vector3 GetPointerPosition();
     private void OnControlsChanged(PlayerInput input);
+    public bool TryGetAction(string actionName, out InputAction action);
     private void SetCurrentPlatformType();
     private void OnMotion(InputValue value);
     private void OnPrimaryClick();

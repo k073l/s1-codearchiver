@@ -50,6 +50,7 @@ public class PlayerInventory : PlayerSingleton<PlayerInventory>, IFirstPersonRef
     public List<HotbarSlot> hotbarSlots;
     private ClipboardSlot clipboardSlot;
     private List<ItemSlotUI> slotUIs;
+    private List<HotbarSlot> equippableSlots;
     private ItemSlot discardSlot;
     [Header("Input")]
     [SerializeField]
@@ -109,5 +110,6 @@ public class PlayerInventory : PlayerSingleton<PlayerInventory>, IFirstPersonRef
     public void EquippedSlotChanged();
     public void Reequip();
     public List<ItemSlot> GetAllInventorySlots();
+    private void HotbarSlotSelected(HotbarSlot slot);
     private void UpdateInventoryVariables();
 }

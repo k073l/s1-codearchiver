@@ -1,3 +1,4 @@
+using System;
 using ScheduleOne.State;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ public class SceneState : MonoStateMachine
     public static IState LastFrameActiveState { get; private set; }
     public InGameStateMachine InGame => _inGameState;
 
+    public event Action<IState> OnActiveStateChanged;
     protected override void Awake();
     private void Update();
     private void OnDestroy();

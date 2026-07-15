@@ -28,7 +28,7 @@ public class PauseMenu : Singleton<PauseMenu>
 
     protected override void Awake();
     protected override void Start();
-    private void PlatformEvents_OnGameLoseFocus();
+    private void OnGameLoseFocus();
     private void Exit(ExitAction action);
     private bool CanTogglePause();
     protected override void OnDestroy();

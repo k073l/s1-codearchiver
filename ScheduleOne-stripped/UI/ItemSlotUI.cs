@@ -38,6 +38,8 @@ public class ItemSlotUI : MonoBehaviour
     public ItemSlot assignedSlot { get; protected set; }
     public ItemUI ItemUI { get; protected set; }
 
+    public event Action OnControllerSelect;
+    public event Action OnControllerDeselect;
     private void Awake();
     public virtual void AssignSlot(ItemSlot s);
     public virtual void ClearSlot();
