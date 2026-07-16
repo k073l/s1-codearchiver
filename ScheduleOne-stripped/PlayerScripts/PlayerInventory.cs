@@ -36,17 +36,18 @@ public class PlayerInventory : PlayerSingleton<PlayerInventory>, IFirstPersonRef
         public int Amount;
     }
 
-    public const float LABEL_DISPLAY_TIME;
-    public const float LABEL_FADE_TIME;
-    public const float DISCARD_TIME;
-    public const int INVENTORY_SLOT_COUNT;
+    public const int InventorySlotCount;
+    private const float LabelDisplayTime;
+    private const float LabelFadeTime;
+    private const float DiscardDuration;
     [Header("Startup Items (Editor only)")]
     [SerializeField]
     private bool giveStartupItems;
     [SerializeField]
     private List<ItemAmount> startupItems;
     [Header("References")]
-    public Transform equipContainer;
+    [SerializeField]
+    private Transform equipContainer;
     public List<HotbarSlot> hotbarSlots;
     private ClipboardSlot clipboardSlot;
     private List<ItemSlotUI> slotUIs;
@@ -60,16 +61,15 @@ public class PlayerInventory : PlayerSingleton<PlayerInventory>, IFirstPersonRef
     private int _equippedSlotIndex;
     public Action<bool> onInventoryStateChanged;
     public Action<int> onEquippedSlotChanged;
-    private int PriorEquippedSlotIndex;
-    private int PreviousEquippedSlotIndex;
     public UnityEvent onPreItemEquipped;
     public UnityEvent onItemEquipped;
-    private bool ManagementSlotEnabled;
-    public float currentEquipTime;
-    protected float currentDiscardTime;
+    private int PriorEquippedSlotIndex;
+    private int PreviousEquippedSlotIndex;
+    private bool _managementSlotEnabled;
+    private float _currentDiscardTime;
     protected UIPanel uiPanel;
     protected UIPanel originalSelectedPanel;
-    public int TOTAL_SLOT_COUNT => 9 + (ManagementSlotEnabled ? 1 : 0);
+    private int EquippableSlotCount => 9 + (_managementSlotEnabled ? 1 : 0);
     public Transform EquipContainer => equipContainer;
     public CashSlot cashSlot { get; private set; }
     public CashInstance cashInstance { get; protected set; }
@@ -77,11 +77,12 @@ public class PlayerInventory : PlayerSingleton<PlayerInventory>, IFirstPersonRef
     public bool HotbarEnabled { get; protected set; } = true;
     public bool EquippingEnabled { get; protected set; } = true;
     public bool HolsterEnabled { get; set; } = true;
-    public Equippable equippable { get; protected set; }
+    public Equippable Equippable { get; protected set; }
+    public float CurrentEquipTime { get; private set; }
+    public UIScreen AttachedScreen { get; private set; }
     public HotbarSlot equippedSlot { get; }
     public ItemInstance EquippedItem { get; }
     public bool isAnythingEquipped => EquippedItem != null;
-    public UIScreen AttachedScreen { get; private set; }
 
     public HotbarSlot IndexAllSlots(int index);
     protected override void Awake();

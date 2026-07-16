@@ -85,6 +85,7 @@ public class DeliveryApp : App<DeliveryApp>
     public static void RefreshLayoutGroupsImmediateAndRecursive(GameObject root);
     public DeliveryShop GetShop(string shopName);
     public void SetIsAvailable(ShopInterface matchingShop, bool available);
+    private void OnTabChange(int index);
     private void UpdateActiveDeliveries();
     private void UpdatePastDeliveries();
     private bool IsValidReceipt(DeliveryReceipt receipt);
