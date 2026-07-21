@@ -48,6 +48,7 @@ public class DragManager : NetworkSingleton<DragManager>
     [ObserversRpc]
     private void SetDragger(string draggableGUID, NetworkObject dragger, Vector3 position);
     public void StopDragging(Vector3 velocity);
+    public void SyncDraggable(Draggable draggable);
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     private void SendDraggableTransformData(string guid, Vector3 position, Quaternion rotation, Vector3 velocity);
     [ObserversRpc(RunLocally = true)]

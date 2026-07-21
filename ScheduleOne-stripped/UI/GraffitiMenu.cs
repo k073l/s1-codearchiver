@@ -39,7 +39,6 @@ public class GraffitiMenu : Singleton<GraffitiMenu>
     public Action onConfirmClicked;
     private List<Button> colorButtons;
     private SpraySurface activeSurface;
-    private int _selectedStrokeSizeIndex;
     protected override void Awake();
     public void Open();
     public void Close();

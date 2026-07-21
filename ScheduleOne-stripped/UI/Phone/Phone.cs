@@ -52,6 +52,7 @@ public class Phone : PlayerSingleton<Phone>
     public bool isHorizontal { get; protected set; }
     public bool isOpenable { get; protected set; } = true;
     public bool FlashlightOn { get; protected set; }
+    public bool IsAnyAppOpen => (Object)(object)ActiveApp != (Object)null;
     public MonoState State => state;
     public float ScaledLookOffset => Mathf.Lerp(2f, 1.4f, CanvasScaler.NormalizedCanvasScaleFactor);
     public ColorFont GeneralColorFont => _generalColorFont;

@@ -11,7 +11,6 @@ using ScheduleOne.PlayerScripts;
 using ScheduleOne.Property;
 using ScheduleOne.State;
 using ScheduleOne.Temperature;
-using ScheduleOne.UI.Input;
 using ScheduleOne.UI.Management;
 using TMPro;
 using UnityEngine;

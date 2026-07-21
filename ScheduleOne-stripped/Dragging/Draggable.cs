@@ -55,4 +55,5 @@ public class Draggable : MonoBehaviour, IGUIDRegisterable
     private bool CanInteract();
     public void StartDragging(Player dragger);
     public void StopDragging();
+    public void Sync();
 }

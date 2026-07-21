@@ -50,7 +50,7 @@ public class InputPromptsManager : Singleton<InputPromptsManager>
     private bool IsControlPathWideKey(string controlPath);
     private bool IsControlPathExtraWideKey(string controlPath);
     public string GetDisplayNameForControlPath(string controlPath);
-    protected override void Start();
+    protected override void Awake();
     protected override void OnDestroy();
     public void LoadModule(string id, EInputPromptPosition position = EInputPromptPosition.BottomLeftInGame, string displayTextOverride = null);
     public void LoadModule(string id);
@@ -61,7 +61,7 @@ public class InputPromptsManager : Singleton<InputPromptsManager>
     public void UnloadModule(string id);
     public InputPromptsBindingData GetBindingDataFromDescriptor(InputPromptsDescriptorData descriptor);
     public List<InputPromptsBindingData> GetAllBindingDataFromDescriptor(InputPromptsDescriptorData descriptor, out List<string> bindingDisplayStrings);
-    public InputPromptsBindingData GetBindingDataFromActionReference(InputActionReference actionReference);
+    public InputPromptsBindingData GetBindingDataFromActionReference(InputActionReference actionReference, string bindingId = null);
     public InputPromptsData GetInputPromptData(string id);
     public void UpdateDisplayTextOverride(string panelId, string displayTextOverride);
     public void ShowHideActivePrompt(string panelId, bool show);

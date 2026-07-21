@@ -16,6 +16,7 @@ public class InputPromptsBindingData : ScriptableObject
     [InputControl]
     public string ControlPath;
     public Sprite Sprite;
+    public Sprite SpriteVariation;
     public Vector2 SpriteSize;
     public ESpriteSettingType SpriteLabelSettingType;
     public string SpriteLabel;
