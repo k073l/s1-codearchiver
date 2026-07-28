@@ -35,6 +35,7 @@ public class ScheduledMaterialChange : MonoBehaviour
     private bool _shouldTurnOff;
     private EOnState _lastOnState;
     protected virtual void Start();
+    private void OnDestroy();
     private void Reset();
     protected virtual void OnUncappedMinPass();
     private void SetOnOffStatus();

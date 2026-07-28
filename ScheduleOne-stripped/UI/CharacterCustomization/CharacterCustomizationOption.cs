@@ -22,7 +22,6 @@ public class CharacterCustomizationOption : MonoBehaviour
     public Button MainButton;
     public UISelectable MainSelectable;
     public Button BuyButton;
-    public UITrigger BuyTrigger;
     public RectTransform OwnedIndicator;
     [Header("Events")]
     public UnityEvent onSelect;

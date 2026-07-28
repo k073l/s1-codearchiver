@@ -93,11 +93,12 @@ public class Avatar : MonoBehaviour, IThirdPersonReferencesProvider
     public string GetThirdPersonPronoun(bool capitalized = true);
     public void SetAnimationBool(string name, bool value);
     public void SetAnimationTrigger(string name);
-    private void ApplyShapeKeys(float gender, float weight, bool bodyOnly = false);
+    private void ApplyCurrentShapeKeys();
+    private void ApplyShapeKeys(float gender, float weight);
     private void SetFeetShrunk(bool shrink, float reduction);
     private void SetWearingHairBlockingAccessory(bool blocked);
     public void LoadAvatarSettings(AvatarSettings settings);
-    public void LoadNakedSettings(AvatarSettings settings, int maxLayerOrder = 19);
+    public void LoadNakedSettings(AvatarSettings settings, bool keepOldLayers, int maxLayerOrder = 19);
     public void ApplyBodySettings(AvatarSettings settings);
     public void SetAdditionalWeight(float weight);
     public void SetAdditionalGender(float gender);

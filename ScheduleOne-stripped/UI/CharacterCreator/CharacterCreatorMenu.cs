@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace ScheduleOne.UI.CharacterCreator;
@@ -31,6 +32,6 @@ public class CharacterCreatorMenu : MonoBehaviour
     public void Start();
     public void OpenWindow(int index);
     private void HandleCycleEvent(int dir);
-    public void Back();
-    public void Next();
+    private void Back();
+    private void Next();
 }
