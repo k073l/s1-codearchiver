@@ -49,6 +49,7 @@ public class ItemUIManager : Singleton<ItemUIManager>
     public bool IsHoveringSlot => (Object)(object)HoveredSlot != (Object)null;
     public bool IsDraggingCash => isDraggingCash;
 
+    public event Action<ItemSlotUI> OnDragStart;
     protected override void Awake();
     protected override void OnDestroy();
     private void OnInputDeviceChanged(GameInput.InputDeviceType type);

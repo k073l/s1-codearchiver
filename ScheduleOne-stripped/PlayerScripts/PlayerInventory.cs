@@ -72,6 +72,7 @@ public class PlayerInventory : PlayerSingleton<PlayerInventory>, IFirstPersonRef
     private int EquippableSlotCount => 9 + (_managementSlotEnabled ? 1 : 0);
     public Transform EquipContainer => equipContainer;
     public CashSlot cashSlot { get; private set; }
+    public List<ItemSlotUI> SlotUIs => slotUIs;
     public CashInstance cashInstance { get; protected set; }
     public int EquippedSlotIndex { get; set; }
     public bool HotbarEnabled { get; protected set; } = true;

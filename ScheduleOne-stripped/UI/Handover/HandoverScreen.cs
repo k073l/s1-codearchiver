@@ -70,6 +70,8 @@ public class HandoverScreen : Singleton<HandoverScreen>
     public Contract CurrentContract { get; protected set; }
     public Customer CurrentCustomer { get; private set; }
 
+    public event Action<EMode> OnHandoverScreenOpened;
+    public event Action OnHandoverScreenClosed;
     private event Action<EHandoverOutcome, List<ItemInstance>, float> _onHandoverCompleteCallback;
     private event Func<List<ItemInstance>, float, float> _successChanceMethod;
     protected override void Start();

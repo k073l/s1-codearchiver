@@ -52,6 +52,7 @@ public class HUD : Singleton<HUD>
     public CanvasGroup CashSlotHintAnimCanvasGroup;
     [SerializeField]
     private ReticleController _reticleController;
+    public StackSplitTutorial StackSplitTutorial;
     [Header("Settings")]
     public Gradient RedGreenGradient;
     private int SampleSize;
