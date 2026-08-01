@@ -18,6 +18,7 @@ using ScheduleOne.ItemFramework;
 using ScheduleOne.Management;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.State;
 using ScheduleOne.Storage;
 using ScheduleOne.Tiles;
 using ScheduleOne.UI.Management;
@@ -123,7 +124,7 @@ public class MushroomSpawnStation : GridItem, IUsable, IItemSlotOwner, ITransitE
     protected override void Destroy();
     public override bool CanBeDestroyed(out string reason);
     public void Use();
-    private void OnInterfaceExited();
+    private void OnEndUse();
     public bool DoesStationContainRequiredItems();
     public bool DoesStationHaveOutputSpace();
     [ServerRpc(RequireOwnership = false, RunLocally = true)]

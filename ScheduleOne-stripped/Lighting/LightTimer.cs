@@ -12,7 +12,7 @@ public class LightTimer : MonoBehaviour
     public int StartTime;
     public int EndTime;
     public int StartTimeOffset;
-    private ToggleableLight toggleableLight;
+    private ToggleableLight[] toggleableLights;
     protected virtual void Awake();
     private void Start();
     protected virtual void UpdateState();

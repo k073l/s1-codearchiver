@@ -39,6 +39,7 @@ public class MoneyManager : NetworkSingleton<MoneyManager>, IBaseSaveable, ISave
     public const string MONEY_TEXT_COLOR;
     public const string MONEY_TEXT_COLOR_DARKER;
     public const string ONLINE_BALANCE_COLOR;
+    private static CultureInfo cultureInfo;
     public List<Transaction> ledger;
     [SyncVar( /*Could not decode attribute arguments.*/)]
     public float onlineBalance;

@@ -44,10 +44,6 @@ public class Grid : MonoBehaviour, IGUIDRegisterable
     public Coordinate GetMatchedCoordinate(FootprintTile tileToMatch);
     public bool IsTileValidAtCoordinate(Coordinate gridCoord, FootprintTile tile, GridItem tileOwner = null);
     public Tile GetTile(Coordinate coord);
-    [Button]
-    public void SetVisible();
-    [Button]
-    public void SetInvisible();
     public void AddTemperatureEmitter(TemperatureEmitter emitter, bool onlyCosmetic);
     public void RemoveTemperatureEmitter(TemperatureEmitter emitter, bool onlyCosmetic);
     private void CosmeticTemperatureEmittersChanged();

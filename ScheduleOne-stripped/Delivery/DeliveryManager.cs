@@ -55,11 +55,11 @@ public class DeliveryManager : NetworkSingleton<DeliveryManager>, IBaseSaveable,
     public override void OnSpawnServer(NetworkConnection connection);
     private void OnTimePass(int minutes);
     public bool IsLoadingBayFree(ScheduleOne.Property.Property destination, int loadingDockIndex);
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void SendDelivery(DeliveryInstance delivery);
     [ServerRpc(RequireOwnership = false)]
     public void RecordDeliveryReceipt_Server(DeliveryReceipt receipt, string originalOrderID = "");
-    [ObserversRpc]
+    [ObserversRpc(RunLocally = true)]
     [TargetRpc]
     private void ReceiveDelivery(NetworkConnection conn, DeliveryInstance delivery);
     [ObserversRpc(RunLocally = true)]

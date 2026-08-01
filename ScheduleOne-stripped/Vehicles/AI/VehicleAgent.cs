@@ -61,6 +61,8 @@ public class VehicleAgent : MonoBehaviour
     public const float OBSTACLE_MAX_RANGE;
     public const float MAX_STEER_ANGLE_OVERRIDE;
     public const float INFREQUENT_UPDATE_RATE;
+    private const float KinematicModeRotationSpeed;
+    private const float KinematicModeSpeedMultiplier;
     public bool DEBUG_MODE;
     public DriveFlags Flags;
     [Header("Seekers")]
@@ -141,6 +143,7 @@ public class VehicleAgent : MonoBehaviour
     public float StuckDistanceThreshold;
     protected NavigationCallback storedNavigationCallback;
     protected SpeedZone currentSpeedZone;
+    private LayerMask _groundMask;
     protected LandVehicle vehicle;
     protected float wheelbase;
     protected float wheeltrack;

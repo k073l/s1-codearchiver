@@ -47,6 +47,7 @@ public class Contract : Quest
     public virtual void SilentlyInitializeContract(string title, string description, QuestEntryData[] entries, string guid, Customer customer, float payment, ProductList products, string deliveryLocationGUID, QuestWindowConfig deliveryWindow, int pickupScheduleIndex, GameDateTime acceptTime);
     protected override void OnUncappedMinPass();
     private void OnDestroy();
+    protected override bool ShouldQuestShowUI();
     private void UpdateTiming();
     public void UpdatePoI();
     public override void End();

@@ -13,11 +13,11 @@ public abstract class NPCAction : NetworkBehaviour
     public const int MAX_CONSECUTIVE_PATHING_FAILURES;
     [SerializeField]
     protected int priority;
-    [Header("Timing Settings")]
-    public int StartTime;
     [Header("Umbrella Use")]
     [SerializeField]
     private bool _canUseUmbrella;
+    [Header("Timing Settings")]
+    public int StartTime;
     protected NPC npc;
     protected NPCScheduleManager schedule;
     public Action onEnded;

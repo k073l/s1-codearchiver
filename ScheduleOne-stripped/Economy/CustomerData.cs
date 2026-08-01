@@ -52,7 +52,7 @@ public class CustomerData : ScriptableObject
     public Action onChanged;
     private void OnValidate();
     public static float GetQualityScalar(EQuality quality);
-    public List<EDay> GetOrderDays(float dependence, float normalizedRelationship);
+    public void GetOrderDays(float dependence, float normalizedRelationship, List<EDay> days);
     public float GetAdjustedWeeklySpend(float normalizedRelationship);
     [Button]
     public void RandomizeAffinities();

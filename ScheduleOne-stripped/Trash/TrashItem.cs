@@ -22,6 +22,8 @@ namespace ScheduleOne.Trash;
 [RequireComponent(typeof(PhysicsDamageable))]
 public class TrashItem : MonoBehaviour, IGUIDRegisterable, ISaveable
 {
+    private const float ColliderRange;
+    private const float ColliderRangeSqr;
     public const float POSITION_CHANGE_THRESHOLD;
     public const float LINEAR_DRAG;
     public const float ANGULAR_DRAG;
@@ -55,7 +57,7 @@ public class TrashItem : MonoBehaviour, IGUIDRegisterable, ISaveable
     protected void Start();
     public virtual void InitializeSaveable();
     protected void OnValidate();
-    protected void MinPass();
+    protected void OnTick();
     protected void Hovered();
     protected void Interacted();
     public void SetGUID(Guid guid);

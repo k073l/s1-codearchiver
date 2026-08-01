@@ -38,9 +38,7 @@ public class BodySearchBehaviour : Behaviour
     private PoliceOfficer officer;
     private float targetDistanceOnStart;
     private float searchTime;
-    private bool hasBeenInRange;
     private float timeOutsideRange;
-    private float timeWithinSearchRange;
     private float timeSinceCantReach;
     [Header("Events")]
     public UnityEvent onSearchComplete_Clear;

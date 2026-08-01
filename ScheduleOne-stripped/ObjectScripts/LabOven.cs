@@ -24,11 +24,11 @@ using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Product;
+using ScheduleOne.State;
 using ScheduleOne.StationFramework;
 using ScheduleOne.Storage;
 using ScheduleOne.Tiles;
 using ScheduleOne.Tools;
-using ScheduleOne.UI.Compass;
 using ScheduleOne.UI.Management;
 using ScheduleOne.UI.Stations;
 using TMPro;
@@ -170,7 +170,6 @@ public class LabOven : GridItem, IUsable, IItemSlotOwner, ITransitEntity, IConfi
     private void OnUncappedMinPass();
     private void OnTimePass(int minutes);
     private void UpdateOvenAppearance();
-    private void Exit(ExitAction action);
     public override bool CanBeDestroyed(out string reason);
     protected override void Destroy();
     public void SetOvenLit(bool lit);
@@ -180,8 +179,8 @@ public class LabOven : GridItem, IUsable, IItemSlotOwner, ITransitEntity, IConfi
     public void SetNPCUser(NetworkObject npcObject);
     public void Hovered();
     public void Interacted();
-    public void Open();
-    public void Close();
+    public void Use();
+    private void OnEndUse();
     public bool IsIngredientCookable();
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void SendCookOperation(OvenCookOperation operation);

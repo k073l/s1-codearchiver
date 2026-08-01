@@ -51,6 +51,6 @@ public class Eye : MonoBehaviour
     public void SetEyeLidState(EyeLidConfiguration config, float time);
     private void StopExistingRoutines();
     public void SetEyeLidState(EyeLidConfiguration config, bool debug = false);
-    public unsafe void LookAt(Vector3 position, bool instant = false);
+    public void LookAt(Vector3 position, bool instant = false);
     public void Blink(float blinkDuration, EyeLidConfiguration endState, bool debug = false);
 }

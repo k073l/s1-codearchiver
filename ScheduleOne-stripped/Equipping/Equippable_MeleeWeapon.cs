@@ -4,6 +4,7 @@ using ScheduleOne.Audio;
 using ScheduleOne.Combat;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.FX;
+using ScheduleOne.Gamepad;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.NPCs;
 using ScheduleOne.PlayerScripts;

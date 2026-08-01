@@ -15,8 +15,9 @@ using UnityEngine.Events;
 namespace ScheduleOne.PlayerScripts.Health;
 public class PlayerHealth : NetworkBehaviour
 {
-    public const float MAX_HEALTH;
-    public const float HEALTH_RECOVERY_PER_MINUTE;
+    public const float MaxHealth;
+    public const float HealthRecoveryPerMinute;
+    public const bool CanRespawnInSinglePlayer;
     [Header("References")]
     public Player Player;
     public UnityEvent<float> onHealthChanged;

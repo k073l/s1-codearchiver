@@ -1,13 +1,10 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Equipping;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.UI;
-using TMPro;
+using ScheduleOne.UI.Input;
 using UnityEngine;
 
 namespace ScheduleOne.Product;
@@ -16,6 +13,8 @@ public class Product_Equippable : Equippable_Viewmodel
     [Header("References")]
     public ProductVisualsSetter Visuals;
     public Transform ModelContainer;
+    [SerializeField]
+    private InputPromptsData _consumeInputPrompt;
     private ProductConsumeAnimation consumeAnimation;
     private bool isConsumable;
     private float consumeTime;
@@ -23,6 +22,7 @@ public class Product_Equippable : Equippable_Viewmodel
     private Vector3 defaultModelPosition;
     private Coroutine consumeRoutine;
     private bool mouseUp;
+    private ProductDefinition _currentProductDefinition;
     public string ConsumeDescription => consumeAnimation.ConsumeDescription;
     public float PrepareDuration => consumeAnimation.PrepareDuration;
     public float EffectsApplyDelay => consumeAnimation.EffectsApplyDelay;
@@ -35,4 +35,6 @@ public class Product_Equippable : Equippable_Viewmodel
     protected virtual void CancelPrepare();
     protected virtual void Consume();
     protected virtual void ApplyEffects();
+    protected void LoadInputPrompts();
+    protected void UnloadInputPrompts();
 }

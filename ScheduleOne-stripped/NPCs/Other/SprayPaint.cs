@@ -7,7 +7,6 @@ namespace ScheduleOne.NPCs.Other;
 public class SprayPaint : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField]
     private NPC _npc;
     [SerializeField]
     private AvatarEquippable _sprayPaintPrefab;

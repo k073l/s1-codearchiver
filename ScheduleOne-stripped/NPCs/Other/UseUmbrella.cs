@@ -5,7 +5,6 @@ namespace ScheduleOne.NPCs.Other;
 public class UseUmbrella : NPCDiscreteAction
 {
     [Header("Components")]
-    [SerializeField]
     private NPC _npc;
     [SerializeField]
     private EquippableData _umbrellaData;

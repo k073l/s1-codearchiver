@@ -14,7 +14,9 @@ using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.Persistence.Loaders;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.State;
 using ScheduleOne.Storage;
+using ScheduleOne.UI.Input;
 using ScheduleOne.Variables;
 using ScheduleOne.Vehicles;
 using TMPro;
@@ -55,6 +57,7 @@ public class ShopInterface : MonoBehaviour, ISaveable
     public ScrollRect ListingScrollRect;
     public ShopAmountSelector AmountSelector;
     public DeliveryVehicle DeliveryVehicle;
+    public MonoState State;
     [Header("Audio")]
     public AudioSourceController AddItemSound;
     public AudioSourceController RemoveItemSound;
@@ -84,6 +87,9 @@ public class ShopInterface : MonoBehaviour, ISaveable
     public int modifyTier1Amount;
     public int modifyTier2Amount;
     public int modifyTier3Amount;
+    [Header("Gamepad")]
+    [SerializeField]
+    private EmbeddedInputPromptUI _embeddedInputPromptUI;
     [SerializeField]
     private List<CategoryButton> categoryButtons;
     private EShopCategory categoryFilter;
@@ -109,15 +115,19 @@ public class ShopInterface : MonoBehaviour, ISaveable
     protected virtual void Update();
     protected void OnDayPass();
     protected void OnWeekPass();
+    public void SetIsOpen(bool open);
     [Button]
     public void Open();
-    public virtual void SetIsOpen(bool isOpen);
-    private void Exit();
+    public void Close();
+    private void OnClose();
     private void Hint();
     protected virtual void Exit(ExitAction action);
     private void CreateListingUI(ShopListing listing);
     public void SelectCategory(EShopCategory category);
-    public virtual void ListingClicked(ListingUI listingUI);
+    public virtual void AddItem(ListingUI ui);
+    public virtual void RemoveItem(ListingUI ui);
+    public void AdjustAmount(ListingUI ui, int amount);
+    public virtual void SetAmount(ListingUI ui, int amount);
     public void CategorySelected(EShopCategory category);
     private void PullStockVariables();
     private void DeselectCurrentCategory();

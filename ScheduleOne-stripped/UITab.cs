@@ -7,7 +7,8 @@ public class UITab : UIPanel, INonNavigablePanel
     public enum CycleInputActionType
     {
         Primary,
-        Secondary
+        Secondary,
+        Tertiary
     }
 
     public enum CycleDirection
@@ -26,6 +27,9 @@ public class UITab : UIPanel, INonNavigablePanel
     [Tooltip("The InputActions for cycling behavior.")]
     private CycleDirection cycleDirection;
     [SerializeField]
+    [Tooltip("Set to true to reverse the cycle direction")]
+    private bool reverseCycleDirection;
+    [SerializeField]
     [Tooltip("UI display for cycle left")]
     private TextMeshProUGUI cycleLeftVisual;
     [SerializeField]
@@ -33,10 +37,12 @@ public class UITab : UIPanel, INonNavigablePanel
     private TextMeshProUGUI cycleRightVisual;
     private float cycleTabTimer;
     private bool wasCycleTabPressedLastFrame;
+    protected override void Start();
     protected override void EarlyUpdate();
     private float GetCycleTabInputValue();
     private void CycleTab(float navDir, float delay, float speed);
+    public void CycleTabWithoutEvent(float navDir);
     private bool Navigate(float navDir);
-    private bool Navigate2(float navDir);
+    protected virtual bool CanNavigate(float navDir);
     protected override void HandleInputDeviceChanged(GameInput.InputDeviceType type);
 }

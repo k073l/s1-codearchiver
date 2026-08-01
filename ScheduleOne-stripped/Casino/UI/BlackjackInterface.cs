@@ -1,7 +1,6 @@
 using System;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Money;
-using ScheduleOne.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,17 +11,13 @@ public class BlackjackInterface : Singleton<BlackjackInterface>
 {
     [Header("References")]
     public Canvas Canvas;
+    public GameObject Container;
     public CasinoGamePlayerDisplay PlayerDisplay;
-    public RectTransform BetContainer;
-    public TextMeshProUGUI BetTitleLabel;
-    public Slider BetSlider;
-    public TextMeshProUGUI BetAmount;
-    public Button ReadyButton;
-    public TextMeshProUGUI ReadyLabel;
     public RectTransform WaitingContainer;
     public TextMeshProUGUI WaitingLabel;
     public TextMeshProUGUI DealerScoreLabel;
     public TextMeshProUGUI PlayerScoreLabel;
+    public UIPanel InputPanel;
     public Button HitButton;
     public Button StandButton;
     public Animation InputContainerAnimation;
@@ -34,6 +29,8 @@ public class BlackjackInterface : Singleton<BlackjackInterface>
     public CanvasGroup ScoresContainerCanvasGroup;
     public TextMeshProUGUI PositiveOutcomeLabel;
     public TextMeshProUGUI PayoutLabel;
+    public CasinoGameBetPanel BetPanel;
+    public UIScreen UIScreen;
     public UnityEvent onBust;
     public UnityEvent onBlackjack;
     public UnityEvent onWin;
@@ -42,13 +39,9 @@ public class BlackjackInterface : Singleton<BlackjackInterface>
     public BlackjackGameController CurrentGame { get; private set; }
 
     protected override void Awake();
-    private void FixedUpdate();
+    private void Update();
     public void Open(BlackjackGameController game);
     public void Close();
-    private void BetSliderChanged(float newValue);
-    private float GetBetFromSliderValue(float sliderVal);
-    private void RefreshDisplayedBet();
-    private void RefreshReadyButton();
     private void LocalPlayerReadyForInput();
     private void ShowScores();
     private void HideScores();

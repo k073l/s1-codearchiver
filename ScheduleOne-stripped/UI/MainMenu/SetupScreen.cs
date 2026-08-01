@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using ScheduleOne.DevUtilities;
-using ScheduleOne.ExtendedComponents;
 using ScheduleOne.Networking;
 using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
@@ -11,11 +10,11 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace ScheduleOne.UI.MainMenu;
-public class SetupScreen : MainMenuScreen
+public class SetupScreen : MenuScreen
 {
     public const string DEFAULT_SAVE_PATH;
     [Header("References")]
-    public GameInputField InputField;
+    public TMP_InputField InputField;
     public Button StartButton;
     public RectTransform SkipIntroContainer;
     public Toggle SkipIntroToggle;

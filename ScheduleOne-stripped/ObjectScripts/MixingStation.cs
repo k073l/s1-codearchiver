@@ -25,11 +25,11 @@ using ScheduleOne.Persistence.Datas;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.PlayerTasks;
 using ScheduleOne.Product;
+using ScheduleOne.State;
 using ScheduleOne.StationFramework;
 using ScheduleOne.Storage;
 using ScheduleOne.Tiles;
 using ScheduleOne.Tools;
-using ScheduleOne.UI.Compass;
 using ScheduleOne.UI.Management;
 using ScheduleOne.UI.Stations;
 using ScheduleOne.Variables;
@@ -129,7 +129,6 @@ public class MixingStation : GridItem, IUsable, IItemSlotOwner, ITransitEntity, 
     public Transform Transform => ((Component)this).transform;
     public Transform UIPoint => uiPoint;
     public bool CanBeSelected => true;
-    public Vector3 DiscoveryBoxOffset { get; private set; }
     public Quaternion DiscoveryBoxRotation { get; private set; }
     public NetworkObject SyncAccessor__003CNPCUserObject_003Ek__BackingField { get; set; }
     public NetworkObject SyncAccessor__003CPlayerUserObject_003Ek__BackingField { get; set; }
@@ -171,8 +170,8 @@ public class MixingStation : GridItem, IUsable, IItemSlotOwner, ITransitEntity, 
     public void SetStartButtonClickable(bool clickable);
     private void OutputChanged();
     private void StartButtonClicked(RaycastHit hit);
-    public void Open();
-    public void Close();
+    public void Use();
+    private void OnEndUse();
     public void Hovered();
     public void Interacted();
     public WorldspaceUIElement CreateWorldspaceUI();

@@ -1,7 +1,9 @@
 using ScheduleOne.Audio;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Gamepad;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.PlayerTasks;
+using ScheduleOne.UI.Input;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -18,8 +20,14 @@ public class BrickPressHandle : MonoBehaviour
     public Transform LoweredTransform;
     public Clickable HandleClickable;
     public AudioSourceController ClickSound;
+    [Header("Prompt Data")]
+    [SerializeField]
+    private InputPromptsData _handlePromptData;
+    [SerializeField]
+    private Transform _handlePromptAnchor;
     private Vector3 clickOffset;
     private bool isMoving;
+    private float _currentVerticalPos;
     public bool Interactable { get; private set; }
     public float CurrentPosition { get; private set; }
     public float TargetPosition { get; private set; }
@@ -33,4 +41,5 @@ public class BrickPressHandle : MonoBehaviour
     public void ClickStart(RaycastHit hit);
     public void ClickEnd();
     private Vector3 GetPlaneHit();
+    private bool HasValidGamepadRotationInput();
 }

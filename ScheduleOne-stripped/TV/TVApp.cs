@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
+using ScheduleOne.State;
 using ScheduleOne.UI;
 using UnityEngine;
 
@@ -22,14 +23,18 @@ public class TVApp : MonoBehaviour
     public TVApp PreviousScreen;
     public CanvasGroup CanvasGroup;
     public TVPauseScreen PauseScreen;
+    public MonoState State;
     private Coroutine lerpCoroutine;
+    private UIScreen _uiScreen;
+    private UIContentPanel _mainPanel;
     public bool IsOpen { get; private set; }
     public bool IsPaused { get; }
 
     protected virtual void Awake();
     private void OnDestroy();
     public virtual void Open();
-    public virtual void Close();
+    public void Close();
+    protected virtual void OnClose();
     public virtual void Resume();
     private void Lerp(float endScale, float endAlpha);
     protected virtual void ActiveMinPass();

@@ -11,6 +11,9 @@ public class MessageBubble : MonoBehaviour
         Right
     }
 
+    private static Color32 OtherBubbleColor;
+    private static Color32 OtherTextColor;
+    public const float BaseBubbleSpacing;
     [Header("Settings")]
     public string text;
     public Alignment alignment;
@@ -19,10 +22,9 @@ public class MessageBubble : MonoBehaviour
     public float bubble_MaxWidth;
     public bool alignTextCenter;
     public bool autosetPosition;
-    private string displayedText;
-    private bool triangleShown;
     [Header("References")]
-    public RectTransform container;
+    [SerializeField]
+    protected RectTransform container;
     [SerializeField]
     protected Image bubble;
     [SerializeField]
@@ -31,15 +33,16 @@ public class MessageBubble : MonoBehaviour
     protected Image triangle_Left;
     [SerializeField]
     protected Image triangle_Right;
-    public Button button;
-    public float height;
-    public float spacingAbove;
-    public static Color32 backgroundColor_Left;
-    public static Color32 textColor_Left;
-    public static Color32 backgroundColor_Right;
-    public static Color32 textColor_Right;
-    public static float baseBubbleSpacing;
-    public void SetupBubble(string _text, Alignment _alignment, bool alignCenter = false);
+    [SerializeField]
+    protected Button button;
+    private string displayedText;
+    private bool triangleShown;
+    public float Height { get; private set; }
+    public float SpacingAbove { get; set; }
+    public RectTransform Container => container;
+    public Button Button => button;
+
+    public void SetupBubble(string _text, Alignment _alignment, bool interactable, bool alignCenter = false);
     protected virtual void Update();
     public virtual void RefreshDisplayedText();
     protected virtual void RefreshTriangle();

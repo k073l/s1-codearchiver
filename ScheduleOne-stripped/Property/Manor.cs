@@ -65,7 +65,7 @@ public class Manor : Property
     private void OnSleepEnd();
     public override bool ShouldSave();
     public override string GetSaveString();
-    public override void Load(PropertyData propertyData, string dataString);
+    public override void Load(PropertyData propertyData, string propertyDataString);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

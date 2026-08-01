@@ -3,6 +3,7 @@ using ScheduleOne.AvatarFramework;
 using ScheduleOne.AvatarFramework.Customization;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.State;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -25,6 +26,8 @@ public class CharacterCustomizationUI : MonoBehaviour
     public Slider RigRotationSlider;
     public RectTransform PreviewIndicator;
     public CharacterCustomizationShop CharacterCustomizationShop;
+    public MonoState State;
+    public UIContentPanel MainPanel;
     [Header("Prefab")]
     public Button CategoryButtonPrefab;
     private float rigTargetY;
@@ -34,7 +37,7 @@ public class CharacterCustomizationUI : MonoBehaviour
     public CharacterCustomizationCategory ActiveCategory { get; private set; }
 
     private void OnValidate();
-    private void Awake();
+    protected virtual void Awake();
     protected virtual void Update();
     public void SetActiveCategory(CharacterCustomizationCategory category);
     public virtual bool IsOptionCurrentlyApplied(CharacterCustomizationOption option);
@@ -43,5 +46,6 @@ public class CharacterCustomizationUI : MonoBehaviour
     public virtual void OptionPurchased(CharacterCustomizationOption option);
     public virtual void Open();
     private void Exit(ExitAction action);
-    protected virtual void Close();
+    private void Close();
+    protected virtual void OnClose();
 }

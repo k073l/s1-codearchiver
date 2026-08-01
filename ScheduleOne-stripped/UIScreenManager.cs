@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using ScheduleOne.DevUtilities;
-using ScheduleOne.PlayerScripts;
+using ScheduleOne.Input;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -21,6 +21,7 @@ public class UIScreenManager : PersistentSingleton<UIScreenManager>
     public const float NavigationRepeatRate;
     public const float DefaultScrollSpeed;
     public const float ScrollbarScrollSpeed;
+    public const float NavigationThreshold;
     [SerializeField]
     private UIPopupScreen[] popupScreenPrefabs;
     [SerializeField]
@@ -37,9 +38,10 @@ public class UIScreenManager : PersistentSingleton<UIScreenManager>
     private static GameObject lastSelectedObject;
     private static bool isBackTriggeredThisFrame;
     public InputActionReference SubmitInputAction => submitInputAction;
+    public UIScreen TopScreen => screenStack?.Peek().screen;
+    public bool HasActiveScreen => screenStack.Count > 0;
     public static GameObject LastSelectedObject { get; set; }
     public static bool IsBackTriggeredThisFrame => isBackTriggeredThisFrame;
-    public UIScreen TopScreen => screenStack?.Peek().screen;
 
     protected override void Start();
     protected override void OnDestroy();
@@ -50,7 +52,8 @@ public class UIScreenManager : PersistentSingleton<UIScreenManager>
     private void HandleInputDeviceChanged(GameInput.InputDeviceType type);
     private void CheckInputDeviceMode();
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode);
-    public void AddScreen(UIScreen screen, Action onCloseCallback = null);
+    public void AddScreen(UIScreen screen);
+    public void AddScreen(UIScreen screen, Action onCloseCallback);
     public void RemoveScreen(UIScreen screen);
     private bool IsScreenInStack(UIScreen screen);
     public bool IsAnyScreenActive();

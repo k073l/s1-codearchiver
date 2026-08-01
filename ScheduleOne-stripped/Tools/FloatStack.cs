@@ -27,6 +27,7 @@ public class FloatStack
 
     public event Action<float> OnValueChanged;
     public FloatStack(float defaultValue);
+    public void SetDefaultValue(float defaultValue);
     public void Add(StackEntry entry);
     public void Remove(string label);
     public bool TryGetEntry(string label, out StackEntry entry);

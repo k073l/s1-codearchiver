@@ -6,6 +6,8 @@ using FishNet;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.State;
+using ScheduleOne.UI.Input;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -23,8 +25,6 @@ public class SleepCanvas : Singleton<SleepCanvas>
     public UIScreen UIScreen;
     public RectTransform MenuContainer;
     public TextMeshProUGUI CurrentTimeLabel;
-    public Button IncreaseButton;
-    public Button DecreaseButton;
     public TextMeshProUGUI EndTimeLabel;
     public Button SleepButton;
     public TextMeshProUGUI SleepButtonLabel;
@@ -34,6 +34,8 @@ public class SleepCanvas : Singleton<SleepCanvas>
     public TextMeshProUGUI TimeLabel;
     public TextMeshProUGUI WakeLabel;
     public TextMeshProUGUI WaitingForHostLabel;
+    public MonoState MenuState;
+    public MonoStateMachine SleepingState;
     public UnityEvent onSleepFullyFaded;
     public UnityEvent onSleepEndFade;
     private List<IPostSleepEvent> queuedPostSleepEvents;
@@ -42,15 +44,12 @@ public class SleepCanvas : Singleton<SleepCanvas>
 
     protected override void Awake();
     private void Exit(ExitAction action);
-    public void SetIsOpen(bool open);
+    public void OpenMenu();
+    private void OnMenuClosed();
     public void Update();
+    private void UpdateUI();
     public void AddPostSleepEvent(IPostSleepEvent postSleepEvent);
-    private void UpdateHourSetting();
-    private void UpdateTimeLabels();
     private void UpdateSleepButton();
-    private void ChangeSleepAmount(int change);
-    private int ClampWakeTime(int time);
-    private int ClampTime(int time, int startTime, int endTime);
     private void SleepButtonPressed();
     private void SleepStart();
     private void LerpBlackOverlay(float transparency, float lerpTime);

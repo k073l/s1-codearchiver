@@ -11,7 +11,8 @@ namespace ScheduleOne.Law;
 public class SentryInstance
 {
     public SentryLocation[] _potentialLocations;
-    public int Members;
+    public int MinMembers;
+    public int MaxMembers;
     [Header("Timing")]
     public int StartTime;
     public int EndTime;

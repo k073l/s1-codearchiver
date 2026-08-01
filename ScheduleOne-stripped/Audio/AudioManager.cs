@@ -1,6 +1,7 @@
-using System;
+using ScheduleOne.Core.Audio;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Persistence;
+using ScheduleOne.Tools;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Events;
@@ -11,7 +12,7 @@ public class AudioManager : PersistentSingleton<AudioManager>
     private const float MinGameVolume;
     private const float MaxGameVolume;
     private const float GameVolumeLerpSpeed;
-    public Action onVolumeSettingsChanged;
+    public PreallocatedAction onVolumeSettingsChanged;
     [SerializeField]
     private AudioMixerSnapshot _defaultSnapshot;
     [SerializeField]

@@ -15,7 +15,6 @@ using ScheduleOne.PlayerScripts;
 using ScheduleOne.UI.WorldspacePopup;
 using ScheduleOne.Vehicles;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 namespace ScheduleOne.Vision;
@@ -98,7 +97,6 @@ public class VisionCone : NetworkBehaviour
     protected float effectiveRange => 25f * RangeMultiplier;
 
     public override void Awake();
-    private void PlayerSpawned(Player plr);
     private void OnEnable();
     private void OnDisable();
     protected virtual void VisionUpdate();

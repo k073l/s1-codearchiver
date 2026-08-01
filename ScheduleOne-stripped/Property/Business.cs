@@ -45,7 +45,7 @@ public class Business : Property, ISaveable
     protected virtual void MinsPass(int mins);
     private void TimeSkipped(int minsPassed);
     public override string GetSaveString();
-    public override void Load(PropertyData propertyData, string dataString);
+    public override void Load(PropertyData propertyData, string propertyDataString);
     public override bool CanDeliverToProperty();
     protected override void RecieveOwned();
     [ServerRpc(RequireOwnership = false)]

@@ -24,13 +24,13 @@ public class DailySummary : NetworkSingleton<DailySummary>
     [Header("References")]
     public Canvas Canvas;
     public RectTransform Container;
-    public UIScreen UIScreen;
     public Animation Anim;
     public TextMeshProUGUI TitleLabel;
     public RectTransform[] ProductEntries;
     public TextMeshProUGUI PlayerEarningsLabel;
     public TextMeshProUGUI DealerEarningsLabel;
     public TextMeshProUGUI XPGainedLabel;
+    public UIScreenMonoState State;
     public UnityEvent onClosed;
     private Dictionary<string, int> itemsSoldByPlayer;
     private float moneyEarnedByPlayer;

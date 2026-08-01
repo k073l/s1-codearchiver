@@ -1,6 +1,7 @@
 using System.Collections;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.State;
 using TMPro;
 using UnityEngine;
 
@@ -20,13 +21,16 @@ public class WorldspaceDialogueRenderer : MonoBehaviour
     public RectTransform Background;
     public TextMeshProUGUI Text;
     public Animation Anim;
-    private Vector3 localOffset;
-    private float CurrentOpacity;
-    private Coroutine hideCoroutine;
-    public string ShownText { get; protected set; } = string.Empty;
+    private Vector3 _localOffset;
+    private float _currentOpacity;
+    private Coroutine _hideCoroutine;
+    public bool IsVisible { get; private set; }
+    public string ShownText { get; private set; } = string.Empty;
 
     private void Awake();
-    private void FixedUpdate();
+    private void OnDestroy();
+    private void OnStateChange(IState newState);
+    private void Update();
     private void LateUpdate();
     private void UpdatePosition();
     public void ShowText(string text, float duration = 0f);

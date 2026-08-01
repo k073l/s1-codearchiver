@@ -42,6 +42,7 @@ public class EntityVisibility : NetworkBehaviour
     public VisibilityAttribute GetAttribute(string name);
     private void UpdateEnvironmentalVisibilityAttribute();
     public float CalculateExposureToPoint(Vector3 point, float checkRange = 50f, NPC checkingNPC = null);
+    protected virtual List<Vector3> GetVisibilityPoints();
     [ServerRpc(RunLocally = true)]
     public void ApplyState(string label, EVisualState state, float autoRemoveAfter = 0f);
     [ServerRpc(RunLocally = true)]

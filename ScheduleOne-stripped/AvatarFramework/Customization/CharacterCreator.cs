@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using FishNet;
@@ -7,7 +6,7 @@ using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.Networking;
 using ScheduleOne.PlayerScripts;
-using ScheduleOne.UI;
+using ScheduleOne.State;
 using ScheduleOne.UI.CharacterCreator;
 using UnityEngine;
 using UnityEngine.Events;
@@ -34,8 +33,9 @@ public class CharacterCreator : Singleton<CharacterCreator>
     public Avatar Rig;
     public Canvas Canvas;
     public Animation CanvasAnimation;
+    public CharacterCreatorMenu CreatorMenu;
+    public MonoState State;
     [Header("Settings")]
-    public bool DemoCreator;
     public BasicAvatarSettings DefaultSettings;
     public List<BasicAvatarSettings> Presets;
     public UnityEvent<BasicAvatarSettings> onComplete;
@@ -48,8 +48,7 @@ public class CharacterCreator : Singleton<CharacterCreator>
     protected override void Awake();
     protected override void Start();
     private void Update();
-    public void Open(BasicAvatarSettings initialSettings, bool showUI = true);
-    public void ShowUI();
+    public void Open(BasicAvatarSettings initialSettings);
     public void Close();
     public void DisableStuff();
     public void Done();

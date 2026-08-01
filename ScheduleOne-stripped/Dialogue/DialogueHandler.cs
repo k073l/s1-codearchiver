@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using FishNet.Object;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.NPCs;
+using ScheduleOne.NPCs.Framework;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.UI;
 using ScheduleOne.VoiceOver;
@@ -15,13 +17,9 @@ public class DialogueHandler : MonoBehaviour
     public const float TimePerChar;
     public const float WorldspaceDialogueMinDuration;
     public const float WorldspaceDialogueMaxDuration;
-    public static DialogueContainer activeDialogue;
-    public static DialogueNodeData activeDialogueNode;
-    public DialogueDatabase Database;
     [Header("References")]
     public Transform LookPosition;
     public WorldspaceDialogueRenderer WorldspaceRend;
-    public VOEmitter VOEmitter;
     [HideInInspector]
     public List<DialogueChoiceData> CurrentChoices;
     [Header("Events")]
@@ -31,21 +29,24 @@ public class DialogueHandler : MonoBehaviour
     public UnityEvent<string> onDialogueChoiceChosen;
     [SerializeField]
     protected List<DialogueContainer> dialogueContainers;
-    protected string overrideText;
     protected List<NodeLinkData> tempLinks;
     protected bool skipNextDialogueBehaviourEnd;
     protected List<DialogueChoiceData> finalChoices;
     private bool passChecked;
+    public static DialogueContainer ActiveDialogue { get; private set; }
+    public static DialogueNodeData ActiveDialogueNode { get; private set; }
     public bool IsDialogueInProgress { get; private set; }
-    public List<DialogueModule> runtimeModules { get; private set; } = new List<DialogueModule>();
+    public DialogueDatabase Database { get; protected set; }
+    public List<DialogueModule> RuntimeModules { get; private set; } = new List<DialogueModule>();
     public NPC NPC { get; protected set; }
     protected DialogueCanvas canvas => Singleton<DialogueCanvas>.Instance;
 
+    public event Action OnDialogueEnd;
     protected virtual void Awake();
-    protected virtual void Start();
-    public void InitializeDialogue(DialogueContainer container);
-    public void InitializeDialogue(DialogueContainer dialogueContainer, bool enableDialogueBehaviour = true, string entryNodeLabel = "ENTRY");
-    public void InitializeDialogue(string dialogueContainerName, bool enableDialogueBehaviour = true, string entryNodeLabel = "ENTRY");
+    public void Initialize(NPCData npcData);
+    public void StartDialogue(DialogueContainer container);
+    public void StartDialogue(DialogueContainer dialogueContainer, bool enableDialogueBehaviour = true, string entryNodeLabel = "ENTRY");
+    public void StartDialogue(string dialogueContainerName, bool enableDialogueBehaviour = true, string entryNodeLabel = "ENTRY");
     public void OverrideShownDialogue(string _overrideText);
     public void StopOverride();
     public virtual void EndDialogue();

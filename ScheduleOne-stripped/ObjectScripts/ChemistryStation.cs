@@ -21,12 +21,12 @@ using ScheduleOne.Management;
 using ScheduleOne.Misc;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.State;
 using ScheduleOne.StationFramework;
 using ScheduleOne.Storage;
 using ScheduleOne.Tiles;
 using ScheduleOne.Tools;
 using ScheduleOne.Trash;
-using ScheduleOne.UI.Compass;
 using ScheduleOne.UI.Management;
 using ScheduleOne.UI.Stations;
 using ScheduleOne.Variables;
@@ -161,9 +161,8 @@ public class ChemistryStation : GridItem, IUsable, IItemSlotOwner, ITransitEntit
     public void CreateTrash(List<StationItem> mixerItems);
     public void Hovered();
     public void Interacted();
-    private void Exit(ExitAction action);
-    public void Open();
-    public void Close();
+    public void Use();
+    private void OnEndUse();
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void SetPlayerUser(NetworkObject playerObject);
     [ServerRpc(RequireOwnership = false, RunLocally = true)]

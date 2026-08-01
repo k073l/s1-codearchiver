@@ -7,9 +7,8 @@ using FishNet.Object.Delegating;
 using FishNet.Serializing;
 using FishNet.Serializing.Generated;
 using FishNet.Transporting;
-using ScheduleOne.Core;
 using ScheduleOne.DevUtilities;
-using ScheduleOne.PlayerScripts;
+using ScheduleOne.UI.Input;
 using UnityEngine;
 
 namespace ScheduleOne.Combat;
@@ -19,11 +18,11 @@ public class CombatManager : NetworkSingleton<CombatManager>
     public LayerMask ExplosionLayerMask;
     public LayerMask RangedWeaponLayerMask;
     public Explosion ExplosionPrefab;
+    public InputPromptsData RangedWeaponInputPrompts;
     private List<int> explosionIDs;
     private bool NetworkInitialize___EarlyScheduleOne_002ECombat_002ECombatManagerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ECombat_002ECombatManagerAssembly_002DCSharp_002Edll_Excuted;
-    [Button]
-    public void CreateTestExplosion();
+    public override void Awake();
     public void CreateExplosion(Vector3 origin, ExplosionData data);
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     private void CreateExplosion(Vector3 origin, ExplosionData data, int id);
@@ -38,5 +37,5 @@ public class CombatManager : NetworkSingleton<CombatManager>
     private void RpcWriter___Observers_Explosion_2907189355(Vector3 origin, ExplosionData data, int id);
     private void RpcLogic___Explosion_2907189355(Vector3 origin, ExplosionData data, int id);
     private void RpcReader___Observers_Explosion_2907189355(PooledReader PooledReader0, Channel channel);
-    public override void Awake();
+    protected override void Awake_UserLogic_ScheduleOne_002ECombat_002ECombatManager_Assembly_002DCSharp_002Edll();
 }

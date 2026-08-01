@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using FluffyUnderware.DevTools.Extensions;
 using GameKit.Utilities;
@@ -10,16 +9,25 @@ using ScheduleOne.Levelling;
 using ScheduleOne.NPCs;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Product;
-using ScheduleOne.UI.Input;
+using ScheduleOne.State;
 using ScheduleOne.UI.Items;
 using ScheduleOne.Vision;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace ScheduleOne.UI;
 public class PickpocketScreen : Singleton<PickpocketScreen>
 {
+    private enum EActionButtonState
+    {
+        Hidden,
+        StopArrow,
+        Continue
+    }
+
     public const int PICKPOCKET_XP;
     [Header("Settings")]
     public float GreenAreaMaxWidth;
@@ -37,8 +45,15 @@ public class PickpocketScreen : Singleton<PickpocketScreen>
     public RectTransform TutorialContainer;
     public RectTransform SliderContainer;
     public Slider Slider;
-    public InputPrompt InputPrompt;
     public RectTransform ActionsContainer;
+    public MonoState State;
+    public UIScreen Screen;
+    public UIPanel Panel;
+    public GameObject ActionButtonContainer;
+    public Button ActionButton;
+    public TextMeshProUGUI ActionButtonLabel;
+    [Header("Input")]
+    public InputActionReference StopPickpocketAction;
     public UnityEvent onFail;
     public UnityEvent onStop;
     public UnityEvent onHitGreen;
@@ -54,15 +69,19 @@ public class PickpocketScreen : Singleton<PickpocketScreen>
     protected override void Awake();
     protected override void Start();
     public void Open(NPC _npc);
-    private void Exit(ExitAction action);
     private void Update();
+    private void StartSliding();
     private void StopArrow();
     public void SetSlotLocked(int index, bool locked);
+    private bool AreAllSlotsUnlocked();
     private ItemSlotUI GetHoveredSlot();
     private void Fail();
     public void Close();
+    private void OnClose();
     private void OpenTutorial();
     public void CloseTutorial();
     private float GetGreenAreaNormalizedPosition(int index);
     private float GetGreenAreaNormalizedWidth(int index);
+    private void SetActionButtonState(EActionButtonState state);
+    private void ActionButtonClicked();
 }

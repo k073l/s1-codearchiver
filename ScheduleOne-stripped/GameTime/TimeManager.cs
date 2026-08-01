@@ -111,6 +111,7 @@ public class TimeManager : NetworkSingleton<TimeManager>, IBaseSaveable, ISaveab
     private void OnTimeSkip_Client(int oldTime, int newTime);
     public static bool IsGivenTimeWithinRange(int givenTime, int min, int max);
     public static bool IsValid24HourTime(string input);
+    public static bool IsValid24HourTime(int time);
     public static string Get12HourTime(float _time, bool appendDesignator = true);
     public static int Get24HourTimeFromMinSum(int minSum);
     public static int GetMinSumFrom24HourTime(int _time);

@@ -19,11 +19,12 @@ public class LawManager : Singleton<LawManager>
     private sealed class _003C_003Ec
     {
         public static readonly _003C_003Ec _003C_003E9;
-        public static UnityAction _003C_003E9__2_0;
-        internal void _003CStart_003Eb__2_0();
+        public static UnityAction _003C_003E9__3_0;
+        internal void _003CStart_003Eb__3_0();
     }
 
-    public const int DISPATCH_OFFICER_COUNT;
+    public const int OfficerDispatchMin;
+    public const int OfficerDispatchMax;
     public static float DISPATCH_VEHICLE_USE_THRESHOLD;
     protected override void Start();
     public void PoliceCalled(Player target, Crime crime);

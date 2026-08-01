@@ -13,9 +13,12 @@ public class GameplayMenuInterface : Singleton<GameplayMenuInterface>
     public Button CharacterButton;
     public RectTransform SelectionIndicator;
     public CharacterInterface CharacterInterface;
+    public GameplayMenuTab Tab;
+    public CanvasGroup TabPromptsCanvasGroup;
     private Coroutine selectionLerp;
     protected override void Awake();
     protected override void Start();
+    private void Update();
     public void Open();
     public void Close();
     public void PhoneClicked();

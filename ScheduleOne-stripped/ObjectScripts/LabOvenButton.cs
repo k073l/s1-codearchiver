@@ -16,6 +16,7 @@ public class LabOvenButton : MonoBehaviour
     private Vector3 animationStartPos;
     private Vector3 animationEndPos;
     public bool Pressed { get; private set; }
+    public bool IsInteractable => Clickable.ClickableEnabled;
 
     private void Start();
     public void SetInteractable(bool interactable);

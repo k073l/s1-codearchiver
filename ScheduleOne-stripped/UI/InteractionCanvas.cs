@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Interaction;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.UI.Input;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace ScheduleOne.UI;
 public class InteractionCanvas : Singleton<InteractionCanvas>
 {
-    public const float DISPLAY_SIZE_MULTIPLIER;
+    public const float DisplayScaleMultiplier;
+    private const float DisplayScale3DBlend;
     [Header("Settings")]
     public Color DefaultMessageColor;
     public Color DefaultIconColor;
@@ -23,19 +26,30 @@ public class InteractionCanvas : Singleton<InteractionCanvas>
     public Canvas Canvas;
     public RectTransform Container;
     public Image Icon;
-    public Text IconText;
-    public Text MessageText;
+    [SerializeField]
+    private TextMeshProUGUI IconText;
+    [SerializeField]
+    private TextMeshProUGUI MessageText;
+    [SerializeField]
+    private LayoutElement Layout;
     public RectTransform WSLabelContainer;
     public RectTransform BackgroundImage;
     [Header("Prefabs")]
     public GameObject WSLabelPrefab;
     private bool _interactionDisplayEnabledThisFrame;
     private Coroutine _displayScaleLerpRoutine;
+    private InputPromptsDescriptorData _currentDescriptorData;
+    private bool _isActive;
     [HideInInspector]
     public List<WorldSpaceLabel> ActiveWSlabels;
-    public float displayScale { get; set; } = 1f;
+    public float DisplayScale { get; set; } = 1f;
 
+    protected override void Start();
+    private void Update();
     protected virtual void LateUpdate();
-    public void EnableInteractionDisplay(Vector3 pos, Sprite icon, string spriteText, string message, Color messageColor, Color iconColor);
+    public void SetActive(bool value);
+    public void EnableInteractionDisplay(Vector3 position, string message, Color messageColor, Sprite sprite, Color spriteColor, string spriteText, float spritePixelMultiplier, Vector2 spriteSize, bool enableBackdrop);
     public void LerpDisplayScale(float endScale);
+    public void SetIcon(Sprite sprite, Color spriteColor, string spriteText, float spritePixelMultiplier, Vector2 spriteSize, bool enableBackdrop);
+    protected override void OnDestroy();
 }

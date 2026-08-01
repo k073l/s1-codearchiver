@@ -17,10 +17,17 @@ public class TabController : MonoBehaviour
     [SerializeField]
     private float _indicatorMoveTime;
     [SerializeField]
+    private bool _allowLoopingNavigation;
+    [SerializeField]
     private AnimationCurve _indicatorMoveCurve;
     [Header("Fonts")]
     [SerializeField]
     private ColorFont _tabColorFont;
+    [Header("UI")]
+    [SerializeField]
+    private UIScreen _screen;
+    [SerializeField]
+    private UITab _uiTab;
     private int _currentTabIndex;
     private Vector2 _indicatorPosition;
     private Coroutine _moveIndicatorCo;
@@ -30,10 +37,12 @@ public class TabController : MonoBehaviour
     public void Start();
     private void SetTab(int index);
     public void SetToSelectedTab(bool instantIndicatorMove = false);
-    public void SetTab(int index, bool instantIndicatorMove = false);
+    public void SetTab(int index, bool instantIndicatorMove = false, bool forceUpdateUI = false);
     private IEnumerator DoMoveTabIndicatorRoutine();
     public void SetTabIndicatorText(int index, string text);
     public void HideTabIndicator(int index);
+    private int GetLoopedIndex(int dir);
+    private int GetClampedIndex(int dir);
     public void SubscribeToTabSelected(TabSelectedEvent handler);
     public void UnsubscribeFromTabSelected(TabSelectedEvent handler);
     private IEnumerator DoDelayRoutine(float delay, Action onComplete);

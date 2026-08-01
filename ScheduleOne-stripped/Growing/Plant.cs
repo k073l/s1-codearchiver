@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using FishNet;
 using FishNet.Object;
 using ScheduleOne.Audio;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Gamepad;
 using ScheduleOne.GameTime;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.ObjectScripts;
@@ -23,6 +25,7 @@ public abstract class Plant : MonoBehaviour
     public AudioSourceController DestroySound;
     public ParticleSystem FullyGrownParticles;
     public Transform HarvestLabelPositionTransform;
+    protected List<PlantHarvestable> _harvestables;
     [Header("Settings")]
     public SeedDefinition SeedDefinition;
     public int GrowthTime;
@@ -57,4 +60,6 @@ public abstract class Plant : MonoBehaviour
     private void ResizeCollider();
     public virtual ItemInstance GetHarvestedProduct(int quantity = 1);
     public PlantData GetPlantData();
+    public void ActivateAllLures();
+    public void DeactivateAllLures();
 }

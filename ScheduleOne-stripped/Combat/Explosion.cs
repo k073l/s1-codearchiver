@@ -9,5 +9,5 @@ namespace ScheduleOne.Combat;
 public class Explosion : MonoBehaviour
 {
     public AudioSourceController Sound;
-    public unsafe void Initialize(Vector3 origin, ExplosionData data);
+    public void Initialize(Vector3 origin, ExplosionData data);
 }

@@ -16,6 +16,7 @@ public class StringSetter : ClipboardScreen
     private string _existingValue;
     private bool _allowEmpty;
     private Action<string> _callback;
+    private UIContentPanel panel;
     private void Awake();
     public void Initialize(string selectionTitle, string existingValue, int characterLimit, bool allowEmpty, Action<string> callback = null);
     public override void Open();

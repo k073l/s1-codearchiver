@@ -4,8 +4,10 @@ using ScheduleOne.DevUtilities;
 using ScheduleOne.Networking;
 using ScheduleOne.Persistence;
 using ScheduleOne.ScriptableObjects;
+using ScheduleOne.State;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace ScheduleOne.UI;
@@ -26,6 +28,7 @@ public class LoadingScreen : PersistentSingleton<LoadingScreen>
     public Image BackgroundImage2;
     public RectTransform TutorialContainer;
     public RectTransform CoopTutorialHint;
+    public MonoState State;
     private string[] loadingMessages;
     private int currentBackgroundImageIndex;
     private Coroutine fadeRoutine;
@@ -39,6 +42,7 @@ public class LoadingScreen : PersistentSingleton<LoadingScreen>
     protected void Update();
     public void Open(bool loadingTutorial = false);
     public void Close();
+    private void OnSceneChange();
     private void AnimateBackground();
     private void Fade(float endAlpha);
 }

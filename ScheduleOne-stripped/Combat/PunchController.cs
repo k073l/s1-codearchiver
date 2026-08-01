@@ -4,6 +4,7 @@ using ScheduleOne.Audio;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Dragging;
 using ScheduleOne.FX;
+using ScheduleOne.Gamepad;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.UI;
 using UnityEngine;

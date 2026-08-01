@@ -16,7 +16,6 @@ public class Accessory : MonoBehaviour
     public SkinnedMeshRenderer[] skinnedMeshesToColor;
     public SkinnedMeshRenderer[] skinnedMeshesToBind;
     public SkinnedMeshRenderer[] shapeKeyMeshRends;
-    private void Awake();
     public void ApplyColor(Color col);
     public void ApplyShapeKeys(float gender, float weight);
     public void BindBones(Transform[] bones);

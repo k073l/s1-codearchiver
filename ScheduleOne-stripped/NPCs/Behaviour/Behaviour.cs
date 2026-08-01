@@ -35,7 +35,6 @@ public class Behaviour : NetworkBehaviour
     public NPC Npc => beh.Npc;
 
     public override void Awake();
-    protected override void OnValidate();
     public virtual void Enable();
     public void Enable_Server();
     public void Enable_Networked();

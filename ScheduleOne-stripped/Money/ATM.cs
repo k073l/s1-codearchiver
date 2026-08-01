@@ -17,7 +17,6 @@ using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.UI;
-using ScheduleOne.UI.ATM;
 using ScheduleOne.Vision;
 using UnityEngine;
 using UnityEngine.Events;
@@ -27,11 +26,11 @@ namespace ScheduleOne.Money;
 public class ATM : NetworkBehaviour, IGUIDRegisterable, IGenericSaveable
 {
     public const bool DepositLimitEnabled;
-    public const float WEEKLY_DEPOSIT_LIMIT;
-    public const float IMPACT_THRESHOLD_BREAK;
-    public const int REPAIR_TIME_DAYS;
-    public const int MIN_CASH_DROP;
-    public const int MAX_CASH_DROP;
+    public const float WeeklyDepositLimit;
+    private const float BreakImpactThreshold;
+    private const int RepairTimeDays;
+    private const int MinCashDrop;
+    private const int MaxCashDrop;
     public static float WeeklyDepositSum;
     public CashPickup CashPrefab;
     [Header("References")]
@@ -40,10 +39,13 @@ public class ATM : NetworkBehaviour, IGUIDRegisterable, IGenericSaveable
     [SerializeField]
     protected Transform camPos;
     [SerializeField]
-    protected ATMInterface interfaceATM;
-    public Transform AccessPoint;
-    public Transform CashSpawnPoint;
-    public PhysicsDamageable Damageable;
+    protected ATMInterface atmInterface;
+    [SerializeField]
+    protected Transform accessPoint;
+    [SerializeField]
+    protected Transform cashSpawnPoint;
+    [SerializeField]
+    protected PhysicsDamageable damageable;
     [Header("Settings")]
     public static float viewLerpTime;
     [SerializeField]
@@ -52,9 +54,10 @@ public class ATM : NetworkBehaviour, IGUIDRegisterable, IGenericSaveable
     public UnityEvent onRepair;
     private bool NetworkInitialize___EarlyScheduleOne_002EMoney_002EATMAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EMoney_002EATMAssembly_002DCSharp_002Edll_Excuted;
+    public bool InUse { get; protected set; }
     public bool IsBroken { get; protected set; }
     public int DaysUntilRepair { get; protected set; }
-    public bool isInUse { get; protected set; }
+    public Transform AccessPoint => accessPoint;
     public Guid GUID { get; protected set; }
 
     [Button]

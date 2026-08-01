@@ -6,6 +6,7 @@ using ScheduleOne.PlayerTasks;
 using ScheduleOne.Product;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace ScheduleOne.Packaging;
 public class PackagingTool : MonoBehaviour
@@ -52,6 +53,8 @@ public class PackagingTool : MonoBehaviour
     public AudioSourceController KickSound;
     public AudioSourceController MotorSound;
     public AudioSourceController DropSound;
+    [Header("Input")]
+    public InputActionReference _dropAction;
     private FunctionalPackaging PackagingPrefab;
     private int ConcealedPackaging;
     private ProductItemInstance ProductItem;
@@ -63,12 +66,12 @@ public class PackagingTool : MonoBehaviour
     private float conveyorVelocity;
     private int directionInput;
     private Task task;
-    private PackagingInstance finalizeInstance;
     private Coroutine finalizeCoroutine;
     private bool leftDown;
     private bool rightDown;
     private bool dropDown;
     private float timeSinceLastDrop;
+    private bool gamepadDropButtonReleasedSinceTaskBegin;
     public bool ReceiveInput { get; private set; }
 
     public void Initialize(Task _task, FunctionalPackaging packaging, int packagingQuantity, ProductItemInstance product, int productQuantity);

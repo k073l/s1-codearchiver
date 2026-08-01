@@ -9,7 +9,7 @@ namespace ScheduleOne.Doors;
 [RequireComponent(typeof(Rigidbody))]
 public class DoorSensor : MonoBehaviour
 {
-    public const float ActivationDistance;
+    private const float ActivationDistanceSqr;
     public EDoorSide DetectorSide;
     public DoorController Door;
     private Collider collider;

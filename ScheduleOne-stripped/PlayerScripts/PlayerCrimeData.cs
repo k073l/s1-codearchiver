@@ -91,6 +91,7 @@ public class PlayerCrimeData : NetworkBehaviour
     public Vector3 SyncAccessor__003CLastKnownPosition_003Ek__BackingField { get; set; }
 
     public override void Awake();
+    private void OnPlayerFreed();
     private void Start();
     private void OnDestroy();
     protected virtual void Update();

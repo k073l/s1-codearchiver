@@ -46,9 +46,6 @@ public class StorageEntity : NetworkBehaviour, IItemSlotOwner
     [Tooltip("If the distance between this StorageEntity and the player is greater than this, the StorageMenu will be closed.")]
     [Range(0f, 10f)]
     public float MaxAccessDistance;
-    public Action onOpened;
-    public Action onClosed;
-    public Action onContentsChanged;
     private bool NetworkInitialize___EarlyScheduleOne_002EStorage_002EStorageEntityAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EStorage_002EStorageEntityAssembly_002DCSharp_002Edll_Excuted;
     public bool IsOpened => (Object)(object)CurrentPlayerAccessor != (Object)null;
@@ -56,6 +53,9 @@ public class StorageEntity : NetworkBehaviour, IItemSlotOwner
     public int ItemCount => ((IItemSlotOwner)this).GetQuantitySum();
     public List<ItemSlot> ItemSlots { get; set; } = new List<ItemSlot>();
 
+    public event Action onOpened;
+    public event Action onClosed;
+    public event Action onContentsChanged;
     public override void Awake();
     protected virtual void Start();
     protected virtual void OnDestroy();
@@ -71,7 +71,6 @@ public class StorageEntity : NetworkBehaviour, IItemSlotOwner
     public void LoadFromItemSet(ItemInstance[] items);
     public void ClearContents();
     public void Open();
-    public void Close();
     protected virtual void OnOpened();
     protected virtual void OnClosed();
     public virtual bool CanBeOpened();

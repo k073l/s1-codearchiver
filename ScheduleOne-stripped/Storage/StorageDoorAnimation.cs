@@ -1,4 +1,3 @@
-using System;
 using ScheduleOne.Audio;
 using ScheduleOne.Core;
 using UnityEngine;

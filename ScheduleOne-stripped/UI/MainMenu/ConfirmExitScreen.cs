@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace ScheduleOne.UI.MainMenu;
-public class ConfirmExitScreen : MainMenuScreen
+public class ConfirmExitScreen : MenuScreen
 {
     public TextMeshProUGUI TimeSinceSaveLabel;
     private void Update();

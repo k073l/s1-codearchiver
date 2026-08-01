@@ -4,14 +4,19 @@ using System.Collections.Generic;
 using ScheduleOne.Audio;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.State;
 using ScheduleOne.Vision;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace ScheduleOne.UI.Phone;
 public class Phone : PlayerSingleton<Phone>
 {
+    private const float MinLookOffset;
+    private const float MaxLookOffset;
+    private const float RotationTime;
     public static GameObject ActiveApp;
     [Header("References")]
     [SerializeField]
@@ -26,16 +31,16 @@ public class Phone : PlayerSingleton<Phone>
     protected GameObject PhoneFlashlight;
     [SerializeField]
     protected AudioSourceController FlashlightToggleSound;
-    [Header("Settings")]
-    public float rotationTime;
-    public float LookOffsetMax;
-    public float LookOffsetMin;
-    public float OpenVerticalOffset;
+    [SerializeField]
+    protected MonoState state;
     [Header("Fonts")]
     [SerializeField]
     private ColorFont _generalColorFont;
     [SerializeField]
     private ColorFont _productColorFont;
+    [Header("Input")]
+    [SerializeField]
+    private InputActionReference _toggleFlashlightInputAction;
     public Action onPhoneOpened;
     public Action onPhoneClosed;
     public Action closeApps;
@@ -47,7 +52,9 @@ public class Phone : PlayerSingleton<Phone>
     public bool isHorizontal { get; protected set; }
     public bool isOpenable { get; protected set; } = true;
     public bool FlashlightOn { get; protected set; }
-    public float ScaledLookOffset => Mathf.Lerp(LookOffsetMax, LookOffsetMin, CanvasScaler.NormalizedCanvasScaleFactor);
+    public bool IsAnyAppOpen => (Object)(object)ActiveApp != (Object)null;
+    public MonoState State => state;
+    public float ScaledLookOffset => Mathf.Lerp(2f, 1.4f, CanvasScaler.NormalizedCanvasScaleFactor);
     public ColorFont GeneralColorFont => _generalColorFont;
 
     protected override void Awake();
@@ -56,8 +63,8 @@ public class Phone : PlayerSingleton<Phone>
     protected virtual void Update();
     protected override void OnDestroy();
     private void ToggleFlashlight();
-    public void SetOpenable(bool o);
     public void SetIsOpen(bool o);
+    public void SetIsActiveGameplayScreen(bool isActive);
     public void SetIsHorizontal(bool h);
     protected IEnumerator SetIsHorizontal_Process(bool h);
     public void SetLookOffsetMultiplier(float multiplier);

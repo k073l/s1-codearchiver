@@ -15,17 +15,14 @@ public class NPCSpeedController : MonoBehaviour
         public SpeedControl(string id, int priority, float speed);
     }
 
+    public const float DefaultNormalizedSpeed;
     [Header("Settings")]
-    [Range(0f, 1f)]
-    public float DefaultWalkSpeed;
     [SerializeField]
     [FormerlySerializedAs("SpeedMultiplier")]
     private float _SpeedMultiplier;
-    [Header("References")]
-    public NPCMovement Movement;
     protected List<SpeedControl> speedControlStack;
-    public SpeedControl ActiveSpeedControl;
     public float SpeedMultiplier { get; set; }
+    public SpeedControl ActiveSpeedControl { get; private set; }
 
     private void Awake();
     public void AddSpeedControl(SpeedControl control);

@@ -1,10 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using ScheduleOne.AvatarFramework.Animation;
 using ScheduleOne.AvatarFramework.Emotions;
 using ScheduleOne.AvatarFramework.Equipping;
 using ScheduleOne.AvatarFramework.Impostors;
-using ScheduleOne.Core;
 using ScheduleOne.Core.Equipping.Framework;
 using ScheduleOne.DevUtilities;
 using UnityEngine;
@@ -46,7 +47,6 @@ public class Avatar : MonoBehaviour, IThirdPersonReferencesProvider
     public AvatarImpostor Impostor;
     public ParticleSystem BloodParticles;
     [Header("Settings")]
-    public AvatarSettings InitialAvatarSettings;
     public Material DefaultAvatarMaterial;
     public bool UseCombinedLayer;
     public UnityEvent<bool, bool, bool> onRagdollChange;
@@ -65,12 +65,12 @@ public class Avatar : MonoBehaviour, IThirdPersonReferencesProvider
     protected bool wearingHairBlockingAccessory;
     private float additionalWeight;
     private float additionalGender;
-    [Header("Runtime loading")]
-    public AvatarSettings SettingsToLoad;
     public UnityEvent onSettingsLoaded;
     private Vector3 originalHipPos;
     private bool usingCombinedLayer;
     private bool blockEyeFaceLayers;
+    private Color _appliedSkinColor;
+    private Color _appliedEmissionColor;
     public Transform RightHandContainer => Animation.RightHandContainer;
     public Transform LeftHandContainer => Animation.LeftHandContainer;
     public Transform RightHandAlignmentPoint => Animation.RightHandAlignmentPoint;
@@ -81,10 +81,6 @@ public class Avatar : MonoBehaviour, IThirdPersonReferencesProvider
     public Transform CenterPointTransform => MiddleSpine;
     public Vector3 CenterPoint => ((Component)CenterPointTransform).transform.position;
 
-    [Button]
-    public void Load();
-    [Button]
-    public void LoadNaked();
     protected virtual void Awake();
     protected virtual void Update();
     public void SetVisible(bool vis);
@@ -97,11 +93,12 @@ public class Avatar : MonoBehaviour, IThirdPersonReferencesProvider
     public string GetThirdPersonPronoun(bool capitalized = true);
     public void SetAnimationBool(string name, bool value);
     public void SetAnimationTrigger(string name);
-    private void ApplyShapeKeys(float gender, float weight, bool bodyOnly = false);
+    private void ApplyCurrentShapeKeys();
+    private void ApplyShapeKeys(float gender, float weight);
     private void SetFeetShrunk(bool shrink, float reduction);
     private void SetWearingHairBlockingAccessory(bool blocked);
     public void LoadAvatarSettings(AvatarSettings settings);
-    public void LoadNakedSettings(AvatarSettings settings, int maxLayerOrder = 19);
+    public void LoadNakedSettings(AvatarSettings settings, bool keepOldLayers, int maxLayerOrder = 19);
     public void ApplyBodySettings(AvatarSettings settings);
     public void SetAdditionalWeight(float weight);
     public void SetAdditionalGender(float gender);
@@ -123,7 +120,10 @@ public class Avatar : MonoBehaviour, IThirdPersonReferencesProvider
     private void SetBodyLayer(int index, string assetPath, Color color);
     public void ApplyAccessorySettings(AvatarSettings settings);
     private void DestroyAccessories();
-    public virtual void SetRagdollPhysicsEnabled(bool ragdollEnabled, bool playStandUpAnim = true);
+    public void EnableRagdoll(Vector3 forcePoint = default(Vector3), Vector3 forceDir = default(Vector3));
+    public void DisableRagdoll(bool playStandUpAnim = true);
+    private void SetRagdollPhysicsEnabled(bool ragdollEnabled, bool wait, bool playStandUpAnim = true, Vector3 forcePoint = default(Vector3), Vector3 forceDir = default(Vector3));
+    public void ApplyRagdollForce(Vector3 forcePoint, Vector3 forceDir);
     public virtual AvatarEquippable SetEquippable(string assetPath);
     public virtual void ReceiveEquippableMessage(string message, object data);
 }

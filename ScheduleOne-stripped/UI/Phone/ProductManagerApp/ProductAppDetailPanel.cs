@@ -1,8 +1,9 @@
+using System;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.GamepadInput;
 using ScheduleOne.Money;
 using ScheduleOne.PlayerTasks;
 using ScheduleOne.Product;
-using ScheduleOne.UI.Tooltips;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -19,24 +20,32 @@ public class ProductAppDetailPanel : MonoBehaviour
     public InputField ValueLabel;
     public Text SuggestedPriceLabel;
     public Toggle ListedForSale;
+    public Toggle FavouriteProduct;
     public Text DescLabel;
     public Text[] PropertyLabels;
-    public RectTransform Listed;
-    public RectTransform Delisted;
-    public RectTransform NotDiscovered;
     public RectTransform RecipesLabel;
-    public RectTransform[] RecipeEntries;
-    public VerticalLayoutGroup LayoutGroup;
+    public ProductRecipe[] RecipeEntries;
     public Scrollbar AddictionSlider;
     public Text AddictionLabel;
-    public ScrollRect ScrollRect;
+    [SerializeField]
+    private Transform _addButton;
+    [SerializeField]
+    private Transform _removeButton;
+    [Header("Input")]
+    [SerializeField]
+    private InputValueRamp _inputValueRamp;
     public ProductDefinition ActiveProduct { get; protected set; }
 
     public void Awake();
+    private void OnDestroy();
     public void SetActiveProduct(ProductDefinition productDefinition);
     private void Update();
-    private void UpdateListed();
+    public void UpdateListed();
+    public void UpdateFavourite();
     private void UpdatePrice();
     private void ListingToggled();
+    private void OnInputChange(GameInput.InputDeviceType device);
+    private void AdjustPrice(float change);
     private void PriceSubmitted(string value);
+    private void OnToggleFavourited(bool value);
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ScheduleOne.Core.Weather;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.Interaction;
@@ -7,7 +8,6 @@ using ScheduleOne.NPCs;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Tools;
 using ScheduleOne.VoiceOver;
-using ScheduleOne.Weather;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -56,13 +56,12 @@ public class DialogueController : MonoBehaviour
     protected DialogueHandler handler;
     private float lastGreetingTime;
     private List<DialogueChoice> shownChoices;
-    private bool dialogueQueued;
     private string cachedGreeting;
+    private float _timeOnDialogueStart;
     protected virtual void Start();
     private void Hovered();
     public void StartGenericDialogue(bool allowExit = true);
     private void Interacted();
-    private void Unqueue();
     private string GetActiveGreeting(out bool playVO, out EVOLineType voLineType);
     private List<DialogueChoice> GetActiveChoices();
     protected virtual bool GetCustomGreeting(out string greeting, out bool playVO, out EVOLineType voLineType);

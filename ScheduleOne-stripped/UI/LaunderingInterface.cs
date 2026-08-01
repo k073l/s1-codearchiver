@@ -8,6 +8,7 @@ using ScheduleOne.Money;
 using ScheduleOne.ObjectScripts.Cash;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Property;
+using ScheduleOne.State;
 using ScheduleOne.Variables;
 using TMPro;
 using UnityEngine;
@@ -17,9 +18,9 @@ using UnityEngine.UI;
 namespace ScheduleOne.UI;
 public class LaunderingInterface : MonoBehaviour
 {
-    protected const float fovOverride;
-    protected const float lerpTime;
-    protected const int minLaunderAmount;
+    private const float FoV;
+    private const float LerpTime;
+    private const int MinLaunderAmount;
     [Header("References")]
     [SerializeField]
     protected Transform cameraPosition;
@@ -45,7 +46,14 @@ public class LaunderingInterface : MonoBehaviour
     protected RectTransform entryContainer;
     [SerializeField]
     protected RectTransform noEntries;
-    public CashStackVisuals[] CashStacks;
+    [SerializeField]
+    protected RectTransform container;
+    [SerializeField]
+    protected CashStackVisuals[] cashStacks;
+    [SerializeField]
+    protected MonoState mainState;
+    [SerializeField]
+    protected MonoState amountSelectorState;
     [Header("Prefabs")]
     [SerializeField]
     protected GameObject timelineNotchPrefab;
@@ -56,27 +64,19 @@ public class LaunderingInterface : MonoBehaviour
     protected Canvas canvas;
     [SerializeField]
     protected ScrollRect scrollRect;
-    [SerializeField]
-    protected UIScreen UIScreen;
-    [SerializeField]
-    protected UIPanel mainPanel;
-    [SerializeField]
-    protected UIScreen selectorScreen;
-    [SerializeField]
-    protected UIPanel selectorPanel;
     private int selectedAmountToLaunder;
     private Dictionary<LaunderingOperation, RectTransform> operationToNotch;
     private List<RectTransform> notches;
     private bool ignoreSliderChange;
     private Dictionary<LaunderingOperation, RectTransform> operationToEntry;
-    protected int maxLaunderAmount => (int)Mathf.Min(business.appliedLaunderLimit, NetworkSingleton<MoneyManager>.Instance.cashBalance);
-    public Business business { get; private set; }
-    public bool isOpen { get; }
+    public bool IsOpen { get; }
+    public Business Business { get; private set; }
+    private int maxLaunderAmount => (int)Mathf.Min(Business.appliedLaunderLimit, NetworkSingleton<MoneyManager>.Instance.cashBalance);
 
+    private void Awake();
     public void Initialize(Business bus);
     private void OnDestroy();
     protected virtual void MinPass();
-    protected void Exit(ExitAction exit);
     protected void UpdateTimeline();
     protected void UpdateCurrentTotal();
     private void CreateEntry(LaunderingOperation op);
@@ -86,12 +86,13 @@ public class LaunderingInterface : MonoBehaviour
     private void RefreshLaunderButton();
     public void OpenAmountSelector();
     public void CloseAmountSelector();
+    private void OnAmountSelectorClose();
     public void ConfirmAmount();
     public void SliderValueChanged();
     public void InputValueChanged();
     public void ChangeSelectorValue(int amount);
     public void Hovered();
     public void Interacted();
-    public virtual void Open();
-    public virtual void Close();
+    public void Open();
+    private void OnClose();
 }

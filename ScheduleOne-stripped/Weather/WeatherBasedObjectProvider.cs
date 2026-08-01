@@ -1,4 +1,5 @@
 using System;
+using ScheduleOne.Core.Weather;
 using UnityEngine;
 
 namespace ScheduleOne.Weather;

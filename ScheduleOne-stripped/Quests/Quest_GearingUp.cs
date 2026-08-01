@@ -1,6 +1,5 @@
 using ScheduleOne.Economy;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace ScheduleOne.Quests;
 public class Quest_GearingUp : Quest

@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.FX;
 using ScheduleOne.Map;
+using ScheduleOne.State;
 using ScheduleOne.Tools;
 using ScheduleOne.UI;
 using ScheduleOne.Vehicles;
@@ -63,6 +63,7 @@ public class PlayerMovement : PlayerSingleton<PlayerMovement>
     public Action onLand;
     public Action onCrouch;
     public Action onUncrouch;
+    private bool _canMove;
     private Vector3 movement;
     private Vector3 lastFrameMovement;
     private float movementY;
@@ -71,6 +72,7 @@ public class PlayerMovement : PlayerSingleton<PlayerMovement>
     private float horizontalAxis;
     private float verticalAxis;
     private Dictionary<int, MotionEvent> movementEvents;
+    private List<int> movementEventKeys;
     private float timeSinceStaminaDrain;
     private bool sprintActive;
     private bool sprintReleased;
@@ -82,8 +84,9 @@ public class PlayerMovement : PlayerSingleton<PlayerMovement>
     private bool teleport;
     private Vector3 teleportPosition;
     private float playerLadderYPosOnLastClimbSound;
+    private float _slope;
     private Coroutine playerRotCoroutine;
-    public bool CanMove { get; set; } = true;
+    public bool CanMove { get; set; }
     public bool CanJump { get; set; } = true;
     public Vector3 Movement => movement;
     public bool IsJumping { get; private set; }
@@ -126,7 +129,7 @@ public class PlayerMovement : PlayerSingleton<PlayerMovement>
     private IEnumerator LerpPlayerRotation_Process(Quaternion endRotation, float lerpTime);
     public void SetPlayerRotation(Quaternion rotation);
     private void EnterVehicle(LandVehicle vehicle);
-    private void ExitVehicle(LandVehicle veh, Transform exitPoint);
+    private void ExitVehicle(LandVehicle veh);
     public void RegisterMovementEvent(int threshold, Action action);
     public void DeregisterMovementEvent(Action action);
     private void UpdateMovementEvents();

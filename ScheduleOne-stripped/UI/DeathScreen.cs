@@ -4,9 +4,11 @@ using ScheduleOne.DevUtilities;
 using ScheduleOne.FX;
 using ScheduleOne.Law;
 using ScheduleOne.Map;
+using ScheduleOne.Networking;
 using ScheduleOne.Persistence;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Property;
+using ScheduleOne.State;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -22,13 +24,14 @@ public class DeathScreen : Singleton<DeathScreen>
     public Button loadSaveButton;
     public Animation Anim;
     public AudioSourceController Sound;
+    public MonoState State;
+    private bool isOpen;
     private bool arrested;
-    public bool isOpen { get; protected set; }
-
     protected override void Awake();
     private void RespawnClicked();
     private void LoadSaveClicked();
     public void Open();
     private bool CanRespawn();
+    private bool CanLoadSave();
     public void Close();
 }

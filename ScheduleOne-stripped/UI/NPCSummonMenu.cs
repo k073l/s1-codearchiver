@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.NPCs;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.State;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,12 +17,11 @@ public class NPCSummonMenu : Singleton<NPCSummonMenu>
     public RectTransform Container;
     public RectTransform EntryContainer;
     public RectTransform[] Entries;
+    public MonoState State;
     private Action<NPC> callback;
-    public bool IsOpen { get; private set; }
-
     protected override void Start();
-    private void Exit(ExitAction exit);
     public void Open(List<NPC> npcs, Action<NPC> _callback);
     public void Close();
+    private void OnClose();
     public void NPCSelected(NPC npc);
 }

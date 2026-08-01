@@ -1,4 +1,5 @@
 using ScheduleOne.Audio;
+using ScheduleOne.Core.Audio;
 using ScheduleOne.DevUtilities;
 
 namespace ScheduleOne.UI.Settings;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ScheduleOne.DevUtilities;
@@ -20,6 +21,8 @@ public class Cart : MonoBehaviour
     public Image CartArea;
     public TextMeshProUGUI TotalText;
     public Toggle LoadVehicleToggle;
+    [SerializeField]
+    private Button buyButton;
     [Header("Prefabs")]
     public CartEntry EntryPrefab;
     public Dictionary<ShopListing, int> cartDictionary;
@@ -28,11 +31,13 @@ public class Cart : MonoBehaviour
     [SerializeField]
     private UIContentPanel cartPanel;
     [SerializeField]
-    private UITrigger buyUITrigger;
+    private UITrigger buyTrigger;
+    private Action _onRemoveListing;
     protected virtual void Update();
     public void SetItemQuantity(ShopListing listing, int quantity);
     public void AddItem(ShopListing listing, int quantity);
     public void RemoveItem(ShopListing listing, int quantity);
+    private void RemoveListing(ShopListing listing);
     public void ClearCart();
     public int GetCartCount(ShopListing listing);
     public bool CanPlayerAffordCart();
@@ -48,4 +53,6 @@ public class Cart : MonoBehaviour
     private CartEntry GetEntry(ShopListing listing);
     private bool IsMouseOverMenuArea();
     public int GetTotalSlotRequirement();
+    public void SubscribeToOnRemoveListing(Action callback);
+    public void UnsubscribeFromOnRemoveListing(Action callback);
 }

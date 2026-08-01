@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Gamepad;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.State;
 using ScheduleOne.UI;
-using ScheduleOne.UI.Compass;
 using UnityEngine;
 
 namespace ScheduleOne.PlayerTasks;
-public class Task
+public class Task : ScheduleOne.State.State
 {
     public enum EOutcome
     {
@@ -21,7 +22,6 @@ public class Task
     protected float MultiGrabRadius;
     public const float MultiGrabForceMultiplier;
     public bool ClickDetectionEnabled;
-    public EOutcome Outcome;
     public Action onTaskSuccess;
     public Action onTaskFail;
     public Action onTaskStop;
@@ -39,8 +39,12 @@ public class Task
     public virtual string TaskName { get; protected set; }
     public string CurrentInstruction { get; protected set; } = string.Empty;
     public bool TaskActive { get; private set; }
+    public EOutcome Outcome { get; protected set; }
+    protected virtual string TaskPointerData => "Default";
+    protected virtual string InputWord { get; }
 
     public Task();
+    public virtual void CancelTask();
     public virtual void StopTask();
     public virtual void Success();
     public virtual void Fail();

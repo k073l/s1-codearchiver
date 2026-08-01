@@ -10,11 +10,13 @@ using FishNet.Serializing;
 using FishNet.Transporting;
 using ScheduleOne.Audio;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Gamepad;
 using ScheduleOne.Interaction;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Management;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.PlayerTasks;
+using ScheduleOne.UI.Input;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -35,6 +37,11 @@ public class Tap : NetworkBehaviour, IUsable
     private AudioSourceController _squeakSound;
     [SerializeField]
     private AudioSourceController _waterRunningSound;
+    [Header("Prompt Data")]
+    [SerializeField]
+    private InputPromptsData _handlePromptData;
+    [SerializeField]
+    private Transform _handlePromptAnchor;
     [CompilerGenerated]
     [SyncVar( /*Could not decode attribute arguments.*/)]
     [HideInInspector]
@@ -91,6 +98,7 @@ public class Tap : NetworkBehaviour, IUsable
     public void SetPlayerUser(NetworkObject playerObject);
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void SetNPCUser(NetworkObject npcObject);
+    private float GetTapFlow();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

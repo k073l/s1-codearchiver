@@ -1,15 +1,16 @@
-using System.Collections.Generic;
-using System.Linq;
 using FishNet.Object;
 using RootMotion.FinalIK;
 using ScheduleOne.NPCs;
 using ScheduleOne.PlayerScripts;
+using Unity.Profiling;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace ScheduleOne.AvatarFramework.Animation;
 public class AvatarLookController : MonoBehaviour
 {
+    private const float CullRange;
+    private const float CullRangeSqr;
     public const float LookAtPlayerRange;
     public const float EyeContractRange;
     public static Transform TempContainer;
@@ -20,13 +21,13 @@ public class AvatarLookController : MonoBehaviour
     public Transform LookForwardTarget;
     public Transform LookOrigin;
     public EyeController Eyes;
-    [Header("Optional NPC reference")]
-    public NPC NPC;
     [Header("Settings")]
     public bool AutoLookAtPlayer;
     public float LookLerpSpeed;
     public float AimIKWeight;
     public float BodyRotationSpeed;
+    protected NPC _parentNPC;
+    protected Player _parentPlayer;
     private Avatar avatar;
     private Vector3 lookAtPos;
     private Transform lookAtTarget;
@@ -36,15 +37,15 @@ public class AvatarLookController : MonoBehaviour
     private int overrideLookPriority;
     private bool overrideRotateBody;
     private bool blockLookOverrides;
-    private Vector3 lastFrameLookOriginPos;
-    private Vector3 lastFrameLookOriginForward;
     public Transform ForceLookTarget;
     public bool ForceLookRotateBody;
     private float defaultIKWeight;
     private Player nearestPlayer;
     private float nearestPlayerDist;
-    private float localPlayerDist;
-    private float cullRange;
+    private float localPlayerSqrDist;
+    private static readonly ProfilerMarker updateLookMarker;
+    private static readonly ProfilerMarker lerpTargetMarker;
+    private static readonly ProfilerMarker eyeLookAtMarker;
     public float BodyRotationSpeedMultiplier { get; set; } = 1f;
 
     private void Awake();
@@ -55,7 +56,6 @@ public class AvatarLookController : MonoBehaviour
     public void BlockLookTargetOverrides();
     private void LookForward();
     private void LerpTargetTransform();
-    private Player GetNearestPlayer();
     private bool CanLookAt(Vector3 position);
     protected void RagdollChange(bool oldValue, bool ragdoll, bool playStandUpAnim);
     public void OverrideIKWeight(float weight);

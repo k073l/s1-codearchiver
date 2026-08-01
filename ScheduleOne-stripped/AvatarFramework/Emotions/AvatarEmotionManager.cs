@@ -8,7 +8,7 @@ using UnityEngine;
 namespace ScheduleOne.AvatarFramework.Emotions;
 public class AvatarEmotionManager : MonoBehaviour
 {
-    public const float MAX_UPDATE_DISTANCE;
+    public const float MAX_UPDATE_DISTANCE_SQR;
     [Header("Settings")]
     public List<AvatarEmotionPreset> EmotionPresetList;
     [Header("References")]

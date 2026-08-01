@@ -3,6 +3,7 @@ using ScheduleOne.Audio;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.FX;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.State;
 using UnityEngine;
 
 namespace ScheduleOne.UI;
@@ -13,11 +14,11 @@ public class ArrestScreen : Singleton<ArrestScreen>
     public CanvasGroup group;
     public AudioSourceController Sound;
     public Animation Anim;
+    public MonoState State;
     public bool isOpen { get; protected set; }
 
     protected override void Awake();
     private void Continue();
-    private void LoadSaveClicked();
     public void Open();
     public void Close();
 }

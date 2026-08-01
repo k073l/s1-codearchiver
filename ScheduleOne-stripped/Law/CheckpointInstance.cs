@@ -12,7 +12,8 @@ public class CheckpointInstance
 {
     public const float MIN_ACTIVATION_DISTANCE;
     public CheckpointManager.ECheckpointLocation Location;
-    public int Members;
+    public int MinMembers;
+    public int MaxMembers;
     public int StartTime;
     public int EndTime;
     [Range(1f, 10f)]

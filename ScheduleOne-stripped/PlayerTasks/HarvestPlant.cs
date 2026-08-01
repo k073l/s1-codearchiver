@@ -1,6 +1,7 @@
 using FishNet.Object;
 using ScheduleOne.Audio;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Gamepad;
 using ScheduleOne.Growing;
 using ScheduleOne.ObjectScripts;
 using ScheduleOne.PlayerScripts;
@@ -14,7 +15,6 @@ public class HarvestPlant : Task
     private int HarvestCount;
     private int HarvestTotal;
     private float rotation;
-    private static bool hintShown;
     private static bool CanDrag;
     private AudioSourceController SoundLoop;
     public override string TaskName { get; protected set; } = "Harvest plant";
@@ -25,4 +25,6 @@ public class HarvestPlant : Task
     protected override void UpdateCursor();
     public override void Update();
     private PlantHarvestable GetHoveredHarvestable();
+    private void StartContinuousHaptics();
+    private void StopContinuousHaptics();
 }

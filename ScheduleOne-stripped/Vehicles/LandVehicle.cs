@@ -17,6 +17,7 @@ using FishNet.Serializing.Generated;
 using FishNet.Transporting;
 using Pathfinding;
 using ScheduleOne.Combat;
+using ScheduleOne.Core.Weather;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Graffiti;
 using ScheduleOne.Interaction;
@@ -28,12 +29,12 @@ using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.Persistence.Loaders;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.State;
 using ScheduleOne.Storage;
 using ScheduleOne.Tools;
 using ScheduleOne.UI;
 using ScheduleOne.Vehicles.AI;
 using ScheduleOne.Vehicles.Modification;
-using ScheduleOne.Weather;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -135,6 +136,7 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable, IWeat
     public StorageEntity Storage;
     private VehicleSeat localPlayerSeat;
     private bool _isOccupied;
+    private bool _localPlayerJustEntered;
     private RollingAverage<float> previousSpeeds;
     private const int previousSpeedsSampleSize;
     [CompilerGenerated]
@@ -156,6 +158,7 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable, IWeat
     private Transform closestExitPoint;
     private float timeOnSpawn;
     private float timeOnLastOccupied;
+    private MonoState _state;
     [HideInInspector]
     public ParkData CurrentParkData;
     private VehicleLoader loader;
@@ -174,6 +177,7 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable, IWeat
     public bool IsPlayerOwned { get; protected set; }
     public bool IsVisible { get; protected set; } = true;
     public Guid GUID { get; protected set; }
+    public MonoState State => _state;
     public Vector3 BoundingBoxDimensions => new Vector3(boundingBox.size.x * ((Component)boundingBox).transform.localScale.x, boundingBox.size.y * ((Component)boundingBox).transform.localScale.y, boundingBox.size.z * ((Component)boundingBox).transform.localScale.z);
     public Transform driverEntryPoint => exitPoints[0];
     public float ActualMaxSteeringAngle { get; }
@@ -289,6 +293,8 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable, IWeat
     private void StopVehicle();
     private void EnterVehicle();
     public void ExitVehicle();
+    private void OnLocalPlayerEnter();
+    private void OnLocalPlayerExit();
     private void EndJustExited();
     public Transform GetExitPoint(int seatIndex = 0);
     private Transform GetClosestExitPoint(Vector3 pos);
@@ -297,6 +303,7 @@ public class LandVehicle : NetworkBehaviour, IGUIDRegisterable, ISaveable, IWeat
     public void RemoveNPCOccupant(NPC npc);
     public virtual bool CanBeRecovered();
     public virtual void RecoverVehicle();
+    public void TeleportToNavMesh(bool resetVelocity);
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void SendOwnedColor(EVehicleColor col);
     [TargetRpc]

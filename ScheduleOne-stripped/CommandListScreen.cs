@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 
 namespace ScheduleOne;
-public class CommandListScreen : MainMenuScreen
+public class CommandListScreen : MenuScreen
 {
     public RectTransform CommandEntryContainer;
     public RectTransform CommandEntryPrefab;

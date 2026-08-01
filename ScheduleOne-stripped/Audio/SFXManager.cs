@@ -17,7 +17,7 @@ public class SFXManager : Singleton<SFXManager>
     protected override void OnDestroy();
     private void Update();
     public void PlayImpactSound(EImpactSound material, Vector3 position, float momentum);
-    public void PlayFootstepSound(EMaterialType materialType, float volume, Vector3 position);
+    public void PlayFootstepSound(EMaterialType materialType, float volume, Vector3 position, float spatialBlend = 1f);
     public void SetConfiguration(BaseConfiguration baseConfiguration);
     private void SetupSoundPool();
     private bool TryPullAudioSource(out AudioSourceController source);

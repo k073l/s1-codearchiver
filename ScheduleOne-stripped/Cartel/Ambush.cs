@@ -29,6 +29,7 @@ public class Ambush : CartelActivity
     public AvatarWeapon[] MeleeWeapons;
     [Header("Debugging & Development")]
     public EMapRegion region;
+    public override bool IsRegionValidForActivity(EMapRegion region);
     public override void Activate(EMapRegion region);
     protected override void Deactivate();
     protected override void MinPassed();

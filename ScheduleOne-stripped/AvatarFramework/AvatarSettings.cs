@@ -75,6 +75,10 @@ public class AvatarSettings : ScriptableObject
     public Color BodyLayer5Color { get; }
     public string BodyLayer6Path { get; }
     public Color BodyLayer6Color { get; }
+    public string BodyLayer7Path { get; }
+    public Color BodyLayer7Color { get; }
+    public string BodyLayer8Path { get; }
+    public Color BodyLayer8Color { get; }
     public string Accessory1Path { get; }
     public Color Accessory1Color { get; }
     public string Accessory2Path { get; }

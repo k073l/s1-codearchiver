@@ -27,9 +27,9 @@ public class RTBGameController : CasinoGameController
         Suit
     }
 
-    public const int BET_MINIMUM;
-    public const int BET_MAXIMUM;
-    public const float ANSWER_MAX_TIME;
+    private const int MinimumBet;
+    private const int MaximumBet;
+    public const float AnswerMaxTime;
     [Header("References")]
     public Transform PlayCameraTransform;
     public Transform FocusedCameraTransform;
@@ -42,7 +42,6 @@ public class RTBGameController : CasinoGameController
     public Action onQuestionDone;
     public Action onLocalPlayerCorrect;
     public Action onLocalPlayerIncorrect;
-    public Action onLocalPlayerBetChange;
     public Action onLocalPlayerExitRound;
     private List<Player> playersInCurrentRound;
     private List<PlayingCard.CardData> cardsInDeck;
@@ -51,15 +50,14 @@ public class RTBGameController : CasinoGameController
     private bool NetworkInitialize__LateScheduleOne_002ECasino_002ERTBGameControllerAssembly_002DCSharp_002Edll_Excuted;
     public EStage CurrentStage { get; private set; }
     public bool IsQuestionActive { get; private set; }
-    public float LocalPlayerBet { get; private set; } = 10f;
     public float LocalPlayerBetMultiplier { get; private set; } = 1f;
-    public float MultipliedLocalPlayerBet => LocalPlayerBet * LocalPlayerBetMultiplier;
+    public float MultipliedLocalPlayerBet => base.LocalPlayerBet * LocalPlayerBetMultiplier;
     public float RemainingAnswerTime { get; private set; } = 6f;
     public bool IsLocalPlayerInCurrentRound => playersInCurrentRound.Contains(Player.Local);
 
     public override void Awake();
     protected override void Open();
-    protected override void Close();
+    protected override void OnClose();
     protected override void Exit(ExitAction action);
     [ObserversRpc(RunLocally = true)]
     private void SetStage(EStage stage);
@@ -84,16 +82,17 @@ public class RTBGameController : CasinoGameController
     [ObserversRpc(RunLocally = true)]
     private void RemovePlayerFromCurrentRound(NetworkObject player);
     private PlayingCard.CardData PullCardFromDeck();
-    public void SetLocalPlayerBet(float bet);
     public bool AreAllPlayersReady();
     public int GetPlayersReadyCount();
     public void SetLocalPlayerAnswer(float answer);
     public int GetAnsweredPlayersCount();
-    public void ToggleLocalPlayerReady();
-    [ObserversRpc(RunLocally = true)]
+    public override void ToggleLocalPlayerReady();
+    [ServerRpc(RunLocally = true, RequireOwnership = false)]
     private void TryNextStage();
     private int GetCardNumberValue(PlayingCard.CardData card);
     public static float GetNetBetMultiplier(EStage stage);
+    public override bool IsWaitingForPlayers();
+    public override void GetBetLimits(out float minimum, out float maximum);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();
@@ -121,8 +120,8 @@ public class RTBGameController : CasinoGameController
     private void RpcWriter___Observers_RemovePlayerFromCurrentRound_3323014238(NetworkObject player);
     private void RpcLogic___RemovePlayerFromCurrentRound_3323014238(NetworkObject player);
     private void RpcReader___Observers_RemovePlayerFromCurrentRound_3323014238(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Observers_TryNextStage_2166136261();
+    private void RpcWriter___Server_TryNextStage_2166136261();
     private void RpcLogic___TryNextStage_2166136261();
-    private void RpcReader___Observers_TryNextStage_2166136261(PooledReader PooledReader0, Channel channel);
+    private void RpcReader___Server_TryNextStage_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
     protected override void Awake_UserLogic_ScheduleOne_002ECasino_002ERTBGameController_Assembly_002DCSharp_002Edll();
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using ScheduleOne.Core;
+using ScheduleOne.Core.Audio;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.UI;
 using UnityEngine;
@@ -60,8 +61,9 @@ public class AudioSourceController : MonoBehaviour
     public float PitchMultiplier { get; set; }
 
     private void Awake();
+    private void Start();
     private void OnEnable();
-    private void OnDisable();
+    private void OnDestroy();
     private void ApplyMixer();
     private void OnPause();
     private void OnUnpause();
@@ -76,10 +78,11 @@ public class AudioSourceController : MonoBehaviour
     public virtual void DuplicateAndPlayOneShot(Transform parent);
     protected void Delay(float delay, Action callback);
     protected IEnumerator DelayIE(float delay, Action callback);
-    public void ApplyAudioSettings(AudioSettingsWrapper settings);
+    public void ApplyAudioSettings(AudioSettingsWrapper settings, bool excludeClip = true);
     public AudioSettingsWrapper ExtractAudioSettings();
     public void SetTime(float time);
     public void SetClip(AudioClip clip);
     public void SetLoop(bool loop);
     public void Stop();
+    public void SetSpacialBlend(float spacialBlend);
 }

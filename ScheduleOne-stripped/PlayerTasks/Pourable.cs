@@ -39,7 +39,7 @@ public class Pourable : Draggable
     public float NormalizedPourRate { get; private set; }
     public float CurrentQuantity { get; protected set; }
 
-    protected virtual void Start();
+    protected override void Start();
     protected override void Update();
     protected override void FixedUpdate();
     protected virtual void UpdatePouring();

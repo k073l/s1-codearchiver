@@ -10,7 +10,8 @@ namespace ScheduleOne.Law;
 public class PatrolInstance
 {
     public FootPatrolRoute Route;
-    public int Members;
+    public int MinMembers;
+    public int MaxMembers;
     public int StartTime;
     public int EndTime;
     [Range(1f, 10f)]

@@ -34,6 +34,10 @@ namespace ScheduleOne.Property;
 public class Property : NetworkBehaviour, ISaveable
 {
     public delegate void PropertyChange(Property property);
+    protected const int IdealCullsPerSecond;
+    protected const float MaxCullDuration;
+    protected const float CullingDistanceBuffer;
+    protected const float DecullHardThreshold;
     public static List<Property> Properties;
     public static List<Property> UnownedProperties;
     public static List<Property> OwnedProperties;
@@ -73,6 +77,7 @@ public class Property : NetworkBehaviour, ISaveable
     public List<IConfigurable> Configurables;
     public readonly List<Grid> Grids;
     protected BoxCollider[] propertyBoundsColliders;
+    private Coroutine cullingRoutine;
     private PropertyLoader loader;
     private List<string> savedObjectPaths;
     private List<string> savedEmployeePaths;
@@ -97,6 +102,8 @@ public class Property : NetworkBehaviour, ISaveable
     public List<string> LocalExtraFolders { get; set; } = new List<string>();
     public bool HasChanged { get; set; } = true;
 
+    public event Action<BuildableItem> onBuildableItemAdded;
+    public event Action<BuildableItem> onBuildableItemRemoved;
     public override void Awake();
     public virtual void InitializeSaveable();
     protected virtual void Start();
@@ -133,7 +140,7 @@ public class Property : NetworkBehaviour, ISaveable
     protected List<DynamicSaveData> GetObjectSaveDatas();
     public virtual List<string> WriteData(string parentFolderPath);
     public virtual void DeleteUnapprovedFiles(string parentFolderPath);
-    public virtual void Load(PropertyData propertyData, string dataString);
+    public virtual void Load(PropertyData propertyData, string propertyDataString);
     public bool DoBoundsContainPoint(Vector3 point);
     private bool IsPointInsideBox(Vector3 worldPoint, BoxCollider box);
     public List<Bed> GetUnassignedBeds();

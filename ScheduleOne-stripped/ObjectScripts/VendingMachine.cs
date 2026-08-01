@@ -15,6 +15,7 @@ using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.Interaction;
 using ScheduleOne.ItemFramework;
+using ScheduleOne.Misc;
 using ScheduleOne.Money;
 using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
@@ -42,12 +43,6 @@ public class VendingMachine : NetworkBehaviour, IGUIDRegisterable, IGenericSavea
     public CashPickup CashPrefab;
     [Header("References")]
     public MeshRenderer DoorMesh;
-    public MeshRenderer BodyMesh;
-    public Material DoorOffMat;
-    public Material DoorOnMat;
-    public Material BodyOffMat;
-    public Material BodyOnMat;
-    public OptimizedLight[] Lights;
     public AudioSourceController PaySound;
     public AudioSourceController DispenseSound;
     public Animation Anim;
@@ -56,6 +51,7 @@ public class VendingMachine : NetworkBehaviour, IGUIDRegisterable, IGenericSavea
     public Transform AccessPoint;
     public PhysicsDamageable Damageable;
     public Transform CashSpawnPoint;
+    public ToggleableLight[] Lights;
     public UnityEvent onBreak;
     public UnityEvent onRepair;
     private bool isLit;

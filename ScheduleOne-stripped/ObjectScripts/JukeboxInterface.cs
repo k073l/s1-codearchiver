@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Interaction;
 using ScheduleOne.PlayerScripts;
-using ScheduleOne.UI;
+using ScheduleOne.State;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,7 +12,8 @@ using UnityEngine.UI;
 namespace ScheduleOne.ObjectScripts;
 public class JukeboxInterface : MonoBehaviour
 {
-    public const float OPEN_TIME;
+    private const float OpenTime;
+    private const float Fov;
     [Header("References")]
     public Jukebox Jukebox;
     public Canvas Canvas;
@@ -26,6 +27,7 @@ public class JukeboxInterface : MonoBehaviour
     public GameObject AmbientDisplayContainer;
     public TextMeshPro AmbientDisplaySongLabel;
     public TextMeshPro AmbientDisplayTimeLabel;
+    public MonoState State;
     [Header("Settings")]
     public Sprite PlaySprite;
     public Sprite PauseSprite;
@@ -45,10 +47,9 @@ public class JukeboxInterface : MonoBehaviour
     private void UpdateAmbientDisplay();
     private void SetupSongEntries();
     public void Start();
-    private void OnDestroy();
-    private void Exit(ExitAction action);
     public void Open();
     public void Close();
+    private void OnClose();
     private void Hovered();
     private void Interacted();
     public void PlayPausePressed();

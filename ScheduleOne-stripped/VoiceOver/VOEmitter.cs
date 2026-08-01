@@ -1,4 +1,5 @@
 using ScheduleOne.Audio;
+using ScheduleOne.NPCs.Framework;
 using UnityEngine;
 
 namespace ScheduleOne.VoiceOver;
@@ -6,16 +7,17 @@ namespace ScheduleOne.VoiceOver;
 public class VOEmitter : MonoBehaviour
 {
     public const float PitchVariation;
-    [SerializeField]
-    private VODatabase Database;
-    [Range(0.5f, 2f)]
-    public float PitchMultiplier;
-    private float runtimePitchMultiplier;
-    protected AudioSourceController audioSourceController;
-    private VODatabase defaultVODatabase;
+    protected float _runtimePitchMultiplier;
+    protected AudioSourceController _audioSourceController;
+    protected VODatabase _defaultVODatabase;
+    protected VODatabase _currentDatabase;
+    protected VODatabase _defaultDatabase;
+    protected float _defaultPitch;
     protected virtual void Awake();
+    public void Initialize(NPCData data);
     public virtual void Play(EVOLineType lineType);
     public void SetRuntimePitchMultiplier(float pitchMultiplier);
     public void SetDatabase(VODatabase database, bool writeDefault = true);
+    public void SetDefaultPitch(float pitch);
     public void ResetDatabase();
 }

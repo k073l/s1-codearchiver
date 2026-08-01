@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using ScheduleOne.Core;
 using UnityEngine;
 
 namespace ScheduleOne.Dialogue;
@@ -11,4 +12,6 @@ public class DialogueModule : MonoBehaviour
     public bool HasChain(string key);
     public string GetLine(string key);
     public bool HasLine(string key);
+    [Button]
+    public int GetWordCount();
 }

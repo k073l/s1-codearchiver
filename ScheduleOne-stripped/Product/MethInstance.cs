@@ -9,6 +9,7 @@ using ScheduleOne.NPCs;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Product.Packaging;
+using ScheduleOne.Tools;
 using UnityEngine;
 
 namespace ScheduleOne.Product;

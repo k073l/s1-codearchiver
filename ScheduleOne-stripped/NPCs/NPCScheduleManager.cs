@@ -24,7 +24,6 @@ public class NPCScheduleManager : MonoBehaviour
     [Header("References")]
     public GameObject[] EnabledDuringCurfew;
     public GameObject[] EnabledDuringNoCurfew;
-    public List<NPCAction> ActionList;
     [Header("Discrete Actions")]
     [SerializeField]
     private List<NPCDiscreteAction> discreteActions;
@@ -35,6 +34,7 @@ public class NPCScheduleManager : MonoBehaviour
     public List<NPCAction> PendingActions { get; set; } = new List<NPCAction>();
     public NPC Npc { get; protected set; }
     public List<NPCDiscreteAction> DiscreteActions => discreteActions;
+    public List<NPCAction> ActionList { get; private set; } = new List<NPCAction>();
     protected List<NPCAction> ActionsAwaitingStart { get; set; } = new List<NPCAction>();
     protected TimeManager Time => NetworkSingleton<TimeManager>.Instance;
 

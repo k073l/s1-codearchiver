@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using FishNet.Object;
 using ScheduleOne.Audio;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Gamepad;
 using ScheduleOne.Interaction;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.State;
 using ScheduleOne.UI;
-using ScheduleOne.UI.Compass;
 using ScheduleOne.Vision;
 using UnityEngine;
 using UnityEngine.Events;
@@ -29,6 +30,7 @@ public class SpraySurfaceInteraction : MonoBehaviour
     public Image SprayImg;
     public AudioSourceController SpraySound;
     public AudioSourceController CleanSound;
+    public MonoState State;
     public bool _allowDraw;
     [Header("Settings")]
     [SerializeField]
@@ -40,7 +42,6 @@ public class SpraySurfaceInteraction : MonoBehaviour
     private List<UShort2> currentStrokePixels;
     private bool isPaintingStroke;
     private float timeSinceStrokeStart;
-    private int _startPaintedPixelCount;
     public bool IsOpen { get; private set; }
     private bool confirmationPanelOpen => ((Component)Singleton<GraffitiMenu>.Instance.ConfirmPanel).gameObject.activeSelf;
     private int _paintedPixelLimit => Mathf.RoundToInt(25000f * PaintedPixelLimitMultiplier);
@@ -57,6 +58,7 @@ public class SpraySurfaceInteraction : MonoBehaviour
     private void FixedUpdate();
     private void StartStroke(bool recordHistory = true);
     private void EndStroke(bool stopSpraySound);
+    private bool IsPointerOverSurface();
     private bool GetCursorPositionOnSurface(out ushort pixelX, out ushort pixelY);
     private Ray GetCursorRay();
     private void Hovered();
@@ -64,7 +66,9 @@ public class SpraySurfaceInteraction : MonoBehaviour
     private void UseGraffitiCleaner();
     private void Exit(ExitAction action);
     private void Open();
+    private void DoneClicked();
     private void Close();
+    private void OnClose();
     private void EquippedSlotChanged(int equippedSlotIndex);
     private void SetColor(ESprayColor color);
     private void SetStrokeSize(byte strokeSize);

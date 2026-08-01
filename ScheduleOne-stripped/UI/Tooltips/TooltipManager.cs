@@ -20,6 +20,7 @@ public class TooltipManager : Singleton<TooltipManager>
     private List<GraphicRaycaster> raycasters;
     private EventSystem eventSystem;
     private bool tooltipShownThisFrame;
+    private bool _manuallyDeactivateTooltip;
     private PointerEventData pointerEventData;
     private List<RaycastResult> rayResults;
     protected override void Awake();
@@ -27,5 +28,6 @@ public class TooltipManager : Singleton<TooltipManager>
     protected virtual void LateUpdate();
     public void AddCanvas(Canvas canvas);
     private void CheckForTooltipHover();
-    public void ShowTooltip(string text, Vector2 position, bool worldspace);
+    public void HideTooltip();
+    public void ShowTooltip(string text, Vector2 position, bool worldspace, bool manuallyDeactivate = false);
 }

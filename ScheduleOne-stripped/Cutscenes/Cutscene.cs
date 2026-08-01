@@ -1,6 +1,6 @@
 using ScheduleOne.DevUtilities;
 using ScheduleOne.PlayerScripts;
-using ScheduleOne.UI;
+using ScheduleOne.State;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,7 +10,6 @@ public class Cutscene : MonoBehaviour
 {
     [Header("Settings")]
     public string Name;
-    public bool DisablePlayerControl;
     public bool OverrideFOV;
     public float CameraFOV;
     [Header("References")]
@@ -18,7 +17,8 @@ public class Cutscene : MonoBehaviour
     [Header("Events")]
     public UnityEvent onPlay;
     public UnityEvent onEnd;
-    private Animation animation;
+    private Animation _animation;
+    private ScheduleOne.State.State _state;
     public bool IsPlaying { get; private set; }
 
     protected virtual void Awake();

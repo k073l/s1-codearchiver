@@ -28,11 +28,14 @@ public abstract class App<T> : PlayerSingleton<T> where T : PlayerSingleton<T>
     protected RectTransform appContainer;
     protected RectTransform notificationContainer;
     protected Text notificationText;
+    [SerializeField]
+    protected UIScreen _screen;
     protected Button appIconButton;
     public bool isOpen { get; protected set; }
 
     public static App<T> GetApp(int index);
     public override void OnStartClient(bool IsOwner);
+    public bool AvailableInCurrentScene();
     protected override void Start();
     private void Close();
     protected virtual void Update();
@@ -41,6 +44,7 @@ public abstract class App<T> : PlayerSingleton<T> where T : PlayerSingleton<T>
     public void SetNotificationCount(int amount);
     protected virtual void OnPhoneOpened();
     private void ShortcutClicked();
-    public virtual void Exit(ExitAction exit);
+    private void Exit(ExitAction action);
+    protected virtual void OnExit(ExitAction action);
     public virtual void SetOpen(bool open);
 }

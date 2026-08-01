@@ -13,7 +13,7 @@ namespace ScheduleOne.UI.MainMenu;
 public class SaveImportButton : MonoBehaviour
 {
     public ImportScreen ImportScreen;
-    public MainMenuScreen ParentScreen;
+    public MenuScreen ParentScreen;
     public int SaveSlotIndex;
     public static string TempImportPath => Path.Combine(Singleton<SaveManager>.Instance.IndividualSavesContainerPath, "TempImport");
 

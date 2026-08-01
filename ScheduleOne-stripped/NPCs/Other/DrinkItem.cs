@@ -4,8 +4,8 @@ using UnityEngine;
 namespace ScheduleOne.NPCs.Other;
 public class DrinkItem : MonoBehaviour
 {
-    public NPC Npc;
     public AvatarEquippable DrinkPrefab;
+    private NPC _npc;
     public bool active { get; protected set; }
 
     private void Awake();

@@ -10,5 +10,4 @@ public class PhoneCallUtility : MonoBehaviour
     public void StartCall(PhoneCallData callData);
     public void SetQueuedCall(PhoneCallData callData);
     public void ClearCall();
-    public void SetPhoneOpenable(bool openable);
 }

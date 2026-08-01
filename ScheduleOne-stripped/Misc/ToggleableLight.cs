@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 namespace ScheduleOne.Misc;
 public class ToggleableLight : MonoBehaviour
 {
-    private enum State
+    protected enum State
     {
         NotInitialized,
         On,
@@ -26,7 +26,7 @@ public class ToggleableLight : MonoBehaviour
     protected Material lightOnMat;
     [SerializeField]
     protected Material lightOffMat;
-    private State state;
+    protected State state;
     public bool isOn { get; set; }
 
     protected virtual void Awake();

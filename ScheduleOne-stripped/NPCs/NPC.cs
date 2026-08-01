@@ -21,6 +21,7 @@ using ScheduleOne.AvatarFramework.Equipping;
 using ScheduleOne.Combat;
 using ScheduleOne.Core.Equipping.Framework;
 using ScheduleOne.Core.Items.Framework;
+using ScheduleOne.Core.Weather;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Dialogue;
 using ScheduleOne.Doors;
@@ -28,94 +29,44 @@ using ScheduleOne.Economy;
 using ScheduleOne.Effects;
 using ScheduleOne.Equipping.Framework;
 using ScheduleOne.GameTime;
-using ScheduleOne.Interaction;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Map;
 using ScheduleOne.Messaging;
 using ScheduleOne.NPCs.Actions;
 using ScheduleOne.NPCs.Behaviour;
+using ScheduleOne.NPCs.Framework;
 using ScheduleOne.NPCs.Relation;
 using ScheduleOne.NPCs.Responses;
 using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.Persistence.Loaders;
 using ScheduleOne.PlayerScripts;
-using ScheduleOne.Variables;
+using ScheduleOne.Tools;
 using ScheduleOne.Vehicles;
 using ScheduleOne.Vehicles.AI;
 using ScheduleOne.Vision;
 using ScheduleOne.VoiceOver;
-using ScheduleOne.Weather;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
 namespace ScheduleOne.NPCs;
-[RequireComponent(typeof(NPCHealth))]
 public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTargetable, IDamageable, ISightable, INetworkedEquippableUser, IEquippableUser, IWeatherEntity
 {
     private const int PanicDuration;
-    public const bool RequiresRegionUnlocked;
-    [Header("Info Settings")]
-    public string FirstName;
-    public bool hasLastName;
-    public string LastName;
-    public string ID;
-    public Sprite MugshotSprite;
+    private const int HeadLightStartTime;
+    private const int HeadLightsEndTime;
+    [SerializeField]
+    private BaseNPCDataObject _npcData;
+    [Header("General Scene Settings")]
     public EMapRegion Region;
-    [Header("If true, NPC will respawn next day instead of waiting 3 days.")]
-    public bool IsImportant;
-    [Header("Personality")]
-    [Range(0f, 1f)]
-    public float Aggression;
-    [Header("References")]
-    [SerializeField]
-    protected Transform modelContainer;
-    [SerializeField]
-    protected InteractableObject intObj;
-    public NPCMovement Movement;
-    public DialogueHandler DialogueHandler;
-    public Avatar Avatar;
-    public NPCAwareness Awareness;
-    public NPCResponses Responses;
-    public NPCActions Actions;
-    public NPCBehaviour Behaviour;
-    public NPCInventory Inventory;
-    public VOEmitter VoiceOverEmitter;
-    public NPCHealth Health;
-    public EntityVisibility Visibility;
+    public string BakedGUID;
     public Action<LandVehicle> onEnterVehicle;
     public Action<LandVehicle> onExitVehicle;
-    [Header("Summoning")]
-    public bool CanBeSummoned;
     [Header("Relationship")]
     public NPCRelationData RelationData;
-    public string NPCUnlockedVariable;
-    public bool ShowRelationshipInfo;
-    [Header("Messaging")]
-    public List<EConversationCategory> ConversationCategories;
-    public bool MessagingKnownByDefault;
-    public bool ConversationCanBeHidden;
-    public Action onConversationCreated;
-    [Header("Other Settings")]
-    public bool CanOpenDoors;
-    public bool OverrideParent;
-    public Transform OverriddenParent;
-    public bool IgnoreImpacts;
-    [Range(0f, 1f)]
-    [SerializeField]
-    private float _useUmbrellaChance;
-    [Range(0f, 1f)]
-    [SerializeField]
-    private float _rainTolerance;
-    [Range(1f, 10f)]
-    [SerializeField]
-    private float _walkInRainMaxSpeedMultiplier;
-    [SerializeField]
-    protected List<GameObject> OutlineRenderers;
-    protected Outlinable OutlineEffect;
-    [Header("GUID")]
-    public string BakedGUID;
+    protected List<GameObject> _outlineRenderers;
+    protected Outlinable _outlineEffect;
     public Action<bool> onVisibilityChanged;
     private Coroutine resetUnsettledCoroutine;
     [CompilerGenerated]
@@ -123,9 +74,6 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     [HideInInspector]
     public bool _003CHasUmbrella_003Ek__BackingField;
     private List<int> impactHistory;
-    private int headlightStartTime;
-    private int heaedLightsEndTime;
-    protected float defaultAggression;
     private WeatherConditions _weatherTolerence;
     protected WeatherConditions _currentWeatherConditionsForEntity;
     private float _wetness;
@@ -139,17 +87,35 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     public bool IsLocalPlayer => false;
     public NetworkBehaviour NetworkBehaviour => (NetworkBehaviour)(object)this;
     public IThirdPersonReferencesProvider ThirdPersonReferences => Avatar;
-    public string fullName { get; }
+    public ScheduleOne.NPCs.Framework.NPCData NPCData { get; private set; }
+    public string ID { get; }
+    public string FirstName => NPCData.BasicInfo.FirstName;
+    public string LastName => NPCData.BasicInfo.LastName;
+    public string FullName { get; }
+    public Sprite MugshotSprite => NPCData.Appearance.Mugshot;
     public float Scale { get; private set; } = 1f;
     public bool IsConscious { get; }
+    public Guid GUID { get; protected set; }
+    public float Aggression => AggressionController.Value;
+    public FloatStack AggressionController { get; private set; } = new FloatStack(0f);
+    public NPCMovement Movement { get; private set; }
+    public DialogueHandler DialogueHandler { get; private set; }
+    public Avatar Avatar { get; private set; }
+    public NPCAwareness Awareness { get; private set; }
+    public NPCResponses Responses { get; private set; }
+    public NPCActions Actions { get; private set; }
+    public NPCBehaviour Behaviour { get; private set; }
+    public NPCInventory Inventory { get; private set; }
+    public VOEmitter VoiceOverEmitter { get; private set; }
+    public NPCHealth Health { get; private set; }
+    public EntityVisibility Visibility { get; private set; }
     public LandVehicle CurrentVehicle { get; protected set; }
     public bool IsInVehicle => (Object)(object)CurrentVehicle != (Object)null;
     public bool isInBuilding => (Object)(object)CurrentBuilding != (Object)null;
     public NPCEnterableBuilding CurrentBuilding { get; protected set; }
     public StaticDoor LastEnteredDoor { get; set; }
     public MSGConversation MSGConversation { get; protected set; }
-    public float WalkInRainMaxSpeedMultiplier => _walkInRainMaxSpeedMultiplier;
-    public string SaveFolderName => fullName;
+    public string SaveFolderName => FullName;
     public string SaveFileName => "NPC";
     public Loader Loader => null;
     public bool ShouldSaveUnderFolder => true;
@@ -165,10 +131,9 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     public Vector3 LookAtPoint => ((Component)Avatar.Eyes).transform.position;
     public bool IsCurrentlyTargetable { get; }
     public float RangedHitChanceMultiplier => 1f;
-    public Vector3 Velocity => Movement.VelocityCalculator.Velocity;
+    public Vector3 Velocity => Movement.Velocity;
     public VisionEvent HighestProgressionEvent { get; set; }
     public EntityVisibility VisibilityComponent => Visibility;
-    public Guid GUID { get; protected set; }
     public bool isVisible { get; protected set; } = true;
     public bool isUnsettled { get; protected set; }
     public bool IsPanicked { get; private set; }
@@ -183,11 +148,14 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     public bool IsUnderCover { get; set; }
     public bool SyncAccessor__003CHasUmbrella_003Ek__BackingField { get; set; }
 
+    public event Action<ScheduleOne.NPCs.Framework.NPCData> OnNPCDataReady;
+    public event Action OnConversationCreated;
     public void RecordLastKnownPosition(bool resetTimeSinceLastSeen);
     public float GetSearchTime();
     public bool IsCurrentlySightable();
     public override void Awake();
-    protected virtual void CheckAndGetReferences();
+    private void ApplyNPCData(ScheduleOne.NPCs.Framework.NPCData data);
+    private void GetAndValidateReferences();
     public virtual void InitializeSaveable();
     public void SetGUID(Guid guid);
     private void PlayerSpawned();
@@ -212,8 +180,6 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     protected virtual void ApplyScale();
     [ServerRpc(RequireOwnership = false)]
     public virtual void AimedAtByPlayer(NetworkObject player);
-    public void OverrideAggression(float aggression);
-    public void ResetAggression();
     protected virtual void OnDie();
     protected virtual void OnKnockedOut();
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
@@ -235,10 +201,6 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     public void SendWorldSpaceDialogue(string text, float duration);
     [ObserversRpc(RunLocally = true)]
     public void ShowWorldSpaceDialogue(string text, float duration);
-    private void Hovered_Internal();
-    private void Interacted_Internal();
-    protected virtual void Hovered();
-    protected virtual void Interacted();
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
     public void EnterBuilding(NetworkConnection connection, string buildingGUID, int doorIndex);
@@ -317,11 +279,11 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     protected virtual bool ShouldSaveInventory();
     protected virtual bool ShouldSaveHealth();
     public string GetSaveString();
-    public virtual NPCData GetNPCData();
+    public virtual ScheduleOne.Persistence.Datas.NPCData GetNPCData();
     public virtual DynamicSaveData GetSaveData();
     public virtual List<string> WriteData(string parentFolderPath);
-    public virtual void Load(NPCData data, string containerPath);
-    public virtual void Load(DynamicSaveData dynamicData, NPCData npcData);
+    public virtual void Load(ScheduleOne.Persistence.Datas.NPCData data, string containerPath);
+    public virtual void Load(DynamicSaveData dynamicData, ScheduleOne.Persistence.Datas.NPCData npcData);
     NetworkObject ICombatTargetable.get_NetworkObject();
     GameObject IDamageable.get_gameObject();
     NetworkObject ISightable.get_NetworkObject();

@@ -16,6 +16,9 @@ public class TabItemUI : MonoBehaviour
     private GameObject _indicator;
     [SerializeField]
     private Text _indicatorLabel;
+    [Header("Screens")]
+    [SerializeField]
+    private UIPanel _contentPanel;
     public ButtonUI Button => _button;
     public Text Label => _label;
     public GameObject Content => _content;

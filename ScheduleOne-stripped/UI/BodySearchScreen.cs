@@ -7,11 +7,13 @@ using ScheduleOne.DevUtilities;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.NPCs;
 using ScheduleOne.PlayerScripts;
-using ScheduleOne.UI.Items;
+using ScheduleOne.State;
+using ScheduleOne.UI.Input;
 using ScheduleOne.Variables;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace ScheduleOne.UI;
@@ -35,6 +37,12 @@ public class BodySearchScreen : Singleton<BodySearchScreen>
     public RectTransform TutorialContainer;
     public Animation ResetAnimation;
     public AudioSourceController FailSound;
+    public InputActionReference SpeedUpInput;
+    public MonoState State;
+    public UIPanel Panel;
+    [Header("Input Prompts")]
+    [SerializeField]
+    private InputPromptObj _inputPromptObj;
     private List<ItemSlotUI> slots;
     public UnityEvent onSearchClear;
     public UnityEvent onSearchFail;
@@ -44,7 +52,6 @@ public class BodySearchScreen : Singleton<BodySearchScreen>
     private ItemSlotUI hoveredSlot;
     private Color[] defaultItemIconColors;
     private float speedBoost;
-    private NPC searcher;
     private bool _caught;
     public bool IsOpen { get; private set; }
     public bool TutorialOpen { get; private set; }

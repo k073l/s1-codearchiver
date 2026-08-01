@@ -8,7 +8,6 @@ using ScheduleOne.PlayerScripts;
 using ScheduleOne.UI.Items;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace ScheduleOne.UI;
@@ -44,7 +43,6 @@ public class HUD : Singleton<HUD>
     public TextMeshProUGUI QuestEntryTitle;
     public CrimeStatusUI CrimeStatusUI;
     public BalanceDisplay OnlineBalanceDisplay;
-    public BalanceDisplay SafeBalanceDisplay;
     public CrosshairText CrosshairText;
     public RectTransform UnreadMessagesPrompt;
     public TextMeshProUGUI SleepPrompt;
@@ -54,11 +52,11 @@ public class HUD : Singleton<HUD>
     public CanvasGroup CashSlotHintAnimCanvasGroup;
     [SerializeField]
     private ReticleController _reticleController;
+    public StackSplitTutorial StackSplitTutorial;
     [Header("Settings")]
     public Gradient RedGreenGradient;
     private int SampleSize;
     private List<float> _previousFPS;
-    private EventSystem eventSystem;
     private Coroutine blackOverlayFade;
     private bool radialIndicatorSetThisFrame;
     protected override void Awake();

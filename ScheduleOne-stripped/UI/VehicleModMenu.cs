@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Money;
 using ScheduleOne.PlayerScripts;
-using ScheduleOne.UI.Compass;
+using ScheduleOne.State;
 using ScheduleOne.Vehicles;
 using ScheduleOne.Vehicles.Modification;
 using TMPro;
@@ -28,6 +28,10 @@ public class VehicleModMenu : Singleton<VehicleModMenu>
     protected Button confirmButton_Online;
     [SerializeField]
     protected TextMeshProUGUI confirmText_Online;
+    [SerializeField]
+    protected MonoState state;
+    [SerializeField]
+    protected UIPanel panel;
     [Header("References")]
     public Transform CameraPosition;
     public Transform VehiclePosition;
@@ -48,6 +52,7 @@ public class VehicleModMenu : Singleton<VehicleModMenu>
     protected virtual void Update();
     public void Open(LandVehicle vehicle);
     public void Close();
+    private void OnClose();
     public void ColorClicked(EVehicleColor col);
     private void UpdateConfirmButton();
     private void RefreshSelectionIndicator();

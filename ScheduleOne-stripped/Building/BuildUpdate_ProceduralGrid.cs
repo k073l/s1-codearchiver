@@ -23,7 +23,7 @@ public class BuildUpdate_ProceduralGrid : BuildUpdate_Base
     public float detectionRange;
     public LayerMask detectionMask;
     public float rotation_Smoothing;
-    protected float currentRotation;
+    protected float _rotation;
     protected bool validPosition;
     protected Material currentGhostMaterial;
     protected Intersection bestIntersection;

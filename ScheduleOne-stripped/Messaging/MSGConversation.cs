@@ -94,7 +94,7 @@ public class MSGConversation : ISaveable
     public void ShowResponses(List<Response> _responses, float showResponseDelay = 0f, bool network = true);
     protected void CreateResponseUI(Response r);
     protected void ClearResponseUI();
-    public void SetResponseContainerVisible(bool v);
+    public void SetResponseContainerVisible(bool visible);
     public void ResponseChosen(Response r, bool network);
     public void ClearResponses(bool network = false);
     public SendableMessage CreateSendableMessage(string text);

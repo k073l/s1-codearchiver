@@ -5,6 +5,7 @@ using FishNet.Object;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Management;
 using ScheduleOne.PlayerScripts;
+using ScheduleOne.State;
 using ScheduleOne.UI;
 using ScheduleOne.UI.Management;
 using UnityEngine;
@@ -20,6 +21,7 @@ public class ManagementClipboard : Singleton<ManagementClipboard>
     public Camera OverlayCamera;
     public Light OverlayLight;
     public SelectionInfoUI SelectionInfo;
+    public MonoState State;
     [Header("Settings")]
     public float ClosedOffset;
     public UnityEvent onClipboardEquipped;
@@ -35,6 +37,8 @@ public class ManagementClipboard : Singleton<ManagementClipboard>
     private void Update();
     private void Exit(ExitAction exitAction);
     public void Open(List<IConfigurable> selection, ManagementClipboard_Equippable equippable);
-    public void Close(bool preserveState = false);
+    public void Close();
+    public void CloseAndPreserveState();
+    private void OnClose();
     private void LerpToVerticalPosition(bool open, Action callback);
 }

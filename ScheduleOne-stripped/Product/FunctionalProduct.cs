@@ -15,12 +15,13 @@ public class FunctionalProduct : Draggable
     private Vector3 startLocalPos;
     private float lowestMaxZ;
     public SmoothedVelocityCalculator VelocityCalculator { get; private set; }
+    public override bool RegisterDefaultLureWhenEmpty => true;
 
+    protected override void Awake();
     public virtual void Initialize(PackagingStation station, ItemInstance item, Transform alignment, bool align = true);
     public virtual void Initialize(ItemInstance item);
     public virtual void InitializeVisuals(ItemInstance item);
     public void AlignTo(Transform alignment);
-    protected override void FixedUpdate();
     protected override void LateUpdate();
     private void Clamp();
 }

@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using ScheduleOne.Clothing;
+using ScheduleOne.DevUtilities;
 using ScheduleOne.ItemFramework;
 using TMPro;
 using UnityEngine;
@@ -14,10 +16,13 @@ public class ShopColorPicker : MonoBehaviour
     public TextMeshProUGUI ColorLabel;
     public RectTransform ColorButtonParent;
     public GameObject ColorButtonPrefab;
+    public UIScreen Screen;
+    public UIPanel Panel;
     public UnityEvent<EClothingColor> onColorPicked;
+    private List<UISelectable> colorButtons;
     public bool IsOpen => ((Component)this).gameObject.activeInHierarchy;
 
-    public void Start();
+    public void Awake();
     private void ColorPicked(EClothingColor color);
     public void Open(ItemDefinition item);
     public void Close();

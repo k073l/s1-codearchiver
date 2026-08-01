@@ -15,6 +15,7 @@ using FishNet.Serializing.Generated;
 using FishNet.Transporting;
 using ScheduleOne.Cartel;
 using ScheduleOne.Core;
+using ScheduleOne.Core.Weather;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Dialogue;
 using ScheduleOne.Effects;
@@ -26,9 +27,9 @@ using ScheduleOne.Map;
 using ScheduleOne.Messaging;
 using ScheduleOne.Money;
 using ScheduleOne.NPCs;
+using ScheduleOne.NPCs.Behaviour;
 using ScheduleOne.NPCs.Relation;
 using ScheduleOne.NPCs.Responses;
-using ScheduleOne.NPCs.Schedules;
 using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.Persistence.Loaders;
@@ -40,13 +41,11 @@ using ScheduleOne.UI.Handover;
 using ScheduleOne.UI.Phone.Messages;
 using ScheduleOne.Variables;
 using ScheduleOne.VoiceOver;
-using ScheduleOne.Weather;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace ScheduleOne.Economy;
 [DisallowMultipleComponent]
-[RequireComponent(typeof(NPC))]
 public class Customer : NetworkBehaviour, ISaveable
 {
     [Serializable]
@@ -112,17 +111,16 @@ public class Customer : NetworkBehaviour, ISaveable
     public const float RELATIONSHIP_FOR_GUARANTEED_SUPPLIER_RECOMMENDATION;
     [CompilerGenerated]
     [SyncVar( /*Could not decode attribute arguments.*/)]
+    [HideInInspector]
     public float _003CCurrentAddiction_003Ek__BackingField;
     private ContractInfo offeredContractInfo;
     [CompilerGenerated]
     [SyncVar]
+    [HideInInspector]
     public bool _003CHasBeenRecommended_003Ek__BackingField;
-    public NPCSignal_WaitForDelivery DealSignal;
     [Header("Settings")]
-    public bool AvailableInDemo;
     [SerializeField]
     protected CustomerData customerData;
-    public DeliveryLocation DefaultDeliveryLocation;
     [Header("Events")]
     public UnityEvent onUnlocked;
     public UnityEvent onDealCompleted;
@@ -137,6 +135,8 @@ public class Customer : NetworkBehaviour, ISaveable
     private CustomerAffinityData currentAffinityData;
     private bool pendingInstantDeal;
     private ProductItemInstance consumedSample;
+    private CustomerAttendDealBehaviour _attendDealBehaviour;
+    private List<EDay> _cachedOrderDays;
     public SyncVar<float> syncVar____003CCurrentAddiction_003Ek__BackingField;
     public SyncVar<bool> syncVar____003CHasBeenRecommended_003Ek__BackingField;
     private bool NetworkInitialize___EarlyScheduleOne_002EEconomy_002ECustomerAssembly_002DCSharp_002Edll_Excuted;
@@ -188,15 +188,13 @@ public class Customer : NetworkBehaviour, ISaveable
     protected virtual void OnSleepStart();
     public static void GetContractTimings(QuestWindowConfig dealWindow, out int softStartTime, out int hardStartTime, out int endTime);
     private void UpdateDealAttendance();
-    [ObserversRpc(RunLocally = true)]
-    [TargetRpc]
-    private void ConfigureDealSignal(NetworkConnection conn, int startTime, bool active);
     private void UpdateOfferExpiry();
     [Button]
     public void ForceDealOffer();
     private List<ProductDefinition> GetOrderableProducts(Dealer dealer = null);
     private List<Tuple<ProductDefinition, int>> GetOrderableProductsWithQuantities(Dealer dealer = null);
     private ContractInfo TryGenerateContract(Dealer dealer);
+    private DeliveryLocation GetDeliveryLocation();
     private ProductDefinition GetWeightedRandomProduct(Dealer dealer, out float appeal, out int orderableQuantity);
     protected virtual void OnCustomerUnlocked(NPCRelationData.EUnlockType unlockType, bool notify);
     public void SetHasBeenRecommended();
@@ -305,11 +303,6 @@ public class Customer : NetworkBehaviour, ISaveable
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();
-    private void RpcWriter___Observers_ConfigureDealSignal_338960014(NetworkConnection conn, int startTime, bool active);
-    private void RpcLogic___ConfigureDealSignal_338960014(NetworkConnection conn, int startTime, bool active);
-    private void RpcReader___Observers_ConfigureDealSignal_338960014(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Target_ConfigureDealSignal_338960014(NetworkConnection conn, int startTime, bool active);
-    private void RpcReader___Target_ConfigureDealSignal_338960014(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Observers_SetOfferedContract_4277245194(ContractInfo info, GameDateTime offerTime);
     private void RpcLogic___SetOfferedContract_4277245194(ContractInfo info, GameDateTime offerTime);
     private void RpcReader___Observers_SetOfferedContract_4277245194(PooledReader PooledReader0, Channel channel);

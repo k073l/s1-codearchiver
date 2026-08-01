@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using FishNet.Object;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.Gamepad;
 using ScheduleOne.Growing;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.ObjectScripts;
 using ScheduleOne.PlayerScripts;
-using ScheduleOne.UI;
+using ScheduleOne.UI.Input;
 using ScheduleOne.Variables;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;

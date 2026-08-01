@@ -5,7 +5,7 @@ using ScheduleOne.Growing;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Trash;
-using ScheduleOne.UI;
+using ScheduleOne.UI.Input;
 using UnityEngine;
 using UnityEngine.Events;
 

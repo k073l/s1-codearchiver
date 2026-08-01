@@ -23,7 +23,6 @@ public class DarkMarketMainDoor : MonoBehaviour
     private Coroutine knockRoutine;
     public bool KnockingEnabled { get; private set; } = true;
 
-    private void Start();
     public void SetKnockingEnabled(bool enabled);
     public void Hovered();
     public void Interacted();

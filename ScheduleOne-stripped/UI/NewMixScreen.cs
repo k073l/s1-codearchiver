@@ -15,11 +15,12 @@ using UnityEngine.UI;
 namespace ScheduleOne.UI;
 public class NewMixScreen : Singleton<NewMixScreen>
 {
-    public const int MAX_PROPERTIES_DISPLAYED;
+    private const int MaxDisplayedProperties;
     [Header("References")]
     [SerializeField]
     protected Canvas canvas;
-    public RectTransform Container;
+    [SerializeField]
+    protected RectTransform container;
     [SerializeField]
     protected TMP_InputField nameInputField;
     [SerializeField]
@@ -27,28 +28,24 @@ public class NewMixScreen : Singleton<NewMixScreen>
     [SerializeField]
     protected RectTransform editIcon;
     [SerializeField]
-    protected Button randomizeNameButton;
-    [SerializeField]
     protected Button confirmButton;
     [SerializeField]
-    protected TextMeshProUGUI PropertiesLabel;
+    protected TextMeshProUGUI[] propertiesLabels;
     [SerializeField]
-    protected TextMeshProUGUI MarketValueLabel;
-    public AudioSourceController Sound;
-    [Header("Prefabs")]
+    protected TextMeshProUGUI marketValueLabel;
     [SerializeField]
-    protected GameObject attributeEntryPrefab;
+    protected AudioSourceController sound;
+    [SerializeField]
+    protected UIScreen screen;
     [Header("Name Library")]
     [SerializeField]
     protected List<string> name1Library;
     [SerializeField]
     protected List<string> name2Library;
-    public Action<string> onMixNamed;
     public bool IsOpen => ((Behaviour)canvas).enabled;
 
+    public event Action<string> onMixNamed;
     protected override void Awake();
-    private void Exit(ExitAction action);
-    protected virtual void Update();
     public void Open(List<Effect> properties, EDrugType drugType, float productMarketValue);
     public void Close();
     public void RandomizeButtonClicked();

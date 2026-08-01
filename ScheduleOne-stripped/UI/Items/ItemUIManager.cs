@@ -18,10 +18,9 @@ public class ItemUIManager : Singleton<ItemUIManager>
     private static readonly float[] CASH_DRAG_THRESHOLDS;
     [Header("References")]
     public Canvas Canvas;
-    public RectTransform CashDragAmountContainer;
-    public RectTransform InputsContainer;
     public ItemInfoPanel InfoPanel;
     public RectTransform ItemQuantityPrompt;
+    public RectTransform CashQuantityPrompt;
     public FilterConfigPanel FilterConfigPanel;
     [Header("Prefabs")]
     public ItemSlotUI ItemSlotUIPrefab;
@@ -37,21 +36,29 @@ public class ItemUIManager : Singleton<ItemUIManager>
     private List<ItemSlot> PrimarySlots;
     private List<ItemSlot> SecondarySlots;
     private bool customDragAmount;
+    private bool canControllerQuickMove;
+    private bool isInfoPanelToggledOn;
+    private bool controllerQuickMoveSingle;
     private Coroutine quantityChangePopRoutine;
     public UnityEvent onDragStart;
     public UnityEvent onItemMoved;
-    private bool canControllerQuickMove;
-    private bool isInfoPanelToggledOn;
     public bool DraggingEnabled { get; protected set; }
     public ItemSlotUI HoveredSlot { get; protected set; }
     public bool QuickMoveEnabled { get; protected set; }
+    public bool IsCurrentlyDragging => (Object)(object)draggedSlot != (Object)null;
+    public bool IsHoveringSlot => (Object)(object)HoveredSlot != (Object)null;
+    public bool IsDraggingCash => isDraggingCash;
 
+    public event Action<ItemSlotUI> OnDragStart;
     protected override void Awake();
+    protected override void OnDestroy();
     private void OnInputDeviceChanged(GameInput.InputDeviceType type);
     public void ControllerHighlightSlot(ItemSlotUI itemSlot);
+    public void ControllerStopHighlightSlot(ItemSlotUI itemSlot);
     public void ControllerToggleTooltip();
     public void ControllerGrabAllSlot();
     public void ControllerQuickMoveSlot();
+    public void ControllerQuickMoveSlotSingle();
     public void ControllerDragAddQuantity();
     public void ControllerDragSubtractQuantity();
     public void ControllerDiscardSlot();
@@ -65,7 +72,8 @@ public class ItemUIManager : Singleton<ItemUIManager>
     private void UpdateCashDragAmount(CashInstance instance);
     private void AddCashAmount(CashInstance instance, bool wrapAround = false);
     private void SubtractCashAmount(CashInstance instance, bool wrapAround = false);
-    public void SetDraggingEnabled(bool enabled, bool modifierPromptsVisible = true);
+    public void SetDraggingEnabled(bool enabled);
+    public void EnableQuickMove(List<ItemSlot> secondarySlots);
     public void EnableQuickMove(List<ItemSlot> primarySlots, List<ItemSlot> secondarySlots);
     private List<ItemSlot> GetQuickMoveSlots(ItemSlot sourceSlot);
     public void DisableQuickMove();

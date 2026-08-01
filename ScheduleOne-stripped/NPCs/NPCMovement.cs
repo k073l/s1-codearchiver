@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using FishNet;
 using FishNet.Connection;
 using FishNet.Managing;
@@ -67,21 +66,16 @@ public class NPCMovement : NetworkBehaviour
     public const float STUMBLE_DURATION;
     public const float STUMBLE_FORCE;
     public const float OBSTACLE_AVOIDANCE_RANGE;
+    public const float OBSTACLE_AVOIDANCE_RANGE_SQR;
     public const float PLAYER_DIST_IMPACT_THRESHOLD;
     public static Dictionary<Vector3, Vector3> cachedClosestReachablePoints;
     public static List<Vector3> cachedClosestPointKeys;
     public const float CLOSEST_REACHABLE_POINT_CACHE_MAX_SQR_OFFSET;
+    private const float SlipperyModeMultiplier;
     public bool DEBUG;
-    [Header("Settings")]
-    public float WalkSpeed;
-    public float RunSpeed;
-    public float MoveSpeedMultiplier;
     [Header("Obstacle Avoidance")]
     public bool ObstacleAvoidanceEnabled;
     public ObstacleAvoidanceType DefaultObstacleAvoidanceType;
-    [Header("Slippery Mode")]
-    public bool SlipperyMode;
-    public float SlipperyModeMultiplier;
     [Header("References")]
     public NavMeshAgent Agent;
     public NPCSpeedController SpeedController;
@@ -91,13 +85,11 @@ public class NPCMovement : NetworkBehaviour
     public Draggable RagdollDraggable;
     public Collider RagdollDraggableCollider;
     protected NPC npc;
-    public float MovementSpeedScale;
     private float ragdollStaticTime;
     public UnityEvent<LandVehicle> onHitByCar;
     public UnityEvent onRagdollStart;
     public UnityEvent onRagdollEnd;
     private bool cacheNextPath;
-    private Vector3 currentDestination_Reachable;
     private Action<WalkResult> walkResultCallback;
     private float currentMaxDistanceForSuccess;
     private bool forceIsMoving;
@@ -117,8 +109,13 @@ public class NPCMovement : NetworkBehaviour
     private float _defaultAngularSpeed;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002ENPCMovementAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002ENPCMovementAssembly_002DCSharp_002Edll_Excuted;
+    public float WalkSpeed => npc.NPCData.Movement.WalkSpeed;
+    public float RunSpeed => npc.NPCData.Movement.SprintSpeed;
+    public float MoveSpeedMultiplier { get; set; } = 1f;
+    public bool SlipperyMode { get; set; }
     public bool HasDestination { get; protected set; }
     public bool IsMoving { get; }
+    public Vector3 Velocity => VelocityCalculator.Velocity;
     public bool IsPaused { get; protected set; }
     public Vector3 FootPosition => ((Component)this).transform.position;
     public float GravityMultiplier { get; protected set; } = 1f;

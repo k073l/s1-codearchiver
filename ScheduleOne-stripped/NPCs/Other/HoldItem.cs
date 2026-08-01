@@ -4,11 +4,11 @@ using UnityEngine;
 namespace ScheduleOne.NPCs.Other;
 public class HoldItem : MonoBehaviour
 {
-    public NPC Npc;
     public AvatarEquippable Equippable;
+    private NPC _npc;
     public bool active { get; protected set; }
 
+    private void Awake();
     public void Begin();
-    private void Update();
     public void End();
 }

@@ -5,9 +5,10 @@ using UnityEngine;
 namespace ScheduleOne.Property;
 public class SewerOffice : Property
 {
-    private const string DefaultSaveFilePath;
     private bool NetworkInitialize___EarlyScheduleOne_002EProperty_002ESewerOfficeAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EProperty_002ESewerOfficeAssembly_002DCSharp_002Edll_Excuted;
+    private string DefaultSaveFilePath => Path.Combine("DefaultSave", "Properties", "Sewer Office.json");
+
     public override void Awake();
     public void OnPasscodeCorrect();
     public override bool ShouldSave();

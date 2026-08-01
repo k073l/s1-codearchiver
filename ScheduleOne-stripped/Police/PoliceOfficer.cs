@@ -31,7 +31,7 @@ using UnityEngine.Events;
 namespace ScheduleOne.Police;
 public class PoliceOfficer : NPC
 {
-    public const float DEACTIVATION_TIME;
+    public const float OutOfSightTimeToDeactivate;
     public const float INVESTIGATION_COOLDOWN;
     public const float INVESTIGATION_MAX_DISTANCE;
     public const float INVESTIGATION_MIN_VISIBILITY;
@@ -65,14 +65,7 @@ public class PoliceOfficer : NPC
     [Header("Settings")]
     public bool AutoDeactivate;
     public bool ChatterEnabled;
-    [Header("Behaviour Settings")]
-    [Range(0f, 1f)]
-    public float Suspicion;
-    [Range(0f, 1f)]
-    public float Leniency;
     [Header("Body Search Settings")]
-    [Range(0f, 1f)]
-    public float BodySearchChance;
     [Range(1f, 10f)]
     public float BodySearchDuration;
     [HideInInspector]
@@ -89,6 +82,7 @@ public class PoliceOfficer : NPC
         private set; }
     public NetworkObject PursuitTarget => PursuitBehaviour.Target?.NetworkObject;
     public LandVehicle AssignedVehicle { get; set; }
+    public float BodySearchChance { get; set; } = 0.1f;
     public bool SyncAccessor__003CIgnorePlayers_003Ek__BackingField { get; set; }
 
     public override void Awake();

@@ -10,7 +10,7 @@ public class StreetLight : MonoBehaviour
     private static Vector3 PowerOrigin;
     [Header("References")]
     [SerializeField]
-    protected ToggleableLight _light;
+    protected ToggleableLight[] _lights;
     [Header("Timing")]
     public int StartTime;
     public int EndTime;
