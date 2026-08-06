@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FishNet;
+using FishNet.Authenticating;
 using FishNet.Component.Scenes;
 using FishNet.Managing;
 using FishNet.Transporting;
@@ -44,7 +45,15 @@ public class LoadManager : PersistentSingleton<LoadManager>
         Initializing,
         LoadingData,
         SpawningPlayer,
-        WaitingForHost
+        WaitingForHost,
+        WaitingForAuth
+    }
+
+    private enum EAuthOutcome
+    {
+        Waiting,
+        Success,
+        Failure
     }
 
     public const int LOADS_PER_FRAME;
@@ -80,6 +89,7 @@ public class LoadManager : PersistentSingleton<LoadManager>
     public static event Action onLoadConfigurations;
     protected override void Awake();
     protected override void Start();
+    private void OnApplicationQuit();
     private void Bananas();
     private void InitializeItemLoaders();
     private void InitializeObjectLoaders();
