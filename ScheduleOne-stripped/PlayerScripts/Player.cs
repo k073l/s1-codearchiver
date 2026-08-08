@@ -312,7 +312,7 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     private void PreDestroyClientObjects(NetworkConnection conn);
     private void CurrentVehicleChanged(NetworkObject oldVeh, NetworkObject newVeh, bool asServer);
     private void SleepStart();
-    [ServerRpc(RunLocally = true, RequireOwnership = false)]
+    [ServerRpc(RunLocally = true, RequireOwnership = true)]
     public void SetReadyToSleep(bool ready);
     private void SleepEnd();
     private void ExitAll();
