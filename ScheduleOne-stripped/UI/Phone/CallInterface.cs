@@ -37,6 +37,7 @@ public class CallInterface : Singleton<CallInterface>
     public PhoneCallData ActiveCallData { get; private set; }
     public bool IsOpen { get; protected set; }
 
+    public event Action<PhoneCallData> CallEnded;
     public event Action<PhoneCallData> CallCompleted;
     public event Action<PhoneCallData> CallStarted;
     protected override void Awake();

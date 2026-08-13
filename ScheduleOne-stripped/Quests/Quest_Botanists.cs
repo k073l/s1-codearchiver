@@ -11,6 +11,6 @@ public class Quest_Botanists : Quest_Employees
     public QuestEntry AssignSuppliesEntry;
     public QuestEntry AssignWorkEntry;
     public QuestEntry AssignDestinationEntry;
-    protected override void OnMinPass();
+    protected override void OnUncappedMinPass();
     public override List<Employee> GetEmployees();
 }

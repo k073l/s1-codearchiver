@@ -24,7 +24,6 @@ public class DeliveryApp : App<DeliveryApp>
     }
 
     private List<DeliveryShop> deliveryShops;
-    public DeliveryStatusDisplay StatusDisplayPrefab;
     [Header("References")]
     public Animation OrderSubmittedAnim;
     public AudioSourceController OrderSubmittedSound;
@@ -49,6 +48,8 @@ public class DeliveryApp : App<DeliveryApp>
     private float shopPanelWidth;
     [SerializeField]
     private float shopTransitionDuration;
+    [SerializeField]
+    private DeliveryStatusDisplay _deliveryStatusDisplayPrefab;
     [Header("UI")]
     [SerializeField]
     private UIScreen _deliveryScreen;

@@ -12,7 +12,6 @@ public class CallManager : Singleton<CallManager>
 
     public event Action<PhoneCallData> OnCallQueued;
     protected override void Start();
-    private void Update();
     protected override void OnDestroy();
     public void QueueCall(PhoneCallData data);
     public void ClearQueuedCall();
