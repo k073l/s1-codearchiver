@@ -5,6 +5,7 @@ using ScheduleOne.Audio;
 using ScheduleOne.Combat;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.NPCs;
+using ScheduleOne.PlayerScripts;
 using ScheduleOne.Vehicles;
 using ScheduleOne.VoiceOver;
 using UnityEngine;

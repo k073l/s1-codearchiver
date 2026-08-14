@@ -27,6 +27,7 @@ public class PayPhone : MonoBehaviour
     private void OnDestroy();
     private void OnCallStarted(PhoneCallData data);
     private void OnCallCompleted(PhoneCallData data);
+    private void OnCallEnded(PhoneCallData data);
     private void OnCallQueued(PhoneCallData data);
     private void UpdateCallState();
     private IEnumerator PeriodicRing();

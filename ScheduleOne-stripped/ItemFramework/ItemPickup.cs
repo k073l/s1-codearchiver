@@ -20,6 +20,7 @@ public class ItemPickup : MonoBehaviour
     public UnityEvent onPickup;
     protected virtual void Awake();
     private void Start();
+    private void OnDestroy();
     private void Init();
     protected virtual void Hovered();
     private void Interacted();
