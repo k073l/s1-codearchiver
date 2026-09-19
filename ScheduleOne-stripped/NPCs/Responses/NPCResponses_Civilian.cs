@@ -46,7 +46,7 @@ public class NPCResponses_Civilian : NPCResponses
     protected override void RespondToLethalAttack(Player perpetrator, Impact impact);
     protected override void RespondToRepeatedNonLethalAttack(Player perpetrator, Impact impact);
     private void RespondToLethalOrRepeatedAttack(Player perpetrator, Impact impact);
-    public override void RespondToAimedAt(Player player);
+    protected override void RespondToAimedAt(Player player);
     private void ExecuteThreatResponse(EAttackResponse response, Player target, Vector3 threatOrigin, Crime crime = null);
     private EAttackResponse GetThreatResponse(EThreatType type, Player threatSource);
 }

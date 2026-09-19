@@ -235,11 +235,11 @@ public class Customer : NetworkBehaviour, ISaveable
     private bool IsDealTime();
     public virtual void OfferDealItems(List<ItemInstance> items, bool offeredByPlayer, out bool accepted);
     public virtual void CustomerRejectedDeal(bool offeredByPlayer);
-    public virtual void ProcessHandover(HandoverScreen.EHandoverOutcome outcome, Contract contract, List<ItemInstance> items, bool handoverByPlayer, bool giveBonuses = true);
+    public virtual void ProcessHandover(Contract contract, List<ItemInstance> items, bool handoverByPlayer, bool giveBonuses = true);
     [ServerRpc(RequireOwnership = false)]
-    private void ProcessHandoverServerSide(HandoverScreen.EHandoverOutcome outcome, List<ItemInstance> items, bool handoverByPlayer, float totalPayment, ProductList productList, float satisfaction, NetworkObject dealerObject);
+    private void ProcessHandoverServerSide(List<ItemInstance> items, bool handoverByPlayer, float totalPayment, ProductList productList, float satisfaction, NetworkObject dealerObject);
     [ObserversRpc]
-    private void ProcessHandoverClient(float satisfaction, bool handoverByPlayer, string npcToRecommend, HandoverScreen.EHandoverOutcome outcome);
+    private void ProcessHandoverClient(float satisfaction, bool handoverByPlayer, string npcToRecommend);
     public void ContractWellReceived(string npcToRecommend);
     private void RecommendDealer(Dealer dealer);
     private void RecommendSupplier(Supplier supplier);
@@ -272,7 +272,9 @@ public class Customer : NetworkBehaviour, ISaveable
     public virtual void Load(ScheduleOne.Persistence.Datas.CustomerData data);
     protected virtual bool IsReadyForHandover(bool enabled);
     protected virtual bool IsHandoverChoiceValid(out string invalidReason);
-    public void HandoverChosen();
+    private void CompleteContractDialogueChosen();
+    private void HandoverSubmitted(List<ItemInstance> items);
+    private void HandoverCancelled();
     protected virtual bool ShowDirectApproachOption(bool enabled);
     public virtual bool IsUnlockable();
     protected virtual bool SampleOptionValid(out string invalidReason);
@@ -280,8 +282,9 @@ public class Customer : NetworkBehaviour, ISaveable
     public void SampleOffered();
     protected virtual float GetSampleRequestSuccessChance();
     protected virtual void SampleAccepted();
-    private float GetSampleSuccess(List<ItemInstance> items, float price);
-    private void ProcessSample(HandoverScreen.EHandoverOutcome outcome, List<ItemInstance> items, float price);
+    private float GetSampleSuccess(List<ItemInstance> items);
+    private void SampleCancelled();
+    private void SampleSubmitted(List<ItemInstance> items);
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     private void ProcessSampleServerSide(List<ItemInstance> items);
     [ObserversRpc(RunLocally = true)]
@@ -327,12 +330,12 @@ public class Customer : NetworkBehaviour, ISaveable
     private void RpcWriter___Observers_ReceiveContractRejected_2166136261();
     private void RpcLogic___ReceiveContractRejected_2166136261();
     private void RpcReader___Observers_ReceiveContractRejected_2166136261(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Server_ProcessHandoverServerSide_3760244802(HandoverScreen.EHandoverOutcome outcome, List<ItemInstance> items, bool handoverByPlayer, float totalPayment, ProductList productList, float satisfaction, NetworkObject dealerObject);
-    private void RpcLogic___ProcessHandoverServerSide_3760244802(HandoverScreen.EHandoverOutcome outcome, List<ItemInstance> items, bool handoverByPlayer, float totalPayment, ProductList productList, float satisfaction, NetworkObject dealerObject);
-    private void RpcReader___Server_ProcessHandoverServerSide_3760244802(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Observers_ProcessHandoverClient_2441224929(float satisfaction, bool handoverByPlayer, string npcToRecommend, HandoverScreen.EHandoverOutcome outcome);
-    private void RpcLogic___ProcessHandoverClient_2441224929(float satisfaction, bool handoverByPlayer, string npcToRecommend, HandoverScreen.EHandoverOutcome outcome);
-    private void RpcReader___Observers_ProcessHandoverClient_2441224929(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Server_ProcessHandoverServerSide_3315874220(List<ItemInstance> items, bool handoverByPlayer, float totalPayment, ProductList productList, float satisfaction, NetworkObject dealerObject);
+    private void RpcLogic___ProcessHandoverServerSide_3315874220(List<ItemInstance> items, bool handoverByPlayer, float totalPayment, ProductList productList, float satisfaction, NetworkObject dealerObject);
+    private void RpcReader___Server_ProcessHandoverServerSide_3315874220(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Observers_ProcessHandoverClient_537707335(float satisfaction, bool handoverByPlayer, string npcToRecommend);
+    private void RpcLogic___ProcessHandoverClient_537707335(float satisfaction, bool handoverByPlayer, string npcToRecommend);
+    private void RpcReader___Observers_ProcessHandoverClient_537707335(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Server_ChangeAddiction_431000436(float change);
     public void RpcLogic___ChangeAddiction_431000436(float change);
     private void RpcReader___Server_ChangeAddiction_431000436(PooledReader PooledReader0, Channel channel, NetworkConnection conn);

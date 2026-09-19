@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Runtime.CompilerServices;
 using FishNet;
 using FishNet.Object;
 using FishNet.Object.Delegating;
@@ -10,6 +9,7 @@ using FishNet.Serializing;
 using FishNet.Transporting;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
+using ScheduleOne.NPCs.Framework;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.PlayerScripts;
 using UnityEngine;
@@ -19,36 +19,36 @@ namespace ScheduleOne.NPCs;
 [DisallowMultipleComponent]
 public class NPCHealth : NetworkBehaviour
 {
-    public const int REVIVE_DAYS;
-    [CompilerGenerated]
-    [SyncVar( /*Could not decode attribute arguments.*/)]
-    [HideInInspector]
-    public float _003CHealth_003Ek__BackingField;
-    private NPC npc;
     public UnityEvent onDie;
     public UnityEvent onKnockedOut;
     public UnityEvent onDieOrKnockedOut;
     public UnityEvent onRevive;
-    public Action<float> onTakeDamage;
-    private bool AfflictedWithLethalEffect;
-    public SyncVar<float> syncVar____003CHealth_003Ek__BackingField;
+    [SyncVar( /*Could not decode attribute arguments.*/)]
+    [HideInInspector]
+    public float _currentHealth;
+    private NPC _npc;
+    private bool _invincible;
+    private bool _afflictedWithLethalEffect;
+    private bool _canRevive;
+    private int _daysToRevive;
+    public SyncVar<float> syncVar____currentHealth;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002ENPCHealthAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002ENPCHealthAssembly_002DCSharp_002Edll_Excuted;
-    public float Health {[CompilerGenerated]
-        get; [CompilerGenerated]
-        private set; }
+    public float Health => SyncAccessor__currentHealth;
     public float NormalizedHealth { get; }
     public bool IsDead { get; private set; }
     public bool IsKnockedOut { get; private set; }
     public int DaysPassedSinceDeath { get; private set; }
     public int HoursSinceAttackedByPlayer { get; private set; } = 9999;
-    public float MaxHealth => npc.NPCData.Health.MaxHealth;
-    public float SyncAccessor__003CHealth_003Ek__BackingField { get; set; }
+    public float MaxHealth { get; private set; } = 100f;
+    public float SyncAccessor__currentHealth { get; set; }
 
+    public event Action<float> onTakeDamage;
     public override void Awake();
-    private void Start();
     private void OnDestroy();
     public override void OnStartServer();
+    public void SetHealthData(Health healthData);
+    public void ResetToDefault();
     public void Load(NPCHealthData healthData);
     private IEnumerator AfflictWithLethalEffect();
     protected virtual void OnHourPass();

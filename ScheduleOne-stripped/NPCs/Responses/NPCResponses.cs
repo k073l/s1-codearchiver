@@ -1,3 +1,4 @@
+using System;
 using ScheduleOne.Combat;
 using ScheduleOne.Law;
 using ScheduleOne.Noise;
@@ -10,15 +11,20 @@ using UnityEngine;
 namespace ScheduleOne.NPCs.Responses;
 public class NPCResponses : MonoBehaviour
 {
-    public const float ASSAULT_RELATIONSHIPCHANGE;
-    public const float DEADLYASSAULT_RELATIONSHIPCHANGE;
-    public const float AIMED_AT_RELATIONSHIPCHANGE;
-    public const float PICKPOCKET_RELATIONSHIPCHANGE;
-    private const float INITIALIZED_TIME_OFFSET;
-    private const float TIME_THRESHOLD;
-    protected float timeSinceLastImpact;
-    protected float timeSinceAimedAt;
+    private const float AssaultRelationshipChange;
+    private const float DeadlyAssaultRelationshipChange;
+    private const float AimedAtRelationshipChange;
+    private const float PickpocketRelationshipChange;
+    private const float RelationshipDecreaseCooldown;
+    private const float RepeatedNonLethalAttackThreshold;
+    public Action<Player> OnNonLethallyAttackedByPlayer;
+    public Action<Player> OnRepeatedlyNonLethallyAttackedByPlayer;
+    public Action<Player> OnLethallyAttackedByPlayer;
+    public Action<Player> OnAimedAtByPlayer;
+    protected float _timeOnLastImpact;
+    protected float _timeOnLastAimedAt;
     protected NPC npc { get; private set; }
+    protected bool IsNPCAwarenessActive => npc.Awareness.IsAwarenessActive;
     protected NPCActions actions => npc.Actions;
 
     protected virtual void Awake();
@@ -34,11 +40,13 @@ public class NPCResponses : MonoBehaviour
     public virtual void NoticedViolatingCurfew(Player player);
     public virtual void NoticedWantedPlayer(Player player);
     public virtual void NoticedSuspiciousPlayer(Player player);
-    public virtual void HitByCar(LandVehicle vehicle);
+    public void HitByCar(LandVehicle vehicle);
+    protected virtual void RespondToHitByCar(LandVehicle vehicle);
     public virtual void ImpactReceived(Impact impact);
     protected virtual void RespondToFirstNonLethalAttack(Player perpetrator, Impact impact);
     protected virtual void RespondToRepeatedNonLethalAttack(Player perpetrator, Impact impact);
     protected virtual void RespondToLethalAttack(Player perpetrator, Impact impact);
     protected virtual void RespondToAnnoyingImpact(Player perpetrator, Impact impact);
-    public virtual void RespondToAimedAt(Player player);
+    public virtual void AimedAtByPlayer(Player player);
+    protected virtual void RespondToAimedAt(Player player);
 }

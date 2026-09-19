@@ -8,5 +8,7 @@ public class BasicInfo
     public bool HasLastName;
     public string LastName;
     public string ID;
+    public string FullName { get; }
+
     public BasicInfo GetCopy();
 }

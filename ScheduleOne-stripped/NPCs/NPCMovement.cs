@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 using FishNet;
 using FishNet.Connection;
 using FishNet.Managing;
@@ -22,7 +24,7 @@ using ScheduleOne.Vehicles;
 using ScheduleOne.VoiceOver;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace ScheduleOne.NPCs;
 public class NPCMovement : NetworkBehaviour
@@ -72,29 +74,42 @@ public class NPCMovement : NetworkBehaviour
     public static List<Vector3> cachedClosestPointKeys;
     public const float CLOSEST_REACHABLE_POINT_CACHE_MAX_SQR_OFFSET;
     private const float SlipperyModeMultiplier;
-    public bool DEBUG;
-    [Header("Obstacle Avoidance")]
-    public bool ObstacleAvoidanceEnabled;
-    public ObstacleAvoidanceType DefaultObstacleAvoidanceType;
+    [SerializeField]
+    private bool DEBUG;
+    [Header("Obstacle Avoidance Settings")]
+    [SerializeField]
+    [FormerlySerializedAs("ObstacleAvoidanceEnabled")]
+    private bool _obstacleAvoidanceEnabled;
+    [SerializeField]
+    [FormerlySerializedAs("DefaultObstacleAvoidanceType")]
+    private ObstacleAvoidanceType _defaultObstacleAvoidanceType;
     [Header("References")]
-    public NavMeshAgent Agent;
-    public NPCSpeedController SpeedController;
-    public CapsuleCollider CapsuleCollider;
-    public NPCAnimation Animation;
-    public SmoothedVelocityCalculator VelocityCalculator;
-    public Draggable RagdollDraggable;
-    public Collider RagdollDraggableCollider;
-    protected NPC npc;
+    [SerializeField]
+    private NavMeshAgent _agent;
+    [SerializeField]
+    private CapsuleCollider _capsuleCollider;
+    [SerializeField]
+    private Collider[] _avatarColliders;
+    [SerializeField]
+    private SmoothedVelocityCalculator _velocityCalculator;
+    [SerializeField]
+    private Draggable _ragdollDraggable;
+    private NPC _npc;
+    private bool _hasDestination;
+    private NavMeshPath _currentPath;
+    private Vector3[] _currentPathCorners;
+    private Action<WalkResult> _moveResultCallback;
+    private float _moveCallbackSuccessThreshold;
+    private float _gravityMultiplier;
+    private float _defaultAngularSpeed;
+    private NPCSpeedController _speedController;
+    private Coroutine _faceDirectionRoutine;
+    private Ladder _currentLadder;
+    private Coroutine _ladderClimbRoutine;
     private float ragdollStaticTime;
-    public UnityEvent<LandVehicle> onHitByCar;
-    public UnityEvent onRagdollStart;
-    public UnityEvent onRagdollEnd;
-    private bool cacheNextPath;
-    private Action<WalkResult> walkResultCallback;
-    private float currentMaxDistanceForSuccess;
-    private bool forceIsMoving;
-    private Coroutine faceDirectionRoutine;
-    private List<ConstantForce> ragdollForceComponents;
+    private NPCPathCache _pathCache;
+    private bool _cacheNextPath;
+    private float _timeOnLastHitByCar;
     private float timeUntilNextStumble;
     private float timeSinceStumble;
     private Vector3 stumbleDirection;
@@ -102,65 +117,59 @@ public class NPCMovement : NetworkBehaviour
     private int desiredVelocityHistoryLength;
     private float velocityHistorySpacing;
     private float timeSinceLastVelocityHistoryRecord;
-    private NavMeshPath agentCurrentPath;
-    private float agentCurrentSpeed;
-    private Vector3[] agentCurrentPathCorners;
-    private Coroutine ladderClimbRoutine;
-    private float _defaultAngularSpeed;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002ENPCMovementAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002ENPCMovementAssembly_002DCSharp_002Edll_Excuted;
-    public float WalkSpeed => npc.NPCData.Movement.WalkSpeed;
-    public float RunSpeed => npc.NPCData.Movement.SprintSpeed;
-    public float MoveSpeedMultiplier { get; set; } = 1f;
-    public bool SlipperyMode { get; set; }
-    public bool HasDestination { get; protected set; }
     public bool IsMoving { get; }
-    public Vector3 Velocity => VelocityCalculator.Velocity;
-    public bool IsPaused { get; protected set; }
-    public Vector3 FootPosition => ((Component)this).transform.position;
-    public float GravityMultiplier { get; protected set; } = 1f;
-    public EStance Stance { get; protected set; }
-    public float TimeSinceHitByCar { get; protected set; }
-    public bool FaceDirectionInProgress => faceDirectionRoutine != null;
-    public bool IsOnLadder => (Object)(object)CurrentLadder != (Object)null;
-    public float CurrentLadderSpeed { get; protected set; }
-    public bool IsClimbingUpwards => CurrentLadderSpeed > 0.1f;
-    public Ladder CurrentLadder { get; protected set; }
+    public Vector3 Velocity => _velocityCalculator.Velocity;
+    public Vector3 AgentDesiredVelocity => _agent.desiredVelocity;
     public Vector3 CurrentDestination { get; protected set; } = Vector3.zero;
-    public NPCPathCache PathCache { get; private set; } = new NPCPathCache();
+    public bool CanMove { get; }
+    public float DefaultWalkSpeed => _npc.NPCData.Movement.WalkSpeed;
+    public NPCSpeedController SpeedController => _speedController;
+    public EStance CurrentStance { get; protected set; }
+    public Vector3 FootPosition => ((Component)this).transform.position;
+    public int NavMeshAreaMask => _agent.areaMask;
+    public float TimeSinceHitByCar => Time.time - _timeOnLastHitByCar;
+    public bool FaceDirectionInProgress => _faceDirectionRoutine != null;
+    public bool IsOnLadder => (Object)(object)_currentLadder != (Object)null;
+    public float CurrentLadderSpeed { get; protected set; }
     public bool Disoriented { get; set; }
+    public bool SlipperyMode { get; set; }
+    private bool _isClimbingUpwards => CurrentLadderSpeed > 0.1f;
 
     public override void Awake();
-    private void Start();
+    private void OnDestroy();
     public override void OnStartClient();
+    public override void OnStartServer();
     protected virtual void Update();
-    public void SetAgentEnabled(bool enabled);
-    private void UpdateRagdoll();
-    private void Stumble();
-    private void UpdateDestination();
     protected virtual void FixedUpdate();
-    private void UpdateStumble();
-    private void UpdateSpeed();
-    private void RecordVelocity();
-    private void UpdateSlippery();
-    private void UpdateCache();
-    public bool CanRecoverFromRagdoll();
-    private void UpdateAvoidance();
     public void OnTriggerEnter(Collider other);
     public void OnCollisionEnter(Collision collision);
     private void CheckHit(Collider other, Collider thisCollider, bool isCollision, Vector3 hitPoint, Collision collision = null);
     public void Warp(Transform target);
-    public unsafe void Warp(Vector3 position);
+    public unsafe void Warp(Vector3 position, Quaternion rotation = default(Quaternion));
     [ObserversRpc(ExcludeServer = true)]
-    private void ReceiveWarp(Vector3 position);
-    public void VisibilityChange(bool visible);
-    public bool CanMove();
+    private void Warp_Client(Vector3 position, Quaternion rotation = default(Quaternion));
+    public void SetObstacleAvoidanceEnabled(bool enabled);
+    public void SetAgentAvoidancePriority(int priority);
     public void SetAgentType(EAgentType type);
-    public void SetSeat(AvatarSeat seat);
+    public void SetSeat(AvatarSeat seat, string animationId = "", float sitTransitionDuration = 0.35f);
     public void SetStance(EStance stance);
     public void SetGravityMultiplier(float multiplier);
     public void SetAngularSpeedMultiplier(float multiplier);
-    public void SetRagdollDraggable(bool draggable);
+    public void SetIgnoreCollision(Collider collider, bool ignore);
+    public void SetIgnoreCollision(Collider[] colliders, bool ignore);
+    private void UpdateObstacleAvoidance();
+    private void OnVisibilityChange(bool visible);
+    private void OnEnterVehicle(LandVehicle veh);
+    private void OnExitVehicle(LandVehicle veh);
+    private void SetAgentEnabled(bool enabled);
+    private void UpdateStumble();
+    private void Stumble();
+    private void SetAgentSpeed(float speed);
+    private void RecordVelocity();
+    private void UpdateSlippery();
+    private void UpdateCache();
     public void ActivateRagdoll_Server();
     [ServerRpc(RunLocally = true, RequireOwnership = false)]
     public void ActivateRagdoll_Server(Vector3 forcePoint, Vector3 forceDir, float forceMagnitude);
@@ -170,21 +179,22 @@ public class NPCMovement : NetworkBehaviour
     public void ApplyRagdollForce(Vector3 forcePoint, Vector3 forceDir, float forceMagnitude);
     [ObserversRpc(RunLocally = true)]
     public void DeactivateRagdoll();
-    private bool SmartSampleNavMesh(Vector3 position, out NavMeshHit hit, float minRadius = 1f, float maxRadius = 10f, int steps = 3);
+    private void UpdateRagdoll();
+    private void UpdateRagdollStaticCounter();
+    private bool CanRecoverFromRagdoll();
     public void SetDestination(Transform target);
     public void SetDestination(Vector3 pos);
     public void SetDestination(ITransitEntity entity);
     public void SetDestination(Vector3 pos, Action<WalkResult> callback = null, float maximumDistanceForSuccess = 1f, float cacheMaxDistSqr = 1f);
+    public void Stop();
+    private void UpdateDestination();
     private unsafe void SetDestination(Vector3 pos, Action<WalkResult> callback = null, bool interruptExistingCallback = true, float successThreshold = 1f, float cacheMaxDistSqr = 1f);
     private bool IsNPCPositionValid(Vector3 position);
+    private bool SmartSampleNavMesh(Vector3 position, out NavMeshHit hit, float minRadius = 1f, float maxRadius = 10f, int steps = 3);
     private void EndSetDestination(WalkResult result);
-    public void Stop();
-    public void WarpToNavMesh();
     public unsafe void FacePoint(Vector3 point, float lerpTime = 0.5f);
     public unsafe void FaceDirection(Vector3 forward, float lerpTime = 0.5f);
     protected IEnumerator FaceDirection_Process(Vector3 forward, float lerpTime);
-    public void PauseMovement();
-    public void ResumeMovement();
     public bool IsAsCloseAsPossible(Vector3 location, float distanceThreshold = 0.5f);
     public bool GetClosestReachablePoint(Vector3 targetPosition, out Vector3 closestPoint);
     public bool CanGetTo(Vector3 position, float proximityReq = 1f);
@@ -196,9 +206,9 @@ public class NPCMovement : NetworkBehaviour
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();
-    private void RpcWriter___Observers_ReceiveWarp_4276783012(Vector3 position);
-    private unsafe void RpcLogic___ReceiveWarp_4276783012(Vector3 position);
-    private void RpcReader___Observers_ReceiveWarp_4276783012(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Observers_Warp_Client_3848837105(Vector3 position, Quaternion rotation = default(Quaternion));
+    private unsafe void RpcLogic___Warp_Client_3848837105(Vector3 position, Quaternion rotation = default(Quaternion));
+    private void RpcReader___Observers_Warp_Client_3848837105(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Server_ActivateRagdoll_Server_2690242654(Vector3 forcePoint, Vector3 forceDir, float forceMagnitude);
     public void RpcLogic___ActivateRagdoll_Server_2690242654(Vector3 forcePoint, Vector3 forceDir, float forceMagnitude);
     private void RpcReader___Server_ActivateRagdoll_Server_2690242654(PooledReader PooledReader0, Channel channel, NetworkConnection conn);

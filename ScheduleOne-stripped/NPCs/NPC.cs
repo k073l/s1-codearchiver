@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using EPOOutline;
 using FishNet;
 using FishNet.Connection;
 using FishNet.Managing;
@@ -19,6 +18,7 @@ using ScheduleOne.AvatarFramework;
 using ScheduleOne.AvatarFramework.Animation;
 using ScheduleOne.AvatarFramework.Equipping;
 using ScheduleOne.Combat;
+using ScheduleOne.Core.Avatar;
 using ScheduleOne.Core.Equipping.Framework;
 using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.Core.Weather;
@@ -49,24 +49,47 @@ using ScheduleOne.VoiceOver;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace ScheduleOne.NPCs;
 public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTargetable, IDamageable, ISightable, INetworkedEquippableUser, IEquippableUser, IWeatherEntity
 {
+    public enum ENpcFactor
+    {
+        Drunk,
+        High
+    }
+
+    [Serializable]
+    public class NpcFactor
+    {
+        public string Name;
+        public float Value;
+        public NpcFactor();
+        public NpcFactor(string name, float value);
+    }
+
     private const int PanicDuration;
     private const int HeadLightStartTime;
     private const int HeadLightsEndTime;
+    private const float SobrietyRate;
+    private const float WetRate;
+    private const float DryRate;
     [SerializeField]
-    private BaseNPCDataObject _npcData;
+    [FormerlySerializedAs("_npcData")]
+    private BaseNPCDataObject _defaultNPCData;
+    [CompilerGenerated]
+    [SyncVar]
+    [HideInInspector]
+    public bool _003CIsActive_003Ek__BackingField;
     [Header("General Scene Settings")]
     public EMapRegion Region;
-    public string BakedGUID;
+    [SerializeField]
+    private string BakedGUID;
     public Action<LandVehicle> onEnterVehicle;
     public Action<LandVehicle> onExitVehicle;
     [Header("Relationship")]
     public NPCRelationData RelationData;
-    protected List<GameObject> _outlineRenderers;
-    protected Outlinable _outlineEffect;
     public Action<bool> onVisibilityChanged;
     private Coroutine resetUnsettledCoroutine;
     [CompilerGenerated]
@@ -77,10 +100,12 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     private WeatherConditions _weatherTolerence;
     protected WeatherConditions _currentWeatherConditionsForEntity;
     private float _wetness;
-    private const float NPC_WET_RATE;
-    private const float NPC_DRY_RATE;
+    [SyncObject]
+    private readonly SyncList<NpcFactor> _factors;
     protected NetworkedEquipper _networkedEquipper;
+    private Transform _defaultParent;
     private Coroutine lerpScaleRoutine;
+    public SyncVar<bool> syncVar____003CIsActive_003Ek__BackingField;
     public SyncVar<bool> syncVar____003CHasUmbrella_003Ek__BackingField;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002ENPCAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002ENPCAssembly_002DCSharp_002Edll_Excuted;
@@ -88,11 +113,16 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     public NetworkBehaviour NetworkBehaviour => (NetworkBehaviour)(object)this;
     public IThirdPersonReferencesProvider ThirdPersonReferences => Avatar;
     public ScheduleOne.NPCs.Framework.NPCData NPCData { get; private set; }
+    public bool HasNPCData => NPCData != null;
+    public bool IsActive {[CompilerGenerated]
+        get; [CompilerGenerated]
+        private set; } = true;
     public string ID { get; }
     public string FirstName => NPCData.BasicInfo.FirstName;
     public string LastName => NPCData.BasicInfo.LastName;
     public string FullName { get; }
     public Sprite MugshotSprite => NPCData.Appearance.Mugshot;
+    public EGender Gender => Avatar.Appearance.Gender;
     public float Scale { get; private set; } = 1f;
     public bool IsConscious { get; }
     public Guid GUID { get; protected set; }
@@ -100,7 +130,7 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     public FloatStack AggressionController { get; private set; } = new FloatStack(0f);
     public NPCMovement Movement { get; private set; }
     public DialogueHandler DialogueHandler { get; private set; }
-    public Avatar Avatar { get; private set; }
+    public ScheduleOne.AvatarFramework.Avatar Avatar { get; private set; }
     public NPCAwareness Awareness { get; private set; }
     public NPCResponses Responses { get; private set; }
     public NPCActions Actions { get; private set; }
@@ -109,12 +139,13 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     public VOEmitter VoiceOverEmitter { get; private set; }
     public NPCHealth Health { get; private set; }
     public EntityVisibility Visibility { get; private set; }
+    public NPCTags Tags { get; private set; }
     public LandVehicle CurrentVehicle { get; protected set; }
     public bool IsInVehicle => (Object)(object)CurrentVehicle != (Object)null;
     public bool isInBuilding => (Object)(object)CurrentBuilding != (Object)null;
     public NPCEnterableBuilding CurrentBuilding { get; protected set; }
     public StaticDoor LastEnteredDoor { get; set; }
-    public MSGConversation MSGConversation { get; protected set; }
+    public MSGConversation MSGConversation { get; private set; }
     public string SaveFolderName => FullName;
     public string SaveFileName => "NPC";
     public Loader Loader => null;
@@ -146,40 +177,46 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
 
     string IWeatherEntity.WeatherVolume { get; set; }
     public bool IsUnderCover { get; set; }
+    public bool SyncAccessor__003CIsActive_003Ek__BackingField { get; set; }
     public bool SyncAccessor__003CHasUmbrella_003Ek__BackingField { get; set; }
 
-    public event Action<ScheduleOne.NPCs.Framework.NPCData> OnNPCDataReady;
-    public event Action OnConversationCreated;
+    public event Action<ScheduleOne.NPCs.Framework.NPCData> OnNPCInitialized;
+    public event Action OnNPCDeinitialized;
+    public event Action OnConversationAssigned;
     public void RecordLastKnownPosition(bool resetTimeSinceLastSeen);
     public float GetSearchTime();
     public bool IsCurrentlySightable();
     public override void Awake();
+    protected virtual void Start();
+    public override void OnSpawnServer(NetworkConnection connection);
+    public override void OnStartServer();
+    protected virtual void OnDestroy();
+    public virtual void InitializeNPC(ScheduleOne.NPCs.Framework.NPCData data);
+    public virtual void DeinitializeNPC();
     private void ApplyNPCData(ScheduleOne.NPCs.Framework.NPCData data);
     private void GetAndValidateReferences();
     public virtual void InitializeSaveable();
     public void SetGUID(Guid guid);
-    private void PlayerSpawned();
-    protected virtual void CreateMessageConversation();
-    protected virtual string GetMessagingName();
-    public virtual Sprite GetMessagingIcon();
-    public void SendTextMessage(string message);
-    protected virtual void Start();
-    protected virtual void OnDestroy();
-    public override void OnSpawnServer(NetworkConnection connection);
-    public override void OnStartServer();
+    private void CreateMessageConversationWhenLocalPlayerExists();
+    private void OnLocalPlayerSpawn_CreateConversationMessage();
+    private void CreateAndAssignDefaultMessageConversation();
+    private void AssignConversationMessage(MSGConversation conversation);
+    public void UnassignConversationMessage();
+    protected virtual void OnMessageConversationAssigned();
+    protected virtual void OnMessageConversationUnassigned();
     [ObserversRpc]
     private void SetTransform(NetworkConnection conn, Vector3 position, Quaternion rotation);
     protected virtual void MinPass();
     protected virtual void OnUncappedMinPass();
     protected virtual void OnTick();
+    [Server]
+    public virtual void SetActive(bool active);
     public virtual void SetVisible(bool visible, bool networked = false);
     [ObserversRpc(RunLocally = true)]
     private void SetVisible_Networked(bool visible);
     public void SetScale(float scale);
     public void SetScale(float scale, float lerpTime);
     protected virtual void ApplyScale();
-    [ServerRpc(RequireOwnership = false)]
-    public virtual void AimedAtByPlayer(NetworkObject player);
     protected virtual void OnDie();
     protected virtual void OnKnockedOut();
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
@@ -223,8 +260,8 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     public void SendEquippableMessage_Networked_Vector(NetworkConnection conn, string message, Vector3 data);
     public IEquippedItemHandler Equip(EquippableData equippable);
     public IEquippedItemHandler Equip(BaseItemInstance item);
-    public IEquippedItemHandler EquipLocal(EquippableData equippable);
-    public IEquippedItemHandler EquipLocal(BaseItemInstance item);
+    public IEquippedItemHandler Equip_Networked(EquippableData equippable);
+    public IEquippedItemHandler Equip_Networked(BaseItemInstance item);
     public void Unequip(IEquippedItemHandler equippedItem);
     public void UnequipAll();
     [ServerRpc(RequireOwnership = false)]
@@ -253,10 +290,11 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     private void RemovePanicked();
     public virtual string GetNameAddress();
     public void PlayVO(EVOLineType lineType, bool network = false);
+    public void PlayVO(EVOLineType lineType, float volumeMultiplier, bool network = false);
     [ServerRpc(RequireOwnership = false)]
-    private void PlayVO_Server(EVOLineType lineType);
+    private void PlayVO_Server(EVOLineType lineType, float volumeMultiplier);
     [ObserversRpc(RunLocally = true)]
-    private void PlayVO_Client(EVOLineType lineType);
+    private void PlayVO_Client(EVOLineType lineType, float volumeMultiplier);
     [TargetRpc]
     public void ReceiveRelationshipData(NetworkConnection conn, float relationship, bool unlocked);
     [ServerRpc(RequireOwnership = false)]
@@ -284,6 +322,12 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     public virtual List<string> WriteData(string parentFolderPath);
     public virtual void Load(ScheduleOne.Persistence.Datas.NPCData data, string containerPath);
     public virtual void Load(DynamicSaveData dynamicData, ScheduleOne.Persistence.Datas.NPCData npcData);
+    public void InitialiseFactors();
+    public void ResetFactors();
+    public float GetFactor(ENpcFactor factor);
+    public void UpdateFactors();
+    public void SetFactor(ENpcFactor factor, float value);
+    public void AdjustFactor(ENpcFactor factor, float adjustment);
     NetworkObject ICombatTargetable.get_NetworkObject();
     GameObject IDamageable.get_gameObject();
     NetworkObject ISightable.get_NetworkObject();
@@ -296,9 +340,6 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     private void RpcWriter___Observers_SetVisible_Networked_1140765316(bool visible);
     private void RpcLogic___SetVisible_Networked_1140765316(bool visible);
     private void RpcReader___Observers_SetVisible_Networked_1140765316(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Server_AimedAtByPlayer_3323014238(NetworkObject player);
-    public virtual void RpcLogic___AimedAtByPlayer_3323014238(NetworkObject player);
-    private void RpcReader___Server_AimedAtByPlayer_3323014238(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
     private void RpcWriter___Server_SendImpact_427288424(Impact impact);
     public virtual void RpcLogic___SendImpact_427288424(Impact impact);
     private void RpcReader___Server_SendImpact_427288424(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
@@ -381,12 +422,12 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     private void RpcWriter___Observers_RemovePanicked_2166136261();
     private void RpcLogic___RemovePanicked_2166136261();
     private void RpcReader___Observers_RemovePanicked_2166136261(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Server_PlayVO_Server_1710085680(EVOLineType lineType);
-    private void RpcLogic___PlayVO_Server_1710085680(EVOLineType lineType);
-    private void RpcReader___Server_PlayVO_Server_1710085680(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Observers_PlayVO_Client_1710085680(EVOLineType lineType);
-    private void RpcLogic___PlayVO_Client_1710085680(EVOLineType lineType);
-    private void RpcReader___Observers_PlayVO_Client_1710085680(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Server_PlayVO_Server_3979304059(EVOLineType lineType, float volumeMultiplier);
+    private void RpcLogic___PlayVO_Server_3979304059(EVOLineType lineType, float volumeMultiplier);
+    private void RpcReader___Server_PlayVO_Server_3979304059(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Observers_PlayVO_Client_3979304059(EVOLineType lineType, float volumeMultiplier);
+    private void RpcLogic___PlayVO_Client_3979304059(EVOLineType lineType, float volumeMultiplier);
+    private void RpcReader___Observers_PlayVO_Client_3979304059(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Target_ReceiveRelationshipData_4052192084(NetworkConnection conn, float relationship, bool unlocked);
     public void RpcLogic___ReceiveRelationshipData_4052192084(NetworkConnection conn, float relationship, bool unlocked);
     private void RpcReader___Target_ReceiveRelationshipData_4052192084(PooledReader PooledReader0, Channel channel);

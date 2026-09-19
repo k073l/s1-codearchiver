@@ -11,7 +11,8 @@ namespace ScheduleOne.NPCs;
 public class NPCAwareness : MonoBehaviour
 {
     public const float PLAYER_AIM_DETECTION_RANGE;
-    public bool AwarenessActiveByDefault;
+    [SerializeField]
+    protected bool AwarenessActiveByDefault;
     [Header("References")]
     public VisionCone VisionCone;
     public Listener Listener;
@@ -25,6 +26,8 @@ public class NPCAwareness : MonoBehaviour
     public UnityEvent<NoiseEvent> onExplosionHeard;
     public UnityEvent<LandVehicle> onHitByCar;
     private NPC npc;
+    public bool IsAwarenessActive { get; private set; } = true;
+
     protected virtual void Awake();
     public void SetAwarenessActive(bool active);
     public void VisionEvent(VisionEventReceipt vEvent);

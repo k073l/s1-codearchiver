@@ -28,8 +28,6 @@ public class Equippable_TrashGrabber : Equippable_Viewmodel
     private TrashGrabberInstance trashGrabberInstance;
     private Pose defaultBinPosition;
     private Vector3 defaultBinScale;
-    public static Equippable_TrashGrabber Instance { get; private set; }
-    public static bool IsEquipped => (Object)(object)Instance != (Object)null;
     private float currentDropTime { get; set; }
     private float timeSinceLastDrop { get; set; } = 100f;
 
@@ -37,7 +35,6 @@ public class Equippable_TrashGrabber : Equippable_Viewmodel
     public override void Unequip();
     protected override void Update();
     private void EjectTrash();
-    private void OnDestroy();
     public void PickupTrash(TrashItem item);
     public int GetCapacity();
     private void RefreshVisuals();

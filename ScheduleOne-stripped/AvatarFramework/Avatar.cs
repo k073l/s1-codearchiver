@@ -1,129 +1,98 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+using EPOOutline;
+using ScheduleOne.Avatar;
+using ScheduleOne.Avatar.Impostors;
 using ScheduleOne.AvatarFramework.Animation;
 using ScheduleOne.AvatarFramework.Emotions;
 using ScheduleOne.AvatarFramework.Equipping;
-using ScheduleOne.AvatarFramework.Impostors;
+using ScheduleOne.Core.Avatar;
 using ScheduleOne.Core.Equipping.Framework;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.PlayerScripts;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace ScheduleOne.AvatarFramework;
-public class Avatar : MonoBehaviour, IThirdPersonReferencesProvider
+public class Avatar : MonoBehaviour, IThirdPersonReferencesProvider, IAvatar
 {
-    public const int MAX_ACCESSORIES;
-    public const bool CombinedLayersEnabled;
-    public const float DEFAULT_SMOOTHNESS;
-    private static float maleShoulderScale;
-    private static float femaleShoulderScale;
+    private const float FrustrumCullMinDist;
+    public Action<bool> OnAvatarCullingChange;
+    public Action<bool> OnRagdollChange;
+    [Header("Settings")]
+    [Range(10f, 500f)]
+    [SerializeField]
+    private float _cullingRange;
+    [SerializeField]
+    private RagdollTemplate _ragdollTemplate;
     [Header("References")]
     public AvatarAnimation Animation;
     public AvatarLookController LookController;
-    public SkinnedMeshRenderer[] BodyMeshes;
-    public SkinnedMeshRenderer[] ShapeKeyMeshes;
-    public SkinnedMeshRenderer FaceMesh;
     public EyeController Eyes;
     public EyebrowController EyeBrows;
-    public Transform BodyContainer;
-    public Transform Armature;
+    [SerializeField]
+    private Transform BodyContainer;
     public Transform LeftShoulder;
     public Transform RightShoulder;
-    public Transform HeadBone;
     public Transform HipBone;
-    public Transform LeftFootBone;
-    public Transform RightFootBone;
-    public Rigidbody[] RagdollRBs;
-    public Collider[] RagdollColliders;
-    public Rigidbody MiddleSpineRB;
-    public Rigidbody[] ImpactForceRBs;
+    [SerializeField]
+    private Transform _rightHandContainer;
+    [SerializeField]
+    private Transform _leftHandContainer;
+    [SerializeField]
+    private Transform _rightHandAlignmentPoint;
+    [SerializeField]
+    private Transform _leftHandAlignmentPoint;
     public AvatarEmotionManager EmotionManager;
     public AvatarEffects Effects;
     public Transform MiddleSpine;
-    public Transform LowerSpine;
     public Transform LowestSpine;
-    public AvatarImpostor Impostor;
     public ParticleSystem BloodParticles;
-    [Header("Settings")]
-    public Material DefaultAvatarMaterial;
-    public bool UseCombinedLayer;
-    public UnityEvent<bool, bool, bool> onRagdollChange;
-    [Header("Data - readonly")]
     [SerializeField]
-    protected float appliedGender;
+    private AttachmentAnchorProviderComponent _attachmentAnchorProvider;
     [SerializeField]
-    protected float appliedWeight;
+    private AvatarAppearance _appearance;
     [SerializeField]
-    protected Hair appliedHair;
+    private AvatarImpostor _impostor;
     [SerializeField]
-    protected Color appliedHairColor;
+    private Transform _ragdollRoot;
+    [Header("Outlining")]
     [SerializeField]
-    protected Accessory[] appliedAccessories;
-    [SerializeField]
-    protected bool wearingHairBlockingAccessory;
-    private float additionalWeight;
-    private float additionalGender;
-    public UnityEvent onSettingsLoaded;
-    private Vector3 originalHipPos;
-    private bool usingCombinedLayer;
-    private bool blockEyeFaceLayers;
-    private Color _appliedSkinColor;
-    private Color _appliedEmissionColor;
-    public Transform RightHandContainer => Animation.RightHandContainer;
-    public Transform LeftHandContainer => Animation.LeftHandContainer;
-    public Transform RightHandAlignmentPoint => Animation.RightHandAlignmentPoint;
-    public Transform LeftHandAlignmentPoint => Animation.LeftHandAlignmentPoint;
-    public bool Ragdolled { get; protected set; }
+    protected GameObject[] _renderersToOutline;
+    protected Outlinable _outlineEffect;
+    private Ragdoll _activeRagdoll;
+    private Vector3 _savedHipPosition;
+    private float _visibilityRangeSqr;
+    private float _gravityMultiplier;
+    public Transform RightHandContainer => _rightHandContainer;
+    public Transform LeftHandContainer => _leftHandContainer;
+    public Transform RightHandAlignmentPoint => _rightHandAlignmentPoint;
+    public Transform LeftHandAlignmentPoint => _leftHandAlignmentPoint;
+    public IAttachmentAnchorProvider AttachmentAnchorProvider => _attachmentAnchorProvider;
+    public AvatarAppearance Appearance => _appearance;
+    public bool IsCulled { get; private set; }
+    public bool Ragdolled => _activeRagdoll != null;
+    public Ragdoll ActiveRagdoll => _activeRagdoll;
     public AvatarEquippable CurrentEquippable { get; protected set; }
-    public AvatarSettings CurrentSettings { get; protected set; }
     public Transform CenterPointTransform => MiddleSpine;
     public Vector3 CenterPoint => ((Component)CenterPointTransform).transform.position;
 
     protected virtual void Awake();
     protected virtual void Update();
+    public Vector3 GetRagdollRootVelocity();
     public void SetVisible(bool vis);
-    public void GetMugshot(Action<Texture2D> callback);
-    public void SetEmission(Color color);
-    public bool IsMale();
-    public bool IsWhite();
-    public string GetFormalAddress(bool capitalized = true);
-    public string GetThirdPersonAddress(bool capitalized = true);
-    public string GetThirdPersonPronoun(bool capitalized = true);
     public void SetAnimationBool(string name, bool value);
     public void SetAnimationTrigger(string name);
-    private void ApplyCurrentShapeKeys();
-    private void ApplyShapeKeys(float gender, float weight);
-    private void SetFeetShrunk(bool shrink, float reduction);
-    private void SetWearingHairBlockingAccessory(bool blocked);
-    public void LoadAvatarSettings(AvatarSettings settings);
-    public void LoadNakedSettings(AvatarSettings settings, bool keepOldLayers, int maxLayerOrder = 19);
-    public void ApplyBodySettings(AvatarSettings settings);
-    public void SetAdditionalWeight(float weight);
-    public void SetAdditionalGender(float gender);
-    public void SetSkinColor(Color color);
-    public void ApplyHairSettings(AvatarSettings settings);
-    public void SetHairVisible(bool visible);
-    public void ApplyHairColorSettings(AvatarSettings settings);
-    public void OverrideHairColor(Color color);
-    public void ResetHairColor();
-    public void ApplyEyeBallSettings(AvatarSettings settings);
-    public void ApplyEyeLidSettings(AvatarSettings settings);
-    public void ApplyEyeLidColorSettings(AvatarSettings settings);
-    public void ApplyEyebrowSettings(AvatarSettings settings);
-    public void SetBlockEyeFaceLayers(bool block);
-    public void ApplyFaceLayerSettings(AvatarSettings settings);
-    private void SetFaceLayer(int index, string assetPath, Color color);
-    public void SetFaceTexture(Texture2D tex, Color color);
-    public void ApplyBodyLayerSettings(AvatarSettings settings, int maxOrder = -1);
-    private void SetBodyLayer(int index, string assetPath, Color color);
-    public void ApplyAccessorySettings(AvatarSettings settings);
-    private void DestroyAccessories();
-    public void EnableRagdoll(Vector3 forcePoint = default(Vector3), Vector3 forceDir = default(Vector3));
-    public void DisableRagdoll(bool playStandUpAnim = true);
-    private void SetRagdollPhysicsEnabled(bool ragdollEnabled, bool wait, bool playStandUpAnim = true, Vector3 forcePoint = default(Vector3), Vector3 forceDir = default(Vector3));
-    public void ApplyRagdollForce(Vector3 forcePoint, Vector3 forceDir);
+    public void SetGravityMultiplier(float multiplier);
+    public void SetImpostorTexture(Texture2D impostorTexture);
+    private void RecalculateVisibilityRangeSqr(int a, int b);
+    private void UpdateAnimationActive();
+    public void EnableRagdoll();
+    public void EnableRagdollAndApplyForce(Vector3 forcePoint, Vector3 forceDir);
+    public void DisableRagdoll();
+    public void RealignAvatarToHips(bool isHipBoneFacingUpwards);
+    private void SetRagdollEnabled(bool ragdoll, Vector3 forcePoint = default(Vector3), Vector3 forceDir = default(Vector3));
+    public void ApplyRagdollForce(Vector3 forcePoint, Vector3 forceDir, ForceMode forceMode = (ForceMode)1);
+    public void ShowOutline(Color color);
+    public void HideOutline();
     public virtual AvatarEquippable SetEquippable(string assetPath);
     public virtual void ReceiveEquippableMessage(string message, object data);
 }

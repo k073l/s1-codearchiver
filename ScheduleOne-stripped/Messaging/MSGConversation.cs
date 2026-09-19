@@ -6,9 +6,7 @@ using ScheduleOne.DevUtilities;
 using ScheduleOne.Economy;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Money;
-using ScheduleOne.NPCs;
 using ScheduleOne.NPCs.Relation;
-using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.Persistence.Loaders;
 using ScheduleOne.UI;
@@ -20,16 +18,16 @@ using UnityEngine.UI;
 
 namespace ScheduleOne.Messaging;
 [Serializable]
-public class MSGConversation : ISaveable
+public class MSGConversation
 {
-    public const int MAX_MESSAGE_HISTORY;
-    public string contactName;
-    public NPC sender;
-    public List<Message> messageHistory;
-    public List<MessageChain> messageChainHistory;
-    public List<MessageBubble> bubbles;
-    public List<SendableMessage> Sendables;
+    private const int MessageHistory;
     public List<EConversationCategory> Categories;
+    private List<Message> _messageHistory;
+    private List<MessageChain> _messageChainHistory;
+    private List<MessageBubble> _bubbles;
+    private List<SendableMessage> _sendables;
+    private MessageContactInfo _sender;
+    private bool _rollingOut;
     public RectTransform entry;
     protected RectTransform container;
     protected RectTransform bubbleContainer;
@@ -50,11 +48,13 @@ public class MSGConversation : ISaveable
     public Action onConversationOpened;
     public List<Response> currentResponses;
     private List<RectTransform> responseRects;
+    public string ContactName => _sender.Name;
+    public string ConversationId { get; private set; }
     public bool IsSenderKnown { get; protected set; } = true;
     public bool Read { get; private set; } = true;
-    public int index { get; protected set; }
-    public bool isOpen { get; protected set; }
-    public bool rollingOut { get; protected set; }
+    public int Index { get; protected set; }
+    public bool IsOpen { get; protected set; }
+    public int MessageHistoryCount => _messageHistory.Count;
     public bool EntryVisible { get; protected set; } = true;
     public UISelectable UISelectable => uiSelectable;
     public bool AreResponsesActive => currentResponses.Count > 0;
@@ -66,12 +66,12 @@ public class MSGConversation : ISaveable
     public List<string> LocalExtraFolders { get; set; } = new List<string>();
     public bool HasChanged { get; set; }
 
-    public MSGConversation(NPC _npc, string _contactName);
-    public virtual void InitializeSaveable();
+    public MSGConversation(MessageContactInfo contact, string conversationId);
     public void SetCategories(List<EConversationCategory> cat);
     public void MoveToTop();
     public bool ShouldReplicate();
     public int GetReplicationByteSize();
+    public Sprite GetSenderIcon();
     protected void CreateUI();
     public void EnsureUIExists();
     protected void RefreshPreviewText();
@@ -86,8 +86,7 @@ public class MSGConversation : ISaveable
     public void SendMessage(Message message, bool notify = true, bool network = true);
     public void SendMessageChain(MessageChain messages, float initialDelay = 0f, bool notify = true, bool network = true);
     public MSGConversationData GetSaveData();
-    public virtual string GetSaveString();
-    public virtual void Load(MSGConversationData data);
+    public void Load(MSGConversationData data);
     public void ResetConversation();
     public void SetSliderValue(float value, Color color);
     public Response GetResponse(string label);
@@ -99,6 +98,7 @@ public class MSGConversation : ISaveable
     public void ClearResponses(bool network = false);
     public SendableMessage CreateSendableMessage(string text);
     public void SendPlayerMessage(int sendableIndex, int sentIndex, bool network);
+    public void SendPlayerMessage(SendableMessage message, int sentIndex, bool network);
     public void RenderPlayerMessage(SendableMessage sendable);
     private void CheckSendLoop();
     private bool CanSendNewMessage();

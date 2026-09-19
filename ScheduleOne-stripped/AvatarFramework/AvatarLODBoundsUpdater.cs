@@ -1,18 +1,18 @@
-using System.Collections.Generic;
-using System.Linq;
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace ScheduleOne.AvatarFramework;
+[RequireComponent(typeof(Avatar))]
 public class AvatarLODBoundsUpdater : MonoBehaviour
 {
-    public const float CHECK_RATE_SECONDS;
-    public const float HIP_OFFSET_THRESHOLD;
-    public Avatar Avatar;
-    private List<LODGroup> lodGroups;
-    private Vector3 hipOffsetOnLastRefresh;
+    private const float CheckInterval;
+    private const float HipOffsetThreshold;
+    [SerializeField]
+    private LODGroup[] _lodGroups;
+    private Avatar _avatar;
+    private Vector3 _hipOffsetOnLastRefresh;
     private void Awake();
     private void InfrequentUpdate();
-    private void GetLODGroups();
+    private void OnRagdollChange(bool isRagdolled);
     private void Recalculate();
 }

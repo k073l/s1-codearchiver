@@ -12,6 +12,6 @@ public class Electrifying : Effect
     public override void ApplyToPlayer(Player player);
     public override void ClearFromNPC(NPC npc);
     public override void ClearFromPlayer(Player player);
-    public static void ApplyToAvatar(Avatar avatar);
-    public static void ClearFromAvatar(Avatar avatar);
+    public static void ApplyToAvatar(ScheduleOne.AvatarFramework.Avatar avatar);
+    public static void ClearFromAvatar(ScheduleOne.AvatarFramework.Avatar avatar);
 }

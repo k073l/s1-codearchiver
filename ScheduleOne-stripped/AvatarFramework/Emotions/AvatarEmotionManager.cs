@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using ScheduleOne.Avatar;
+using ScheduleOne.Core.Avatar;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.PlayerScripts;
 using UnityEngine;
@@ -20,14 +23,17 @@ public class AvatarEmotionManager : MonoBehaviour
     private AvatarEmotionPreset neutralPreset;
     private Coroutine emotionLerpRoutine;
     private Dictionary<string, Coroutine> emotionRemovalRoutines;
-    private int tempIndex;
     public string CurrentEmotion { get; protected set; } = "Neutral";
     public AvatarEmotionPreset CurrentEmotionPreset { get; protected set; }
     public bool IsSwitchingEmotion => emotionLerpRoutine != null;
 
+    public event Action<AvatarEmotionPreset> OnEmotionChanged;
+    public event Action<FaceAvatarObject> OnFaceChanged;
     private void Start();
     public void UpdateEmotion();
     public void ConfigureNeutralFace(Texture2D faceTex, float restingBrowHeight, float restingBrowAngle, Eye.EyeLidConfiguration leftEyelidConfig, Eye.EyeLidConfiguration rightEyelidConfig);
+    public void SetNeutralFace(string faceId);
+    public void SetNeutralEyes(EyeSettings leftEye, EyeSettings rightEye, EyebrowSettings leftEyebrow, EyebrowSettings rightEyebrow, EyelidPosition leftEyelidPosition, EyelidPosition rightEyelidPosition);
     public virtual void AddEmotionOverride(string emotionName, string overrideLabel, float duration = 0f, int priority = 0);
     public void RemoveEmotionOverride(string label);
     public void ClearOverrides();

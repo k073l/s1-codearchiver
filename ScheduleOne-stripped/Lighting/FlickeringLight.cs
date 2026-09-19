@@ -14,13 +14,23 @@ public class FlickeringLight : MonoBehaviour
     public bool enableColorShift;
     public Color minColor;
     public Color maxColor;
+    [Header("Flicker Movement")]
+    [SerializeField]
+    private bool _enableFlickerMovement;
+    [SerializeField]
+    private float _flickerMovementRange;
+    [SerializeField]
+    private float _flickerMovementSpeed;
     [Header("Flicker Speed")]
     [Tooltip("How quickly the light flickers (lower is faster).")]
     public float flickerSpeed;
     private Light lightSource;
     private float targetIntensity;
+    private Vector3 _targetMovement;
+    private Vector3 _originalPosition;
     private Color targetColor;
     private void Start();
     private void Update();
     private void UpdateTargetValues();
+    private void UpdateMovement();
 }

@@ -4,16 +4,16 @@ using ScheduleOne.NPCs;
 using ScheduleOne.PlayerScripts;
 using Unity.Profiling;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace ScheduleOne.AvatarFramework.Animation;
 public class AvatarLookController : MonoBehaviour
 {
-    private const float CullRange;
     private const float CullRangeSqr;
-    public const float LookAtPlayerRange;
-    public const float EyeContractRange;
-    public static Transform TempContainer;
+    private const float LookAtPlayerRange;
+    private const float EyeContractRange;
+    private const float AimIKWeight;
+    private const float BodyRotationSpeed;
     public bool DEBUG;
     [Header("References")]
     public AimIK Aim;
@@ -22,23 +22,23 @@ public class AvatarLookController : MonoBehaviour
     public Transform LookOrigin;
     public EyeController Eyes;
     [Header("Settings")]
-    public bool AutoLookAtPlayer;
     public float LookLerpSpeed;
-    public float AimIKWeight;
-    public float BodyRotationSpeed;
+    [SerializeField]
+    [FormerlySerializedAs("AutoLookAtPlayer")]
+    private bool _autoLookAtPlayer;
+    [Header("Force Look")]
+    public Transform ForceLookTarget;
+    public bool ForceLookRotateBody;
     protected NPC _parentNPC;
     protected Player _parentPlayer;
     private Avatar avatar;
     private Vector3 lookAtPos;
-    private Transform lookAtTarget;
     private Vector3 lastFrameOffset;
     private bool overrideLookAt;
     private Vector3 overriddenLookTarget;
     private int overrideLookPriority;
     private bool overrideRotateBody;
     private bool blockLookOverrides;
-    public Transform ForceLookTarget;
-    public bool ForceLookRotateBody;
     private float defaultIKWeight;
     private Player nearestPlayer;
     private float nearestPlayerDist;
@@ -57,7 +57,6 @@ public class AvatarLookController : MonoBehaviour
     private void LookForward();
     private void LerpTargetTransform();
     private bool CanLookAt(Vector3 position);
-    protected void RagdollChange(bool oldValue, bool ragdoll, bool playStandUpAnim);
     public void OverrideIKWeight(float weight);
     public void ResetIKWeight();
 }

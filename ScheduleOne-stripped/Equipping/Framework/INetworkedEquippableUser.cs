@@ -10,6 +10,6 @@ public interface INetworkedEquippableUser : IEquippableUser
 
     Transform ItemHandlerContainer => ((Component)NetworkBehaviour).transform;
 
-    IEquippedItemHandler EquipLocal(EquippableData equippable);
-    IEquippedItemHandler EquipLocal(BaseItemInstance item);
+    IEquippedItemHandler Equip_Networked(EquippableData equippable);
+    IEquippedItemHandler Equip_Networked(BaseItemInstance item);
 }

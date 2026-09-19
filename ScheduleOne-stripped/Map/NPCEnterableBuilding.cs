@@ -26,6 +26,8 @@ public class NPCEnterableBuilding : MonoBehaviour, IGUIDRegisterable
     public Guid GUID { get; protected set; }
     public int OccupantCount => Occupants.Count;
 
+    public event Action<NPC> OnNPCEnteredBuilding;
+    public event Action<NPC> OnNPCExitedBuilding;
     protected virtual void Awake();
     public void SetGUID(Guid guid);
     public virtual void NPCEnteredBuilding(NPC npc, StaticDoor door);
@@ -34,4 +36,5 @@ public class NPCEnterableBuilding : MonoBehaviour, IGUIDRegisterable
     public void GetDoors();
     public List<NPC> GetSummonableNPCs();
     public StaticDoor GetClosestDoor(Vector3 pos, bool useableOnly);
+    public List<NPC> GetOccupants();
 }

@@ -9,6 +9,7 @@ using FishNet.Serializing;
 using FishNet.Serializing.Generated;
 using FishNet.Transporting;
 using ScheduleOne.Combat;
+using ScheduleOne.Core.Avatar;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.NPCs;
 using UnityEngine;
@@ -18,7 +19,7 @@ namespace ScheduleOne.Cartel;
 public class CartelGoon : NPC
 {
     private List<CartelGoon> goonMates;
-    private CartelGoonAppearance appearance;
+    private CartelGoonAppearance _appearance;
     public Action onDespawn;
     private bool NetworkInitialize___EarlyScheduleOne_002ECartel_002ECartelGoonAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ECartel_002ECartelGoonAssembly_002DCSharp_002Edll_Excuted;
@@ -34,7 +35,7 @@ public class CartelGoon : NPC
     private void Spawn_Client(NetworkConnection conn);
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
-    private void ConfigureGoonSettings(NetworkConnection conn, CartelGoonAppearance appearance, float moveSpeed);
+    private void ConfigureGoonSettings(NetworkConnection conn, CartelGoonAppearance appearance);
     public void Despawn();
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
@@ -51,11 +52,11 @@ public class CartelGoon : NPC
     private void RpcReader___Observers_Spawn_Client_328543758(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Target_Spawn_Client_328543758(NetworkConnection conn);
     private void RpcReader___Target_Spawn_Client_328543758(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Observers_ConfigureGoonSettings_3427656873(NetworkConnection conn, CartelGoonAppearance appearance, float moveSpeed);
-    private void RpcLogic___ConfigureGoonSettings_3427656873(NetworkConnection conn, CartelGoonAppearance appearance, float moveSpeed);
-    private void RpcReader___Observers_ConfigureGoonSettings_3427656873(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Target_ConfigureGoonSettings_3427656873(NetworkConnection conn, CartelGoonAppearance appearance, float moveSpeed);
-    private void RpcReader___Target_ConfigureGoonSettings_3427656873(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Observers_ConfigureGoonSettings_451009018(NetworkConnection conn, CartelGoonAppearance appearance);
+    private void RpcLogic___ConfigureGoonSettings_451009018(NetworkConnection conn, CartelGoonAppearance appearance);
+    private void RpcReader___Observers_ConfigureGoonSettings_451009018(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Target_ConfigureGoonSettings_451009018(NetworkConnection conn, CartelGoonAppearance appearance);
+    private void RpcReader___Target_ConfigureGoonSettings_451009018(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Observers_Despawn_Client_328543758(NetworkConnection conn);
     private void RpcLogic___Despawn_Client_328543758(NetworkConnection conn);
     private void RpcReader___Observers_Despawn_Client_328543758(PooledReader PooledReader0, Channel channel);

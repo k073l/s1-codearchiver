@@ -12,6 +12,7 @@ using ScheduleOne.Dialogue;
 using ScheduleOne.Economy;
 using ScheduleOne.GameTime;
 using ScheduleOne.ItemFramework;
+using ScheduleOne.NPCs.Framework;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Product;
 using ScheduleOne.Quests;
@@ -56,7 +57,7 @@ public class RequestProductBehaviour : Behaviour
     private bool GetNewDestination(out Vector3 dest);
     public static bool IsTargetValid(Player player);
     public bool CanStartDialogue();
-    private void SetUpDialogue();
+    private void SetUpDialogue(NPCData npcData);
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     private void SendStartInitialDialogue();
     [ObserversRpc(RunLocally = true)]
@@ -67,7 +68,8 @@ public class RequestProductBehaviour : Behaviour
     private void StartFollowUpDialogue();
     private bool DialogueActive(bool enabled);
     private void RequestAccepted();
-    private void HandoverClosed(HandoverScreen.EHandoverOutcome outcome, List<ItemInstance> items, float askingPrice);
+    private void HandoverCancelled();
+    private void HandoverSubmitted(List<ItemInstance> items, float askingPrice);
     private void Follow();
     private void RequestRejected();
     public override void NetworkInitialize___Early();

@@ -69,7 +69,7 @@ public class MessagesApp : App<MessagesApp>
     protected override void Update();
     private void Loaded();
     private void Clean();
-    public void CreateConversationUI(MSGConversation c, out RectTransform entry, out RectTransform container);
+    public void CreateConversationUI(MSGConversation conversation, out RectTransform entry, out RectTransform container);
     public void RepositionEntries();
     public void ReturnButtonClicked();
     public void RefreshNotifications();

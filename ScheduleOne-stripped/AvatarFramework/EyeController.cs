@@ -1,81 +1,63 @@
 using System;
 using System.Collections;
+using ScheduleOne.Core.Avatar;
 using ScheduleOne.DevUtilities;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace ScheduleOne.AvatarFramework;
-[ExecuteInEditMode]
 public class EyeController : MonoBehaviour
 {
-    private static float eyeHeightMultiplier;
-    public bool DEBUG;
     [Header("References")]
     [SerializeField]
-    public Eye leftEye;
+    private Eye _leftEye;
     [SerializeField]
-    public Eye rightEye;
-    [Header("Location Settings")]
-    [Range(0f, 45f)]
-    [SerializeField]
-    protected float eyeSpacing;
-    [Range(-1f, 1f)]
-    [SerializeField]
-    protected float eyeHeight;
-    [Range(0.5f, 1.5f)]
-    [SerializeField]
-    protected float eyeSize;
-    [Header("Eyelid Settings")]
-    public Eye.EyeLidConfiguration LeftRestingEyeState;
-    public Eye.EyeLidConfiguration RightRestingEyeState;
-    [Header("Eyeball Settings")]
-    [SerializeField]
-    protected Material eyeBallMaterial;
-    [Header("Pupil State")]
-    [Range(0f, 1f)]
-    public float PupilDilation;
+    private Eye _rightEye;
     [Header("Blinking Settings")]
-    public bool BlinkingEnabled;
+    [SerializeField]
+    [FormerlySerializedAs("BlinkingEnabled")]
+    private bool blinkingEnabled;
     [SerializeField]
     [Range(0f, 10f)]
-    protected float blinkInterval;
+    private float blinkInterval;
     [SerializeField]
     [Range(0f, 2f)]
-    protected float blinkIntervalSpread;
+    private float blinkIntervalSpread;
     [SerializeField]
     [Range(0f, 1f)]
-    protected float blinkDuration;
-    private Avatar avatar;
-    private Coroutine blinkRoutine;
-    private float timeUntilNextBlink;
-    private bool eyeBallTintOverridden;
-    private bool eyeLidOverridden;
-    private Eye.EyeLidConfiguration defaultLeftEyeRestingState;
-    private Eye.EyeLidConfiguration defaultRightEyeRestingState;
-    private float defaultDilation;
-    private Color defaultEyeballColor;
-    private Color currentEyeballColor;
-    public bool EyesOpen { get; protected set; } = true;
+    private float blinkDuration;
+    private Coroutine _blinkRoutine;
+    private float _timeUntilNextBlink;
+    public Eye LeftEye => _leftEye;
+    public Eye RightEye => _rightEye;
 
     protected virtual void Awake();
+    private void OnDisable();
     protected void Update();
-    private void OnEnable();
-    public void SetEyeballTint(Color col, bool overrideDefault = false);
-    public void ResetEyeballTint();
-    public void OverrideEyeLids(Eye.EyeLidConfiguration eyeLidConfiguration);
-    public void ResetEyeLids();
-    private void RagdollChange(bool oldValue, bool newValue, bool playStandUpAnim);
-    public void SetEyesOpen(bool open);
-    private void ApplyDilation();
-    public void SetPupilDilation(float dilation, bool writeDefault = true);
+    public void LookAt(Vector3 position);
+    public void ApplyEyeSettings(EyeSettings leftEyeSettings, EyeSettings rightEyeSettings);
+    public void ApplyEyelidSettings(EyelidSettings leftEyelidSettings, EyelidSettings rightEyelidSettings);
+    public void SetEyelidColor(Color eyelidColor);
+    public void SetEyelidRestingPosition(EyelidPosition position);
+    public void SetEyelidRestingPosition(EAvatarSide side, EyelidPosition position);
+    public void ResetEyelidRestingPosition();
+    public void ResetEyelidRestingPosition(EAvatarSide side);
+    public void SetEyeballColor(Color color, float emission = 0.115f, bool setDefault = false);
+    public void SetEyeballColor(EAvatarSide side, Color color, float emission = 0.115f, bool setDefault = false);
+    public void ResetEyeballColor();
+    public void ResetEyeballColor(EAvatarSide side);
+    public void SetPupilDilation(float dilation, bool setDefault = true);
+    public void SetPupilDilation(EAvatarSide side, float dilation, bool setDefault = true);
+    public void ResetPupilDilation();
+    public void ResetPupilDilation(EAvatarSide side);
+    public void SetEyeLight(Color color, float intensity);
+    public void SetEyeLight(EAvatarSide side, Color color, float intensity);
+    public void ResetEyeLight();
+    public void ResetEyeLight(EAvatarSide side);
+    private void OnRagdollChange(bool ragdoll);
     public void SetEyeballMaterial(Material material);
     public void ResetEyeballMaterial();
-    public void ResetPupilDilation();
-    private void ApplyRestingEyeLidState();
-    public void ForceBlink();
-    public void SetLeftEyeRestingLidState(Eye.EyeLidConfiguration config);
-    public void SetRightEyeRestingLidState(Eye.EyeLidConfiguration config);
-    private IEnumerator BlinkRoutine();
+    public void Blink();
     private void ResetBlinkCounter();
-    public void LookAt(Vector3 position, bool instant = false);
+    private IEnumerator BlinkControlRoutine();
 }

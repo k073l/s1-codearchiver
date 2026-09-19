@@ -20,8 +20,8 @@ public class NPCResponses_CartelGoon : NPCResponses
     public override void GunshotHeard(NoiseEvent gunshotSound);
     public override void NoticePlayerDischargingWeapon(Player player);
     public override void PlayerFailedPickpocket(Player player);
-    public override void HitByCar(LandVehicle vehicle);
+    protected override void RespondToHitByCar(LandVehicle vehicle);
     public override void ImpactReceived(Impact impact);
-    public override void RespondToAimedAt(Player player);
+    protected override void RespondToAimedAt(Player player);
     protected override void RespondToAnnoyingImpact(Player perpetrator, Impact impact);
 }

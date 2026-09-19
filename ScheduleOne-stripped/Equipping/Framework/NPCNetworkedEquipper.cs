@@ -3,7 +3,6 @@ using ScheduleOne.NPCs;
 using UnityEngine;
 
 namespace ScheduleOne.Equipping.Framework;
-[RequireComponent(typeof(NPC))]
 public class NPCNetworkedEquipper : NetworkedEquipper
 {
     private NPC _npc;

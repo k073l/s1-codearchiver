@@ -14,10 +14,8 @@ using FishNet.Transporting.Yak;
 using FishySteamworks;
 using Pathfinding;
 using ScheduleOne.Audio;
-using ScheduleOne.AvatarFramework.Animation;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Economy;
-using ScheduleOne.Input;
 using ScheduleOne.Money;
 using ScheduleOne.Networking;
 using ScheduleOne.Persistence.Datas;
@@ -89,7 +87,6 @@ public class LoadManager : PersistentSingleton<LoadManager>
     public static event Action onLoadConfigurations;
     protected override void Awake();
     protected override void Start();
-    private void OnApplicationQuit();
     private void Bananas();
     private void InitializeItemLoaders();
     private void InitializeObjectLoaders();

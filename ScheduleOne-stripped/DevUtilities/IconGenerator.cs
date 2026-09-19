@@ -20,7 +20,8 @@ public class IconGenerator : Singleton<IconGenerator>
         public Transform TopLevelTransform;
     }
 
-    public int IconSize;
+    public const string LayerMaskName;
+    public const int IconSize;
     public string OutputPath;
     public bool ModifyLighting;
     [Header("References")]
@@ -34,6 +35,6 @@ public class IconGenerator : Singleton<IconGenerator>
     protected override void Awake();
     [Button]
     public void GenerateIcon();
-    public Texture2D GeneratePackagingIcon(string packagingID, string productID);
-    public Texture2D GetTexture(Transform model);
+    public Texture2D GeneratePackagingIcon(string packagingID, string productID, int iconSize = 512);
+    public Texture2D GetTexture(Transform model, int iconSize = 512);
 }

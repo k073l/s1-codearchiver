@@ -22,7 +22,7 @@ public class Jeremy : NPC
 
     public Dealership Dealership;
     public List<DealershipListing> Listings;
-    public DialogueContainer GreetingDialogue;
+    public Conversation GreetingDialogue;
     public string GreetedVariable;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002ECharacterClasses_002EJeremyAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002ECharacterClasses_002EJeremyAssembly_002DCSharp_002Edll_Excuted;

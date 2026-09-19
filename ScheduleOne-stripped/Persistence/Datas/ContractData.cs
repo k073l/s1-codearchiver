@@ -6,6 +6,7 @@ namespace ScheduleOne.Persistence.Datas;
 [Serializable]
 public class ContractData : QuestData
 {
+    public string CustomerId;
     public string CustomerGUID;
     public float Payment;
     public ProductList ProductList;
@@ -13,5 +14,5 @@ public class ContractData : QuestData
     public QuestWindowConfig DeliveryWindow;
     public int PickupScheduleIndex;
     public GameDateTimeData AcceptTime;
-    public ContractData(string guid, EQuestState state, bool isTracked, string title, string desc, bool isTimed, GameDateTimeData expiry, QuestEntryData[] entries, string customerGUID, float payment, ProductList productList, string deliveryLocationGUID, QuestWindowConfig deliveryWindow, int pickupScheduleIndex, GameDateTimeData acceptTime);
+    public ContractData(string guid, EQuestState state, bool isTracked, string title, string desc, bool isTimed, GameDateTimeData expiry, QuestEntryData[] entries, string customerId, float payment, ProductList productList, string deliveryLocationGUID, QuestWindowConfig deliveryWindow, int pickupScheduleIndex, GameDateTimeData acceptTime);
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +18,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace ScheduleOne.UI;
-public class DailySummary : NetworkSingleton<DailySummary>
+public class DailySummary : NetworkSingleton<DailySummary>, ISleepEvent
 {
     [Header("References")]
     public Canvas Canvas;
@@ -37,10 +36,12 @@ public class DailySummary : NetworkSingleton<DailySummary>
     private float moneyEarnedByDealers;
     private bool NetworkInitialize___EarlyScheduleOne_002EUI_002EDailySummaryAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EUI_002EDailySummaryAssembly_002DCSharp_002Edll_Excuted;
-    public bool IsOpen { get; private set; }
+    public bool IsInProgress { get; private set; }
+    public int EventOrder { get; private set; } = 1;
     public int xpGained { get; private set; }
 
     protected override void Start();
+    public void StartEvent();
     public void Open();
     public void Close();
     private void SleepEnd();

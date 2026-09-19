@@ -1,77 +1,42 @@
 using System;
-using System.Collections.Generic;
-using FishNet;
-using ScheduleOne.Audio;
 using ScheduleOne.Combat;
 using ScheduleOne.DevUtilities;
-using ScheduleOne.Dragging;
-using ScheduleOne.Equipping;
-using ScheduleOne.GameTime;
-using ScheduleOne.Interaction;
-using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
-using ScheduleOne.Persistence.Loaders;
-using ScheduleOne.PlayerScripts;
-using ScheduleOne.Property;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace ScheduleOne.Trash;
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(Draggable))]
+[RequireComponent(typeof(TrashItemDraggable))]
 [RequireComponent(typeof(PhysicsDamageable))]
-public class TrashItem : MonoBehaviour, IGUIDRegisterable, ISaveable
+public class TrashItem : MonoBehaviour, IGUIDRegisterable
 {
-    private const float ColliderRange;
-    private const float ColliderRangeSqr;
-    public const float POSITION_CHANGE_THRESHOLD;
-    public const float LINEAR_DRAG;
-    public const float ANGULAR_DRAG;
-    public const float MIN_Y;
-    public const int INTERACTION_PRIORITY;
-    public Rigidbody Rigidbody;
-    public Draggable Draggable;
+    private const float LinearDrag;
+    private const float AngularDrag;
+    private const float ImpactForceMultiplier;
     [Header("Settings")]
-    public string ID;
+    [SerializeField]
+    [FormerlySerializedAs("ID")]
+    private string Id;
     [Range(0f, 5f)]
     public int Size;
     [Range(0f, 10f)]
     public int SellValue;
-    public bool CanGoInContainer;
-    public Collider[] colliders;
-    private Vector3 lastPosition;
-    public Action<TrashItem> onDestroyed;
-    private bool collidersEnabled;
-    private float timeOnPhysicsEnabled;
+    [SerializeField]
+    [FormerlySerializedAs("CanGoInContainer")]
+    private bool _canGoInTrashContainer;
+    private Rigidbody _rigidbody;
+    private TrashItemDraggable _draggable;
     public Guid GUID { get; protected set; }
-    public ScheduleOne.Property.Property CurrentProperty { get; protected set; }
-    public string SaveFolderName => "Trash_" + GUID.ToString().Substring(0, 6);
-    public string SaveFileName => "Trash_" + GUID.ToString().Substring(0, 6);
-    public Loader Loader => null;
-    public bool ShouldSaveUnderFolder => false;
-    public List<string> LocalExtraFiles { get; set; } = new List<string>();
-    public List<string> LocalExtraFolders { get; set; } = new List<string>();
-    public bool HasChanged { get; set; }
+    public string ID => Id;
+    public Vector3 Velocity => _rigidbody.velocity;
 
+    public event Action<TrashItem> onDestroyed;
     protected void Awake();
-    protected void Start();
-    public virtual void InitializeSaveable();
-    protected void OnValidate();
-    protected void OnTick();
-    protected void Hovered();
-    protected void Interacted();
+    public virtual void Initialize(Guid guid, Vector3 initialVelocity = default(Vector3));
+    public virtual bool CanGoInTrashContainer();
     public void SetGUID(Guid guid);
-    public void SetVelocity(Vector3 velocity);
     public void DestroyTrash();
-    public virtual void Deinitialize();
-    private void OnDestroy();
-    private void RecheckPosition();
+    public virtual void OnDestroyed();
     public virtual TrashItemData GetData();
-    public virtual string GetSaveString();
-    public virtual bool ShouldSave();
-    private void RecheckProperty();
-    public void SetContinuousCollisionDetection();
-    public void SetDiscreteCollisionDetection();
-    public void SetPhysicsActive(bool active);
-    public void SetCollidersEnabled(bool enabled);
 }

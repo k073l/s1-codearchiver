@@ -1,5 +1,5 @@
 using FishNet.Object;
-using ScheduleOne.AvatarFramework;
+using ScheduleOne.Core.Avatar;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Employees;
 using ScheduleOne.FX;

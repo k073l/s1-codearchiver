@@ -1,14 +1,14 @@
 using System;
-using ScheduleOne.AvatarFramework;
+using ScheduleOne.Core.Avatar;
 using UnityEngine;
 
 namespace ScheduleOne.NPCs.Framework;
 [Serializable]
 public class Appearance
 {
-    public AvatarSettings AvatarSettings;
     public Sprite Mugshot;
-    [Header("Seasonal Appearance")]
-    public AvatarSettings ChristmasAppearance;
+    public NakedAppearanceObject DefaultAppearance;
+    public Outfit DefaultOutfit;
+    public Texture2D Impostor;
     public Appearance GetCopy();
 }

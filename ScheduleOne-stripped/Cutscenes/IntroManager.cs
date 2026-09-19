@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using FishNet;
 using ScheduleOne.Audio;
-using ScheduleOne.AvatarFramework.Customization;
+using ScheduleOne.CharacterCreator;
 using ScheduleOne.Clothing;
 using ScheduleOne.Core;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.GameTime;
+using ScheduleOne.Networking;
 using ScheduleOne.Persistence;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Property;
@@ -46,6 +47,6 @@ public class IntroManager : Singleton<IntroManager>
     [Button]
     public void Play();
     private void PlayMusic();
-    public void CharacterCreationDone(BasicAvatarSettings avatar, List<ClothingInstance> clothes);
+    public void CharacterCreationDone(CharacterCreatorState characterCreatorOutput);
     public void PassedStep(int stepIndex);
 }

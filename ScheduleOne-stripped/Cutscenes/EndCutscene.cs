@@ -1,5 +1,6 @@
 using ScheduleOne.AvatarFramework;
-using ScheduleOne.PlayerScripts;
+using ScheduleOne.DevUtilities;
+using ScheduleOne.GameTime;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,8 +11,8 @@ public class EndCutscene : Cutscene
     public UnityEvent onRunStart;
     public UnityEvent onEngineStart;
     public UnityEvent onLightsOn;
-    public Avatar Avatar;
-    public override void Play();
+    public ScheduleOne.AvatarFramework.Avatar Avatar;
+    private void Start();
     public void StandUp();
     public void RunStart();
     public void EngineStart();

@@ -8,6 +8,7 @@ namespace ScheduleOne.Effects;
 [CreateAssetMenu(fileName = "Disorienting", menuName = "Properties/Disorienting Property")]
 public class Disorienting : Effect
 {
+    private Vector2 _pupilOffset;
     public override void ApplyToNPC(NPC npc);
     public override void ApplyToPlayer(Player player);
     public override void ClearFromNPC(NPC npc);

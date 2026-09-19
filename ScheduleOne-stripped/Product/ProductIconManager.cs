@@ -19,6 +19,7 @@ public class ProductIconManager : Singleton<ProductIconManager>
     }
 
     public const string ProductIconPath;
+    private const int RuntimeProductIconSize;
     [SerializeField]
     private List<ProductIcon> icons;
     [Header("Product and packaging")]
@@ -28,5 +29,6 @@ public class ProductIconManager : Singleton<ProductIconManager>
     protected override void Awake();
     public Sprite GetIcon(string productID, string packagingID, bool ignoreError = false);
     public Sprite GenerateIcons(string productID);
+    private Texture2D GenerateRuntimeProductTexture(string productID, string packagingID);
     private Texture2D GenerateProductTexture(string productID, string packagingID);
 }

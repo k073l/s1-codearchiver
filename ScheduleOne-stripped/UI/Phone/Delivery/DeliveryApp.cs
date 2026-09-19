@@ -61,7 +61,6 @@ public class DeliveryApp : App<DeliveryApp>
     private UIPanel _pastOrdersPanel;
     private List<DeliveryStatusDisplay> statusDisplays;
     private DeliveryReceiptDisplay[] _pastDeliveries;
-    private bool started;
     private List<RectTransform> _shopPanels;
     private List<Vector2> _shopPanelInitialAnchors;
     private Coroutine _shopTransitionCoroutine;

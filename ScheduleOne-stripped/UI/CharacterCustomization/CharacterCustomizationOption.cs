@@ -1,3 +1,4 @@
+using ScheduleOne.Core.Avatar;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Levelling;
 using ScheduleOne.Money;
@@ -9,8 +10,7 @@ using UnityEngine.UI;
 namespace ScheduleOne.UI.CharacterCustomization;
 public class CharacterCustomizationOption : MonoBehaviour
 {
-    public string Name;
-    public string Label;
+    public AvatarObject AvatarObject;
     public float Price;
     public bool RequireLevel;
     public FullRank RequiredLevel;
@@ -28,6 +28,9 @@ public class CharacterCustomizationOption : MonoBehaviour
     public UnityEvent onDeselect;
     public UnityEvent onPurchase;
     private bool selected;
+    private CharacterCustomizationCategory _parentCategory;
+    public string Name { get; }
+    public CharacterCustomizationCategory ParentCategory => _parentCategory;
     public bool purchased { get; private set; }
     private bool purchaseable { get; }
 

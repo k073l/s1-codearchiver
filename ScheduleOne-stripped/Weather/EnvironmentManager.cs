@@ -12,6 +12,7 @@ using ScheduleOne.Core.Weather;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.Persistence;
+using ScheduleOne.Reflections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
@@ -73,6 +74,9 @@ public class EnvironmentManager : NetworkSingleton<EnvironmentManager>, IEnviron
     [SerializeField]
     [Range(0f, 360f)]
     private float _windShiftAngle;
+    [Header("Reflections")]
+    [SerializeField]
+    private ReflectionProbeManager _reflectionProbeManager;
     [Header("Debugging & Development")]
     [SerializeField]
     private UniversalRendererData _rendererData;
@@ -121,6 +125,7 @@ public class EnvironmentManager : NetworkSingleton<EnvironmentManager>, IEnviron
 
     SkyState IEnvironmentManager.SkyState => _currentSkyState;
     public List<WeatherSequence> WeatherSequences => _weatherSequences;
+    public ReflectionProbe ReflectionProbe => _reflectionProbeManager.ReflectionProbe;
 
     public override void Awake();
     protected override void Start();
@@ -159,8 +164,12 @@ public class EnvironmentManager : NetworkSingleton<EnvironmentManager>, IEnviron
     private Transform GetWeatherAnchor();
     private Transform GetPlayer();
     private bool IsPositionUnderCover(Vector3 position);
+    public float GetHeightFromPosition(Vector3 position);
+    public float GetRawHeightFromPosition(Vector3 position);
     private int GetWrappedIndex(int index, int change, int size);
     public WeatherProfile GetWeatherProfile(string id);
+    public void GetCurrentWeather(out string activeId, out string neighbourId, out float blend);
+    public bool HasActiveWeatherVolumes();
     private void OnMinutePass();
     private void OnTick();
     private void OnTimeSet();
@@ -169,6 +178,8 @@ public class EnvironmentManager : NetworkSingleton<EnvironmentManager>, IEnviron
     public void OnWeatherEntityRegistered(IWeatherEntity entity);
     public void OnWeatherEntityUnregistered(IWeatherEntity entity);
     public void OnEnclosureRegistered(WorldEnclosure enclosure);
+    public void OverrideTimeOfDay(int timeOfDay);
+    public void ClearTimeOfDayOverride();
     private void RegisterEnclosure(WorldEnclosure enclosure);
     private void RegisterWeatherEnclosure(WeatherEnclosure enclosure);
     private void RegisterOverrideEnclosure(SkyOverrideEnclosure enclosure);

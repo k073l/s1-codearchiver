@@ -1,17 +1,16 @@
-using ScheduleOne.Core;
-using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace ScheduleOne.Development;
 public class DevTesting : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField]
-    private string _example;
+    private string animationName;
     [SerializeField]
-    private TextMeshProUGUI _temp;
-    [Button]
-    private void GetRequiredSize();
-    private void Update();
+    private bool isAnimationActive;
+    [SerializeField]
+    private Transform avatar;
+    [SerializeField]
+    private Animator animator;
+    private void OnValidate();
 }

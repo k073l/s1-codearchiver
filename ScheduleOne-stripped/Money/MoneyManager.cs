@@ -77,6 +77,7 @@ public class MoneyManager : NetworkSingleton<MoneyManager>, IBaseSaveable, ISave
     public static string ApplyMoneyTextColor(string text);
     public static string ApplyMoneyTextColorDarker(string text);
     public static string ApplyOnlineBalanceColor(string text);
+    public static string ApplyCurrencyColorRichText(string text, ECurrencyType currencyType);
     public override void Awake();
     public virtual void InitializeSaveable();
     protected override void Start();

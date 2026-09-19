@@ -44,7 +44,7 @@ public class VehicleAgent : MonoBehaviour
 
     public delegate void NavigationCallback(ENavigationResult status);
     public const string VehicleGraphName;
-    public const string RoadGraphName;
+    public const string RoadNodesGraphName;
     public const float MaxDistanceFromPath;
     public const float MaxDistanceFromPathWhenReversing;
     public static Vector3 MainGraphSamplePoint;
@@ -63,6 +63,7 @@ public class VehicleAgent : MonoBehaviour
     public const float INFREQUENT_UPDATE_RATE;
     private const float KinematicModeRotationSpeed;
     private const float KinematicModeSpeedMultiplier;
+    private static readonly string[] KinematicModeObstacleLayers;
     public bool DEBUG_MODE;
     public DriveFlags Flags;
     [Header("Seekers")]
@@ -144,6 +145,7 @@ public class VehicleAgent : MonoBehaviour
     protected NavigationCallback storedNavigationCallback;
     protected SpeedZone currentSpeedZone;
     private LayerMask _groundMask;
+    private LayerMask _kinematicModeObstacleLayerMask;
     protected LandVehicle vehicle;
     protected float wheelbase;
     protected float wheeltrack;
@@ -206,5 +208,6 @@ public class VehicleAgent : MonoBehaviour
     public bool IsOnVehicleGraph();
     private float GetDistanceFromVehicleGraph();
     private Vector3 GetPathLateralDirection();
+    private bool GetForwardObstacle(float range, LayerMask layers, out Vector3 hitPoint, out float hitDistance);
     public bool GetIsStuck();
 }

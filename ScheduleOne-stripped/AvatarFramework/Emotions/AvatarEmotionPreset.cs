@@ -1,4 +1,5 @@
 using System;
+using ScheduleOne.Core.Avatar;
 using UnityEngine;
 
 namespace ScheduleOne.AvatarFramework.Emotions;
@@ -6,9 +7,9 @@ namespace ScheduleOne.AvatarFramework.Emotions;
 public class AvatarEmotionPreset
 {
     public string PresetName;
-    public Texture2D FaceTexture;
-    public Eye.EyeLidConfiguration LeftEyeRestingState;
-    public Eye.EyeLidConfiguration RightEyeRestingState;
+    public FaceAvatarObject FaceAvatarObject;
+    public EyelidPosition LeftEyeRestingPosition;
+    public EyelidPosition RightEyeRestingPosition;
     [Range(-30f, 30f)]
     public float BrowAngleChange_L;
     [Range(-30f, 30f)]

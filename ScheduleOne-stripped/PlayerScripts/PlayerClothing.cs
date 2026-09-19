@@ -10,28 +10,25 @@ using FishNet.Serializing.Generated;
 using FishNet.Transporting;
 using ScheduleOne.AvatarFramework;
 using ScheduleOne.Clothing;
+using ScheduleOne.Core.Avatar;
 using ScheduleOne.ItemFramework;
 using UnityEngine;
 
 namespace ScheduleOne.PlayerScripts;
+[RequireComponent(typeof(Player))]
 public class PlayerClothing : NetworkBehaviour, IItemSlotOwner
 {
-    public Player Player;
-    public Dictionary<EClothingSlot, ItemSlot> ClothingSlots;
-    private List<ClothingInstance> appliedClothing;
+    private readonly Dictionary<EClothingSlot, ItemSlot> _clothingSlots;
+    private ScheduleOne.AvatarFramework.Avatar _avatar;
     private bool NetworkInitialize___EarlyScheduleOne_002EPlayerScripts_002EPlayerClothingAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EPlayerScripts_002EPlayerClothingAssembly_002DCSharp_002Edll_Excuted;
     public List<ItemSlot> ItemSlots { get; set; } = new List<ItemSlot>();
-    private AvatarSettings appearanceSettings => Player.Avatar.CurrentSettings;
 
     public override void Awake();
     public override void OnSpawnServer(NetworkConnection connection);
-    public void InsertClothing(ClothingInstance clothing);
-    protected virtual void ClothingChanged();
-    public virtual void RefreshAppearance();
-    private bool TryGetInventoryClothing(string assetPath, Color color, out ClothingInstance clothing);
-    private bool IsClothingApplied(AvatarSettings settings, ClothingInstance clothing);
-    private void ApplyClothing(AvatarSettings settings, ClothingInstance clothing);
+    public void InsertClothingItem(ClothingInstance clothing);
+    public ItemSlot GetClothingSlot(EClothingSlot slotType);
+    protected void RefreshAppearance();
     [ServerRpc(RunLocally = true, RequireOwnership = false)]
     public void SetStoredInstance(NetworkConnection conn, int itemSlotIndex, ItemInstance instance);
     [ObserversRpc(RunLocally = true)]
@@ -84,5 +81,5 @@ public class PlayerClothing : NetworkBehaviour, IItemSlotOwner
     private void RpcReader___Observers_SetSlotFilter_Internal_527532783(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Target_SetSlotFilter_Internal_527532783(NetworkConnection conn, int itemSlotIndex, SlotFilter filter);
     private void RpcReader___Target_SetSlotFilter_Internal_527532783(PooledReader PooledReader0, Channel channel);
-    protected virtual void Awake_UserLogic_ScheduleOne_002EPlayerScripts_002EPlayerClothing_Assembly_002DCSharp_002Edll();
+    protected void Awake_UserLogic_ScheduleOne_002EPlayerScripts_002EPlayerClothing_Assembly_002DCSharp_002Edll();
 }

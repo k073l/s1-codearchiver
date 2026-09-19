@@ -15,6 +15,7 @@ public class StorageGrid : MonoBehaviour
     public int UnoccupiedTileCount { get; }
 
     private void Awake();
+    private void OnDrawGizmos();
     public void RegisterTile(StorageTile tile);
     public void DeregisterTile(StorageTile tile);
     public Coordinate GetMatchedCoordinate(FootprintTile tileToMatch);

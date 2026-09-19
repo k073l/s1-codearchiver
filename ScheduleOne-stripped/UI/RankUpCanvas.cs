@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace ScheduleOne.UI;
-public class RankUpCanvas : MonoBehaviour, IPostSleepEvent
+public class RankUpCanvas : MonoBehaviour, ISleepEvent
 {
     public Animation OpenCloseAnim;
     public Animation RankUpAnim;
@@ -30,11 +30,10 @@ public class RankUpCanvas : MonoBehaviour, IPostSleepEvent
     public AudioSourceController ClickSound;
     private Coroutine coroutine;
     private List<Tuple<FullRank, FullRank>> queuedRankUps;
-    public bool IsRunning { get; private set; }
-    public int Order { get; private set; }
+    public bool IsInProgress { get; private set; }
+    public int EventOrder { get; private set; } = 2;
 
     public void Start();
-    private void QueuePostSleepEvent();
     public void StartEvent();
     public void EndEvent();
     public void RankUp(FullRank oldRank, FullRank newRank);

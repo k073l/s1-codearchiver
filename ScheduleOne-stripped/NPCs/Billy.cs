@@ -23,8 +23,8 @@ public class Billy : NPC
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002EBillyAssembly_002DCSharp_002Edll_Excuted;
     public override void Awake();
     public void OpenRDXTradeHandover();
-    private void HandoverOutcome(HandoverScreen.EHandoverOutcome outcome, List<ItemInstance> givenItems, float payment);
-    private float GetSucccessChance(List<ItemInstance> items, float price);
+    private void HandoverCancelled();
+    private void HandoverSubmitted(List<ItemInstance> givenItems);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

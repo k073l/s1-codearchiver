@@ -26,6 +26,7 @@ using ScheduleOne.Product;
 using ScheduleOne.Product.Packaging;
 using ScheduleOne.Property;
 using ScheduleOne.Quests;
+using ScheduleOne.SpecialCustomers;
 using ScheduleOne.Trash;
 using ScheduleOne.UI;
 using ScheduleOne.Variables;
@@ -153,6 +154,15 @@ public class Console : Singleton<Console>
         public override void Execute(List<string> args);
     }
 
+    public class RunPerformanceCapture : ConsoleCommand
+    {
+        public override string CommandWord => "capture";
+        public override string CommandDescription => "Runs a performance capture. Optionally specify chunk size, rotation amount, and time between captures.";
+        public override string ExampleUsage => "capture, capture 16 4 4";
+
+        public override void Execute(List<string> args);
+    }
+
     public class SetWeather : ConsoleCommand
     {
         public override string CommandWord => "setweather";
@@ -248,6 +258,15 @@ public class Console : Singleton<Console>
         public override string CommandWord => "disableinstancing";
         public override string CommandDescription => "Disables instancing in the game";
         public override string ExampleUsage => "disableinstancing";
+
+        public override void Execute(List<string> args);
+    }
+
+    public class QueueCustomerGroup : ConsoleCommand
+    {
+        public override string CommandWord => "queuecustomergroup";
+        public override string CommandDescription => "Queues the specified special customer group to arrive the next day.";
+        public override string ExampleUsage => "queuecustomergroup hippies, queuecustomergroup partybus, queuecustomergroup businessmen, queuecustomergroup bikers";
 
         public override void Execute(List<string> args);
     }

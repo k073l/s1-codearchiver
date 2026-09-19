@@ -3,7 +3,7 @@ using UnityEngine;
 namespace ScheduleOne.NPCs.Behaviour;
 public class HeavyFlinchBehaviour : Behaviour
 {
-    public const float FLINCH_DURATION;
+    private const float FlinchDuration;
     private float remainingFlinchTime;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002EBehaviour_002EHeavyFlinchBehaviourAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002EBehaviour_002EHeavyFlinchBehaviourAssembly_002DCSharp_002Edll_Excuted;

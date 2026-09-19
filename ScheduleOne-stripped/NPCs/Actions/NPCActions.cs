@@ -11,6 +11,7 @@ using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.Law;
 using ScheduleOne.NPCs.Behaviour;
+using ScheduleOne.NPCs.Framework;
 using ScheduleOne.NPCs.Other;
 using ScheduleOne.PlayerScripts;
 using UnityEngine;
@@ -21,7 +22,8 @@ public class NPCActions : NetworkBehaviour
     private NPC npc;
     private bool _canUseUmbrella;
     private UseUmbrella _umbrellaAction;
-    private NPCSpeedController.SpeedControl _rainySpeedControl;
+    private SpeedControl _rainySpeedControl;
+    private float _rainTolerance;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002EActions_002ENPCActionsAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002EActions_002ENPCActionsAssembly_002DCSharp_002Edll_Excuted;
     protected NPCBehaviour behaviour => npc.Behaviour;
@@ -36,6 +38,7 @@ public class NPCActions : NetworkBehaviour
     public void FacePlayer(Player player);
     public void SetCanUseUmbrella(bool canUseUmbrella);
     private void UpdateUmbrellaUse();
+    private void OnNPCInitialize(NPCData data);
     private float GetRainAmount();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();

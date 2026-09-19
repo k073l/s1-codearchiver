@@ -14,9 +14,9 @@ public class DealerNPCData : NPCData
     public float SigningFee;
     [Range(0f, 1f)]
     public float SalesCutPercentage;
-    public DialogueContainer RecruitDialogue;
-    public DialogueContainer CollectCashDialogue;
-    public DialogueContainer AssignCustomersDialogue;
+    public Conversation RecruitDialogue;
+    public Conversation CollectCashDialogue;
+    public Conversation AssignCustomersDialogue;
     public override NPCData GetDeepCopy();
     private void PopulateDealerData(DealerNPCData data);
 }

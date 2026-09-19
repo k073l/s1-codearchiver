@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using FishNet;
@@ -17,11 +16,12 @@ using FishNet.Serializing;
 using FishNet.Serializing.Generated;
 using FishNet.Transporting;
 using ScheduleOne.Audio;
+using ScheduleOne.Avatar.Player;
 using ScheduleOne.AvatarFramework;
 using ScheduleOne.AvatarFramework.Animation;
-using ScheduleOne.AvatarFramework.Customization;
 using ScheduleOne.Combat;
 using ScheduleOne.Core.Audio;
+using ScheduleOne.Core.Avatar;
 using ScheduleOne.Core.Equipping.Framework;
 using ScheduleOne.Core.Items.Framework;
 using ScheduleOne.Cutscenes;
@@ -71,7 +71,7 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     [Header("References")]
     [SerializeField]
     private GameObject LocalGameObject;
-    public Avatar Avatar;
+    public ScheduleOne.AvatarFramework.Avatar Avatar;
     public SmoothedVelocityCalculator VelocityCalculator;
     public PlayerVisibility VisualState;
     public EntityVisibility Visibility;
@@ -100,18 +100,20 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     [ColorUsage(true, true)]
     [SerializeField]
     private Color _lightningColorTint;
+    [Header("Appearance")]
     [SerializeField]
-    private AvatarSettings _defaultAppearance;
-    [SerializeField]
-    private BasicAvatarSettings _defaultBasicAppearance;
+    private PlayerAppearanceObject _defaultPlayerAppearance;
     [CompilerGenerated]
     [SyncVar( /*Could not decode attribute arguments.*/)]
+    [HideInInspector]
     public string _003CPlayerName_003Ek__BackingField;
     [CompilerGenerated]
     [SyncVar( /*Could not decode attribute arguments.*/)]
+    [HideInInspector]
     public string _003CPlayerCode_003Ek__BackingField;
     [CompilerGenerated]
     [SyncVar(OnChange = "CurrentVehicleChanged")]
+    [HideInInspector]
     public NetworkObject _003CCurrentVehicle_003Ek__BackingField;
     [CompilerGenerated]
     [SyncVar]
@@ -136,7 +138,6 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     private float standingScale;
     private float timeAirborne;
     private Coroutine taseCoroutine;
-    private List<ConstantForce> ragdollForceComponents;
     private List<int> impactHistory;
     private List<Quaternion> seizureRotations;
     private List<int> equippableMessageIDHistory;
@@ -167,6 +168,7 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
         get; [CompilerGenerated]
         protected set; } = "Player";
     public NetworkConnection Connection { get; private set; }
+    public EGender Gender => Avatar.Appearance.Gender;
     public string PlayerCode {[CompilerGenerated]
         get; [CompilerGenerated]
         protected set; } = string.Empty;
@@ -210,7 +212,7 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
         [ServerRpc(RequireOwnership = false)]
         set; } = Quaternion.identity;
     public int EquippedItemSlotIndex { get; private set; } = -1;
-    public BasicAvatarSettings CurrentBasicAppearance { get; protected set; }
+    public PlayerAppearance CurrentAppearance { get; private set; }
     public ProductItemInstance ConsumedProduct { get; private set; }
     private int _timeSinceProductConsumed { get; set; }
     public string SaveFolderName { get; }
@@ -227,7 +229,7 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public List<string> LocalExtraFolders { get; set; } = new List<string>();
     public bool HasChanged { get; set; } = true;
     public bool avatarVisibleToLocalPlayer { get; private set; }
-    public bool playerDataRetrieveReturned { get; private set; }
+    public bool PlayerLoaded { get; private set; }
     public bool playerSaveRequestReturned { get; private set; }
     public bool Paranoid { get; set; }
     public bool Sneaky { get; set; }
@@ -258,7 +260,9 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public virtual void InitializeSaveable();
     protected virtual void OnDestroy();
     public override void OnStartClient();
-    private void PlayerLoaded();
+    private void OnLocalPlayerLoaded();
+    [ServerRpc]
+    private void SetPlayerLoaded_Server();
     public override void OnSpawnServer(NetworkConnection connection);
     [ServerRpc(RunLocally = true, RequireOwnership = false)]
     public void RequestSavePlayer();
@@ -269,16 +273,16 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public void HostExitedGame();
     private unsafe void ClientConnectionStateChanged(ClientConnectionStateArgs args);
     [ServerRpc(RunLocally = true)]
-    public void SendPlayerNameData(string playerName, string id);
+    public void SetPlayerNameAndId_Server(string playerName, string id);
+    [ObserversRpc(RunLocally = true)]
+    [TargetRpc]
+    private void SetPlayerNameAndId_Client(NetworkConnection conn, string playerName, string id);
     [ServerRpc(RequireOwnership = false)]
-    public void RequestPlayerData(string playerCode);
+    private void RequestPlayerData_Server(string playerCode, bool isHost);
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
-    public void ReceivePlayerData(NetworkConnection conn, PlayerData data, string inventoryString, string appearanceString, string clothigString, VariableData[] vars);
+    private void SetPlayerData_Client(NetworkConnection conn, FullPlayerData fullData);
     public void SetGravityMultiplier(float multiplier);
-    [ObserversRpc(RunLocally = true)]
-    [TargetRpc]
-    private void ReceivePlayerNameData(NetworkConnection conn, string playerName, string id);
     [ServerRpc(RunLocally = true, RequireOwnership = false)]
     public void SetFlashlightOn_Server(bool on);
     [ObserversRpc(RunLocally = true)]
@@ -301,10 +305,6 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     [TargetRpc]
     [ObserversRpc(RunLocally = true)]
     private void ReceiveCrouched(NetworkConnection conn, bool crouched);
-    [ServerRpc(RunLocally = true)]
-    public void SendAvatarSettings(AvatarSettings settings);
-    [ObserversRpc(BufferLast = true, RunLocally = true)]
-    public void SetAvatarSettings(AvatarSettings settings);
     [ObserversRpc]
     private void SetVisible_Networked(bool vis);
     public void EnterVehicle(LandVehicle vehicle, VehicleSeat seat);
@@ -316,13 +316,12 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public void SetReadyToSleep(bool ready);
     private void SleepEnd();
     private void ExitAll();
-    public void SetVisibleToLocalPlayer(bool vis);
     [ServerRpc]
     public void SendPunch();
     [ObserversRpc]
     private void Punch();
     [ServerRpc(RunLocally = true)]
-    private void MarkIntroCompleted(BasicAvatarSettings appearance);
+    public void MarkIntroCompleted_Server();
     public bool IsPointVisibleToPlayer(Vector3 point, float maxDistance_Visible = 30f, float minDistance_Invisible = 5f);
     private void SetCapsuleColliderHeight(float normalizedHeight);
     public void SetScale(float scale);
@@ -331,15 +330,12 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public virtual string GetSaveString();
     public PlayerData GetPlayerData();
     public virtual List<string> WriteData(string parentFolderPath);
-    public string GetInventoryString();
-    public string GetAppearanceString();
-    public string GetClothingString();
-    public string GetVariablesString();
-    public virtual void Load(PlayerData data, string containerPath);
-    public virtual void Load(PlayerData data);
-    public virtual void LoadInventory(string contentsString);
-    public virtual void LoadAppearance(string appearanceString);
-    public virtual void LoadClothing(string contentsString);
+    private string GetInventoryString();
+    private string GetAppearanceString();
+    private string GetClothingString();
+    private string GetVariablesString();
+    private void LoadInventory(string contentsString);
+    private void LoadClothing(string contentsString);
     public void SetRagdolled(bool ragdolled);
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public virtual void SendImpact(Impact impact);
@@ -373,11 +369,12 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     private void ReceiveEquippableMessage_Networked_Vector(string message, int receipt, Vector3 data);
     public IEquippedItemHandler Equip(EquippableData equippable);
     public IEquippedItemHandler Equip(BaseItemInstance item);
-    public IEquippedItemHandler EquipLocal(EquippableData equippable);
-    public IEquippedItemHandler EquipLocal(BaseItemInstance item);
+    public IEquippedItemHandler Equip_Networked(EquippableData equippable);
+    public IEquippedItemHandler Equip_Networked(BaseItemInstance item);
     public void Unequip(IEquippedItemHandler equippedItem);
     public void UnequipAll();
     public void SetThirdPersonMeshesVisibility(bool visible);
+    private void ApplyThirdPersonMeshVisibility();
     [ServerRpc(RunLocally = true)]
     public void SendAnimationTrigger(string trigger);
     [ObserversRpc(RunLocally = true)]
@@ -403,9 +400,9 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     public void RemoveEquippedItemFromInventory(string id, int amount);
     private void GetNetworth(MoneyManager.FloatContainer container);
     [ServerRpc(RunLocally = true)]
-    public void SetAppearance_Server(BasicAvatarSettings settings);
+    public void SetAppearance_Server(PlayerAppearance appearance);
     [ObserversRpc(RunLocally = true)]
-    private void SetAppearance(BasicAvatarSettings settings, bool refreshClothing);
+    private void SetAppearance(PlayerAppearance appearance);
     public void MountSkateboard(Skateboard board);
     [ServerRpc(RunLocally = true)]
     private void SendMountedSkateboard(NetworkObject skateboardObj);
@@ -456,6 +453,9 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     [SpecialName]
     public void RpcLogic___set_CameraRotation_3429297120(Quaternion value);
     private void RpcReader___Server_set_CameraRotation_3429297120(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Server_SetPlayerLoaded_Server_2166136261();
+    private void RpcLogic___SetPlayerLoaded_Server_2166136261();
+    private void RpcReader___Server_SetPlayerLoaded_Server_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
     private void RpcWriter___Server_RequestSavePlayer_2166136261();
     public void RpcLogic___RequestSavePlayer_2166136261();
     private void RpcReader___Server_RequestSavePlayer_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
@@ -467,22 +467,22 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     private void RpcWriter___Observers_HostExitedGame_2166136261();
     public void RpcLogic___HostExitedGame_2166136261();
     private void RpcReader___Observers_HostExitedGame_2166136261(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Server_SendPlayerNameData_1988918489(string playerName, string id);
-    public void RpcLogic___SendPlayerNameData_1988918489(string playerName, string id);
-    private void RpcReader___Server_SendPlayerNameData_1988918489(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Server_RequestPlayerData_3615296227(string playerCode);
-    public void RpcLogic___RequestPlayerData_3615296227(string playerCode);
-    private void RpcReader___Server_RequestPlayerData_3615296227(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Observers_ReceivePlayerData_3244732873(NetworkConnection conn, PlayerData data, string inventoryString, string appearanceString, string clothigString, VariableData[] vars);
-    public void RpcLogic___ReceivePlayerData_3244732873(NetworkConnection conn, PlayerData data, string inventoryString, string appearanceString, string clothigString, VariableData[] vars);
-    private void RpcReader___Observers_ReceivePlayerData_3244732873(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Target_ReceivePlayerData_3244732873(NetworkConnection conn, PlayerData data, string inventoryString, string appearanceString, string clothigString, VariableData[] vars);
-    private void RpcReader___Target_ReceivePlayerData_3244732873(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Observers_ReceivePlayerNameData_3895153758(NetworkConnection conn, string playerName, string id);
-    private void RpcLogic___ReceivePlayerNameData_3895153758(NetworkConnection conn, string playerName, string id);
-    private void RpcReader___Observers_ReceivePlayerNameData_3895153758(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Target_ReceivePlayerNameData_3895153758(NetworkConnection conn, string playerName, string id);
-    private void RpcReader___Target_ReceivePlayerNameData_3895153758(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Server_SetPlayerNameAndId_Server_1988918489(string playerName, string id);
+    public void RpcLogic___SetPlayerNameAndId_Server_1988918489(string playerName, string id);
+    private void RpcReader___Server_SetPlayerNameAndId_Server_1988918489(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Observers_SetPlayerNameAndId_Client_3895153758(NetworkConnection conn, string playerName, string id);
+    private void RpcLogic___SetPlayerNameAndId_Client_3895153758(NetworkConnection conn, string playerName, string id);
+    private void RpcReader___Observers_SetPlayerNameAndId_Client_3895153758(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Target_SetPlayerNameAndId_Client_3895153758(NetworkConnection conn, string playerName, string id);
+    private void RpcReader___Target_SetPlayerNameAndId_Client_3895153758(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Server_RequestPlayerData_Server_310431262(string playerCode, bool isHost);
+    private void RpcLogic___RequestPlayerData_Server_310431262(string playerCode, bool isHost);
+    private void RpcReader___Server_RequestPlayerData_Server_310431262(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Observers_SetPlayerData_Client_4023372914(NetworkConnection conn, FullPlayerData fullData);
+    private void RpcLogic___SetPlayerData_Client_4023372914(NetworkConnection conn, FullPlayerData fullData);
+    private void RpcReader___Observers_SetPlayerData_Client_4023372914(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Target_SetPlayerData_Client_4023372914(NetworkConnection conn, FullPlayerData fullData);
+    private void RpcReader___Target_SetPlayerData_Client_4023372914(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Server_SetFlashlightOn_Server_1140765316(bool on);
     public void RpcLogic___SetFlashlightOn_Server_1140765316(bool on);
     private void RpcReader___Server_SetFlashlightOn_Server_1140765316(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
@@ -500,12 +500,6 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     private void RpcReader___Target_ReceiveCrouched_214505783(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Observers_ReceiveCrouched_214505783(NetworkConnection conn, bool crouched);
     private void RpcReader___Observers_ReceiveCrouched_214505783(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Server_SendAvatarSettings_4281687581(AvatarSettings settings);
-    public void RpcLogic___SendAvatarSettings_4281687581(AvatarSettings settings);
-    private void RpcReader___Server_SendAvatarSettings_4281687581(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Observers_SetAvatarSettings_4281687581(AvatarSettings settings);
-    public void RpcLogic___SetAvatarSettings_4281687581(AvatarSettings settings);
-    private void RpcReader___Observers_SetAvatarSettings_4281687581(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Observers_SetVisible_Networked_1140765316(bool vis);
     private void RpcLogic___SetVisible_Networked_1140765316(bool vis);
     private void RpcReader___Observers_SetVisible_Networked_1140765316(PooledReader PooledReader0, Channel channel);
@@ -518,9 +512,9 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     private void RpcWriter___Observers_Punch_2166136261();
     private void RpcLogic___Punch_2166136261();
     private void RpcReader___Observers_Punch_2166136261(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Server_MarkIntroCompleted_3281254764(BasicAvatarSettings appearance);
-    private void RpcLogic___MarkIntroCompleted_3281254764(BasicAvatarSettings appearance);
-    private void RpcReader___Server_MarkIntroCompleted_3281254764(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Server_MarkIntroCompleted_Server_2166136261();
+    public void RpcLogic___MarkIntroCompleted_Server_2166136261();
+    private void RpcReader___Server_MarkIntroCompleted_Server_2166136261(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
     private void RpcWriter___Server_SendImpact_427288424(Impact impact);
     public virtual void RpcLogic___SendImpact_427288424(Impact impact);
     private void RpcReader___Server_SendImpact_427288424(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
@@ -588,12 +582,12 @@ public class Player : NetworkBehaviour, ISaveable, ICombatTargetable, IDamageabl
     private void RpcWriter___Observers_RemoveEquippedItemFromInventory_3643459082(string id, int amount);
     public void RpcLogic___RemoveEquippedItemFromInventory_3643459082(string id, int amount);
     private void RpcReader___Observers_RemoveEquippedItemFromInventory_3643459082(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Server_SetAppearance_Server_3281254764(BasicAvatarSettings settings);
-    public void RpcLogic___SetAppearance_Server_3281254764(BasicAvatarSettings settings);
-    private void RpcReader___Server_SetAppearance_Server_3281254764(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Observers_SetAppearance_2139595489(BasicAvatarSettings settings, bool refreshClothing);
-    private void RpcLogic___SetAppearance_2139595489(BasicAvatarSettings settings, bool refreshClothing);
-    private void RpcReader___Observers_SetAppearance_2139595489(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Server_SetAppearance_Server_595254339(PlayerAppearance appearance);
+    public void RpcLogic___SetAppearance_Server_595254339(PlayerAppearance appearance);
+    private void RpcReader___Server_SetAppearance_Server_595254339(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Observers_SetAppearance_595254339(PlayerAppearance appearance);
+    private void RpcLogic___SetAppearance_595254339(PlayerAppearance appearance);
+    private void RpcReader___Observers_SetAppearance_595254339(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Server_SendMountedSkateboard_3323014238(NetworkObject skateboardObj);
     private void RpcLogic___SendMountedSkateboard_3323014238(NetworkObject skateboardObj);
     private void RpcReader___Server_SendMountedSkateboard_3323014238(PooledReader PooledReader0, Channel channel, NetworkConnection conn);

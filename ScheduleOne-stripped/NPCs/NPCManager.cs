@@ -6,13 +6,15 @@ using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.Persistence.Loaders;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ScheduleOne.NPCs;
 public class NPCManager : NetworkSingleton<NPCManager>, IBaseSaveable, ISaveable
 {
     public static List<NPC> NPCRegistry;
-    public Transform[] NPCWarpPoints;
-    public Transform NPCContainer;
+    [SerializeField]
+    [FormerlySerializedAs("NPCWarpPoints")]
+    private Transform[] _npcsWarpPoints;
     [Header("Prefabs")]
     public NPCPoI NPCPoIPrefab;
     public NPCPoI PotentialCustomerPoIPrefab;
@@ -33,6 +35,7 @@ public class NPCManager : NetworkSingleton<NPCManager>, IBaseSaveable, ISaveable
     protected override void OnDestroy();
     public virtual void InitializeSaveable();
     public static NPC GetNPC(string id);
+    public static NPC GetClosestNPC(Vector3 point, NPC exclude = null);
     public static List<NPC> GetNPCsInRegion(EMapRegion region);
     public virtual string GetSaveString();
     public List<Transform> GetOrderedDistanceWarpPoints(Vector3 origin);

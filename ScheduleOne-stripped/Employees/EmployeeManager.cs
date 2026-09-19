@@ -10,6 +10,7 @@ using FishNet.Serializing;
 using FishNet.Serializing.Generated;
 using FishNet.Transporting;
 using ScheduleOne.AvatarFramework;
+using ScheduleOne.Core.Avatar;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Property;
 using ScheduleOne.Quests;
@@ -24,7 +25,9 @@ public class EmployeeManager : NetworkSingleton<EmployeeManager>
     [Serializable]
     public class EmployeeAppearance
     {
-        public AvatarSettings Settings;
+        [SerializeField]
+        private AvatarSettings Settings;
+        public NakedAppearanceObject AppearanceObject;
         public Sprite Mugshot;
     }
 
@@ -63,7 +66,7 @@ public class EmployeeManager : NetworkSingleton<EmployeeManager>
     public void GenerateRandomName(bool male, out string firstName, out string lastName);
     public EmployeeAppearance GetAppearance(bool male, int index);
     public VODatabase GetVoice(bool male, int index);
-    public void GetRandomAppearance(bool male, out int index, out AvatarSettings settings);
+    public void GetRandomAppearance(bool male, out int index, out NakedAppearanceObject appearance);
     public Employee GetEmployeePrefab(EEmployeeType type);
     public List<Employee> GetEmployeesByType(EEmployeeType type);
     public override void NetworkInitialize___Early();

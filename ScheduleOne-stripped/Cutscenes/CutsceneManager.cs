@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using ScheduleOne.Core;
 using ScheduleOne.DevUtilities;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,13 +7,17 @@ using UnityEngine.Events;
 namespace ScheduleOne.Cutscenes;
 public class CutsceneManager : Singleton<CutsceneManager>
 {
-    public List<Cutscene> Cutscenes;
-    [Header("Run cutscene by name")]
+    [Header("References")]
     [SerializeField]
-    private string cutsceneName;
-    private Cutscene playingCutscene;
-    [Button]
-    private void RunCutscene();
+    private GameObject _cinematicBars;
+    private Dictionary<string, Cutscene> _cutscenes;
+    private Cutscene _activeCutscene;
+    public event Action<Cutscene> OnCutsceneStarted;
+    public event Action<Cutscene> OnCutsceneEnded;
     public void Play(string name);
-    private void Ended();
+    public void Play(Cutscene cutscene);
+    private void OnActiveCutsceneEnded();
+    public void RegisterCutscene(Cutscene cutscene);
+    public void UnregisterCutscene(Cutscene cutscene);
+    public void SetCinematicBars(bool active);
 }

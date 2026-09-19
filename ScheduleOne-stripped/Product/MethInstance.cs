@@ -1,7 +1,7 @@
 using System;
 using FishNet.Object;
 using ScheduleOne.Audio;
-using ScheduleOne.AvatarFramework;
+using ScheduleOne.Core.Avatar;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.FX;
 using ScheduleOne.ItemFramework;
@@ -16,6 +16,7 @@ namespace ScheduleOne.Product;
 [Serializable]
 public class MethInstance : ProductItemInstance
 {
+    private static EyelidPosition EyelidPosition;
     public MethInstance(ItemDefinition definition, int quantity, EQuality quality, PackagingDefinition packaging = null);
     public override ItemInstance GetCopy(int overrideQuantity = -1);
     public override ItemData GetItemData();

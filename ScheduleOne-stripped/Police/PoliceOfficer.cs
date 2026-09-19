@@ -12,7 +12,6 @@ using FishNet.Object.Synchronizing.Internal;
 using FishNet.Serializing;
 using FishNet.Serializing.Generated;
 using FishNet.Transporting;
-using ScheduleOne.AvatarFramework;
 using ScheduleOne.AvatarFramework.Equipping;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Dialogue;
@@ -57,7 +56,7 @@ public class PoliceOfficer : NPC
     public PoliceChatterVO ChatterVO;
     public Behaviour[] DeactivationBlockingBehaviours;
     [Header("Dialogue")]
-    public DialogueContainer CheckpointDialogue;
+    public Conversation CheckpointDialogue;
     [Header("Tools")]
     public AvatarEquippable BatonPrefab;
     public AvatarEquippable TaserPrefab;
@@ -68,8 +67,6 @@ public class PoliceOfficer : NPC
     [Header("Body Search Settings")]
     [Range(1f, 10f)]
     public float BodySearchDuration;
-    [HideInInspector]
-    public PoliceBelt belt;
     private float timeSinceReadyToPool;
     private float timeSinceOutOfSight;
     private float chatterCountDown;
@@ -82,6 +79,7 @@ public class PoliceOfficer : NPC
         private set; }
     public NetworkObject PursuitTarget => PursuitBehaviour.Target?.NetworkObject;
     public LandVehicle AssignedVehicle { get; set; }
+    public PoliceBelt PoliceBelt { get; private set; }
     public float BodySearchChance { get; set; } = 0.1f;
     public bool SyncAccessor__003CIgnorePlayers_003Ek__BackingField { get; set; }
 
@@ -122,7 +120,6 @@ public class PoliceOfficer : NPC
     [ServerRpc(RequireOwnership = false)]
     public void SetIgnorePlayers(bool ignore);
     public void SetRandomAvoidancePriority();
-    public void SetAvoidancePriority(int priority);
     public virtual void UpdateBodySearch();
     private bool CanInvestigate();
     private void UpdateExistingInvestigation();

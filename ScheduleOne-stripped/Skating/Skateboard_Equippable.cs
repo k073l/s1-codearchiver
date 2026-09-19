@@ -5,7 +5,6 @@ using ScheduleOne.ItemFramework;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.State;
 using ScheduleOne.UI;
-using ScheduleOne.UI.Input;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

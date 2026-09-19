@@ -11,10 +11,10 @@ public class DialogueController_Ming : DialogueController
 {
     public ScheduleOne.Property.Property Property;
     public float Price;
-    public DialogueContainer BuyDialogue;
+    public Conversation BuyDialogue;
     public string BuyText;
     public string RemindText;
-    public DialogueContainer RemindLocationDialogue;
+    public Conversation RemindLocationDialogue;
     public QuestEntry[] PurchaseRoomQuests;
     public UnityEvent onPurchase;
     protected override void Start();

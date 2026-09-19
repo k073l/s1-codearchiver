@@ -15,6 +15,7 @@ public class Bungalow : Property
     private bool NetworkInitialize___EarlyScheduleOne_002EProperty_002EBungalowAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EProperty_002EBungalowAssembly_002DCSharp_002Edll_Excuted;
     protected override void Start();
+    public override void OnStartServer();
     private void UpdateVariables();
     private void BuildableItemRemoved(BuildableItem item);
     private void BuildableItemAdded(BuildableItem item);

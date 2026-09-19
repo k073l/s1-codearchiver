@@ -24,6 +24,7 @@ public class NPCEvent_Sit : NPCEvent
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002ESchedules_002ENPCEvent_SitAssembly_002DCSharp_002Edll_Excuted;
     public new string ActionName => "Sit";
 
+    public override void Awake();
     public override string GetName();
     public override void Started();
     public override void OnSpawnServer(NetworkConnection connection);
@@ -52,5 +53,5 @@ public class NPCEvent_Sit : NPCEvent
     private void RpcWriter___Observers_EndAction_2166136261();
     protected virtual void RpcLogic___EndAction_2166136261();
     private void RpcReader___Observers_EndAction_2166136261(PooledReader PooledReader0, Channel channel);
-    public override void Awake();
+    protected override void Awake_UserLogic_ScheduleOne_002ENPCs_002ESchedules_002ENPCEvent_Sit_Assembly_002DCSharp_002Edll();
 }

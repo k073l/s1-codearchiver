@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using FishNet;
 using ScheduleOne.UI.Phone.Messages;
 
 namespace ScheduleOne.NPCs.CharacterClasses;

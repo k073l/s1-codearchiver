@@ -13,8 +13,8 @@ public class Marco : NPC
 {
     public Transform VehicleRecoveryPoint;
     public VehicleDetector VehicleDetector;
-    public DialogueContainer RecoveryConversation;
-    public DialogueContainer GreetingDialogue;
+    public Conversation RecoveryConversation;
+    public Conversation GreetingDialogue;
     public string GreetedVariable;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002ECharacterClasses_002EMarcoAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002ECharacterClasses_002EMarcoAssembly_002DCSharp_002Edll_Excuted;

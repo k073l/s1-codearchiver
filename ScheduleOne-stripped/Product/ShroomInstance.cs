@@ -26,7 +26,7 @@ public class ShroomInstance : ProductItemInstance
     public override void ClearEffectsFromNPC(NPC npc);
     public override void ApplyEffectsToPlayer(Player player);
     public override void ClearEffectsFromPlayer(Player player);
-    private void ApplyEffectsToAvatar(Avatar avatar);
-    private void ClearEffectsFromAvatar(Avatar avatar);
+    private void ApplyEffectsToAvatar(ScheduleOne.AvatarFramework.Avatar avatar);
+    private void ClearEffectsFromAvatar(ScheduleOne.AvatarFramework.Avatar avatar);
     private IEnumerator DoPsychedlicEffectBlend(PsychedelicFullScreenFeature.MaterialProperties targetMaterialProperties, float targetValuePercentage, float duration);
 }
