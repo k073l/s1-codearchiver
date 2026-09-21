@@ -14,4 +14,5 @@ public class NPCAuxAction : NPCDiscreteAction
     private void Awake();
     protected override void BeginOnClient();
     protected override void EndOnClient();
+    protected virtual string GetAnimationName();
 }

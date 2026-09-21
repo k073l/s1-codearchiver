@@ -54,6 +54,8 @@ public class Avatar : MonoBehaviour, IThirdPersonReferencesProvider, IAvatar
     private AvatarImpostor _impostor;
     [SerializeField]
     private Transform _ragdollRoot;
+    [SerializeField]
+    private Collider[] _avatarColliders;
     [Header("Outlining")]
     [SerializeField]
     protected GameObject[] _renderersToOutline;
@@ -82,6 +84,9 @@ public class Avatar : MonoBehaviour, IThirdPersonReferencesProvider, IAvatar
     public void SetAnimationBool(string name, bool value);
     public void SetAnimationTrigger(string name);
     public void SetGravityMultiplier(float multiplier);
+    public void SetIgnoreCollision(Collider collider, bool ignore);
+    public void SetIgnoreCollision(Collider[] colliders, bool ignore);
+    public void SetAvatarCollidersEnabled(bool enabled);
     public void SetImpostorTexture(Texture2D impostorTexture);
     private void RecalculateVisibilityRangeSqr(int a, int b);
     private void UpdateAnimationActive();

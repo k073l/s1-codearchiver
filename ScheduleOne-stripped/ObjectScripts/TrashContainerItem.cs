@@ -51,6 +51,7 @@ public class TrashContainerItem : GridItem, ITransitEntity
     private void AddTrashBagToRadius(TrashBag trashBag);
     private void RemoveTrashItemFromRadius(TrashItem trashItem);
     private void RemoveTrashBagFromRadius(TrashBag trashBag);
+    private bool CanTrashGoInContainer(TrashItem trashItem);
     private bool IsTrashValid(TrashItem trashItem);
     public bool IsPointInPickupZone(Vector3 point);
     public override void NetworkInitialize___Early();

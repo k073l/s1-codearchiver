@@ -22,6 +22,7 @@ public class SpecialCustomer : NPC
     public void SetGroupMates(SpecialCustomer[] groupMates);
     private void OnGroupMateAttackedByPlayer(Player attacker);
     private bool WillRespondToGroupMateAttacked(Player attacker);
+    public override bool ShouldSave();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

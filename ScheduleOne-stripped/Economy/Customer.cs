@@ -289,7 +289,7 @@ public class Customer : NetworkBehaviour, ISaveable
     private void ProcessSampleServerSide(List<ItemInstance> items);
     [ObserversRpc(RunLocally = true)]
     private void ProcessSampleClient();
-    private void SampleConsumed();
+    private void SampleConsumed(ProductItemInstance product);
     private void EndWait();
     protected virtual void DirectApproachRejected();
     [ObserversRpc]

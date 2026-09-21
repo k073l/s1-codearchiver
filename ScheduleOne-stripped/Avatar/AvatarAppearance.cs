@@ -35,6 +35,7 @@ public class AvatarAppearance : MonoBehaviour
     public EGender Gender { get; }
     public ESkinTone PrimarySkinTone { get; }
     public NakedAppearance AppliedNakedAppearance => _appliedNakedAppearance;
+    public float CurrentWeight => _appliedWeight;
 
     public event Action<NakedAppearance> OnNakedAppearanceChanged;
     public event Action<List<SerializedAvatarObject>> OnOutfitChanged;

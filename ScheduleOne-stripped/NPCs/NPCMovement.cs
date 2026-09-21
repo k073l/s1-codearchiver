@@ -89,8 +89,6 @@ public class NPCMovement : NetworkBehaviour
     [SerializeField]
     private CapsuleCollider _capsuleCollider;
     [SerializeField]
-    private Collider[] _avatarColliders;
-    [SerializeField]
     private SmoothedVelocityCalculator _velocityCalculator;
     [SerializeField]
     private Draggable _ragdollDraggable;

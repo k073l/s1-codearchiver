@@ -128,6 +128,7 @@ public class NPC : NetworkBehaviour, IGUIDRegisterable, ISaveable, ICombatTarget
     public Guid GUID { get; protected set; }
     public float Aggression => AggressionController.Value;
     public FloatStack AggressionController { get; private set; } = new FloatStack(0f);
+    public float Fortitude { get; private set; }
     public NPCMovement Movement { get; private set; }
     public DialogueHandler DialogueHandler { get; private set; }
     public ScheduleOne.AvatarFramework.Avatar Avatar { get; private set; }

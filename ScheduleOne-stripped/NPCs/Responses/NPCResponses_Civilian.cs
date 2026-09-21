@@ -21,7 +21,8 @@ public class NPCResponses_Civilian : NPCResponses
         Panic,
         Flee,
         CallPolice,
-        Fight
+        Fight,
+        Observe
     }
 
     public enum EThreatType
@@ -32,6 +33,7 @@ public class NPCResponses_Civilian : NPCResponses
         ExplosionHeard
     }
 
+    private const float FleePanicFortitudeThreshold;
     [Header("Response Settings")]
     public bool OverrideThreatResponses;
     public EAttackResponse ThreatResponseOverride;
@@ -49,4 +51,7 @@ public class NPCResponses_Civilian : NPCResponses
     protected override void RespondToAimedAt(Player player);
     private void ExecuteThreatResponse(EAttackResponse response, Player target, Vector3 threatOrigin, Crime crime = null);
     private EAttackResponse GetThreatResponse(EThreatType type, Player threatSource);
+    private bool CanCallPolice(Player threatSource);
+    private EAttackResponse GetRandomResponse(EAttackResponse[] options);
+    private bool RollCallPoliceChance();
 }

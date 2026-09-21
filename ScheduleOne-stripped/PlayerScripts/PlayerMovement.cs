@@ -114,7 +114,8 @@ public class PlayerMovement : PlayerSingleton<PlayerMovement>
     private void ClampMovement();
     private float GetSurfaceAngle();
     private bool GetIsGrounded();
-    public unsafe void Teleport(Vector3 position, bool alignFeetToPosition = false);
+    public void Teleport(Vector3 position, bool alignFeetToPosition = false);
+    public unsafe void Teleport(Vector3 position, Vector3 forwardDirection, bool alignFeetToPosition = false);
     public void SetResidualVelocity(Vector3 dir, float force, float time);
     public void WarpToNavMesh(bool clearVelocity = false);
     private void UpdateHorizontalAxis();

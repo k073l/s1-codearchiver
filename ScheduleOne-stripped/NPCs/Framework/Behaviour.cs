@@ -9,6 +9,8 @@ public class Behaviour
     public bool IgnoreCombatImpacts;
     [Range(0f, 1f)]
     public float DefaultAggression;
+    [Range(0f, 1f)]
+    public float DefaultFortitude;
     public bool CanCallPolice;
     public Behaviour GetCopy();
 }

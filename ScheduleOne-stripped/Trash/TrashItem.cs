@@ -35,6 +35,7 @@ public class TrashItem : MonoBehaviour, IGUIDRegisterable
     protected void Awake();
     public virtual void Initialize(Guid guid, Vector3 initialVelocity = default(Vector3));
     public virtual bool CanGoInTrashContainer();
+    public bool IsBeingDragged();
     public void SetGUID(Guid guid);
     public void DestroyTrash();
     public virtual void OnDestroyed();

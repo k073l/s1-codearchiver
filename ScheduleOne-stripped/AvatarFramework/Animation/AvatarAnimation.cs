@@ -36,8 +36,7 @@ public class AvatarAnimation : MonoBehaviour
     private const float MaxStrafeSpeed;
     private const float MaxCrouchDirectionSpeed;
     private const float MaxCrouchStrafeSpeed;
-    private const float BlendIncreaseMultiplier;
-    private const float BlendReduceMultiplier;
+    private const float MotionParameterLerpSpeed;
     public const float SitTransitionDuration;
     private static readonly Vector3 SittingOffset;
     private const string StandUpFromBackClipName;
@@ -60,7 +59,6 @@ public class AvatarAnimation : MonoBehaviour
     public AnimationCurve DirectionAnimationValueCurve;
     public AnimationCurve StrafeAnimationValueCurve;
     public AnimationCurve CrouchMovementAnimationValue;
-    public AnimationCurve StrafeBlendMultiplierCurve;
     private Avatar avatar;
     private BoneTransform[] standUpFromBackBoneTransforms;
     private BoneTransform[] standUpFromFrontBoneTransforms;
@@ -72,12 +70,11 @@ public class AvatarAnimation : MonoBehaviour
     private BoneTransform[] _lastFrameBoneTransforms;
     private bool _lastFrameBoneTransformsValid;
     private bool _activateRagdollNextFrame;
-    private float _currentStrafeBlend;
-    private float _lastTargetStrafe;
-    private float _currentDirectionBlend;
-    private float _lastTargetDirection;
-    private float _lastMotionTime;
-    private Vector3 _smoothedMotion;
+    private float _currentStrafe;
+    private float _currentDirection;
+    private float _targetStrafe;
+    private float _targetDirection;
+    private Vector3 _currentMotion;
     public bool IsCrouched { get; protected set; }
     public bool IsSeated => (Object)(object)CurrentSeat != (Object)null;
     public float TimeSinceSitEnd { get; protected set; } = 1000f;
@@ -90,7 +87,7 @@ public class AvatarAnimation : MonoBehaviour
     private void LateUpdate();
     public void SetFootstepVolumeMultiplier(float volume);
     public void SetMotion(Vector3 relativeMotion, bool isCrouched);
-    private float UpdateBlend(ref float blend, float relativeMotion, float maxSpeed, ref float lastTargetInput, AnimationCurve curve, float tick, float blendMultiplier = 1f);
+    private float UpdateBlend(float relativeMotion, float maxSpeed, AnimationCurve curve);
     private void SetDirection(float dir);
     private void SetStrafe(float strafe);
     public void SetTimeAirborne(float airbone);
