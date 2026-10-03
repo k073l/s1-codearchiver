@@ -15,6 +15,7 @@ using ScheduleOne.DevUtilities;
 using ScheduleOne.Dialogue;
 using ScheduleOne.Effects;
 using ScheduleOne.ItemFramework;
+using ScheduleOne.Levelling;
 using ScheduleOne.NPCs.Behaviour;
 using ScheduleOne.NPCs.Schedules;
 using ScheduleOne.PlayerScripts;

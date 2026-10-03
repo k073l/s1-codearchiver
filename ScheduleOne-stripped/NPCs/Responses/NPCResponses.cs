@@ -21,6 +21,7 @@ public class NPCResponses : MonoBehaviour
     public Action<Player> OnRepeatedlyNonLethallyAttackedByPlayer;
     public Action<Player> OnLethallyAttackedByPlayer;
     public Action<Player> OnAimedAtByPlayer;
+    public Action<Player> OnPickpocketFailed;
     protected float _timeOnLastImpact;
     protected float _timeOnLastAimedAt;
     protected NPC npc { get; private set; }

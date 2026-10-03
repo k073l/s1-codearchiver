@@ -5,6 +5,7 @@ using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.Props;
+using ScheduleOne.Weather;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -31,6 +32,9 @@ public class SpecialCustomerCamp : NetworkBehaviour
     [Tooltip("Props that required monitoring to be reset / repositioned when players no longer around. Must implement IProp to be considered")]
     [SerializeField]
     private List<GameObject> _monitoredPropObjs;
+    [Header("Map Modifications")]
+    [SerializeField]
+    private MaskModificationData _maskModification;
     [Header("Events")]
     [SerializeField]
     protected UnityEvent _onInitialArrival;
@@ -49,6 +53,7 @@ public class SpecialCustomerCamp : NetworkBehaviour
     public Transform Container => _container;
     public SpecialCustomerCutscene Cutscene => _cutscene;
     public SpecialCustomerActivities Activities => _activities;
+    public MaskModificationData MaskModification => _maskModification;
 
     public void Start();
     private void OnDestroy();

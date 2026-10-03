@@ -8,7 +8,7 @@ public class StoredItem_Cash : StoredItem
     protected CashInstance cashInstance;
     [Header("References")]
     public CashStackVisuals Visuals;
-    public override void InitializeStoredItem(StorableItemInstance _item, StorageGrid grid, Vector2 _originCoordinate, float _rotation);
+    public override void InitializeStoredItem(StorableItemInstance item, StorageGrid grid, Vector2 _originCoordinate, float _rotation);
     public override void Destroy();
     private void RefreshShownBills();
 }

@@ -13,4 +13,5 @@ public class InstanceObjectData : ScriptableObject
     public Vector2Int MinMaxLodDistance;
     public Texture2D PositionData;
     public Texture2D RotationData;
+    public bool RenderOutOfFrustum;
 }

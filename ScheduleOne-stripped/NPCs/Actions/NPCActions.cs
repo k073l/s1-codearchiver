@@ -22,7 +22,6 @@ public class NPCActions : NetworkBehaviour
     private NPC npc;
     private bool _canUseUmbrella;
     private UseUmbrella _umbrellaAction;
-    private SpeedControl _rainySpeedControl;
     private float _rainTolerance;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002EActions_002ENPCActionsAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002EActions_002ENPCActionsAssembly_002DCSharp_002Edll_Excuted;

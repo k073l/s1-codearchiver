@@ -1,52 +1,63 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering;
 
 namespace ScheduleOne.Growing;
 public class GrowContainerSurfaceCover : MonoBehaviour
 {
-    public const int TextureSize;
-    public const int PourRadius;
-    public const int UpdatesPerSecond;
-    public const float CoveredPixelThreshold;
-    public const float Delay;
-    [Header("Settings")]
-    public float SuccessfulCoverageThreshold;
-    [Header("References")]
+    [Header("Components")]
+    [SerializeField]
+    private ComputeShader _coverShader;
     public GrowContainer GrowContainer;
     public MeshRenderer MeshRenderer;
-    public Texture2D PourMask;
-    [Header("Pour Over time Settings")]
+    [Header("Settings")]
+    public float SuccessfulCoverageThreshold;
     [SerializeField]
-    private float _applyPoutOverTimeDuration;
+    private bool _flipX;
     [SerializeField]
-    private AnimationCurve _applyPoutOverTimeCurve;
+    private bool _flipZ;
     public UnityEvent onSufficientCoverage;
-    private bool queued;
-    private Vector3 queuedWorldPos;
-    private Texture2D mainTex;
-    private Texture2D tempTex;
-    private Vector3 relative;
-    private Vector2 vector2;
-    private Vector2 normalizedOffset;
-    private Vector2 originPixel;
-    private float _pourApplicationStrength;
-    public float CurrentCoverage { get; private set; }
-    public float PourApplicationStrength { get; set; }
-    public bool UseApplyOverTime { get; set; }
-    private float _sideLength => GrowContainer.GetGrowSurfaceSideLength();
+    private const int TextureSize;
+    private const int Radius;
+    private const int Hardness;
+    private const float Opacity;
+    private const int UpdatesPerSecond;
+    private const float CoveredPixelThreshold;
+    private const float FixedScale;
+    private int _resetCountKernel;
+    private int _countKernel;
+    private int _pourKernel;
+    private int _clearKernel;
+    private float _updateTimer;
+    private bool _readbackPending;
+    private bool _isActive;
+    private float _activationDelay;
+    private RenderTexture _coverTexture;
+    private ComputeBuffer _coverageBuffer;
+    private Coroutine _updateCo;
+    private float _coverage;
+    public float _applicationStrength;
+    private Vector3 _worldPosition;
+    public float ApplicationStrength { get; set; }
 
     private void Awake();
     private void OnEnable();
+    private void Setup();
+    private void SetShader();
     public void ConfigureAppearance(Color col, float transparency);
-    public void Reset();
-    public void QueuePour(Vector3 worldSpacePosition);
+    public void UpdateFill();
+    public void SetActive(bool isActive, float delay = 0f);
+    public void SetFillPosition(Vector3 worldPosition);
+    public void ResetCover();
+    private void Fill();
+    public void FillForDuration(Vector3 worldPosition, float duration);
+    private IEnumerator DoFillRoutine(float duration);
+    private void ResetCoverageCount();
+    private void RequestCoverage();
+    private void OnCoverageReadback(AsyncGPUReadbackRequest request);
+    private Vector2Int WorldToPixel(Vector3 worldPos);
     public float GetNormalizedProgress();
-    private IEnumerator CheckQueue();
-    private void Blank();
-    private void DelayedApplyPour(Vector3 worldSpace);
-    private void ApplyPour(Vector3 worldSpace, bool applyOverTime = false);
-    private IEnumerator ApplyPourOverTime();
-    private float GetPourMaskValue(int x, int y);
-    private float GetCoverage();
+    private void OnDestroy();
 }

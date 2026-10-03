@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using FishNet.Object;
 using ScheduleOne.AvatarFramework.Animation;
 using ScheduleOne.DevUtilities;
@@ -18,9 +20,12 @@ public class Motorbike : NetworkBehaviour, IProp
     [SerializeField]
     private Rigidbody _rigidbody;
     [SerializeField]
+    private Collider[] _colliders;
+    [Header("Headlights")]
+    [SerializeField]
     private ToggleableLight _headlight;
     [SerializeField]
-    private Collider[] _colliders;
+    private List<MeshRenderer> _lightRenderers;
     [Header("Settings")]
     [SerializeField]
     private bool _headlightsOn;
@@ -31,12 +36,17 @@ public class Motorbike : NetworkBehaviour, IProp
     private int _headlightActivationTime;
     [SerializeField]
     private int _headlightDisableTime;
+    [SerializeField]
+    private float _lightTurnOffDelay;
+    [SerializeField]
+    private AnimationCurve _lightCurve;
     private int _id;
     private Vector3 _defaultPosition;
     private Quaternion _defaultRotation;
-    private Coroutine _checkKnockedOverRoutine;
+    private Coroutine _lightStateRoutine;
     private bool _isInitialised;
     private bool _isUpright;
+    private MaterialPropertyBlock[] _propertyBlocks;
     private bool NetworkInitialize___EarlyScheduleOne_002EVehicles_002EMotorbikeAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EVehicles_002EMotorbikeAssembly_002DCSharp_002Edll_Excuted;
     public int Id => _id;
@@ -58,6 +68,7 @@ public class Motorbike : NetworkBehaviour, IProp
     private void OnUncappedMinPass();
     public void OverrideAutomaticHeadlights(bool active);
     public void SetHeadlights(bool active);
+    private IEnumerator DoLightStateRoutine(bool isOn);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

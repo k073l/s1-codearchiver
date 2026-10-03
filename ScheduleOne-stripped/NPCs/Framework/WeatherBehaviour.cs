@@ -9,7 +9,7 @@ public class WeatherBehaviour
     public float UseUmbrellaChance;
     [Range(0f, 1f)]
     public float RainTolerance;
-    [Range(0f, 10f)]
-    public float MaxWalkSpeedInRainMultiplier;
+    [Range(0f, 5f)]
+    public float RainWalkSpeedMultiplier;
     public WeatherBehaviour GetCopy();
 }

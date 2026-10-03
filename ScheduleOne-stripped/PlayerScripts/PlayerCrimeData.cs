@@ -54,7 +54,7 @@ public class PlayerCrimeData : NetworkBehaviour
     public const float SHOT_COOLDOWN_MAX;
     public const float VEHICLE_COLLISION_LIFETIME;
     public const float VEHICLE_COLLISION_LIMIT;
-    public PoliceOfficer NearestOfficer;
+    public PoliceOfficer NearestActivePoliceOfficer;
     public Player Player;
     public AudioSourceController onPursuitEscapedSound;
     [CompilerGenerated]

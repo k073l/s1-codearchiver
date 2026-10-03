@@ -24,6 +24,7 @@ using ScheduleOne.Persistence.Datas;
 using ScheduleOne.Persistence.Loaders;
 using ScheduleOne.Product;
 using ScheduleOne.UI.SleepMessage;
+using ScheduleOne.Weather;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -37,6 +38,7 @@ public class SpecialCustomerManager : NetworkSingleton<SpecialCustomerManager>, 
         public int DepartureDay;
     }
 
+    private const string FirstGroupToArrive;
     private const int MaxSpecialCustomersInGroup;
     public const int WaitForArrivalDuration;
     private const int StayDuration;

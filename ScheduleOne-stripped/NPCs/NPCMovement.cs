@@ -145,9 +145,10 @@ public class NPCMovement : NetworkBehaviour
     public void OnCollisionEnter(Collision collision);
     private void CheckHit(Collider other, Collider thisCollider, bool isCollision, Vector3 hitPoint, Collision collision = null);
     public void Warp(Transform target);
-    public unsafe void Warp(Vector3 position, Quaternion rotation = default(Quaternion));
+    public void Warp(Vector3 position);
+    public unsafe void Warp(Vector3 position, Quaternion rotation);
     [ObserversRpc(ExcludeServer = true)]
-    private void Warp_Client(Vector3 position, Quaternion rotation = default(Quaternion));
+    private void Warp_Client(Vector3 position, Quaternion rotation);
     public void SetObstacleAvoidanceEnabled(bool enabled);
     public void SetAgentAvoidancePriority(int priority);
     public void SetAgentType(EAgentType type);
@@ -204,8 +205,8 @@ public class NPCMovement : NetworkBehaviour
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();
-    private void RpcWriter___Observers_Warp_Client_3848837105(Vector3 position, Quaternion rotation = default(Quaternion));
-    private unsafe void RpcLogic___Warp_Client_3848837105(Vector3 position, Quaternion rotation = default(Quaternion));
+    private void RpcWriter___Observers_Warp_Client_3848837105(Vector3 position, Quaternion rotation);
+    private unsafe void RpcLogic___Warp_Client_3848837105(Vector3 position, Quaternion rotation);
     private void RpcReader___Observers_Warp_Client_3848837105(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Server_ActivateRagdoll_Server_2690242654(Vector3 forcePoint, Vector3 forceDir, float forceMagnitude);
     public void RpcLogic___ActivateRagdoll_Server_2690242654(Vector3 forcePoint, Vector3 forceDir, float forceMagnitude);

@@ -33,13 +33,13 @@ public class SpecialCustomerData : ScriptableObject
     [Header("Buy Quantity")]
     [Tooltip("Buy quantity at the lowest player level")]
     [SerializeField]
-    private int BaseBuyQuantity;
+    private int _baseBuyQuantity;
     [Tooltip("Additional buy quantity per player rank (e.g. StreetRat -> Hoodlum)")]
     [SerializeField]
-    private int AdditionalBuyQuantityPerRank;
+    private int _additionalBuyQuantityPerRank;
     [Tooltip("Maximum buy quantity regardless of player rank")]
     [SerializeField]
-    private int MaxBuyQuantity;
+    private int _maxBuyQuantity;
     [Header("Drugs & Effects")]
     [Tooltip("The type of drug this special customer group prefers")]
     public List<EDrugType> DrugPreference;
@@ -60,6 +60,7 @@ public class SpecialCustomerData : ScriptableObject
     public float DealCompleteClipDelay;
     public string GroupName => _groupName;
     public string GroupId => _groupId;
+    public int BaseBuyQuantity => _baseBuyQuantity;
 
     public string GetArrivalMessage(bool applyColor = true);
     public string GetIncomingMessage(bool applyColor = true);

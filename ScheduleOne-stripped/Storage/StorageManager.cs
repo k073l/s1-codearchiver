@@ -3,10 +3,12 @@ using ScheduleOne.DevUtilities;
 using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.Persistence.Loaders;
+using UnityEngine;
 
 namespace ScheduleOne.Storage;
 public class StorageManager : NetworkSingleton<StorageManager>, IBaseSaveable, ISaveable
 {
+    private Dictionary<StoredItem, List<StoredItem>> _storedItemInstancePool;
     private StorageLoader loader;
     private bool NetworkInitialize___EarlyScheduleOne_002EStorage_002EStorageManagerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EStorage_002EStorageManagerAssembly_002DCSharp_002Edll_Excuted;
@@ -22,6 +24,8 @@ public class StorageManager : NetworkSingleton<StorageManager>, IBaseSaveable, I
     public override void Awake();
     public virtual void InitializeSaveable();
     public virtual string GetSaveString();
+    public StoredItem GetStoredItemInstance(StoredItem prefab, Transform parent);
+    public void ReturnStoredItem(StoredItem originalPrefab, StoredItem instance);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

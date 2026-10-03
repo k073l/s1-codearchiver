@@ -32,7 +32,7 @@ public class ProductItemInstance : QualityItemInstance
     public override Equippable Equippable => GetEquippable();
 
     [CodegenExclude]
-    public override StoredItem StoredItem => GetStoredItem();
+    public override StoredItem StoredItemPrefab => GetStoredItemPrefab();
 
     [CodegenExclude]
     public override Sprite Icon => GetIcon();
@@ -42,7 +42,7 @@ public class ProductItemInstance : QualityItemInstance
     public override ItemInstance GetCopy(int overrideQuantity = -1);
     public virtual void SetPackaging(PackagingDefinition def);
     private Equippable GetEquippable();
-    private StoredItem GetStoredItem();
+    private StoredItem GetStoredItemPrefab();
     private Sprite GetIcon();
     public override ItemData GetItemData();
     public virtual float GetAddictiveness();

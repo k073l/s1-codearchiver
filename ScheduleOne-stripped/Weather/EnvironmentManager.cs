@@ -170,6 +170,7 @@ public class EnvironmentManager : NetworkSingleton<EnvironmentManager>, IEnviron
     public WeatherProfile GetWeatherProfile(string id);
     public void GetCurrentWeather(out string activeId, out string neighbourId, out float blend);
     public bool HasActiveWeatherVolumes();
+    public void SetMaskMapModificationState(MaskModificationData mod, bool state);
     private void OnMinutePass();
     private void OnTick();
     private void OnTimeSet();

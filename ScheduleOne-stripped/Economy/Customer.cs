@@ -290,7 +290,8 @@ public class Customer : NetworkBehaviour, ISaveable
     [ObserversRpc(RunLocally = true)]
     private void ProcessSampleClient();
     private void SampleConsumed(ProductItemInstance product);
-    private void EndWait();
+    private void EndDialogueBehaviourAfterDelay(float delay = 1.5f);
+    private void EndDialogueBehaviour();
     protected virtual void DirectApproachRejected();
     [ObserversRpc]
     private void SampleWasSufficient();
