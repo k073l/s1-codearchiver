@@ -10,6 +10,7 @@ public class NPCSpeedController
     private List<SpeedControl> _speedControlStack;
     private Dictionary<string, SpeedControl> _speedControlDict;
     public float MoveSpeed { get; private set; }
+    public float DefaultSpeed { get; private set; } = 1.8f;
 
     public event Action<float> OnMoveSpeedChanged;
     public NPCSpeedController(float defaultSpeed_Ms = 1.8f);

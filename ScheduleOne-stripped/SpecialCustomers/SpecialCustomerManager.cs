@@ -129,6 +129,7 @@ public class SpecialCustomerManager : NetworkSingleton<SpecialCustomerManager>, 
     private void RunWaitingForArrivalPhase();
     [Server]
     private void RunArrivalPhase();
+    private void ActivateGroup(string groupId);
     [Server]
     private void RunInactivePhase();
     [Server]

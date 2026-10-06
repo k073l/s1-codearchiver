@@ -122,7 +122,7 @@ public class NPCMovement : NetworkBehaviour
     public Vector3 AgentDesiredVelocity => _agent.desiredVelocity;
     public Vector3 CurrentDestination { get; protected set; } = Vector3.zero;
     public bool CanMove { get; }
-    public float DefaultWalkSpeed => _npc.NPCData.Movement.WalkSpeed;
+    public float DefaultWalkSpeed => SpeedController.DefaultSpeed;
     public NPCSpeedController SpeedController => _speedController;
     public EStance CurrentStance { get; protected set; }
     public Vector3 FootPosition => ((Component)this).transform.position;
