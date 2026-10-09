@@ -1,4 +1,5 @@
 using System;
+using ScheduleOne.Core.Avatar;
 using UnityEngine;
 
 namespace ScheduleOne.AvatarFramework;
@@ -13,4 +14,6 @@ public class AvatarLayer : ScriptableObject
     public Texture2D Normal_DefaultImportType;
     public int Order;
     public Material CombinedMaterial;
+    [Header("Meta")]
+    public AvatarObject AvatarObjectEquivalent;
 }

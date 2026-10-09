@@ -1,10 +1,12 @@
 using System;
+using ScheduleOne.Configuration;
 using ScheduleOne.DevUtilities;
 using UnityEngine;
 
 namespace ScheduleOne.Clothing;
 public static class ClothingColorExtensions
 {
+    private static ClothingConfiguration GetClothingConfiguration();
     public static Color GetActualColor(this EClothingColor color);
     public static Color GetLabelColor(this EClothingColor color);
     public static string GetLabel(this EClothingColor color);

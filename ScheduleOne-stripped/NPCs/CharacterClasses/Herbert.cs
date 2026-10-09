@@ -1,3 +1,4 @@
+using ScheduleOne.Dialogue;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.UI.Shop;
 using ScheduleOne.VoiceOver;

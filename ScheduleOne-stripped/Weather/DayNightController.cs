@@ -1,6 +1,8 @@
 using ScheduleOne.Core;
 using ScheduleOne.Core.Utilities;
 using ScheduleOne.Core.Weather;
+using ScheduleOne.DevUtilities;
+using ScheduleOne.GameTime;
 using UnityEngine;
 
 namespace ScheduleOne.Weather;
@@ -44,7 +46,9 @@ public class DayNightController : MonoBehaviour
     private const float SUN_SHADOW_STRENGTH;
     private const float MOON_SHADOW_STRENGTH;
     public const float MAX_LIGHT_INTENSITY;
-    public bool EnableDebugTimeControl => _enableDebugTimeControl;
+    private bool _overrideTimeOfDay;
+    private int _timeOfDayOverride;
+    public bool TimeOfDayOverridden { get; }
 
     private void Update();
     private SkyState EvaluateSky(SkyState state, SkySettings activeSettings, SkySettings neighbourSettings, float blend, float timeInTwentyFourHour, float timePercentage);
@@ -58,6 +62,9 @@ public class DayNightController : MonoBehaviour
     public SkyState EvaluateSky(SkySettings activeSettings, SkySettings neighbourSettings, float blend, SkySettings overrideSkySettings = null, float overrideBlend = 0f);
     public float EvaluateFloatByTimeOfDay(DynamicGradient gradient);
     public Color EvaluateColorByTimeOfDay(DynamicGradient gradient);
+    public void OverrideTimeOfDay(int timeOfDay);
+    public void ClearTimeOfDayOverride();
+    private void ApplyTimeOfDayOverride();
     public void OnUpdateTime(float normalisedTime);
     public void OnTick();
     public void OnTimeSet(float normalisedTime);

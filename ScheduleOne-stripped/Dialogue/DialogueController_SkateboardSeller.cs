@@ -21,6 +21,8 @@ public class DialogueController_SkateboardSeller : DialogueController
     }
 
     public List<Option> Options;
+    [SerializeField]
+    private Conversation _sellConversation;
     private Option chosenWeapon;
     public UnityEvent onPurchase;
     private void Awake();

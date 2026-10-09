@@ -23,14 +23,16 @@ public class ColorSmoother
     [SerializeField]
     private List<Override> overrides;
     private Override activeOverride;
+    private bool _selfUpdate;
     public Color CurrentValue { get; private set; } = Color.white;
     public float Multiplier { get; private set; } = 1f;
     public Color Default => DefaultValue;
 
-    public void Initialize();
+    public void Initialize(bool selfUpdate = true);
     public void SetDefault(Color value);
     public void SetMultiplier(float value);
     public void AddOverride(Color value, int priority, string label);
     public void RemoveOverride(string label);
-    public void Update();
+    private void SelfUpdate();
+    public void Update(float tick);
 }

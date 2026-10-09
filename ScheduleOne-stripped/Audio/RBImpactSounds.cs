@@ -1,4 +1,3 @@
-using System;
 using ScheduleOne.Combat;
 using ScheduleOne.Core.Audio;
 using ScheduleOne.DevUtilities;

@@ -2,15 +2,13 @@ using ScheduleOne.DevUtilities;
 using ScheduleOne.Growing;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.PlayerScripts;
-using ScheduleOne.UI;
 using ScheduleOne.Variables;
 using UnityEngine;
 
 namespace ScheduleOne.PlayerTasks.Tasks;
 public class PourWaterTask : PourOntoTargetTask
 {
-    public const float NORMALIZED_FILL_PER_TARGET;
-    public static bool hintShown;
+    private const float NormalizedFillPerTargetHit;
     protected override bool UseCoverage => true;
     protected override bool FailOnEmpty => false;
     protected override GrowContainerCameraHandler.ECameraPosition CameraPosition => GrowContainerCameraHandler.ECameraPosition.BirdsEye;

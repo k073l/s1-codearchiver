@@ -26,7 +26,6 @@ public class GenericDialogueBehaviour : Behaviour
     public override void Disable();
     public override void Activate();
     public override void Resume();
-    public override void Deactivate();
     public override void OnActiveTick();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();

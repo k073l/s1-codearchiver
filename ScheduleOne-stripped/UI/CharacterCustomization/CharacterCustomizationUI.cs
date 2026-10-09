@@ -1,6 +1,6 @@
 using System.Collections;
+using ScheduleOne.Avatar.Player;
 using ScheduleOne.AvatarFramework;
-using ScheduleOne.AvatarFramework.Customization;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.State;
@@ -15,7 +15,6 @@ public class CharacterCustomizationUI : MonoBehaviour
     [Header("Settings")]
     public string Title;
     public CharacterCustomizationCategory[] Categories;
-    public bool LoadAvatarSettingsNaked;
     [Header("References")]
     public Canvas Canvas;
     public RectTransform MainContainer;
@@ -32,7 +31,7 @@ public class CharacterCustomizationUI : MonoBehaviour
     public Button CategoryButtonPrefab;
     private float rigTargetY;
     private Coroutine openCloseRoutine;
-    protected BasicAvatarSettings currentSettings;
+    protected PlayerAppearance currentAppearance;
     public bool IsOpen { get; private set; }
     public CharacterCustomizationCategory ActiveCategory { get; private set; }
 
@@ -44,6 +43,7 @@ public class CharacterCustomizationUI : MonoBehaviour
     public virtual void OptionSelected(CharacterCustomizationOption option);
     public virtual void OptionDeselected(CharacterCustomizationOption option);
     public virtual void OptionPurchased(CharacterCustomizationOption option);
+    protected void ApplyCurrentAppearanceToPreviewRig();
     public virtual void Open();
     private void Exit(ExitAction action);
     private void Close();

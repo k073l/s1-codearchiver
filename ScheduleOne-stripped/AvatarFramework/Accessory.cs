@@ -1,3 +1,4 @@
+using ScheduleOne.Core.Avatar;
 using UnityEngine;
 
 namespace ScheduleOne.AvatarFramework;
@@ -16,6 +17,8 @@ public class Accessory : MonoBehaviour
     public SkinnedMeshRenderer[] skinnedMeshesToColor;
     public SkinnedMeshRenderer[] skinnedMeshesToBind;
     public SkinnedMeshRenderer[] shapeKeyMeshRends;
+    [Header("Meta")]
+    public AvatarObject AvatarObjectEquivalent;
     public void ApplyColor(Color col);
     public void ApplyShapeKeys(float gender, float weight);
     public void BindBones(Transform[] bones);

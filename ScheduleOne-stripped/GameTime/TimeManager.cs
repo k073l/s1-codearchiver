@@ -14,8 +14,6 @@ using ScheduleOne.Networking;
 using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.Persistence.Loaders;
-using ScheduleOne.PlayerScripts;
-using ScheduleOne.Variables;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -25,13 +23,14 @@ public class TimeManager : NetworkSingleton<TimeManager>, IBaseSaveable, ISaveab
     private const float DefaultCycleDuration;
     public const float TickDuration;
     public const int EndOfDay;
-    public const int WakeTime;
     private static float CycleDuration;
     [SerializeField]
     private EDay _defaultDay;
     private float _lastMinWaitExcess;
     private bool _stopMinPassWait;
     private float _secondsOnCurrentMinute;
+    private Coroutine _tickLoop;
+    private Coroutine _timeLoop;
     public ActionList onMinutePass;
     public ActionList onUncappedMinutePass;
     public ActionList onTick;
@@ -43,8 +42,6 @@ public class TimeManager : NetworkSingleton<TimeManager>, IBaseSaveable, ISaveab
     public Action onWeekPass;
     public Action onUpdate;
     public Action onFixedUpdate;
-    public Action onSleepStart;
-    public Action onSleepEnd;
     private TimeLoader loader;
     private bool NetworkInitialize___EarlyScheduleOne_002EGameTime_002ETimeManagerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EGameTime_002ETimeManagerAssembly_002DCSharp_002Edll_Excuted;
@@ -59,9 +56,7 @@ public class TimeManager : NetworkSingleton<TimeManager>, IBaseSaveable, ISaveab
     public bool IsNight { get; }
     public float NormalizedTimeOfDay => (Mathf.Clamp01(_secondsOnCurrentMinute / MinuteDuration) + (float)DailyMinSum) / 1440f;
     public int DayIndex => ElapsedDays % 7;
-    public bool IsSleepInProgress { get; private set; }
     public float Playtime { get; private set; }
-    public bool HostSleepDone { get; private set; }
     public float TimeSpeedMultiplier { get; private set; } = 1f;
     public int DailyMinSum { get; private set; }
     private float _minuteStaggerTime => MinuteDuration / (Time.timeScale * 0.9f);
@@ -93,7 +88,10 @@ public class TimeManager : NetworkSingleton<TimeManager>, IBaseSaveable, ISaveab
     private void PassMinute();
     [ObserversRpc(RunLocally = true, ExcludeServer = true)]
     private void PassMinute_Client(int oldTime);
-    public void SetTimeAndSync(int time);
+    public void SetTime_Server(int time);
+    public void SkipToTimeAndSync(int newTime);
+    [ObserversRpc(RunLocally = true)]
+    private void OnTimeSkip_Client(int oldTime, int newTime);
     private void SetTime(int time);
     public bool IsCurrentTimeWithinRange(int min, int max);
     public bool IsCurrentDateWithinRange(GameDateTime start, GameDateTime end);
@@ -101,14 +99,7 @@ public class TimeManager : NetworkSingleton<TimeManager>, IBaseSaveable, ISaveab
     public int GetTotalMinSum();
     public void SetTimeSpeedMultiplier(float multiplier);
     public void SetCycleDuration(float time);
-    private void CheckSleepStart();
-    [ObserversRpc(RunLocally = true)]
-    public void StartSleep();
-    [ObserversRpc(RunLocally = true)]
-    public void SetHostSleepDone(bool done);
-    private void SkipForwardToTime(int newTime);
-    [ObserversRpc(RunLocally = true)]
-    private void OnTimeSkip_Client(int oldTime, int newTime);
+    public static float Normalized24HourTime(int time);
     public static bool IsGivenTimeWithinRange(int givenTime, int min, int max);
     public static bool IsValid24HourTime(string input);
     public static bool IsValid24HourTime(int time);
@@ -130,12 +121,6 @@ public class TimeManager : NetworkSingleton<TimeManager>, IBaseSaveable, ISaveab
     private void RpcWriter___Observers_PassMinute_Client_3316948804(int oldTime);
     private void RpcLogic___PassMinute_Client_3316948804(int oldTime);
     private void RpcReader___Observers_PassMinute_Client_3316948804(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Observers_StartSleep_2166136261();
-    public void RpcLogic___StartSleep_2166136261();
-    private void RpcReader___Observers_StartSleep_2166136261(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Observers_SetHostSleepDone_1140765316(bool done);
-    public void RpcLogic___SetHostSleepDone_1140765316(bool done);
-    private void RpcReader___Observers_SetHostSleepDone_1140765316(PooledReader PooledReader0, Channel channel);
     private void RpcWriter___Observers_OnTimeSkip_Client_1692629761(int oldTime, int newTime);
     private void RpcLogic___OnTimeSkip_Client_1692629761(int oldTime, int newTime);
     private void RpcReader___Observers_OnTimeSkip_Client_1692629761(PooledReader PooledReader0, Channel channel);

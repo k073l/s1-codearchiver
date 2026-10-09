@@ -49,11 +49,11 @@ public class Botanist : Employee, IConfigurable
     public Transform uiPoint;
     [Header("Settings")]
     public int MaxAssignedPots;
-    public DialogueContainer NoAssignedStationsDialogue;
-    public DialogueContainer UnspecifiedPotsDialogue;
-    public DialogueContainer NullDestinationPotsDialogue;
-    public DialogueContainer MissingMaterialsDialogue;
-    public DialogueContainer NoPotsRequireWorkDialogue;
+    public Conversation NoAssignedStationsDialogue;
+    public Conversation UnspecifiedPotsDialogue;
+    public Conversation NullDestinationPotsDialogue;
+    public Conversation MissingMaterialsDialogue;
+    public Conversation NoPotsRequireWorkDialogue;
     [CompilerGenerated]
     [SyncVar]
     public NetworkObject _003CCurrentPlayerConfigurer_003Ek__BackingField;

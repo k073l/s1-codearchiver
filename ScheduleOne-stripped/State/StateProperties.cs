@@ -1,6 +1,5 @@
 using System;
 using ScheduleOne.DevUtilities;
-using ScheduleOne.Input;
 using ScheduleOne.PlayerScripts;
 using ScheduleOne.UI;
 using ScheduleOne.UI.Compass;

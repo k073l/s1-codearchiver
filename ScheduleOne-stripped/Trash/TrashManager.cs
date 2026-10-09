@@ -9,13 +9,12 @@ using FishNet.Object.Delegating;
 using FishNet.Serializing;
 using FishNet.Serializing.Generated;
 using FishNet.Transporting;
-using ScheduleOne.Combat;
 using ScheduleOne.DevUtilities;
+using ScheduleOne.GameTime;
 using ScheduleOne.Networking;
 using ScheduleOne.Persistence;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.Persistence.Loaders;
-using ScheduleOne.PlayerScripts;
 using UnityEngine;
 
 namespace ScheduleOne.Trash;
@@ -29,15 +28,13 @@ public class TrashManager : NetworkSingleton<TrashManager>, IBaseSaveable, ISave
         public float GenerationChance;
     }
 
-    public const int TRASH_ITEM_LIMIT;
-    public const int TRASH_REPLICATIONS_PER_SECOND;
+    private const float MinimumYPosition;
+    private const int TrashItemLimit;
     public TrashItem[] TrashPrefabs;
     public TrashItem TrashBagPrefab;
     public TrashItemData[] GenerateableTrashItems;
-    private List<TrashItem> trashItems;
-    public float TrashForceMultiplier;
+    private List<TrashItem> _trashItems;
     private TrashLoader loader;
-    private List<string> writtenItemFiles;
     private bool NetworkInitialize___EarlyScheduleOne_002ETrash_002ETrashManagerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ETrash_002ETrashManagerAssembly_002DCSharp_002Edll_Excuted;
     public string SaveFolderName => "Trash";
@@ -50,66 +47,59 @@ public class TrashManager : NetworkSingleton<TrashManager>, IBaseSaveable, ISave
     public int LoadOrder { get; }
 
     protected override void Start();
+    protected override void OnDestroy();
     public virtual void InitializeSaveable();
+    private void OnTick();
+    [Server]
+    private void CheckTrashOutOfBounds();
     public override void OnSpawnServer(NetworkConnection connection);
-    public void ReplicateTransformData(TrashItem trash);
+    public TrashItem CreateTrashItem(string id, Vector3 posiiton, Quaternion rotation, Vector3 initialVelocity = default(Vector3), string guid = "");
     [ServerRpc(RequireOwnership = false)]
-    private void SendTransformData(string guid, Vector3 position, Quaternion rotation, Vector3 velocity, NetworkConnection sender);
-    [ObserversRpc]
-    private void ReceiveTransformData(string guid, Vector3 position, Quaternion rotation, Vector3 velocity, NetworkConnection sender);
-    public TrashItem CreateTrashItem(string id, Vector3 posiiton, Quaternion rotation, Vector3 initialVelocity = default(Vector3), string guid = "", bool startKinematic = false);
-    [ServerRpc(RequireOwnership = false)]
-    private void SendTrashItem(string id, Vector3 position, Quaternion rotation, Vector3 initialVelocity, NetworkConnection sender, string guid, bool startKinematic = false);
+    private void CreateTrashItem_Server(string id, Vector3 position, Quaternion rotation, Vector3 velocity, NetworkConnection sender, string guid);
     [ObserversRpc]
     [TargetRpc]
-    private void CreateTrashItem(NetworkConnection conn, string id, Vector3 position, Quaternion rotation, Vector3 initialVelocity, NetworkConnection sender, string guid, bool startKinematic = false);
-    private TrashItem CreateAndReturnTrashItem(string id, Vector3 position, Quaternion rotation, Vector3 initialVelocity, string guid, bool startKinematic);
-    public TrashItem CreateTrashBag(string id, Vector3 posiiton, Quaternion rotation, TrashContentData content, Vector3 initialVelocity = default(Vector3), string guid = "", bool startKinematic = false);
+    private void CreateTrashItem_Client(NetworkConnection conn, string id, Vector3 position, Quaternion rotation, Vector3 velocity, NetworkConnection sender, string guid);
+    private TrashItem CreateTrashItemInternal(string id, Vector3 position, Quaternion rotation, Vector3 velocity, string guid);
+    public TrashItem CreateTrashBag(string id, Vector3 posiiton, Quaternion rotation, TrashContentData content, Vector3 initialVelocity = default(Vector3), string guid = "");
     [ServerRpc(RequireOwnership = false)]
-    private void SendTrashBag(string id, Vector3 position, Quaternion rotation, TrashContentData content, Vector3 initialVelocity, NetworkConnection sender, string guid, bool startKinematic = false);
+    private void SendTrashBag(string id, Vector3 position, Quaternion rotation, TrashContentData content, Vector3 initialVelocity, NetworkConnection sender, string guid);
     [ObserversRpc]
     [TargetRpc]
-    private void CreateTrashBag(NetworkConnection conn, string id, Vector3 position, Quaternion rotation, TrashContentData content, Vector3 initialVelocity, NetworkConnection sender, string guid, bool startKinematic = false);
-    private TrashItem CreateAndReturnTrashBag(string id, Vector3 position, Quaternion rotation, TrashContentData content, Vector3 initialVelocity, string guid, bool startKinematic);
+    private void CreateTrashBag(NetworkConnection conn, string id, Vector3 position, Quaternion rotation, TrashContentData content, Vector3 initialVelocity, NetworkConnection sender, string guid);
+    private TrashItem CreateAndReturnTrashBag(string id, Vector3 position, Quaternion rotation, TrashContentData content, Vector3 initialVelocity, string guid);
     public void DestroyAllTrash();
     public void DestroyTrash(TrashItem trash);
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
-    private void SendDestroyTrash(string guid);
+    private void DestroyTrash_Server(string guid);
     [ObserversRpc(RunLocally = true)]
-    private void DestroyTrash(string guid);
+    private void DestroyTrash_Client(string guid);
     public TrashItem GetTrashPrefab(string id);
     public TrashItem GetRandomGeneratableTrashPrefab();
     public virtual string GetSaveString();
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();
-    private void RpcWriter___Server_SendTransformData_2990100769(string guid, Vector3 position, Quaternion rotation, Vector3 velocity, NetworkConnection sender);
-    private void RpcLogic___SendTransformData_2990100769(string guid, Vector3 position, Quaternion rotation, Vector3 velocity, NetworkConnection sender);
-    private void RpcReader___Server_SendTransformData_2990100769(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Observers_ReceiveTransformData_2990100769(string guid, Vector3 position, Quaternion rotation, Vector3 velocity, NetworkConnection sender);
-    private void RpcLogic___ReceiveTransformData_2990100769(string guid, Vector3 position, Quaternion rotation, Vector3 velocity, NetworkConnection sender);
-    private void RpcReader___Observers_ReceiveTransformData_2990100769(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Server_SendTrashItem_478112418(string id, Vector3 position, Quaternion rotation, Vector3 initialVelocity, NetworkConnection sender, string guid, bool startKinematic = false);
-    private void RpcLogic___SendTrashItem_478112418(string id, Vector3 position, Quaternion rotation, Vector3 initialVelocity, NetworkConnection sender, string guid, bool startKinematic = false);
-    private void RpcReader___Server_SendTrashItem_478112418(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Observers_CreateTrashItem_2385526393(NetworkConnection conn, string id, Vector3 position, Quaternion rotation, Vector3 initialVelocity, NetworkConnection sender, string guid, bool startKinematic = false);
-    private void RpcLogic___CreateTrashItem_2385526393(NetworkConnection conn, string id, Vector3 position, Quaternion rotation, Vector3 initialVelocity, NetworkConnection sender, string guid, bool startKinematic = false);
-    private void RpcReader___Observers_CreateTrashItem_2385526393(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Target_CreateTrashItem_2385526393(NetworkConnection conn, string id, Vector3 position, Quaternion rotation, Vector3 initialVelocity, NetworkConnection sender, string guid, bool startKinematic = false);
-    private void RpcReader___Target_CreateTrashItem_2385526393(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Server_SendTrashBag_3965031115(string id, Vector3 position, Quaternion rotation, TrashContentData content, Vector3 initialVelocity, NetworkConnection sender, string guid, bool startKinematic = false);
-    private void RpcLogic___SendTrashBag_3965031115(string id, Vector3 position, Quaternion rotation, TrashContentData content, Vector3 initialVelocity, NetworkConnection sender, string guid, bool startKinematic = false);
-    private void RpcReader___Server_SendTrashBag_3965031115(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Observers_CreateTrashBag_680856992(NetworkConnection conn, string id, Vector3 position, Quaternion rotation, TrashContentData content, Vector3 initialVelocity, NetworkConnection sender, string guid, bool startKinematic = false);
-    private void RpcLogic___CreateTrashBag_680856992(NetworkConnection conn, string id, Vector3 position, Quaternion rotation, TrashContentData content, Vector3 initialVelocity, NetworkConnection sender, string guid, bool startKinematic = false);
-    private void RpcReader___Observers_CreateTrashBag_680856992(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Target_CreateTrashBag_680856992(NetworkConnection conn, string id, Vector3 position, Quaternion rotation, TrashContentData content, Vector3 initialVelocity, NetworkConnection sender, string guid, bool startKinematic = false);
-    private void RpcReader___Target_CreateTrashBag_680856992(PooledReader PooledReader0, Channel channel);
-    private void RpcWriter___Server_SendDestroyTrash_3615296227(string guid);
-    private void RpcLogic___SendDestroyTrash_3615296227(string guid);
-    private void RpcReader___Server_SendDestroyTrash_3615296227(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
-    private void RpcWriter___Observers_DestroyTrash_3615296227(string guid);
-    private void RpcLogic___DestroyTrash_3615296227(string guid);
-    private void RpcReader___Observers_DestroyTrash_3615296227(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Server_CreateTrashItem_Server_856160079(string id, Vector3 position, Quaternion rotation, Vector3 velocity, NetworkConnection sender, string guid);
+    private void RpcLogic___CreateTrashItem_Server_856160079(string id, Vector3 position, Quaternion rotation, Vector3 velocity, NetworkConnection sender, string guid);
+    private void RpcReader___Server_CreateTrashItem_Server_856160079(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Observers_CreateTrashItem_Client_673753684(NetworkConnection conn, string id, Vector3 position, Quaternion rotation, Vector3 velocity, NetworkConnection sender, string guid);
+    private void RpcLogic___CreateTrashItem_Client_673753684(NetworkConnection conn, string id, Vector3 position, Quaternion rotation, Vector3 velocity, NetworkConnection sender, string guid);
+    private void RpcReader___Observers_CreateTrashItem_Client_673753684(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Target_CreateTrashItem_Client_673753684(NetworkConnection conn, string id, Vector3 position, Quaternion rotation, Vector3 velocity, NetworkConnection sender, string guid);
+    private void RpcReader___Target_CreateTrashItem_Client_673753684(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Server_SendTrashBag_3197724538(string id, Vector3 position, Quaternion rotation, TrashContentData content, Vector3 initialVelocity, NetworkConnection sender, string guid);
+    private void RpcLogic___SendTrashBag_3197724538(string id, Vector3 position, Quaternion rotation, TrashContentData content, Vector3 initialVelocity, NetworkConnection sender, string guid);
+    private void RpcReader___Server_SendTrashBag_3197724538(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Observers_CreateTrashBag_632312601(NetworkConnection conn, string id, Vector3 position, Quaternion rotation, TrashContentData content, Vector3 initialVelocity, NetworkConnection sender, string guid);
+    private void RpcLogic___CreateTrashBag_632312601(NetworkConnection conn, string id, Vector3 position, Quaternion rotation, TrashContentData content, Vector3 initialVelocity, NetworkConnection sender, string guid);
+    private void RpcReader___Observers_CreateTrashBag_632312601(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Target_CreateTrashBag_632312601(NetworkConnection conn, string id, Vector3 position, Quaternion rotation, TrashContentData content, Vector3 initialVelocity, NetworkConnection sender, string guid);
+    private void RpcReader___Target_CreateTrashBag_632312601(PooledReader PooledReader0, Channel channel);
+    private void RpcWriter___Server_DestroyTrash_Server_3615296227(string guid);
+    private void RpcLogic___DestroyTrash_Server_3615296227(string guid);
+    private void RpcReader___Server_DestroyTrash_Server_3615296227(PooledReader PooledReader0, Channel channel, NetworkConnection conn);
+    private void RpcWriter___Observers_DestroyTrash_Client_3615296227(string guid);
+    private void RpcLogic___DestroyTrash_Client_3615296227(string guid);
+    private void RpcReader___Observers_DestroyTrash_Client_3615296227(PooledReader PooledReader0, Channel channel);
     public override void Awake();
 }

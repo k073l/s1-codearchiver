@@ -21,14 +21,16 @@ public class FloatSmoother
     private float SmoothingSpeed;
     private List<Override> overrides;
     private Override activeOverride;
+    private bool _selfUpdate;
     public float CurrentValue { get; private set; }
     public float Multiplier { get; private set; } = 1f;
 
-    public void Initialize();
+    public void Initialize(bool selfUpdate = true);
     public void SetDefault(float value, bool apply = true);
     public void SetMultiplier(float value);
     public void SetSmoothingSpeed(float value);
     public void AddOverride(float value, int priority, string label);
     public void RemoveOverride(string label);
-    public void Update();
+    private void SelfUpdate();
+    public void Update(float tick);
 }

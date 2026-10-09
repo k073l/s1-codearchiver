@@ -31,6 +31,7 @@ public class NPCEvent_Conversate : NPCEvent
 
     public override string GetName();
     protected override void Start();
+    private void OnDestroy();
     public override void Started();
     public override void ActiveUpdate();
     public override void MinPassed();

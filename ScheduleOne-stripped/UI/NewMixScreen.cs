@@ -24,7 +24,7 @@ public class NewMixScreen : Singleton<NewMixScreen>
     [SerializeField]
     protected TMP_InputField nameInputField;
     [SerializeField]
-    protected GameObject mixAlreadyExistsText;
+    protected GameObject invalidNameLabel;
     [SerializeField]
     protected RectTransform editIcon;
     [SerializeField]
@@ -52,5 +52,5 @@ public class NewMixScreen : Singleton<NewMixScreen>
     public void ConfirmButtonClicked();
     public string GenerateUniqueName(Effect[] properties = null, EDrugType drugType = EDrugType.Marijuana);
     protected void RefreshNameButtons();
-    public void OnNameValueChanged(string newVal);
+    private void OnNameValueChanged(string newName);
 }

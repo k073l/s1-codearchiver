@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using FishNet.Serializing.Helping;
+using ScheduleOne.Core.Avatar;
 using UnityEngine;
 
 namespace ScheduleOne.AvatarFramework;
@@ -49,6 +50,11 @@ public class AvatarSettings : ScriptableObject
     public AvatarLayer CombinedLayer;
     [CodegenExclude]
     public Texture2D ImpostorTexture;
+    [Header("New Avatar System")]
+    [CodegenExclude]
+    public NakedAppearanceObject EquivalentNakedAppearance;
+    [CodegenExclude]
+    public Outfit EquivalentOutfit;
     public float UpperEyelidRestingPosition => LeftEyeRestingState.topLidOpen;
     public float LowerEyelidRestingPosition => LeftEyeRestingState.bottomLidOpen;
     public string FaceLayer1Path { get; }

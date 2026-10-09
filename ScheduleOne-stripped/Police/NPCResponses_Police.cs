@@ -14,7 +14,7 @@ public class NPCResponses_Police : NPCResponses
 {
     private PoliceOfficer officer;
     protected override void Awake();
-    public override void HitByCar(LandVehicle vehicle);
+    protected override void RespondToHitByCar(LandVehicle vehicle);
     public override void NoticedDrugDeal(Player player);
     public override void NoticedPettyCrime(Player player);
     public override void NoticedVandalism(Player player);
@@ -29,7 +29,7 @@ public class NPCResponses_Police : NPCResponses
     protected override void RespondToLethalAttack(Player perpetrator, Impact impact);
     protected override void RespondToRepeatedNonLethalAttack(Player perpetrator, Impact impact);
     protected override void RespondToAnnoyingImpact(Player perpetrator, Impact impact);
-    public override void RespondToAimedAt(Player player);
+    protected override void RespondToAimedAt(Player player);
     public override void ImpactReceived(Impact impact);
     public override void GunshotHeard(NoiseEvent gunshotSound);
 }

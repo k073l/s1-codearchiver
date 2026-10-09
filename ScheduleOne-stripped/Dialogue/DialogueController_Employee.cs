@@ -8,6 +8,8 @@ namespace ScheduleOne.Dialogue;
 public class DialogueController_Employee : DialogueController
 {
     private ScheduleOne.Property.Property selectedProperty;
+    [SerializeField]
+    private Conversation _transferConversation;
     private void Awake();
     public override void ChoiceCallback(string choiceLabel);
     public override void ModifyChoiceList(string dialogueLabel, ref List<DialogueChoiceData> existingChoices);

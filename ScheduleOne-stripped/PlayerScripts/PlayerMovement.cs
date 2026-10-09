@@ -114,6 +114,7 @@ public class PlayerMovement : PlayerSingleton<PlayerMovement>
     private void ClampMovement();
     private float GetSurfaceAngle();
     private bool GetIsGrounded();
+    public void Teleport(Vector3 position, Quaternion rotation, bool alignFeetToPosition = false);
     public unsafe void Teleport(Vector3 position, bool alignFeetToPosition = false);
     public void SetResidualVelocity(Vector3 dir, float force, float time);
     public void WarpToNavMesh(bool clearVelocity = false);
@@ -127,7 +128,7 @@ public class PlayerMovement : PlayerSingleton<PlayerMovement>
     private void UpdatePlayerHeight();
     public void LerpPlayerRotation(Quaternion rotation, float lerpTime);
     private IEnumerator LerpPlayerRotation_Process(Quaternion endRotation, float lerpTime);
-    public void SetPlayerRotation(Quaternion rotation);
+    private void SetRotation(Quaternion rotation);
     private void EnterVehicle(LandVehicle vehicle);
     private void ExitVehicle(LandVehicle veh);
     public void RegisterMovementEvent(int threshold, Action action);

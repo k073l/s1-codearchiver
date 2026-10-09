@@ -1,10 +1,10 @@
 using System.Collections;
 using ScheduleOne.Audio;
+using ScheduleOne.Core.Avatar;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.FX;
 using ScheduleOne.Tools;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace ScheduleOne.AvatarFramework;
 public class AvatarEffects : MonoBehaviour
@@ -46,12 +46,16 @@ public class AvatarEffects : MonoBehaviour
     private FloatSmoother NeckSizeBoost;
     [SerializeField]
     private ColorSmoother SkinColorSmoother;
-    private bool laxativeEnabled;
-    private Color currentEmission;
-    private Color targetEmission;
-    private bool isCulled;
+    private bool _laxativeEnabled;
+    private float _defaultWeight;
+    private float _defaultGender;
+    private Color _currentEmission;
+    private Color _targetEmission;
+    private bool _isCulled;
     private void Start();
+    private void OnNakedAppearanceChanged(NakedAppearance appearance);
     public void Update();
+    private void UpdateSmoothers();
     private void SetEffectsCulled(bool culled);
     public void SetStinkParticlesActive(bool active, bool mirror = true);
     public void TriggerSick(bool mirror = true);
@@ -72,7 +76,7 @@ public class AvatarEffects : MonoBehaviour
     public void SetGiraffeActive(bool active, bool mirror = true);
     public void SetSkinColorInverted(bool inverted, bool mirror = true);
     public unsafe void SetSicklySkinColor(bool mirror = true);
-    private void SetDefaultSkinColor(bool mirror = true);
+    private void SetDefaultSkinColor(Color color, bool mirror = true);
     public void SetGenderInverted(bool inverted, bool mirror = true);
     public void AddAdditionalWeightOverride(float value, int priority, string label, bool mirror = true);
     public void RemoveAdditionalWeightOverride(string label, bool mirror = true);

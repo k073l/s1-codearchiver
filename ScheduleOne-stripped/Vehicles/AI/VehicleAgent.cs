@@ -44,25 +44,27 @@ public class VehicleAgent : MonoBehaviour
 
     public delegate void NavigationCallback(ENavigationResult status);
     public const string VehicleGraphName;
-    public const string RoadGraphName;
-    public const float MaxDistanceFromPath;
-    public const float MaxDistanceFromPathWhenReversing;
-    public static Vector3 MainGraphSamplePoint;
-    public static float MinRenavigationRate;
-    public const float Steer_P;
-    public const float Steer_I;
-    public const float Steer_D;
-    public const float Throttle_P;
-    public const float Throttle_I;
-    public const float Throttle_D;
-    public const float Steer_Rate;
-    public const float MaxAxlePositionShift;
-    public const float OBSTACLE_MIN_RANGE;
-    public const float OBSTACLE_MAX_RANGE;
-    public const float MAX_STEER_ANGLE_OVERRIDE;
-    public const float INFREQUENT_UPDATE_RATE;
+    public const string RoadNodesGraphName;
+    private const float MaxDistanceFromPath;
+    private const float MaxDistanceFromPathWhenReversing;
+    private static float MinRenavigationRate;
+    private const float Steer_P;
+    private const float Steer_I;
+    private const float Steer_D;
+    private const float Throttle_P;
+    private const float Throttle_I;
+    private const float Throttle_D;
+    private const float ObstacleMinRange;
+    private const float ObstacleMaxRange;
+    private const float MaxSteerAngleOverride;
+    private const float InfrequentUpdateRate;
     private const float KinematicModeRotationSpeed;
     private const float KinematicModeSpeedMultiplier;
+    private static readonly string[] KinematicModeObstacleLayers;
+    private const float WheelSweepSphereCastRadius;
+    private const float MaxReverseDuration;
+    private const float DestinationDistanceSlowThreshold;
+    private const float DestinationArrivalThreshold;
     public bool DEBUG_MODE;
     public DriveFlags Flags;
     [Header("Seekers")]
@@ -91,8 +93,6 @@ public class VehicleAgent : MonoBehaviour
     private Sensor[] sensors;
     [Header("Sweeping")]
     [SerializeField]
-    protected LayerMask sweepMask;
-    [SerializeField]
     protected Transform sweepOrigin_FL;
     [SerializeField]
     protected Transform sweepOrigin_FR;
@@ -109,8 +109,6 @@ public class VehicleAgent : MonoBehaviour
     protected float sampleStepSizeMin;
     protected float sampleStepSizeMax;
     protected int aheadPointSamples;
-    protected const float DestinationDistanceSlowThreshold;
-    protected const float DestinationArrivalThreshold;
     [Header("Steer settings")]
     [SerializeField]
     protected float steerTargetFollowRate;
@@ -144,6 +142,7 @@ public class VehicleAgent : MonoBehaviour
     protected NavigationCallback storedNavigationCallback;
     protected SpeedZone currentSpeedZone;
     private LayerMask _groundMask;
+    private LayerMask _kinematicModeObstacleLayerMask;
     protected LandVehicle vehicle;
     protected float wheelbase;
     protected float wheeltrack;
@@ -152,10 +151,7 @@ public class VehicleAgent : MonoBehaviour
     protected float turnRadius;
     protected float sweepTrack;
     private float wheelBottomOffset;
-    [Header("Control info - READONLY")]
-    [SerializeField]
     protected float targetSpeed;
-    [SerializeField]
     protected float targetSteerAngle_Normalized;
     protected float lateralOffset;
     protected PathSmoothingUtility.SmoothedPath path;
@@ -170,6 +166,7 @@ public class VehicleAgent : MonoBehaviour
     public Vector3 TargetLocation { get; protected set; } = Vector3.zero;
     protected float sampleStepSize => Mathf.Lerp(sampleStepSizeMin, sampleStepSizeMax, Mathf.Clamp01(vehicle.Speed_Kmh / vehicle.TopSpeed));
     protected float turnSpeedReductionRange => Mathf.Lerp(turnSpeedReductionMinRange, turnSpeedReductionMaxRange, Mathf.Clamp(vehicle.Speed_Kmh / vehicle.TopSpeed, 0f, 1f));
+    private LayerMask _wheelSweepCollisionMask => sensor_FM.checkMask;
     protected float maxSteerAngle => vehicle.ActualMaxSteeringAngle;
     private Vector3 frontOfVehiclePosition => ((Component)this).transform.position + ((Component)this).transform.forward * vehicleLength / 2f;
     public bool NavigationCalculationInProgress => navigationCalculationRoutine != null;
@@ -197,14 +194,13 @@ public class VehicleAgent : MonoBehaviour
     private void EndDriving();
     public void StopNavigating();
     public void RecalculateNavigation();
-    public bool SweepTurn(ESweepType sweep, float sweepAngle, bool reverse, out float hitDistance, out Vector3 hitPoint, float steerAngle = 0f);
-    public void BetterSweepTurn(ESweepType sweep, float steerAngle, bool reverse, LayerMask mask, out float hitDistance, out RaycastHit hit);
+    public bool GetWheelSweepCollision(ESweepType sweep, float steerAngle, bool reverse, out float hitDistance, out RaycastHit hit);
     public void StartReverse();
     public IEnumerator Reverse();
     private void StopReversing();
-    private Collider GetClosestForwardObstruction(out float obstructionDist);
     public bool IsOnVehicleGraph();
     private float GetDistanceFromVehicleGraph();
     private Vector3 GetPathLateralDirection();
+    private bool GetForwardObstacle(float range, LayerMask layers, out Vector3 hitPoint, out float hitDistance);
     public bool GetIsStuck();
 }

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using ScheduleOne.AvatarFramework;
+using ScheduleOne.Core.Avatar;
 using ScheduleOne.Map;
 using ScheduleOne.VoiceOver;
 using UnityEngine;
@@ -14,14 +14,22 @@ public class GoonPool : MonoBehaviour
     [SerializeField]
     private NPCEnterableBuilding[] exitBuildings;
     [Header("Appearance Settings")]
-    public AvatarSettings[] MaleBaseAppearances;
-    public AvatarSettings[] FemaleBaseAppearances;
-    public AvatarSettings[] MaleClothing;
-    public AvatarSettings[] FemaleClothing;
-    public VODatabase[] MaleVoices;
-    public VODatabase[] FemaleVoices;
-    public Color[] SkinTones;
-    public Color[] HairColors;
+    [SerializeField]
+    private NakedAppearanceObject[] _maleAppearances;
+    [SerializeField]
+    private NakedAppearanceObject[] _femaleAppearances;
+    [SerializeField]
+    private Outfit[] _maleOutfits;
+    [SerializeField]
+    private Outfit[] _femaleOutfits;
+    [SerializeField]
+    private Color[] _skinToneOptions;
+    [SerializeField]
+    private Color[] _hairColorOptions;
+    [SerializeField]
+    private VODatabase[] _maleVoices;
+    [SerializeField]
+    private VODatabase[] _femaleVoices;
     private List<CartelGoon> spawnedGoons;
     private List<CartelGoon> unspawnedGoons;
     public int UnspawnedGoonCount => unspawnedGoons.Count;
@@ -33,4 +41,7 @@ public class GoonPool : MonoBehaviour
     public CartelGoon SpawnGoon(Vector3 spawnPoint);
     public void ReturnToPool(CartelGoon goon);
     public NPCEnterableBuilding GetNearestExitBuilding(Vector3 position);
+    public NakedAppearanceObject GetAppearanceAtIndex(bool isMale, int index);
+    public Outfit GetOutfitAtIndex(bool isMale, int index);
+    public VODatabase GetVoiceAtIndex(bool isMale, int index);
 }

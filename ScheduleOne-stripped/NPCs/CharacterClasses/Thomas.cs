@@ -21,13 +21,12 @@ public class Thomas : NPC
     public UnityEvent onMeetingEnded;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002ECharacterClasses_002EThomasAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002ECharacterClasses_002EThomasAssembly_002DCSharp_002Edll_Excuted;
-    public override Sprite GetMessagingIcon();
     public void SendIntroMessage();
     [ServerRpc(RequireOwnership = false)]
     public void MeetingEnded_Server();
     [ObserversRpc]
     private void MeetingEnded();
-    protected override void CreateMessageConversation();
+    protected override void OnMessageConversationAssigned();
     [ServerRpc(RequireOwnership = false)]
     private void CancelAgreement_Server();
     public override void NetworkInitialize___Early();

@@ -45,5 +45,6 @@ public class AudioManager : PersistentSingleton<AudioManager>
     public void SetMasterVolume(float volume);
     public void SetVolume(EAudioType type, float volume);
     private void SetMainMixerVolume(float value);
+    public AudioSourceController CreateAudioSourceController(EAudioType audioType, AudioClip defaultClip = null, float defaultVolume = 1f, bool spatialize = false);
     private static float ValueToVolume(float value);
 }

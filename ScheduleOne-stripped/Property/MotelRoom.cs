@@ -16,6 +16,7 @@ public class MotelRoom : Property
     private bool NetworkInitialize___EarlyScheduleOne_002EProperty_002EMotelRoomAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002EProperty_002EMotelRoomAssembly_002DCSharp_002Edll_Excuted;
     protected override void Start();
+    public override void OnStartServer();
     private void UpdateVariables();
     public override bool CanDeliverToProperty();
     private void BuildableItemRemoved(BuildableItem item);

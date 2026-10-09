@@ -18,7 +18,7 @@ public class NPCEvent_LocationDialogue : NPCEvent
     [Header("Dialogue Settings")]
     public int GreetingOverrideToEnable;
     public int ChoiceToEnable;
-    public DialogueContainer DialogueOverride;
+    public Conversation DialogueOverride;
     protected bool IsActionStarted;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002ESchedules_002ENPCEvent_LocationDialogueAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002ESchedules_002ENPCEvent_LocationDialogueAssembly_002DCSharp_002Edll_Excuted;

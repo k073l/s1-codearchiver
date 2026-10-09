@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using ScheduleOne.DevUtilities;
 using UnityEngine;
@@ -12,7 +13,7 @@ public class BlackOverlay : Singleton<BlackOverlay>
     public bool isShown { get; protected set; }
 
     protected override void Awake();
-    public void Open(float fadeTime = 0.5f);
-    public void Close(float fadeTime = 0.5f);
-    private IEnumerator Fade(float endOpacity, float fadeTime);
+    public void Open(float fadeTime = 0.5f, Action onComplete = null);
+    public void Close(float fadeTime = 0.5f, Action onComplete = null);
+    private IEnumerator Fade(float endOpacity, float fadeTime, Action onComplete = null);
 }

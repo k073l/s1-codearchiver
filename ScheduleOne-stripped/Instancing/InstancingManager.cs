@@ -37,7 +37,7 @@ public class InstancingManager : Singleton<InstancingManager>
     private void Update();
     private void UpdateAndDrawInstances();
     protected override void OnDestroy();
-    private void ReleaseBuffer(ref ComputeBuffer buffer);
+    public static void ReleaseBuffer(ref ComputeBuffer buffer);
     public void EnableInstancing();
     public void DisableInstancing();
     public bool TryAssignCamera();

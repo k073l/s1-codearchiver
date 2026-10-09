@@ -8,7 +8,6 @@ using FishNet.Serializing;
 using FishNet.Transporting;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
-using ScheduleOne.UI;
 using UnityEngine;
 using UnityEngine.Events;
 

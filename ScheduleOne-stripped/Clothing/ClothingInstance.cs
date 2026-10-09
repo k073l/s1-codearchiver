@@ -1,8 +1,10 @@
 using System;
 using FishNet.Serializing;
+using ScheduleOne.Core.Avatar;
 using ScheduleOne.ItemFramework;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.Storage;
+using UnityEngine;
 
 namespace ScheduleOne.Clothing;
 [Serializable]
@@ -16,4 +18,5 @@ public class ClothingInstance : StorableItemInstance
     public override ItemData GetItemData();
     public override void Write(Writer writer);
     public override void Read(Reader reader);
+    public SerializedAvatarObject GetSerializedAvatarObject();
 }

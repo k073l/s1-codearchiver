@@ -4,6 +4,7 @@ namespace ScheduleOne.Instancing;
 [CreateAssetMenu(fileName = "InstanceObjectData", menuName = "ScheduleOne/Instancing/Instanced Object Data", order = 1)]
 public class InstanceObjectData : ScriptableObject
 {
+    public string Id;
     public Mesh Mesh;
     public Material Material;
     public int TextureResolution;
@@ -12,4 +13,5 @@ public class InstanceObjectData : ScriptableObject
     public Vector2Int MinMaxLodDistance;
     public Texture2D PositionData;
     public Texture2D RotationData;
+    public bool RenderOutOfFrustum;
 }

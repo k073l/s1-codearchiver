@@ -170,8 +170,8 @@ public class ProductManager : NetworkSingleton<ProductManager>, IBaseSaveable, I
     [ObserversRpc(RunLocally = true)]
     private void SetMixOperation(NewMixOperation operation, bool complete);
     public string FinishAndNameMix(string productID, string ingredientID, string mixName);
-    public static string MakeIDFileSafe(string id);
-    public static bool IsMixNameValid(string mixName);
+    public static string CreateProductIdFromName(string name);
+    public static bool IsValidProductName(string mixName);
     [ObserversRpc(RunLocally = true)]
     private void FinishAndNameMix(string productID, string ingredientID, string mixName, string mixID);
     [ServerRpc(RequireOwnership = false)]

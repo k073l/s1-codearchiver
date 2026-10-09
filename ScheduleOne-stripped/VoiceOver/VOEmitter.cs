@@ -16,6 +16,7 @@ public class VOEmitter : MonoBehaviour
     protected virtual void Awake();
     public void Initialize(NPCData data);
     public virtual void Play(EVOLineType lineType);
+    public virtual void Play(EVOLineType lineType, float volumeMultiplier = 1f);
     public void SetRuntimePitchMultiplier(float pitchMultiplier);
     public void SetDatabase(VODatabase database, bool writeDefault = true);
     public void SetDefaultPitch(float pitch);

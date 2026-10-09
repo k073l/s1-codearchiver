@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ScheduleOne.Core.Avatar;
 using ScheduleOne.ItemFramework;
 using UnityEngine;
 
@@ -9,10 +10,11 @@ namespace ScheduleOne.Clothing;
 public class ClothingDefinition : StorableItemDefinition
 {
     public EClothingSlot Slot;
-    public EClothingApplicationType ApplicationType;
-    public string ClothingAssetPath;
+    public AvatarObject ClothingAvatarObject;
     public bool Colorable;
     public EClothingColor DefaultColor;
     public List<EClothingSlot> SlotsToBlock;
     public override ItemInstance GetDefaultInstance(int quantity = 1);
+    public ClothingInstance GetDefaultInstance(EClothingColor color, int quantity = 1);
+    public override void ValidateDefinition();
 }

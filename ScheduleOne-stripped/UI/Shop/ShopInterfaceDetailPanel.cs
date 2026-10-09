@@ -12,9 +12,10 @@ public class ShopInterfaceDetailPanel : MonoBehaviour
     public VerticalLayoutGroup LayoutGroup;
     public TextMeshProUGUI DescriptionLabel;
     public TextMeshProUGUI UnlockLabel;
-    private ListingUI listing;
+    private ListingUI _listingUI;
     private void Awake();
-    public void Open(ListingUI _listing);
+    public void Open(ListingUI listingUI);
+    public bool AnythingToDisplay(ShopListing listing);
     private void LateUpdate();
     private void Position();
     public void Close();

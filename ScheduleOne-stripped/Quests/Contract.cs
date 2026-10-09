@@ -12,7 +12,6 @@ using ScheduleOne.NPCs;
 using ScheduleOne.Persistence.Datas;
 using ScheduleOne.Product;
 using ScheduleOne.UI;
-using ScheduleOne.UI.Handover;
 using ScheduleOne.UI.Phone;
 using ScheduleOne.Variables;
 using UnityEngine;
@@ -61,6 +60,7 @@ public class Contract : Quest
     protected override bool ShouldShowJournalEntry();
     protected override bool CanExpire();
     public bool DoesProductListMatchSpecified(List<ItemInstance> items, bool enforceQuality);
+    public float GetProductListMatch(List<ProductItemInstance> items, out int matchedProductCount);
     public float GetProductListMatch(List<ItemInstance> items, out int matchedProductCount);
     private Dictionary<ProductItemInstance, float> GetDescendingMatchRatings(ProductList.Entry requestedItem, List<ItemInstance> providedItems);
     public override SaveData GetSaveData();

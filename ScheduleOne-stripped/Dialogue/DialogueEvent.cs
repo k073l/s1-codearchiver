@@ -5,7 +5,7 @@ namespace ScheduleOne.Dialogue;
 [Serializable]
 public class DialogueEvent
 {
-    public DialogueContainer Dialogue;
+    public Conversation Dialogue;
     public UnityEvent onDialogueEnded;
     public DialogueNodeEvent[] NodeEvents;
 }

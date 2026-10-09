@@ -11,7 +11,7 @@ namespace ScheduleOne.NPCs;
 public class Stan : NPC
 {
     public ShopInterface ShopInterface;
-    public DialogueContainer GreetingDialogue;
+    public Conversation GreetingDialogue;
     public string GreetedVariable;
     [Header("Settings")]
     public string[] OrderCompletedLines;

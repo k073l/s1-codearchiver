@@ -11,6 +11,7 @@ using FishNet.Object.Synchronizing;
 using FishNet.Object.Synchronizing.Internal;
 using FishNet.Serializing;
 using FishNet.Transporting;
+using ScheduleOne.Core.Avatar;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.Dialogue;
 using ScheduleOne.GameTime;
@@ -50,13 +51,14 @@ public class Employee : NPC
     public float SigningFee;
     public float DailyWage;
     [Header("References")]
+    public Outfit EmployeeOutfit;
     public IdleBehaviour WaitOutside;
     public MoveItemBehaviour MoveItemBehaviour;
-    public DialogueContainer BedNotAssignedDialogue;
-    public DialogueContainer NotPaidDialogue;
-    public DialogueContainer WorkIssueDialogueTemplate;
-    public DialogueContainer FireDialogue;
-    public DialogueContainer TransferDialogue;
+    public Conversation BedNotAssignedDialogue;
+    public Conversation NotPaidDialogue;
+    public Conversation WorkIssueDialogueTemplate;
+    public Conversation FireDialogue;
+    public Conversation TransferDialogue;
     private List<NoWorkReason> WorkIssues;
     protected bool initialized;
     protected int consecutivePathingFailures;
@@ -120,7 +122,7 @@ public class Employee : NPC
     public virtual EmployeeHome GetHome();
     public bool IsPayAvailable();
     public void RemoveDailyWage();
-    public virtual bool GetWorkIssue(out DialogueContainer notWorkingReason);
+    public virtual bool GetWorkIssue(out Conversation notWorkingReason);
     public virtual void SetIdle(bool idle);
     protected void LeavePropertyAndDespawn();
     [ObserversRpc(RunLocally = true)]

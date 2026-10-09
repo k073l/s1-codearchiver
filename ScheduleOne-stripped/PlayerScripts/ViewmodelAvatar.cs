@@ -1,27 +1,29 @@
+using System.Collections.Generic;
 using ScheduleOne.AvatarFramework;
+using ScheduleOne.Core.Avatar;
 using ScheduleOne.DevUtilities;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Rendering;
 
 namespace ScheduleOne.PlayerScripts;
 public class ViewmodelAvatar : Singleton<ViewmodelAvatar>
 {
+    private const float ViewmodelHeight;
     [SerializeField]
     private float ArmShift;
-    public Avatar ParentAvatar;
+    public ScheduleOne.AvatarFramework.Avatar ParentAvatar;
     public Animator Animator;
-    public Avatar Avatar;
+    public ScheduleOne.AvatarFramework.Avatar Avatar;
     public Transform RightHandContainer;
-    private Vector3 _leftShoulderDefaultLocalPos;
-    private Vector3 _rightShoulderDefaultLocalPos;
     public bool IsVisible { get; private set; }
 
     protected override void Awake();
     public void SetVisibility(bool isVisible);
     private void LateUpdate();
     private void SetBoneTransforms();
-    public void SetAppearance(AvatarSettings settings);
+    private void SetNakedAppearance(NakedAppearance appearance);
+    private void SetOutfit(List<SerializedAvatarObject> outfit);
+    private void ApplyViewmodelMeshSettings();
     public void SetAnimatorController(RuntimeAnimatorController controller);
     public void SetOffset(Vector3 offset);
     public void SetRotationOffset(Vector3 eulerAngles);

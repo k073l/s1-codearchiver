@@ -1,35 +1,37 @@
 using System.Collections.Generic;
 using System.Linq;
+using ScheduleOne.DevUtilities;
 using ScheduleOne.Tiles;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 
 namespace ScheduleOne.Storage;
 public class StoredItem : MonoBehaviour
 {
     [Header("References")]
-    public Transform buildPoint;
-    public List<CoordinateStorageFootprintTilePair> CoordinateFootprintTilePairs;
-    private int footprintX;
-    private int footprintY;
-    protected List<CoordinatePair> coordinatePairs;
-    protected float rotation;
-    public int xSize;
-    public int ySize;
-    public StorableItemInstance item { get; protected set; }
-    public bool Destroyed { get; private set; }
-    public FootprintTile OriginFootprint => CoordinateFootprintTilePairs[0].tile;
-    public int FootprintX { get; }
-    public int FootprintY { get; }
-    public StorageGrid parentGrid { get; protected set; }
-    public List<CoordinatePair> CoordinatePairs => coordinatePairs;
-    public float Rotation => rotation;
-    public int totalArea => CoordinateFootprintTilePairs.Count;
+    [SerializeField]
+    private Transform buildPoint;
+    [HideInInspector]
+    [SerializeField]
+    [FormerlySerializedAs("CoordinateFootprintTilePairs")]
+    private List<CoordinateStorageFootprintTilePair> _coordinateFootprintTilePairs;
+    private float _rotation;
+    private int _footprintX;
+    private int _footprintY;
+    private StorageGrid _parentGrid;
+    private StorableItemInstance _itemInstance;
+    private List<CoordinatePair> _coordinatePairs;
+    private StoredItem _originalPrefab;
+    public bool Initialized => _itemInstance != null;
+    public int SizeX { get; }
+    public int SizeY { get; }
 
     protected virtual void Awake();
-    public virtual void InitializeStoredItem(StorableItemInstance _item, StorageGrid grid, Vector2 _originCoordinate, float _rotation);
-    private void RefreshTransform();
+    public void SetOriginalPrefab(StoredItem prefab);
+    public virtual void InitializeStoredItem(StorableItemInstance item, StorageGrid grid, Vector2 originCoordinate, float rotation);
     public virtual void Destroy();
     public void ClearFootprintOccupancy();
-    public FootprintTile GetTile(Coordinate coord);
+    private void RefreshTransform();
+    private FootprintTile GetTile(Coordinate coord);
 }

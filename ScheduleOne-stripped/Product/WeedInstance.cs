@@ -1,7 +1,7 @@
 using System;
 using FishNet.Object;
 using ScheduleOne.Audio;
-using ScheduleOne.AvatarFramework;
+using ScheduleOne.Core.Avatar;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.FX;
 using ScheduleOne.ItemFramework;

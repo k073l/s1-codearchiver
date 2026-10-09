@@ -18,5 +18,6 @@ public enum EShopCategory
     Neck,
     Eyes,
     Head,
-    Wrist
+    Wrist,
+    Floor
 }

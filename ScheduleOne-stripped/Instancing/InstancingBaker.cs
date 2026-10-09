@@ -14,7 +14,7 @@ public class InstancingBaker : MonoBehaviour
 
     [Header("References")]
     [SerializeField]
-    private List<GameObject> _objects;
+    private string _id;
     [Header("Baking Settings")]
     [SerializeField]
     private int _textureResolution;
@@ -24,7 +24,8 @@ public class InstancingBaker : MonoBehaviour
     private Mesh _mesh;
     [SerializeField]
     private Material _material;
-    private const string SAVE_PATH;
+    private const string AssetPath;
+    private const string TexturePath;
     [Button("Bake")]
     public void BakeGameObjects();
     public void Bake(List<InstanceObjectBakeData> bakingData);

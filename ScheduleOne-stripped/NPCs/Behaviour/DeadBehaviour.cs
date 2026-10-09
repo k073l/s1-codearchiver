@@ -1,4 +1,3 @@
-using System;
 using ScheduleOne.DevUtilities;
 using ScheduleOne.GameTime;
 using ScheduleOne.Map;
@@ -11,7 +10,7 @@ public class DeadBehaviour : Behaviour
 {
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002EBehaviour_002EDeadBehaviourAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002EBehaviour_002EDeadBehaviourAssembly_002DCSharp_002Edll_Excuted;
-    public bool IsInMedicalCenter => (Object)(object)base.Npc.CurrentBuilding == (Object)(object)Singleton<ScheduleOne.Map.Map>.Instance.MedicalCentre;
+    public bool IsInMedicalCenter => (Object)(object)base.Npc.CurrentBuilding == (Object)(object)Singleton<ScheduleOne.Map.Map>.Instance.MedicalCentre.NPCRecoveryRoom;
 
     private void Start();
     private void OnDestroy();

@@ -17,9 +17,9 @@ public class DarkMarketMainDoor : MonoBehaviour
     public InteractableObject InteractableObject;
     public Peephole Peephole;
     public Igor Igor;
-    public DialogueContainer FailDialogue;
-    public DialogueContainer SuccessDialogue;
-    public DialogueContainer SuccessDialogueNotOpen;
+    public Conversation FailDialogue;
+    public Conversation SuccessDialogue;
+    public Conversation SuccessDialogueNotOpen;
     private Coroutine knockRoutine;
     public bool KnockingEnabled { get; private set; } = true;
 

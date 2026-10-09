@@ -41,6 +41,8 @@ public class Drawing
 
     public List<SprayStroke> GetStrokes();
     public Drawing(int width, int height, bool initPixels);
+    private void EnsureHistoryTextureArrayInitialized();
+    public void DeleteDrawingHistory();
     public Drawing GetCopy();
     public void DrawPaintedPixel(PixelData data, bool applyTexture);
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

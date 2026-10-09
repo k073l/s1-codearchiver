@@ -59,7 +59,6 @@ public class Property : NetworkBehaviour, ISaveable
     public float MinimumCullingDistance;
     public GameObject[] ObjectsToCull;
     [Header("References")]
-    public Transform EmployeeContainer;
     public Transform SpawnPoint;
     public Transform InteriorSpawnPoint;
     public GameObject ForSaleSign;
@@ -78,6 +77,7 @@ public class Property : NetworkBehaviour, ISaveable
     public readonly List<Grid> Grids;
     protected BoxCollider[] propertyBoundsColliders;
     private Coroutine cullingRoutine;
+    protected bool _hasBeenLoaded;
     private PropertyLoader loader;
     private List<string> savedObjectPaths;
     private List<string> savedEmployeePaths;
@@ -122,7 +122,6 @@ public class Property : NetworkBehaviour, ISaveable
     protected virtual void RecieveOwned();
     public virtual bool ShouldSave();
     public void SetOwned();
-    public void SetBoundsVisible(bool vis);
     public virtual bool CanBePurchased();
     public virtual void SetContentCulled(bool culled);
     public int RegisterEmployee(Employee emp);

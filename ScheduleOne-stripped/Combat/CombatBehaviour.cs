@@ -90,7 +90,7 @@ public class CombatBehaviour : Behaviour
     public override void BehaviourUpdate();
     protected void UpdateTimeout();
     protected virtual void UpdateLookAt();
-    protected void SetMovementSpeed(float speed, string label = "combat", int priority = 5);
+    protected void SetMovementSpeed(float normalizedSpeed);
     private void EnsureRangedWeaponRoutineIsRunning();
     protected Vector3 GetPredictedFutureTargetPosition(float lead_Min = 0f, float lead_Max = 2f);
     protected unsafe override void SetDestination(Vector3 position, bool teleportIfFail = true, float successThreshold = 1f);

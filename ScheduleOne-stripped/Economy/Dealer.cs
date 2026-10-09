@@ -105,6 +105,7 @@ public class Dealer : NPC, IItemSlotOwner
     private void SetRecommended();
     [ServerRpc(RequireOwnership = false, RunLocally = true)]
     public void InitialRecruitment();
+    public void NotifyPlayerOfCartelDeal(Contract contract);
     [ObserversRpc(RunLocally = true)]
     [TargetRpc]
     public virtual void SetIsRecruited(NetworkConnection conn);

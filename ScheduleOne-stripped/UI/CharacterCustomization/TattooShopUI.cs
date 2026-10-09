@@ -1,4 +1,4 @@
-using ScheduleOne.AvatarFramework;
+using UnityEngine;
 
 namespace ScheduleOne.UI.CharacterCustomization;
 public class TattooShopUI : CharacterCustomizationUI

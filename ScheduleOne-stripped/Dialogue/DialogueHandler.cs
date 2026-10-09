@@ -28,12 +28,13 @@ public class DialogueHandler : MonoBehaviour
     public UnityEvent<string> onDialogueNodeDisplayed;
     public UnityEvent<string> onDialogueChoiceChosen;
     [SerializeField]
-    protected List<DialogueContainer> dialogueContainers;
+    protected List<Conversation> dialogueContainers;
     protected List<NodeLinkData> tempLinks;
     protected bool skipNextDialogueBehaviourEnd;
     protected List<DialogueChoiceData> finalChoices;
+    private DialogueModule _genericModule;
     private bool passChecked;
-    public static DialogueContainer ActiveDialogue { get; private set; }
+    public static Conversation ActiveDialogue { get; private set; }
     public static DialogueNodeData ActiveDialogueNode { get; private set; }
     public bool IsDialogueInProgress { get; private set; }
     public DialogueDatabase Database { get; protected set; }
@@ -44,8 +45,9 @@ public class DialogueHandler : MonoBehaviour
     public event Action OnDialogueEnd;
     protected virtual void Awake();
     public void Initialize(NPCData npcData);
-    public void StartDialogue(DialogueContainer container);
-    public void StartDialogue(DialogueContainer dialogueContainer, bool enableDialogueBehaviour = true, string entryNodeLabel = "ENTRY");
+    public void Deinitialize();
+    public void StartDialogue(Conversation container);
+    public void StartDialogue(Conversation dialogueContainer, bool enableDialogueBehaviour = true, string entryNodeLabel = "ENTRY");
     public void StartDialogue(string dialogueContainerName, bool enableDialogueBehaviour = true, string entryNodeLabel = "ENTRY");
     public void OverrideShownDialogue(string _overrideText);
     public void StopOverride();

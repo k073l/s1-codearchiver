@@ -8,7 +8,7 @@ namespace ScheduleOne.Storage;
 public class StorableItemInstance : ItemInstance
 {
     [CodegenExclude]
-    public virtual StoredItem StoredItem { get; }
+    public virtual StoredItem StoredItemPrefab { get; }
 
     public StorableItemInstance(ItemDefinition definition, int quantity);
     public override ItemInstance GetCopy(int overrideQuantity = -1);

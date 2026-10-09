@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Linq;
 using FishNet;
@@ -33,6 +32,7 @@ public class RV : Property
     public bool IsDestroyed { get; private set; }
 
     protected override void Start();
+    public override void OnStartServer();
     public override void OnSpawnServer(NetworkConnection connection);
     private void UpdateVariables();
     public override bool ShouldSave();

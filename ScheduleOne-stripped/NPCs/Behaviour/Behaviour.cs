@@ -1,3 +1,4 @@
+using System;
 using FishNet;
 using FishNet.Connection;
 using FishNet.Object;
@@ -16,6 +17,7 @@ public class Behaviour : NetworkBehaviour
     public string Name;
     [Tooltip("Behaviour priority; higher = takes priority over lower number behaviour")]
     public int Priority;
+    public int PriorityGroup;
     [Header("Umbrella")]
     [SerializeField]
     private bool _canUseUmbrellaDuringBehaviour;
@@ -25,6 +27,7 @@ public class Behaviour : NetworkBehaviour
     public UnityEvent onDisable;
     public UnityEvent onBegin;
     public UnityEvent onEnd;
+    private Action<string, string> _onBehaviourEnd;
     protected int consecutivePathingFailures;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002EBehaviour_002EBehaviourAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002EBehaviour_002EBehaviourAssembly_002DCSharp_002Edll_Excuted;
@@ -50,15 +53,21 @@ public class Behaviour : NetworkBehaviour
     public virtual void Pause();
     public void Resume_Server();
     public virtual void Resume();
+    protected virtual void OnActivateOrResume();
+    protected virtual void OnDeactivateOrPause();
     public virtual void BehaviourUpdate();
     public virtual void BehaviourLateUpdate();
     public virtual void OnActiveTick();
     public virtual void OnActiveUncappedMinutePass();
+    public virtual float GetProgress();
     protected void SetDestination(ITransitEntity transitEntity, bool teleportIfFail = true);
     protected unsafe virtual void SetDestination(Vector3 position, bool teleportIfFail = true, float successThreshold = 1f);
     protected virtual void WalkCallback(NPCMovement.WalkResult result);
+    protected bool IsAtDestination(Vector3 targetPosition, float minDistanceToLocation = 0.5f);
     private void UpdateGameObjectName();
     public void SetCanUseUmbrellaDuringBehaviour(bool canUse);
+    public void SubscribeToBehaviourEnd(Action<string, string> callback);
+    public void UnsubscribeFromBehaviourEnd(Action<string, string> callback);
     public override void NetworkInitialize___Early();
     public override void NetworkInitialize__Late();
     public override void NetworkInitializeIfDisabled();

@@ -13,7 +13,7 @@ public class Phil : Supplier
 {
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002ECharacterClasses_002EPhilAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002ECharacterClasses_002EPhilAssembly_002DCSharp_002Edll_Excuted;
-    protected override void CreateMessageConversation();
+    protected override void OnMessageConversationAssigned();
     protected virtual void InstructionsRequested();
     protected override void SupplierUnlocked(NPCRelationData.EUnlockType type, bool notify);
     public override void NetworkInitialize___Early();

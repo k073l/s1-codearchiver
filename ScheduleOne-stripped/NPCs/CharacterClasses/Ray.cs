@@ -13,7 +13,7 @@ using UnityEngine.Events;
 namespace ScheduleOne.NPCs.CharacterClasses;
 public class Ray : NPC
 {
-    public DialogueContainer GreetingDialogue;
+    public Conversation GreetingDialogue;
     public string GreetedVariable;
     public string IntroductionMessage;
     public string IntroSentVariable;

@@ -18,6 +18,7 @@ using UnityEngine;
 namespace ScheduleOne.EntityFramework;
 public class GridItem : BuildableItem
 {
+    private static readonly Type[] CanShareTilesWith;
     [HideInInspector]
     public List<CoordinateFootprintTilePair> CoordinateFootprintTilePairs;
     protected Guid _ownerGridGUID;

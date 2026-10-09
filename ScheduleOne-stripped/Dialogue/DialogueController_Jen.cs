@@ -9,7 +9,7 @@ public class DialogueController_Jen : DialogueController
 {
     public string BuyKeyText;
     public StorableItemDefinition KeyItem;
-    public DialogueContainer BuyKeyDialogue;
+    public Conversation BuyKeyDialogue;
     public float MinRelationToBuyKey;
     protected override void Start();
     private bool CanBuyKey(out string invalidReason);

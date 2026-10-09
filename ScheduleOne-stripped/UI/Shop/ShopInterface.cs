@@ -146,7 +146,7 @@ public class ShopInterface : MonoBehaviour, ISaveable
     public void OpenAmountSelector(ListingUI listing);
     private void DropdownClicked(ListingUI listing);
     private void QuantitySelectedNew(int amount);
-    private void EntryHovered(ListingUI listing);
+    private void EntryHovered(ListingUI listingUI);
     private void EntryUnhovered();
     public void Load(ShopData data);
     public bool ShouldSave();

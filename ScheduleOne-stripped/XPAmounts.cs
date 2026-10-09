@@ -10,4 +10,6 @@ public static class XPAmounts
     public const int ESCAPED_WANTED2;
     public const int NEW_MIXTURE_DISCOVERED;
     public const int GRAFFITI_SPRAYED;
+    public const int SPECIAL_CUSTOMER_DEAL_BASE_BUDGET;
+    public const int SPECIAL_CUSTOMER_DEAL_MAX;
 }

@@ -22,9 +22,9 @@ public class BasicEnclosure : MonoBehaviour
     private GameObject _openingObj;
     private const float EXPOSURE_EPSILON;
     private IEnclosureOpening _opening;
-    public bool IsBlendZone => _isBlendZone;
     public Vector3 Center => _center;
     public Vector3 Size => _size;
+    public bool IsBlendZone => _isBlendZone;
 
     private void Awake();
     public bool WithinEnclosure(Vector3 targetPosition);

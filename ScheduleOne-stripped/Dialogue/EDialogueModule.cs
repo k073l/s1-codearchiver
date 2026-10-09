@@ -8,5 +8,6 @@ public enum EDialogueModule
     Police,
     Supplier,
     Dealer,
-    CartelGoon
+    CartelGoon,
+    SpecialCustomer
 }

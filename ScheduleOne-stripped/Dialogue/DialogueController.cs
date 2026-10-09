@@ -10,6 +10,7 @@ using ScheduleOne.Tools;
 using ScheduleOne.VoiceOver;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace ScheduleOne.Dialogue;
 public class DialogueController : MonoBehaviour
@@ -22,7 +23,7 @@ public class DialogueController : MonoBehaviour
         public bool Enabled;
         public string ChoiceText;
         public bool ShowWorldspaceDialogue;
-        public DialogueContainer Conversation;
+        public Conversation Conversation;
         public UnityEvent onChoosen;
         public ShouldShowCheck shouldShowCheck;
         public IsChoiceValid isValidCheck;
@@ -44,21 +45,27 @@ public class DialogueController : MonoBehaviour
     private const float RainyGreetingThreshold;
     private const float RainyGreetingChance;
     [Header("References")]
-    public InteractableObject IntObj;
-    public DialogueContainer GenericDialogue;
+    [SerializeField]
+    [FormerlySerializedAs("IntObj")]
+    private InteractableObject _interactable;
     [Header("Settings")]
     public bool DialogueEnabled;
     public bool UseDialogueBehaviour;
     public List<DialogueChoice> Choices;
     public List<GreetingOverride> GreetingOverrides;
-    public DialogueContainer OverrideContainer;
+    public Conversation OverrideContainer;
     protected NPC npc;
     protected DialogueHandler handler;
-    private float lastGreetingTime;
-    private List<DialogueChoice> shownChoices;
-    private string cachedGreeting;
+    private float _lastGreetingTime;
+    private List<DialogueChoice> _shownChoices;
+    private string _cachedGreeting;
+    private Action<string> _onChoiceSelectedEvent;
     private float _timeOnDialogueStart;
+    private float _remainingInteractionCooldown;
+    private Conversation _genericConversation => Singleton<DialogueManager>.Instance.GenericConversation;
+
     protected virtual void Start();
+    private void Update();
     private void Hovered();
     public void StartGenericDialogue(bool allowExit = true);
     private void Interacted();
@@ -68,13 +75,16 @@ public class DialogueController : MonoBehaviour
     public virtual int AddDialogueChoice(DialogueChoice data, int priority = 0);
     public virtual int AddGreetingOverride(GreetingOverride data);
     public virtual bool CanStartDialogue();
+    public void SetCooldown(float cooldown);
     public virtual string ModifyDialogueText(string dialogueLabel, string dialogueText);
     public virtual string ModifyChoiceText(string choiceLabel, string choiceText);
     public virtual void ModifyChoiceList(string dialogueLabel, ref List<DialogueChoiceData> existingChoices);
     public virtual void ChoiceCallback(string choiceLabel);
     public virtual bool CheckChoice(string choiceLabel, out string invalidReason);
-    public void SetOverrideContainer(DialogueContainer container);
+    public void SetOverrideContainer(Conversation container);
     public void ClearOverrideContainer();
     public virtual bool DecideBranch(string branchLabel, out int index);
     public void SetDialogueEnabled(bool enabled);
+    public void SubscribeToChoiceSelected(Action<string> callback);
+    public void UnsubscribeFromChoiceSelected(Action<string> callback);
 }

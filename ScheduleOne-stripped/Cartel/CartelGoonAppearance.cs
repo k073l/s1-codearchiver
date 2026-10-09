@@ -6,7 +6,7 @@ namespace ScheduleOne.Cartel;
 public class CartelGoonAppearance
 {
     public bool IsMale;
-    public int BaseAppearanceIndex;
+    public int AppearanceIndex;
     public Color SkinColor;
     public Color HairColor;
     public int ClothingIndex;

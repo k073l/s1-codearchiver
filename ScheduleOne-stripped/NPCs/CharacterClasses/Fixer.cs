@@ -12,7 +12,7 @@ public class Fixer : NPC
     public const int ADDITIONAL_SIGNING_FEE_2;
     public const int MAX_SIGNING_FEE;
     public const int ADDITIONAL_FEE_THRESHOLD;
-    public DialogueContainer GreetingDialogue;
+    public Conversation GreetingDialogue;
     public string GreetedVariable;
     private bool NetworkInitialize___EarlyScheduleOne_002ENPCs_002ECharacterClasses_002EFixerAssembly_002DCSharp_002Edll_Excuted;
     private bool NetworkInitialize__LateScheduleOne_002ENPCs_002ECharacterClasses_002EFixerAssembly_002DCSharp_002Edll_Excuted;
